@@ -1,0 +1,94 @@
+<?php
+
+namespace LayeroShop\Widgets;
+
+use Elementor\Controls_Manager;
+use Elementor\Repeater;
+use LayeroShop\Shop_Content;
+
+if (! defined('ABSPATH')) {
+	exit;
+}
+
+class Footnotes extends Base_Widget {
+	public function get_name() {
+		return 'layero_footnotes';
+	}
+
+	public function get_title() {
+		return __('Layero lábjegyzetek', 'layero-shop-ui');
+	}
+
+	public function get_icon() {
+		return 'eicon-editor-list-ol';
+	}
+
+	protected function register_controls() {
+		$this->start_controls_section('content_section', array('label' => __('Lábjegyzetek', 'layero-shop-ui')));
+		$repeater = new Repeater();
+		$repeater->add_control('text', array('label' => __('Szöveg', 'layero-shop-ui'), 'type' => Controls_Manager::TEXTAREA));
+		$this->add_control('items', array(
+			'type' => Controls_Manager::REPEATER,
+			'fields' => $repeater->get_controls(),
+			'title_field' => '{{{ text }}}',
+			'default' => Shop_Content::footnotes(),
+		));
+		$this->end_controls_section();
+
+		$this->start_controls_section('style_section', array(
+			'label' => __('Megjelenés', 'layero-shop-ui'),
+			'tab' => Controls_Manager::TAB_STYLE,
+		));
+		$this->add_control('text_color', array(
+			'label' => __('Szöveg szín', 'layero-shop-ui'),
+			'type' => Controls_Manager::COLOR,
+			'selectors' => array(
+				'{{WRAPPER}} .sh-footnotes' => 'color: {{VALUE}};',
+			),
+		));
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			array(
+				'name' => 'text_typography',
+				'label' => __('Tipográfia', 'layero-shop-ui'),
+				'selector' => '{{WRAPPER}} .sh-footnotes p',
+			)
+		);
+		$this->add_responsive_control('spacing', array(
+			'label' => __('Felső margó', 'layero-shop-ui'),
+			'type' => Controls_Manager::SLIDER,
+			'size_units' => array('px', 'rem'),
+			'range' => array('px' => array('min' => 0, 'max' => 80)),
+			'selectors' => array(
+				'{{WRAPPER}} .sh-footnotes' => 'margin-top: {{SIZE}}{{UNIT}};',
+			),
+		));
+		$this->end_controls_section();
+	}
+
+	protected function render() {
+		$settings = $this->get_settings_for_display();
+		$items = ! empty($settings['items']) ? $settings['items'] : Shop_Content::footnotes();
+		?>
+		<div class="shop-wrap sh-footnotes lyr-footnotes">
+			<?php foreach ($items as $index => $item) : ?>
+				<p><sup><?php echo esc_html($index + 1); ?></sup> <?php echo esc_html($this->normalize_text($item['text'] ?? '', $index)); ?></p>
+			<?php endforeach; ?>
+		</div>
+		<?php
+	}
+
+	private function normalize_text($text, $index) {
+		$text = (string) $text;
+
+		if (1 === (int) $index && false === stripos($text, 'tájékoztató')) {
+			return 'A minimális rendelési érték 50 lej. Az árak tájékoztató jellegűek; az egyedi gyártású termékek végleges ára a személyre szabás részleteitől függhet.';
+		}
+
+		if (2 === (int) $index && false === stripos($text, 'CO₂')) {
+			return 'A PLA növényi (kukoricakeményítő) alapú, ipari komposztálásban lebomló anyag. A műhelyünk áramát napelemek adják, így a gyártás CO₂-kibocsátása közel nulla.';
+		}
+
+		return $text;
+	}
+}

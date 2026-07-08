@@ -1,0 +1,10 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=$HOME/shop/wp-content/plugins/layero_shop_live/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R assets $DEPLOYPATH
+    - /bin/cp -R includes $DEPLOYPATH
+    - /bin/cp -R languages $DEPLOYPATH
+    - /bin/cp layero-shop-ui.php $DEPLOYPATH
+    - /bin/cp uninstall.php $DEPLOYPATH
