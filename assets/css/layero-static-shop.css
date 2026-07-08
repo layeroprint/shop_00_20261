@@ -2934,3 +2934,84 @@ input, select, textarea, progress { accent-color: var(--accent); }
     padding-inline: 72px;
   }
 }
+
+/* Elementor/Hello guard: keep the Layero shop skin authoritative in the head cascade. */
+body.elementor-page.elementor-default {
+  font-family: var(--font);
+  color: var(--ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "tnum";
+}
+
+.elementor :where(.sh-slider, .sh-band, .shop-wrap, .sh-section, .sh-header, .sh-footer, .lyr-section, .lyr-hero, .lyr-spotlight, .lyr-trust-bar, .lyr-marquee, .lyr-quiz-cta, .lyr-gallery-strip, .lyr-custom-cta, .lyr-newsletter, .lyr-footnotes, .lyr-mini-cart, .lyr-personalization),
+.elementor :where([class^="sh-"], [class*=" sh-"], [class^="lyr-"], [class*=" lyr-"]) {
+  font-family: var(--font);
+}
+
+.elementor :where(.sh-h2, .sh-bento__body strong),
+.elementor :where(.lyr-section__head h2, .lyr-spotlight__copy h2, .lyr-custom-cta__copy h2, .lyr-newsletter h2) {
+  font-family: var(--font-display);
+}
+
+.elementor a.sh-btn,
+.elementor a.lyr-btn,
+.elementor .sh-btn,
+.elementor .lyr-btn {
+  text-decoration: none;
+}
+
+.elementor a.sh-btn.sh-btn--primary,
+.elementor .sh-btn.sh-btn--primary {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 8px 22px rgba(10, 124, 146, 0.28);
+}
+
+.elementor a.sh-btn.sh-btn--primary:hover,
+.elementor .sh-btn.sh-btn--primary:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 12px 28px rgba(10, 124, 146, 0.34);
+}
+
+.elementor a.sh-btn.sh-btn--white,
+.elementor .sh-btn.sh-btn--white {
+  box-shadow: 0 4px 16px rgba(3, 10, 20, 0.16);
+}
+
+.elementor a.sh-btn.sh-btn--white:hover,
+.elementor .sh-btn.sh-btn--white:hover {
+  box-shadow: 0 8px 24px rgba(3, 10, 20, 0.22);
+}
+
+.elementor a.lyr-btn.lyr-btn--primary,
+.elementor .lyr-btn.lyr-btn--primary {
+  box-shadow: 0 10px 26px rgba(10, 124, 146, 0.24);
+}
+
+.elementor a.lyr-btn.lyr-btn--white,
+.elementor .lyr-btn.lyr-btn--white {
+  box-shadow: 0 8px 24px rgba(3, 10, 20, 0.18);
+}
+
+.elementor a.lyr-category-card,
+.elementor .lyr-category-card {
+  box-shadow: var(--lyr-shadow);
+}
+
+.elementor a.lyr-category-card:hover,
+.elementor .lyr-category-card:hover {
+  box-shadow: var(--lyr-shadow-lg);
+}
+
+.elementor a.sh-bento,
+.elementor .sh-bento {
+  box-shadow: none;
+}
+
+.elementor a.sh-bento:hover,
+.elementor .sh-bento:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.elementor .lyr-product-card:hover,
+.elementor .sh-prod-card:hover {
+  box-shadow: var(--shadow-lg);
+}

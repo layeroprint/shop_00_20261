@@ -19,7 +19,7 @@ final class Assets {
 
 	private function __construct() {
 		add_action('init', array($this, 'register'));
-		add_action('wp_enqueue_scripts', array($this, 'enqueue'));
+		add_action('wp_enqueue_scripts', array($this, 'enqueue'), 100);
 		add_action('elementor/frontend/after_register_styles', array($this, 'register'));
 		add_action('elementor/frontend/after_register_scripts', array($this, 'register'));
 	}
