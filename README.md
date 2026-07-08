@@ -52,6 +52,11 @@ Ezek bekerülnek:
 - checkout tételadatba
 - rendelési tétel metaadatba
 
+A WooCommerce termék szerkesztőben két Layero kártyamező is elérhető:
+
+- `Layero kártya típus`: felülírja a termékkártyán látható kategóriasort.
+- `Layero kártya címkék`: több badge soronként, `Szöveg|stílus` formában. Példák: `Bestseller|best`, `B2B kedvenc|dark`, `Új|new`, `Egyedi|info`. A támogatott stílusok: `best`, `new`, `sale`, `dark`, `accent`, `gold`, `eco`, `coral`, `info`.
+
 Shortcode:
 
 ```text

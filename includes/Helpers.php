@@ -197,6 +197,175 @@ final class Helpers {
 		return function_exists('wc_placeholder_img') ? wc_placeholder_img($size) : '';
 	}
 
+	public static function product_card_type_label($product) {
+		if (! $product || ! method_exists($product, 'get_meta')) {
+			return '';
+		}
+
+		return trim((string) $product->get_meta('_layero_card_type_label', true));
+	}
+
+	public static function product_badges($product) {
+		if (! $product) {
+			return array();
+		}
+
+		$badges = array();
+		if (method_exists($product, 'is_on_sale') && $product->is_on_sale()) {
+			$badges[] = array(
+				'label' => self::product_sale_badge_label($product),
+				'style' => 'sale',
+			);
+		}
+
+		if (method_exists($product, 'get_meta')) {
+			$badges = array_merge($badges, self::parse_badge_lines((string) $product->get_meta('_layero_product_badges', true)));
+		}
+
+		if (method_exists($product, 'is_featured') && $product->is_featured() && ! self::has_badge_like($badges, array('kiemelt', 'bestseller'))) {
+			$badges[] = array(
+				'label' => __('Kiemelt', 'layero-shop-ui'),
+				'style' => 'best',
+			);
+		}
+
+		return array_slice($badges, 0, 5);
+	}
+
+	public static function demo_product_badges($product) {
+		$badges = array();
+		$price = isset($product['price']) ? (float) $product['price'] : 0;
+		$regular = isset($product['regular_price']) ? (float) $product['regular_price'] : 0;
+
+		if ($regular > 0 && $price > 0 && $regular > $price) {
+			$badges[] = array(
+				'label' => '-' . (int) round((($regular - $price) / $regular) * 100) . '%',
+				'style' => 'sale',
+			);
+		}
+
+		if (! empty($product['badge'])) {
+			$badges[] = array(
+				'label' => $product['badge'],
+				'style' => self::badge_style_for_label($product['badge']),
+			);
+		}
+
+		return array_slice($badges, 0, 5);
+	}
+
+	public static function product_badges_html($badges) {
+		if (empty($badges)) {
+			return '';
+		}
+
+		$html = '<div class="sh-badges lyr-badges">';
+		foreach ($badges as $badge) {
+			if (empty($badge['label'])) {
+				continue;
+			}
+			$style = ! empty($badge['style']) ? sanitize_html_class($badge['style']) : 'info';
+			$html .= '<span class="sh-badge sh-badge--' . esc_attr($style) . ' lyr-badge lyr-badge--' . esc_attr($style) . '">' . esc_html($badge['label']) . '</span>';
+		}
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	private static function parse_badge_lines($raw) {
+		$badges = array();
+		$lines = preg_split('/\r\n|\r|\n/', (string) $raw);
+
+		foreach ($lines as $line) {
+			$line = trim($line);
+			if ('' === $line) {
+				continue;
+			}
+
+			$parts = array_map('trim', explode('|', $line, 2));
+			$label = sanitize_text_field($parts[0]);
+			if ('' === $label) {
+				continue;
+			}
+
+			$badges[] = array(
+				'label' => $label,
+				'style' => self::normalize_badge_style($parts[1] ?? '', $label),
+			);
+		}
+
+		return $badges;
+	}
+
+	private static function product_sale_badge_label($product) {
+		$regular = (float) $product->get_regular_price();
+		$price = (float) $product->get_price();
+
+		if (! $regular && method_exists($product, 'get_variation_regular_price')) {
+			$regular = (float) $product->get_variation_regular_price('max', true);
+		}
+		if (! $price && method_exists($product, 'get_variation_sale_price')) {
+			$price = (float) $product->get_variation_sale_price('min', true);
+		}
+
+		if ($regular > 0 && $price > 0 && $regular > $price) {
+			return '-' . (int) round((($regular - $price) / $regular) * 100) . '%';
+		}
+
+		return __('Akció', 'layero-shop-ui');
+	}
+
+	private static function normalize_badge_style($style, $label) {
+		$style = sanitize_html_class(strtolower((string) $style));
+		$allowed = array('sale', 'best', 'new', 'info', 'dark', 'accent', 'gold', 'eco', 'coral', 'b2b', 'custom', 'limited', 'personal');
+
+		if (in_array($style, $allowed, true)) {
+			return $style;
+		}
+
+		return self::badge_style_for_label($label);
+	}
+
+	private static function badge_style_for_label($label) {
+		$normalized = function_exists('remove_accents') ? remove_accents((string) $label) : (string) $label;
+		$normalized = strtolower($normalized);
+
+		if (false !== strpos($normalized, 'bestseller') || false !== strpos($normalized, 'top')) {
+			return 'best';
+		}
+		if ('uj' === trim($normalized) || false !== strpos($normalized, 'ujdonsag')) {
+			return 'new';
+		}
+		if (false !== strpos($normalized, 'b2b') || false !== strpos($normalized, 'ceges')) {
+			return 'dark';
+		}
+		if (false !== strpos($normalized, 'szezon') || false !== strpos($normalized, 'limit')) {
+			return 'gold';
+		}
+		if (false !== strpos($normalized, 'eco') || false !== strpos($normalized, 'zold')) {
+			return 'eco';
+		}
+		if (false !== strpos($normalized, 'egyedi') || false !== strpos($normalized, 'personal')) {
+			return 'info';
+		}
+
+		return 'accent';
+	}
+
+	private static function has_badge_like($badges, $needles) {
+		foreach ($badges as $badge) {
+			$label = function_exists('remove_accents') ? remove_accents((string) ($badge['label'] ?? '')) : (string) ($badge['label'] ?? '');
+			$label = strtolower($label);
+			foreach ($needles as $needle) {
+				if (false !== strpos($label, $needle)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public static function product_card($product, $args = array()) {
 		if (! $product) {
 			return '';
@@ -218,16 +387,14 @@ final class Helpers {
 		$is_simple_ajax = $product->supports('ajax_add_to_cart') && $product->is_purchasable() && $product->is_in_stock();
 		$button_text = $args['button_text'] ? $args['button_text'] : $product->add_to_cart_text();
 		$excerpt = wp_trim_words(wp_strip_all_tags($product->get_short_description() ?: $product->get_description()), 18);
+		$card_type_label = self::product_card_type_label($product);
+		$badges = self::product_badges($product);
 
 		ob_start();
 		?>
 		<article class="<?php echo esc_attr($classes); ?>" data-layero-product-card data-layero-product-id="<?php echo esc_attr($product->get_id()); ?>">
 			<figure class="lyr-product-card__media">
-				<?php if ($product->is_on_sale()) : ?>
-					<span class="lyr-badge lyr-badge--sale"><?php echo esc_html__('Akció', 'layero-shop-ui'); ?></span>
-				<?php elseif ($product->is_featured()) : ?>
-					<span class="lyr-badge"><?php echo esc_html__('Kiemelt', 'layero-shop-ui'); ?></span>
-				<?php endif; ?>
+				<?php echo self::product_badges_html($badges); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php echo self::product_image($product, $args['image_size']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</figure>
 			<button class="sh-heart lyr-product-card__wish" type="button" data-layero-wish-toggle data-layero-product-id="<?php echo esc_attr($product->get_id()); ?>" aria-label="<?php esc_attr_e('Kedvencekhez adás', 'layero-shop-ui'); ?>">
@@ -235,7 +402,9 @@ final class Helpers {
 			</button>
 			<div class="sh-prod-card__body lyr-product-card__body">
 				<a class="sh-card-link" href="<?php echo esc_url($link); ?>" aria-label="<?php echo esc_attr($product->get_name()); ?>"></a>
-				<?php if ($cat_names) : ?>
+				<?php if ($card_type_label) : ?>
+					<span class="sh-prod-card__cat lyr-product-card__cat"><?php echo esc_html($card_type_label); ?></span>
+				<?php elseif ($cat_names) : ?>
 					<span class="sh-prod-card__cat lyr-product-card__cat"><?php echo wp_kses_post($cat_names); ?></span>
 				<?php endif; ?>
 				<span class="sh-prod-card__name"><?php echo esc_html($product->get_name()); ?></span>
@@ -278,14 +447,13 @@ final class Helpers {
 		$link = self::product_url($product['id']);
 		$category_link = self::products_url($product['category']);
 		$price = ! empty($product['price']) ? number_format_i18n($product['price'], 0) . ' RON' : __('Ajánlatkérés', 'layero-shop-ui');
+		$badges = self::demo_product_badges($product);
 
 		ob_start();
 		?>
 		<article class="sh-prod-card sh-reveal lyr-product-card lyr-product-card--demo" data-layero-product-card data-layero-product-id="<?php echo esc_attr($product['id']); ?>">
 			<figure class="lyr-product-card__media">
-				<?php if (! empty($product['badge'])) : ?>
-					<span class="sh-badge sh-badge--info lyr-badge"><?php echo esc_html($product['badge']); ?></span>
-				<?php endif; ?>
+				<?php echo self::product_badges_html($badges); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<img src="<?php echo esc_url(Shop_Content::asset_url($product['image'])); ?>" alt="<?php echo esc_attr($product['name']); ?>" loading="lazy">
 			</figure>
 			<button class="sh-heart lyr-product-card__wish" type="button" data-layero-wish-toggle data-layero-product-id="<?php echo esc_attr($product['id']); ?>" aria-label="<?php esc_attr_e('Kedvencekhez adás', 'layero-shop-ui'); ?>">

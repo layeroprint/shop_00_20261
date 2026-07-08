@@ -18,11 +18,51 @@ final class WooCommerce {
 	}
 
 	private function __construct() {
+		add_action('woocommerce_product_options_general_product_data', array($this, 'render_product_badge_fields'));
+		add_action('woocommerce_admin_process_product_object', array($this, 'save_product_badge_fields'));
 		add_action('woocommerce_before_add_to_cart_button', array($this, 'render_personalization_fields'));
 		add_filter('woocommerce_add_cart_item_data', array($this, 'add_cart_item_data'), 10, 3);
 		add_filter('woocommerce_get_item_data', array($this, 'display_cart_item_data'), 10, 2);
 		add_action('woocommerce_checkout_create_order_line_item', array($this, 'add_order_item_meta'), 10, 4);
 		add_shortcode('layero_mini_cart', array($this, 'mini_cart_shortcode'));
+	}
+
+	public function render_product_badge_fields() {
+		if (! function_exists('woocommerce_wp_text_input') || ! function_exists('woocommerce_wp_textarea_input')) {
+			return;
+		}
+
+		echo '<div class="options_group layero-product-badges">';
+		woocommerce_wp_text_input(
+			array(
+				'id' => '_layero_card_type_label',
+				'label' => __('Layero kártya típus', 'layero-shop-ui'),
+				'description' => __('Ez jelenik meg a termékkártyán a WooCommerce kategória helyett. Példa: Tematikus lámpák, Céges megoldások, Dekorációk.', 'layero-shop-ui'),
+				'desc_tip' => true,
+			)
+		);
+		woocommerce_wp_textarea_input(
+			array(
+				'id' => '_layero_product_badges',
+				'label' => __('Layero kártya címkék', 'layero-shop-ui'),
+				'description' => __('Egy címke soronként. Formátum: Szöveg|stílus. Példa: Bestseller|best, B2B kedvenc|dark, Új|new, Egyedi|info. Stílusok: best, new, sale, dark, accent, gold, eco, coral, info.', 'layero-shop-ui'),
+				'desc_tip' => false,
+				'rows' => 4,
+			)
+		);
+		echo '</div>';
+	}
+
+	public function save_product_badge_fields($product) {
+		if (! $product || ! is_a($product, 'WC_Product')) {
+			return;
+		}
+
+		$type_label = isset($_POST['_layero_card_type_label']) ? sanitize_text_field(wp_unslash($_POST['_layero_card_type_label'])) : '';
+		$badges = isset($_POST['_layero_product_badges']) ? sanitize_textarea_field(wp_unslash($_POST['_layero_product_badges'])) : '';
+
+		$product->update_meta_data('_layero_card_type_label', $type_label);
+		$product->update_meta_data('_layero_product_badges', $badges);
 	}
 
 	public function render_personalization_fields() {

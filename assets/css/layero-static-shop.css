@@ -658,16 +658,25 @@ button { font-family: inherit; cursor: pointer; }
 }
 @media (hover: none) { .sh-quickview { display: none; } }
 /* badge-ek: kitöltött, feltűnő (bal felső sarok, egymás alá) */
-.sh-badges { position: absolute; top: 10px; left: 10px; z-index: 3; display: flex; flex-direction: column; gap: 5px; align-items: flex-start; }
+.sh-badges { position: absolute; top: 10px; left: 10px; z-index: 3; display: flex; flex-direction: column; gap: 5px; align-items: flex-start; max-width: calc(100% - 68px); }
 .sh-badge {
   padding: 4px 11px; border-radius: 999px;
-  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  max-width: 100%; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em; line-height: 1; text-transform: uppercase; white-space: nowrap;
   color: #fff; box-shadow: 0 2px 8px rgba(10, 20, 30, 0.18);
 }
 .sh-badge--sale { background: #e04726; }
 .sh-badge--best { background: var(--gold); }
 .sh-badge--new  { background: var(--accent); }
 .sh-badge--info { background: var(--ink); }
+.sh-badge--dark,
+.sh-badge--b2b { background: var(--dark); }
+.sh-badge--accent { background: var(--accent-deep); }
+.sh-badge--gold,
+.sh-badge--limited { background: #b7791f; }
+.sh-badge--eco { background: var(--eco); }
+.sh-badge--coral,
+.sh-badge--personal,
+.sh-badge--custom { background: var(--coral); }
 
 .sh-prod-card__body { padding: 13px 15px 15px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
 .sh-prod-card__cat { font-size: 0.6rem; font-weight: 650; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); }

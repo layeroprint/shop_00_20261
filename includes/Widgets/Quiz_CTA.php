@@ -136,10 +136,12 @@ class Quiz_CTA extends Base_Widget {
 	private function quiz_payload() {
 		$products = array();
 		foreach (Shop_Content::products() as $product) {
+			$category = Shop_Content::category_by_slug($product['category']);
 			$products[] = array(
 				'id' => $product['id'],
 				'name' => $product['name'],
 				'category' => $product['category'],
+				'category_label' => $category ? $category['name'] : $product['category'],
 				'price' => (int) $product['price'],
 				'regular_price' => (int) $product['regular_price'],
 				'badge' => $product['badge'],
