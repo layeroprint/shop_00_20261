@@ -52,6 +52,7 @@ final class Elementor {
 			'Footnotes',
 			'Static_Page',
 			'Coming_Soon',
+			'Coming_Soon_Ro',
 		);
 
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Widgets/Base_Widget.php';
