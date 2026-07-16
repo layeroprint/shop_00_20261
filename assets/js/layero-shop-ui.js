@@ -341,6 +341,8 @@
 		var root = track.closest('.lyr-product-carousel') || track.parentElement;
 		var prev = root ? root.querySelector('[data-layero-carousel-prev]') : null;
 		var next = root ? root.querySelector('[data-layero-carousel-next]') : null;
+		var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		var hold = function () {};
 
 		function move(direction) {
 			track.scrollBy({
@@ -349,8 +351,131 @@
 			});
 		}
 
-		if (prev) prev.addEventListener('click', function () { move(-1); });
-		if (next) next.addEventListener('click', function () { move(1); });
+		if (prev) prev.addEventListener('click', function () { hold(2600); move(-1); });
+		if (next) next.addEventListener('click', function () { hold(2600); move(1); });
+
+		/* folyamatos marquee-görgetés: a kártyasort megduplázzuk, és a
+		   görgetés varrat nélkül visszaugrik az elejére (mint a lokális shopon) */
+		if (track.hasAttribute('data-layero-marquee') && !reduce) {
+			var cards = track.children.length;
+			if (cards > 2) {
+				track.insertAdjacentHTML('beforeend', track.innerHTML);
+				Array.prototype.forEach.call(track.querySelectorAll('.sh-reveal'), function (el) {
+					el.classList.add('is-in');
+				});
+				track.style.scrollSnapType = 'none';
+
+				var speed = parseInt(track.getAttribute('data-layero-marquee-speed'), 10);
+				speed = Number.isFinite(speed) && speed > 0 ? speed : 42;
+				var paused = false;
+				var hovering = false;
+				var resumeTimer = 0;
+				var lastTs = 0;
+
+				var resume = function () { if (!hovering && !document.hidden) paused = false; };
+				var pause = function () { paused = true; window.clearTimeout(resumeTimer); };
+				hold = function (ms) { pause(); resumeTimer = window.setTimeout(resume, ms || 1800); };
+
+				function step(ts) {
+					if (lastTs && !paused) {
+						track.scrollLeft += speed * (ts - lastTs) / 1000;
+						var half = track.scrollWidth / 2;
+						if (track.scrollLeft >= half) track.scrollLeft -= half;
+					}
+					lastTs = ts;
+					window.requestAnimationFrame(step);
+				}
+				window.requestAnimationFrame(step);
+
+				track.addEventListener('mouseenter', function () { hovering = true; pause(); });
+				track.addEventListener('mouseleave', function () { hovering = false; resume(); });
+				track.addEventListener('pointerdown', pause);
+				window.addEventListener('pointerup', function () { hold(1800); });
+				track.addEventListener('wheel', function () { hold(1800); }, { passive: true });
+				track.addEventListener('touchmove', function () { hold(1800); }, { passive: true });
+				document.addEventListener('visibilitychange', function () {
+					if (document.hidden) pause();
+					else resume();
+				});
+			}
+		}
+	}
+
+	function initSpotlight(root) {
+		if (root.dataset.layeroSpotlightReady === '1') return;
+		root.dataset.layeroSpotlightReady = '1';
+
+		var imgs = Array.prototype.slice.call(root.querySelectorAll('.sh-spotlight__img'));
+		var dots = Array.prototype.slice.call(root.querySelectorAll('.sh-spotlight__dot'));
+		var dataNode = root.querySelector('[data-lyr-spotlight-items]');
+		if (imgs.length < 2 || !dataNode) return;
+
+		var items;
+		try {
+			items = JSON.parse(dataNode.textContent || '[]');
+		} catch (error) {
+			return;
+		}
+		if (!items || items.length < 2) return;
+
+		var dyn = root.querySelector('[data-f-dyn]');
+		var badge = root.querySelector('[data-f-badge]');
+		var link = root.querySelector('[data-f-link]');
+		var nameEl = root.querySelector('[data-f-name]');
+		var descEl = root.querySelector('[data-f-desc]');
+		var priceEl = root.querySelector('[data-f-price]');
+		var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		var interval = parseInt(root.getAttribute('data-lyr-interval'), 10);
+		interval = Number.isFinite(interval) && interval >= 2000 ? interval : 4200;
+		var current = 0;
+		var timer = null;
+		var swapTimer = null;
+
+		function fill(item) {
+			if (nameEl) nameEl.textContent = item.name || '';
+			if (descEl) descEl.textContent = item.desc || '';
+			if (priceEl) priceEl.innerHTML = item.price || '';
+			if (link && item.url) link.setAttribute('href', item.url);
+		}
+
+		function show(index) {
+			current = (index + items.length) % items.length;
+			imgs.forEach(function (img, i) { img.classList.toggle('is-on', i === current); });
+			dots.forEach(function (dot, i) {
+				var on = i === current;
+				dot.classList.toggle('is-on', on);
+				dot.setAttribute('aria-selected', on ? 'true' : 'false');
+			});
+			if (badge) badge.textContent = items[current].badge || '';
+			window.clearTimeout(swapTimer);
+			if (reduce || !dyn) {
+				fill(items[current]);
+				return;
+			}
+			dyn.classList.add('is-swap');
+			swapTimer = window.setTimeout(function () {
+				fill(items[current]);
+				dyn.classList.remove('is-swap');
+			}, 190);
+		}
+
+		function stop() {
+			if (timer) window.clearInterval(timer);
+			timer = null;
+		}
+
+		function start() {
+			stop();
+			if (!reduce) timer = window.setInterval(function () { show(current + 1); }, interval);
+		}
+
+		dots.forEach(function (dot, i) {
+			dot.addEventListener('click', function () { stop(); show(i); start(); });
+		});
+		root.addEventListener('mouseenter', stop);
+		root.addEventListener('mouseleave', start);
+
+		start();
 	}
 
 	function initNewsletter(form) {
@@ -386,6 +511,7 @@
 		(context || document).querySelectorAll('[data-layero-slider]').forEach(initSlider);
 		(context || document).querySelectorAll('[data-layero-quiz]').forEach(initQuiz);
 		(context || document).querySelectorAll('[data-layero-carousel]').forEach(initCarousel);
+		(context || document).querySelectorAll('[data-lyr-spotlight]').forEach(initSpotlight);
 		(context || document).querySelectorAll('[data-layero-newsletter]').forEach(initNewsletter);
 		(context || document).querySelectorAll('.lyr-mini-cart').forEach(initMiniCart);
 		initWishlist(context || document);

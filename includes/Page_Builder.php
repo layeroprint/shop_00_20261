@@ -220,7 +220,7 @@ final class Page_Builder {
 			'<div class="sh-section-hd"><h2 class="sh-h2">Így dolgozunk.</h2></div>' .
 			'<ol class="sh-steps">' .
 			'<li><span>1</span><div><b>Ötlet</b>Kiválasztasz egy terméket vagy leírod a saját ötleted — képpel, vázlattal, ahogy kényelmes.</div></li>' .
-			'<li><span>2</span><div><b>Terv</b>Digitális előnézetet készítünk, amit jóváhagyásra megmutatunk. Módosítás az árban.</div></li>' .
+			'<li><span>2</span><div><b>Terv</b>E-mailben egyeztetjük és véglegesítjük a részleteket. Módosítás az árban.</div></li>' .
 			'<li><span>3</span><div><b>Gyártás</b>A jóváhagyott terv alapján kinyomtatjuk és összeszereljük a darabot a műhelyünkben.</div></li>' .
 			'<li><span>4</span><div><b>Kézbesítés</b>Gondosan becsomagolva, nyomon követhető csomagként küldjük — 1–3 munkanap a gyártás után.</div></li>' .
 			'</ol></div></section>'
@@ -271,9 +271,8 @@ final class Page_Builder {
 		$faq_html = '<section class="sh-band sh-band--tight"><div class="shop-wrap sh-faq">';
 
 		$faq_html .= '<div class="sh-faq__group" id="rendeles"><h2 class="sh-h2">Rendelés és személyre szabás</h2><div class="sh-acc">';
-		$faq_html .= '<details open><summary>Hogyan tudok személyre szabott terméket rendelni?</summary><div><p>Válaszd ki a terméket, add meg a személyre szabás részleteit (név, felirat, motívum), és tedd a kosárba. A rendelés után e-mailben egyeztetjük a pontos szövegeket és részleteket. Komplexebb daraboknál digitális előnézetet küldünk jóváhagyásra, és csak azután indítjuk a gyártást.</p></div></details>';
-		$faq_html .= '<details><summary>Kérhetek digitális előnézetet gyártás előtt?</summary><div><p>Igen. Minden egyedi vagy összetettebb személyre szabásnál digitális előnézetet küldünk, amit jóvá kell hagynod a gyártás megkezdése előtt. A módosítási kör az árban van — addig igazítjuk, amíg pontosan az nem lesz, amit elképzeltél.</p></div></details>';
-		$faq_html .= '<details><summary>Módosíthatom vagy lemondhatom a rendelésem?</summary><div><p>Amíg a gyártás nem indult el (jellemzően az előnézet jóváhagyásáig), a rendelés díjmentesen módosítható vagy lemondható. Írj a <a href="mailto:layeroprint@gmail.com">layeroprint@gmail.com</a> címre a rendelésszámoddal.</p></div></details>';
+		$faq_html .= '<details open><summary>Hogyan tudok személyre szabott terméket rendelni?</summary><div><p>Válaszd ki a terméket, add meg a személyre szabás részleteit (név, felirat, motívum), és tedd a kosárba. A rendelés után e-mailben egyeztetjük a pontos szövegeket és részleteket, és csak a jóváhagyásod után indítjuk a gyártást.</p></div></details>';
+		$faq_html .= '<details><summary>Módosíthatom vagy lemondhatom a rendelésem?</summary><div><p>Amíg a gyártás nem indult el, a rendelés díjmentesen módosítható vagy lemondható. Írj a <a href="mailto:layeroprint@gmail.com">layeroprint@gmail.com</a> címre a rendelésszámoddal.</p></div></details>';
 		$faq_html .= '<details><summary>Meddig kell megadnom a személyre szabás adatait?</summary><div><p>A rendelés után kapott visszaigazoló e-mailre válaszolva bármikor elküldheted. Minél előbb megkapjuk, annál hamarabb indul a gyártás — a feltüntetett gyártási idő az adatok véglegesítésétől számít.</p></div></details>';
 		$faq_html .= '</div></div>';
 

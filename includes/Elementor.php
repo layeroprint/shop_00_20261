@@ -35,6 +35,7 @@ final class Elementor {
 	public function register_widgets($widgets_manager) {
 		$widgets = array(
 			'Hero_Slider',
+			'Whofor',
 			'Trust_Bar',
 			'Value_Marquee',
 			'Category_Bento',

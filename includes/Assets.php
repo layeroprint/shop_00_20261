@@ -89,6 +89,8 @@ final class Assets {
 						'fiok.html' => home_url('/fiok/'),
 						'kedvencek.html' => home_url('/kedvencek/'),
 						'termek.html' => home_url('/termek/'),
+						'aszf.html' => home_url('/aszf/'),
+						'adatvedelem.html' => home_url('/adatvedelem/'),
 					),
 				)
 			) . ';',

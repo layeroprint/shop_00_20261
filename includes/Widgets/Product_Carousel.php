@@ -48,6 +48,20 @@ class Product_Carousel extends Base_Widget {
 		$this->add_control('featured', array('label' => __('Csak kiemelt Woo termékek', 'layero-shop-ui'), 'type' => Controls_Manager::SWITCHER));
 		$this->add_control('on_sale', array('label' => __('Csak akciós Woo termékek', 'layero-shop-ui'), 'type' => Controls_Manager::SWITCHER));
 		$this->add_control('show_excerpt', array('label' => __('Leírás mutatása', 'layero-shop-ui'), 'type' => Controls_Manager::SWITCHER));
+		$this->add_control('autoplay', array(
+			'label' => __('Folyamatos auto-görgetés (marquee)', 'layero-shop-ui'),
+			'type' => Controls_Manager::SWITCHER,
+			'default' => 'yes',
+			'description' => __('A kártyasor lassan, folyamatosan gördül; egér fölé húzva megáll.', 'layero-shop-ui'),
+		));
+		$this->add_control('autoplay_speed', array(
+			'label' => __('Sebesség (px/mp)', 'layero-shop-ui'),
+			'type' => Controls_Manager::NUMBER,
+			'default' => 42,
+			'min' => 10,
+			'max' => 160,
+			'condition' => array('autoplay' => 'yes'),
+		));
 		$this->end_controls_section();
 
 		$this->start_controls_section('style_section', array(
@@ -106,7 +120,7 @@ class Product_Carousel extends Base_Widget {
 					<button class="sh-carousel-btn" type="button" data-layero-carousel-next data-car-next aria-label="<?php esc_attr_e('Jobbra', 'layero-shop-ui'); ?>">&rsaquo;</button>
 				</div>
 			</div>
-			<div class="sh-carousel lyr-carousel" data-layero-carousel>
+			<div class="sh-carousel lyr-carousel" data-layero-carousel<?php echo 'yes' === ($settings['autoplay'] ?? 'yes') ? ' data-layero-marquee data-layero-marquee-speed="' . esc_attr(absint($settings['autoplay_speed'] ?? 42)) . '"' : ''; ?>>
 				<?php if ($use_demo) : ?>
 					<?php foreach (Shop_Content::demo_products($limit, $settings['category'] ?? '', $collection) as $product) : ?>
 						<?php echo Helpers::demo_product_card($product, $card_args); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

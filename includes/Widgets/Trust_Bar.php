@@ -37,6 +37,19 @@ class Trust_Bar extends Base_Widget {
 				'bolt' => __('Gyors gyártás', 'layero-shop-ui'),
 				'shield' => __('Garancia', 'layero-shop-ui'),
 				'leaf' => __('Eco', 'layero-shop-ui'),
+				'pin' => __('Helyi gyártás', 'layero-shop-ui'),
+			),
+		));
+		$repeater->add_control('tint', array(
+			'label' => __('Ikon-szín (duotone)', 'layero-shop-ui'),
+			'type' => Controls_Manager::SELECT,
+			'default' => 'accent',
+			'options' => array(
+				'accent' => __('Cián', 'layero-shop-ui'),
+				'gold' => __('Arany', 'layero-shop-ui'),
+				'coral' => __('Borostyán', 'layero-shop-ui'),
+				'eco' => __('Zöld', 'layero-shop-ui'),
+				'ink' => __('Tinta (éjkék)', 'layero-shop-ui'),
 			),
 		));
 		$repeater->add_control('title', array('label' => __('Cím', 'layero-shop-ui'), 'type' => Controls_Manager::TEXT));
@@ -99,12 +112,14 @@ class Trust_Bar extends Base_Widget {
 		$items = ! empty($settings['items']) ? $settings['items'] : Shop_Content::trust_items();
 		?>
 		<div class="sh-infobar">
-			<?php foreach ($items as $item) : ?>
-				<article>
-					<?php echo Helpers::icon($item['icon'] ?? 'check'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					<div><strong><?php echo esc_html($item['title'] ?? ''); ?></strong><span><?php echo esc_html($item['text'] ?? ''); ?></span></div>
-				</article>
-			<?php endforeach; ?>
+			<div class="shop-wrap sh-infobar__inner" style="--lyr-infobar-cols: <?php echo esc_attr(max(1, count($items))); ?>;">
+				<?php foreach ($items as $item) : ?>
+					<article class="if-<?php echo esc_attr(sanitize_html_class($item['tint'] ?? 'accent')); ?>">
+						<?php echo Helpers::icon($item['icon'] ?? 'check'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<div><strong><?php echo esc_html($item['title'] ?? ''); ?></strong><span><?php echo esc_html($item['text'] ?? ''); ?></span></div>
+					</article>
+				<?php endforeach; ?>
+			</div>
 		</div>
 		<?php
 	}

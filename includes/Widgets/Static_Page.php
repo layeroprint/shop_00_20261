@@ -43,6 +43,8 @@ class Static_Page extends Base_Widget {
 					'fiok' => __('Fiókom', 'layero-shop-ui'),
 					'kedvencek' => __('Kedvencek', 'layero-shop-ui'),
 					'404' => __('404', 'layero-shop-ui'),
+					'aszf' => __('ÁSZF', 'layero-shop-ui'),
+					'adatvedelem' => __('Adatvédelem', 'layero-shop-ui'),
 				),
 			)
 		);
@@ -82,6 +84,8 @@ class Static_Page extends Base_Widget {
 			'fiok' => 'fiok.html',
 			'kedvencek' => 'kedvencek.html',
 			'404' => '404.html',
+			'aszf' => 'aszf.html',
+			'adatvedelem' => 'adatvedelem.html',
 		);
 
 		$file = $files[$page] ?? $files['home'];
@@ -125,6 +129,8 @@ class Static_Page extends Base_Widget {
 			'fiok.html' => home_url('/fiok/'),
 			'kedvencek.html' => home_url('/kedvencek/'),
 			'termek.html' => home_url('/termek/'),
+			'aszf.html' => home_url('/aszf/'),
+			'adatvedelem.html' => home_url('/adatvedelem/'),
 		);
 
 		foreach ($page_map as $file => $url) {

@@ -9,54 +9,162 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap">
-  <link rel="stylesheet" href="shop.css">
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="shop.css?v=20260716c">
+  <link rel="preload" as="image" imagesrcset="assets/termekvilag/lampa-ba/layero-asset-0179-600.webp 600w, assets/termekvilag/lampa-ba/layero-asset-0179-720.webp 720w, assets/termekvilag/lampa-ba/layero-asset-0179-900.webp 900w" imagesizes="(max-width: 900px) min(78vw, 340px), min(38vw, 400px)" fetchpriority="high">
+  <link rel="preload" as="image" imagesrcset="assets/termekvilag/lampa-ba/layero-asset-0180-600.webp 600w, assets/termekvilag/lampa-ba/layero-asset-0180-720.webp 720w, assets/termekvilag/lampa-ba/layero-asset-0180-900.webp 900w" imagesizes="(max-width: 900px) min(78vw, 340px), min(38vw, 400px)" fetchpriority="high">
 </head>
 <body data-page="home">
 
-  <!-- ── HERO SLIDER ─────────────────────────────────────────────── -->
-  <section class="sh-slider" id="sh-slider" aria-label="Kiemelt ajánlatok">
+  <!-- ── HERO SLIDER: 1. slide a húzható lámpa-összehasonlítóval ────
+       data-hero-style = az induló stílus (aurora | studio | editorial | neon | sunset).
+       Élő próba/váltás: nyisd meg az index.html?herolab címet. -->
+  <section class="sh-slider" id="sh-slider" data-hero-style="studio" aria-label="Kiemelt ajánlatok">
 
-    <article class="sh-slide is-on">
-      <div class="sh-slide__media"><img src="assets/termekvilag/hero_slider/layero-asset-0009.png" alt=""></div>
-      <div class="sh-slide__copy">
-        <span class="sh-slide__eyebrow">Layero Shop</span>
-        <h2>Ajándék, ami <em>rólad</em> szól.</h2>
-        <p>Világító lámpák, kulcstartók és dekorációk — névvel, logóval, egyedi 3D gyártásban.</p>
-        <div class="sh-slide__cta">
-          <a class="sh-btn sh-btn--white" href="kategoria.html">Vásárlás most</a>
-          <a class="sh-link--light" href="#kategoriak">Kategóriák ›</a>
+    <article class="sh-slide sh-slide--ba is-on">
+      <div class="shop-wrap sh-slide__ba-inner">
+        <div class="sh-slide__ba-copy">
+          <span class="sh-slide__eyebrow">Személyre szabott 3D ajándékok</span>
+          <h2>Ajándék, ami <em>rólad</em> szól.</h2>
+          <p>Névre szóló lámpák, kulcstartók és dekorációk — egyetlen példányban, a te ötletedből nyomtatva.</p>
+          <div class="sh-slide__cta">
+            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=lampak">Lámpák felfedezése</a>
+            <a class="sh-link--light" href="kategoria.html">Összes termék ›</a>
+          </div>
+          <p class="sh-slide__eta" id="sh-hero-eta"></p>
+        </div>
+        <div class="sh-slide__ba-stage">
+          <div class="ro-ba" data-lamp-ba tabindex="0" role="img" aria-label="Egyedi Jurassic Park lámpa felkapcsolt és lekapcsolt állapotának összehasonlítása">
+            <img class="ro-ba__img" src="assets/termekvilag/lampa-ba/layero-asset-0179-600.webp" srcset="assets/termekvilag/lampa-ba/layero-asset-0179-600.webp 600w, assets/termekvilag/lampa-ba/layero-asset-0179-720.webp 720w, assets/termekvilag/lampa-ba/layero-asset-0179-900.webp 900w" sizes="(max-width: 900px) min(78vw, 340px), min(38vw, 400px)" alt="" draggable="false" fetchpriority="high" decoding="async" width="600" height="747">
+            <div class="ro-ba__top" aria-hidden="true">
+              <img class="ro-ba__img" src="assets/termekvilag/lampa-ba/layero-asset-0180-600.webp" srcset="assets/termekvilag/lampa-ba/layero-asset-0180-600.webp 600w, assets/termekvilag/lampa-ba/layero-asset-0180-720.webp 720w, assets/termekvilag/lampa-ba/layero-asset-0180-900.webp 900w" sizes="(max-width: 900px) min(78vw, 340px), min(38vw, 400px)" alt="" draggable="false" fetchpriority="high" decoding="async" width="600" height="750">
+            </div>
+            <div class="ro-ba__handle" aria-hidden="true"><span class="ro-ba__grip">&lsaquo;&rsaquo;</span></div>
+            <span class="ro-ba__tag ro-ba__tag--on" aria-hidden="true">Felkapcsolva</span>
+            <span class="ro-ba__tag ro-ba__tag--off" aria-hidden="true">Lekapcsolva</span>
+          </div>
+          <p class="sh-slide__ba-hint" aria-hidden="true">Húzd el a csúszkát — így világít este</p>
         </div>
       </div>
     </article>
 
-    <article class="sh-slide">
-      <div class="sh-slide__media"><img src="assets/termekvilag/hero_slider/layero-asset-0013.png" alt=""></div>
-      <div class="sh-slide__copy">
-        <span class="sh-slide__eyebrow">Tematikus lámpák</span>
-        <h2>Névre szóló <em>fény</em>.</h2>
-        <p>Kedvenc film, játék, sport vagy hobbi — LED-világítással, saját névvel.</p>
-        <div class="sh-slide__cta">
-          <a class="sh-btn sh-btn--white" href="kategoria.html?cat=lampak">Lámpák megnézése</a>
+    <article class="sh-slide sh-slide--spot">
+      <div class="shop-wrap sh-slide__spot-inner">
+        <div class="sh-slide__spot-copy">
+          <span class="sh-slide__eyebrow">Népszerű termékek</span>
+          <h2>Ajándék minden <em>szenvedélyre</em>.</h2>
+          <p>F1-naptár, borosüveg-tartó, filmes falidísz vagy névre szóló kulcstartó — 3D nyomtatva, a te ötleted szerint, egyetlen példányban.</p>
+          <div class="sh-slide__cta">
+            <a class="sh-btn sh-btn--white" href="kategoria.html">Összes termék</a>
+            <a class="sh-link--light" href="kviz.html">Segíts választani ›</a>
+          </div>
+        </div>
+        <div class="sh-slide__spot-stage">
+          <div class="sh-spot" data-spot>
+            <div class="sh-spot__frame">
+              <span class="sh-spot__badge" data-spot-badge>F1 2026 naptár</span>
+              <span class="sh-fchip sh-fchip--bl"><i>✦</i> Egyedi darab</span>
+              <div class="sh-spot__imgs">
+                <img class="sh-spot__img is-on" data-theme="F1 2026 naptár" src="assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-01.jpg" alt="Formula 1 2026-os versenynaptár, 3D nyomtatott piros-fekete fali tábla" decoding="async">
+                <img class="sh-spot__img" data-theme="Borosüveg-tartó" src="assets/termekvilag/hero_slider/layero-asset-0021.webp" alt="Szarvas formájú, kőhatású borosüveg-tartó szobor" decoding="async">
+                <img class="sh-spot__img" data-theme="Gyűrűk Ura" src="assets/kulcstartok/65-lord-of-the-rings-plakat-tabla/65-lord-of-the-rings-plakat-tabla-03.jpg" alt="Gyűrűk Ura plakát tábla, dombornyomott 3D falidísz" decoding="async">
+                <img class="sh-spot__img" data-theme="Logós kulcstartó" src="assets/termekvilag/hero_slider/layero-asset-0027.webp" alt="Egyedi logós kulcstartó, kétszínű 3D nyomtatással" decoding="async">
+              </div>
+            </div>
+            <div class="sh-spot__dots" role="tablist" aria-label="Termékek">
+              <button class="sh-spot__dot is-on" type="button" data-spot-dot="0" role="tab" aria-selected="true" aria-label="F1 2026 naptár"></button>
+              <button class="sh-spot__dot" type="button" data-spot-dot="1" role="tab" aria-selected="false" aria-label="Borosüveg-tartó"></button>
+              <button class="sh-spot__dot" type="button" data-spot-dot="2" role="tab" aria-selected="false" aria-label="Gyűrűk Ura"></button>
+              <button class="sh-spot__dot" type="button" data-spot-dot="3" role="tab" aria-selected="false" aria-label="Logós kulcstartó"></button>
+            </div>
+          </div>
         </div>
       </div>
     </article>
 
-    <article class="sh-slide">
-      <div class="sh-slide__media"><img src="assets/termekvilag/hero_slider/layero-asset-0010.png" alt=""></div>
-      <div class="sh-slide__copy">
-        <span class="sh-slide__eyebrow">Egyedi rendelés</span>
-        <h2>Van egy ötleted? <em>Legyártjuk.</em></h2>
-        <p>Küldj egy leírást vagy referenciaképet — megtervezzük és kinyomtatjuk.</p>
+    <!-- 3. slide — BORÍTÓ: teljes-képes lifestyle fotó, mozis fátyollal -->
+    <article class="sh-slide sh-slide--cover">
+      <div class="sh-slide__media"><img src="assets/termekvilag/hero_slider/layero-asset-0010.webp" alt="" width="1122" height="1402" decoding="async"></div>
+      <span class="sh-fchip sh-fchip--tr"><i>✦</i> Kézzel készült</span>
+      <div class="sh-cover-copy">
+        <span class="sh-slide__eyebrow">Új kollekció</span>
+        <h2>Az ajándék, amire <em>évekig</em> emlékeznek.</h2>
+        <p>Névre szóló lámpák és dekorációk — kézzel tervezve, 3D-ben nyomtatva, egyetlen példányban.</p>
         <div class="sh-slide__cta">
-          <a class="sh-btn sh-btn--white" href="termek.html?id=egyedi-otlet">Ajánlatot kérek</a>
+          <a class="sh-btn sh-btn--white" href="kategoria.html">Kollekció felfedezése</a>
+          <a class="sh-link--light" href="kviz.html">Segíts választani ›</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4. slide — SPLIT-PANEL: kétszínű háttér, bold tipó + termék -->
+    <article class="sh-slide sh-slide--mid sh-slide--split2">
+      <div class="shop-wrap sh-slide__inner sh-slide__inner--2col">
+        <div class="sh-hc sh-hc--xl">
+          <span class="sh-slide__eyebrow">Asztali lámpák</span>
+          <h2>A fény, ami a <em>nevedet</em> mondja.</h2>
+          <p>Egyedi tervezésű lámpák meleg LED-fénnyel — a te szövegeddel, a te dátumoddal, egyetlen példányban.</p>
+          <div class="sh-slide__cta">
+            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=lampak">Lámpák megnézése</a>
+            <a class="sh-link--light" href="kategoria.html">Összes termék ›</a>
+          </div>
+        </div>
+        <div class="sh-hframe">
+          <img src="assets/termekvilag/hero_slider/layero-asset-0016.webp" alt="Hullám asztali lámpa" decoding="async">
+          <span class="sh-fchip sh-fchip--tr"><i>✦</i> Névre szabható</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5. slide — ÜNNEPI KAMPÁNY: saját fenyő+arany háttér, akció-tag -->
+    <article class="sh-slide sh-slide--mid sh-slide--festive">
+      <div class="shop-wrap sh-slide__inner sh-slide__inner--2col">
+        <div class="sh-hc">
+          <span class="sh-promo-badge">Ünnepi kollekció</span>
+          <h2>Karácsonyi <em>fény</em>, névre szabva.</h2>
+          <p>Ünnepi lámpák és mécses-szettek — rendeld időben, hogy karácsonyra biztosan ott legyen a fa alatt.</p>
+          <div class="sh-slide__cta">
+            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=szezonalis">Ünnepi kollekció</a>
+            <a class="sh-link--light" href="kategoria.html">Összes termék ›</a>
+          </div>
+        </div>
+        <div class="sh-hframe">
+          <img src="assets/termekvilag/hero_slider/layero-asset-0017.webp" alt="Karácsonyi kedvenc-lámpa" decoding="async">
+          <span class="sh-hframe__tag">-20%</span>
+          <span class="sh-fchip sh-fchip--bl"><i>🎁</i> Ünnepi kedvenc</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 6. slide — AKCIÓ: bold meleg háttér, óriás szám + termék -->
+    <article class="sh-slide sh-slide--mid sh-slide--sale">
+      <div class="shop-wrap sh-slide__inner sh-slide__inner--2col">
+        <div class="sh-hc">
+          <span class="sh-slide__eyebrow">Szezonvég</span>
+          <h2 class="sh-sale-big"><em>-20%</em> minden lámpára</h2>
+          <p class="sh-sale-sub">Csak most: a teljes lámpa-kollekcióra, a pénztárnál automatikusan levonva.</p>
+          <div class="sh-slide__cta">
+            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=lampak">Irány a lámpák</a>
+            <a class="sh-link--light" href="kategoria.html">Összes termék ›</a>
+          </div>
+        </div>
+        <div class="sh-hframe">
+          <img src="assets/termekvilag/hero_slider/layero-asset-0009.webp" alt="Névre szóló szám-lámpa" decoding="async">
+          <span class="sh-sale-seal">AKCIÓ</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 7. slide — EDITORIAL STATEMENT: mély tinta, kép nélküli állítás -->
+    <article class="sh-slide sh-slide--mid sh-slide--ink">
+      <div class="shop-wrap sh-slide__inner">
+        <div class="sh-hc sh-hc--center sh-hc--hero">
+          <span class="sh-slide__eyebrow">Layero — személyre szabott 3D</span>
+          <h2>Nem ajándék. <em>Emlék</em>, amit kinyomtatunk.</h2>
+          <p>Küldd el az ötleted vagy egy referenciaképet — megtervezzük, és egyetlen példányban legyártjuk.</p>
+          <div class="sh-slide__cta">
+            <a class="sh-btn sh-btn--white" href="termek.html?id=egyedi-otlet">Ajánlatot kérek</a>
+            <a class="sh-link--light" href="kviz.html">Nem tudom, mit — kvíz ›</a>
+          </div>
         </div>
       </div>
     </article>
@@ -66,47 +174,46 @@
     <div class="sh-slider__dots" id="sh-slider-dots" role="tablist" aria-label="Slide választó"></div>
   </section>
 
+  <!-- ── KINEK KERESED? gyors belépők (őszinte alkalom-navigáció) ── -->
+  <nav class="sh-whofor" aria-label="Kinek keresel ajándékot?">
+    <div class="shop-wrap sh-whofor__inner">
+      <span class="sh-whofor__label">Kinek keresed?</span>
+      <a href="kategoria.html?cat=baba-gyerek"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9 10h.01M15 10h.01"/><path d="M8.8 14.2a4.2 4.2 0 0 0 6.4 0"/></svg>Gyereknek</a>
+      <a href="kategoria.html?cat=rajongoi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.6 2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8Z"/></svg>Rajongónak</a>
+      <a href="kategoria.html?cat=lampak"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.4 10.9c.6.5 1 1.2 1 2V17h4.8v-1.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z"/><path d="M10 20.5h4"/></svg>Neki — fénnyel</a>
+      <a href="kategoria.html?cat=dekoraciok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 11 8-7 8 7"/><path d="M6 9.5V20h12V9.5"/></svg>Otthonra</a>
+      <a href="kategoria.html?cat=szezonalis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 13h16M12 9v11"/><path d="M12 9c-4.5 0-5-2.5-4-3.8C9 4 11 4.5 12 9Zm0 0c4.5 0 5-2.5 4-3.8C15 4 13 4.5 12 9Z"/></svg>Ünnepre</a>
+      <a href="kategoria.html?cat=ceges"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5"/><path d="M3.5 12.5h17"/></svg>Cégeknek</a>
+      <a class="sh-whofor__quiz" href="kviz.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>Nem tudom — kvíz ›</a>
+    </div>
+  </nav>
+
   <!-- ── INFÓ-PONTOK: bizalmi sáv ────────────────────────────────── -->
   <div class="sh-infobar">
-    <article>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h8A1.5 1.5 0 0 1 14 6.5V16H3V6.5Z"/><path d="M14 9h3.6a1.5 1.5 0 0 1 1.3.8L21 13.5V16h-7V9Z"/><circle cx="6.5" cy="18" r="1.9"/><circle cx="17.5" cy="18" r="1.9"/></svg>
-      <div><strong>Ingyenes szállítás</strong>200 lej feletti rendelésre¹</div>
-    </article>
-    <article>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.6 12.4 11 5a1.8 1.8 0 0 1 1.3-.5H18a1.5 1.5 0 0 1 1.5 1.5v5.7a1.8 1.8 0 0 1-.5 1.3l-7.4 7.4a1.8 1.8 0 0 1-2.5 0l-5-5a1.8 1.8 0 0 1 0-2.5Z"/><circle cx="15.3" cy="8.7" r="1.15" fill="currentColor" stroke="none"/></svg>
-      <div><strong>Már 50 lejtől</strong>alacsony minimális rendelés²</div>
-    </article>
-    <article>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>
-      <div><strong>Gyors gyártás</strong>5–10 munkanap alatt</div>
-    </article>
-    <article>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20.5A7.5 7.5 0 0 1 3.5 13C3.5 7.5 8 3.5 20.5 3.5c0 8.5-4.5 12.5-9.5 12.5Z"/><path d="M3.5 20.5c3-4.5 6.5-7 11-8"/></svg>
-      <div><strong>Környezetbarát</strong>PLA + napelemes gyártás³</div>
-    </article>
+    <div class="shop-wrap sh-infobar__inner">
+      <article>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h8A1.5 1.5 0 0 1 14 6.5V16H3V6.5Z"/><path d="M14 9h3.6a1.5 1.5 0 0 1 1.3.8L21 13.5V16h-7V9Z"/><circle cx="6.5" cy="18" r="1.9"/><circle cx="17.5" cy="18" r="1.9"/></svg>
+        <div><strong>Ingyenes szállítás</strong>200 lej feletti rendelésre¹</div>
+      </article>
+      <article class="if-gold">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.6 12.4 11 5a1.8 1.8 0 0 1 1.3-.5H18a1.5 1.5 0 0 1 1.5 1.5v5.7a1.8 1.8 0 0 1-.5 1.3l-7.4 7.4a1.8 1.8 0 0 1-2.5 0l-5-5a1.8 1.8 0 0 1 0-2.5Z"/><circle cx="15.3" cy="8.7" r="1.15" fill="currentColor" stroke="none"/></svg>
+        <div><strong>Már 50 lejtől</strong>alacsony minimális rendelés²</div>
+      </article>
+      <article class="if-coral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>
+        <div><strong>Gyors gyártás</strong>5–10 munkanap alatt</div>
+      </article>
+      <article class="if-eco">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20.5A7.5 7.5 0 0 1 3.5 13C3.5 7.5 8 3.5 20.5 3.5c0 8.5-4.5 12.5-9.5 12.5Z"/><path d="M3.5 20.5c3-4.5 6.5-7 11-8"/></svg>
+        <div><strong>Környezetbarát</strong>PLA + napelemes gyártás³</div>
+      </article>
+      <article class="if-ink">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><strong>Helyi gyártás</strong>Szatmárnémetiben készül</div>
+      </article>
+    </div>
   </div>
 
-  <!-- ── MÁRKA-MARQUEE: futó értéksor ────────────────────────────── -->
-  <div class="sh-marquee">
-    <div class="sh-marquee__track">
-      <span>Névre szóló</span><i aria-hidden="true">✦</i>
-      <span>Egyetlen példány a világon</span><i aria-hidden="true">✦</i>
-      <span>PLA biopolimer</span><i aria-hidden="true">✦</i>
-      <span>Napelemes műhely</span><i aria-hidden="true">✦</i>
-      <span>5–10 nap alatt nálad</span><i aria-hidden="true">✦</i>
-      <span>2 év jótállás</span><i aria-hidden="true">✦</i>
-      <span>4.9★ vásárlói élmény</span><i aria-hidden="true">✦</i>
-    </div>
-    <div class="sh-marquee__track" aria-hidden="true">
-      <span>Névre szóló</span><i>✦</i>
-      <span>Egyetlen példány a világon</span><i>✦</i>
-      <span>PLA biopolimer</span><i>✦</i>
-      <span>Napelemes műhely</span><i>✦</i>
-      <span>5–10 nap alatt nálad</span><i>✦</i>
-      <span>2 év jótállás</span><i>✦</i>
-      <span>4.9★ vásárlói élmény</span><i>✦</i>
-    </div>
-  </div>
 
   <!-- ── KATEGÓRIÁK: képes kártyák ───────────────────────────────── -->
   <section class="sh-band sh-band--tight" id="kategoriak">
@@ -117,6 +224,18 @@
         <a class="sh-link" href="kategoria.html">Összes termék ›</a>
       </div>
       <div class="sh-cats" id="sh-home-cats"></div>
+    </div>
+  </section>
+
+  <!-- ── NÉPSZERŰ TERMÉKEK ───────────────────────────────────────── -->
+  <section class="sh-band sh-band--tight sh-band--gray">
+    <div class="shop-wrap">
+      <div class="sh-section-hd">
+        <span class="sh-label sh-kicker">Bestsellerek</span>
+        <h2 class="sh-h2">Népszerű termékek. <span>Amit a legtöbben visznek.</span></h2>
+        <a class="sh-link" href="kategoria.html">Mind ›</a>
+      </div>
+      <div class="sh-prod-grid" id="sh-home-popular"></div>
     </div>
   </section>
 
@@ -137,8 +256,8 @@
         </article>
         <article class="sh-reveal">
           <span class="sh-flow__num">2</span>
-          <h3>Digitális előnézetet kapsz</h3>
-          <p>Megmutatjuk a tervet, és addig igazítjuk, amíg jóvá nem hagyod. Csak utána nyomtatunk.</p>
+          <h3>Egyeztetjük a részleteket</h3>
+          <p>E-mailben pontosítjuk a szöveget, a színt és a méretet — csak a jóváhagyásod után nyomtatunk.</p>
           <span class="sh-flow__ghost" aria-hidden="true">2</span>
         </article>
         <article class="sh-reveal">
@@ -150,38 +269,84 @@
       </div>
     </div>
   </section>
-  <!-- ── NÉPSZERŰ TERMÉKEK ───────────────────────────────────────── -->
-  <section class="sh-band sh-band--tight sh-band--gray">
-    <div class="shop-wrap">
-      <div class="sh-section-hd">
-        <span class="sh-label sh-kicker">Bestsellerek</span>
-        <h2 class="sh-h2">Népszerű termékek. <span>Amit a legtöbben visznek.</span></h2>
-        <a class="sh-link" href="kategoria.html">Mind ›</a>
-      </div>
-      <div class="sh-prod-grid" id="sh-home-popular"></div>
-    </div>
-  </section>
-
-  <!-- ── AJÁNDÉKKERESŐ KVÍZ CTA ─────────────────────────────────── -->
-  <section class="sh-band sh-band--tight">
-    <div class="shop-wrap">
-      <a class="sh-quizcta" href="kviz.html">
-        <div class="sh-quizcta__ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9.5"/></svg>
-        </div>
-        <div class="sh-quizcta__copy">
-          <span class="sh-quizcta__eyebrow">Nem tudod, mit válassz?</span>
-          <h2>Ajándékkereső — 4 kérdés, kész ötlet.</h2>
-          <p>Mondd el, kinek és milyen alkalomra keresel, és megmutatjuk, melyik darab illik hozzá a legjobban.</p>
-        </div>
-        <span class="sh-quizcta__btn">Kitöltöm ›</span>
-      </a>
-    </div>
-  </section>
 
   <!-- ── SPOTLIGHT: kiemelt termék ───────────────────────────────── -->
   <section class="sh-band sh-band--dark">
     <div class="sh-spotlight" id="sh-home-spotlight"></div>
+  </section>
+
+  <!-- ── VÉLEMÉNYEK ──────────────────────────────────────────────── -->
+  <section class="sh-band sh-band--tight sh-band--gray">
+    <div class="shop-wrap">
+      <div class="sh-section-hd">
+        <span class="sh-label sh-kicker">Vélemények</span>
+        <h2 class="sh-h2">Vásárlóink mondták. <span><b data-count="1000" data-suffix="+" style="color:var(--accent);font-weight:700">0</b> elégedett vásárló.</span></h2>
+      </div>
+      <div class="sh-reviews">
+        <article class="sh-review sh-reveal">
+          <div class="sh-review__stars" aria-label="5 csillag">★★★★★</div>
+          <p>„A fiam nevével készült dínós lámpa azóta is minden este világít. A minőség sokkal jobb, mint amire számítottam."</p>
+          <footer><span class="sh-review__avatar" aria-hidden="true">KE</span><div><strong>Kiss Emese</strong><span>Dínós henger-lámpa</span></div></footer>
+        </article>
+        <article class="sh-review sh-reveal">
+          <div class="sh-review__stars" aria-label="5 csillag">★★★★★</div>
+          <p>„Céges QR-displayt rendeltünk az étterembe — két hét alatt megduplázódtak a Google-értékeléseink."</p>
+          <footer><span class="sh-review__avatar" aria-hidden="true">BT</span><div><strong>Balogh Tamás</strong><span>QR + NFC display</span></div></footer>
+        </article>
+        <article class="sh-review sh-reveal">
+          <div class="sh-review__stars" aria-label="5 csillag">★★★★★</div>
+          <p>„Egyedi ötlettel kerestem meg őket, és pontosan azt kaptam, amit elképzeltem. Minden lépés profi volt."</p>
+          <footer><span class="sh-review__avatar" aria-hidden="true">SN</span><div><strong>Szabó Nóra</strong><span>Egyedi rendelés</span></div></footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MIÉRT MINKET VÁLASSZ? ──────────────────────────────────── -->
+  <section class="sh-band sh-band--tight">
+    <div class="shop-wrap">
+      <div class="sh-section-hd">
+        <span class="sh-label sh-kicker">Miért mi</span>
+        <h2 class="sh-h2">Miért a Layero? <span>Nem egy újabb tárgy a polcról.</span></h2>
+      </div>
+      <p class="sh-whyus-lead">Egy Layero ajándékot nem lehet lecserélni a boltban kapható következőre. Névre szól, <b>a te ötletedből születik</b>, és pontosan olyan lesz, amilyennek elképzelted — olyan darab, amit máshol meg sem találsz, mert egyszerűen <b>nem is létezik</b>. Nem csak egy tárgy: egy üzenet, hogy időt és gondolatot szántál rá.</p>
+      <div class="sh-whycmp sh-reveal">
+        <div class="sh-whycmp__row sh-whycmp__row--head">
+          <span></span>
+          <span class="sh-whycmp__us">Layero ajándék</span>
+          <span class="sh-whycmp__them">Hagyományos ajándék</span>
+        </div>
+        <div class="sh-whycmp__row">
+          <span class="sh-whycmp__feat">Névre, feliratra személyre szabva</span>
+          <span class="sh-whycmp__us"><i class="sh-whycmp__ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 5 5L19 7"/></svg></i></span>
+          <span class="sh-whycmp__them">gyári — mindenkinek ugyanaz</span>
+        </div>
+        <div class="sh-whycmp__row">
+          <span class="sh-whycmp__feat">Egyetlen példány — nincs belőle még egy</span>
+          <span class="sh-whycmp__us"><i class="sh-whycmp__ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 5 5L19 7"/></svg></i></span>
+          <span class="sh-whycmp__them">tömeggyártott</span>
+        </div>
+        <div class="sh-whycmp__row">
+          <span class="sh-whycmp__feat">Romániában, Szatmárnémetiben gyártva</span>
+          <span class="sh-whycmp__us"><i class="sh-whycmp__ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 5 5L19 7"/></svg></i></span>
+          <span class="sh-whycmp__them">import — messziről szállítva</span>
+        </div>
+        <div class="sh-whycmp__row">
+          <span class="sh-whycmp__feat">Fotó vagy referencia alapján is elkészítjük</span>
+          <span class="sh-whycmp__us"><i class="sh-whycmp__ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 5 5L19 7"/></svg></i></span>
+          <span class="sh-whycmp__them">nem megoldható</span>
+        </div>
+        <div class="sh-whycmp__row">
+          <span class="sh-whycmp__feat">Évek múlva is megvan — nem hervad, nem fogy el</span>
+          <span class="sh-whycmp__us"><i class="sh-whycmp__ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 5 5L19 7"/></svg></i></span>
+          <span class="sh-whycmp__them">elhervad / elfogy</span>
+        </div>
+      </div>
+      <div class="sh-whyus-foot">
+        <span>Nem tudod, melyik illik hozzá a legjobban?</span>
+        <a class="sh-btn sh-btn--primary" href="kviz.html">Ajándékkereső kvíz ›</a>
+      </div>
+    </div>
   </section>
 
   <!-- ── ÚJDONSÁGOK ──────────────────────────────────────────────── -->
@@ -199,104 +364,44 @@
     </div>
   </section>
 
-  <!-- ── MIÉRT MINKET VÁLASSZ? ──────────────────────────────────── -->
-  <section class="sh-band sh-band--tight">
+  <!-- ── LAYERO-MOZAIK: a márkanév termékfotó-csempékből kirakva ──── -->
+  <section class="sh-band sh-band--dark sh-band--tight sh-mozaik" aria-labelledby="sh-mozaik-title" hidden>
     <div class="shop-wrap">
       <div class="sh-section-hd">
-        <span class="sh-label sh-kicker">Miért mi</span>
-        <h2 class="sh-h2">Miért a Layero? <span>Nem egy újabb tárgy a polcról.</span></h2>
+        <span class="sh-label sh-kicker">Munkáink</span>
+        <h2 class="sh-h2" id="sh-mozaik-title">Egy név. <span>Sok-sok történet.</span></h2>
       </div>
-      <p class="sh-whyus-lead">Egy Layero ajándékot nem lehet lecserélni a boltban kapható következőre. Névre szól, <b>a te ötletedből születik</b>, és pontosan olyan lesz, amilyennek elképzelted — olyan darab, amit máshol meg sem találsz, mert egyszerűen <b>nem is létezik</b>. Nem csak egy tárgy: egy üzenet, hogy időt és gondolatot szántál rá.</p>
-      <div class="sh-whyus">
-        <div class="sh-whyus__row sh-whyus__row--head">
-          <span></span>
-          <span class="sh-whyus__us">Layero ajándék</span>
-          <span class="sh-whyus__them">Hagyományos ajándék</span>
-        </div>
-        <div class="sh-whyus__row"><span>Névre, feliratra személyre szabva</span><b class="ok">✓</b><b class="no">gyári — mindenkinek ugyanaz</b></div>
-        <div class="sh-whyus__row"><span>A te ötletedből, a te igényeidre szabva</span><b class="ok">✓</b><b class="no">fix, kész kínálat</b></div>
-        <div class="sh-whyus__row"><span>Egyetlen példány — nincs belőle még egy</span><b class="ok">✓</b><b class="no">tömeggyártott</b></div>
-        <div class="sh-whyus__row"><span>Máshol meg sem találod — mert nem is létezik</span><b class="ok">✓</b><b class="no">kapható bárhol</b></div>
-        <div class="sh-whyus__row"><span>Digitális előnézet, mielőtt elkészül</span><b class="ok">✓</b><b class="no">amit látsz, azt viszed</b></div>
-        <div class="sh-whyus__row"><span>Fotó vagy referencia alapján is elkészítjük</span><b class="ok">✓</b><b class="no">nem megoldható</b></div>
-        <div class="sh-whyus__row"><span>Évek múlva is megvan — nem hervad, nem fogy el</span><b class="ok">✓</b><b class="no">elhervad / elfogy</b></div>
-        <div class="sh-whyus__row"><span>Azt üzeni: „rád gondoltam, időt szántam rád”</span><b class="ok">✓</b><b class="no">„csak egy tárgy”</b></div>
-        <div class="sh-whyus__row"><span>Emberi, magyar nyelvű segítség a tervezéshez</span><b class="ok">✓</b><b class="no">jobb esetben eladó</b></div>
-      </div>
-      <div class="sh-whyus-foot">
-        <span>Nem tudod, melyik illik hozzá a legjobban?</span>
-        <a class="sh-btn sh-btn--primary" href="kviz.html">Ajándékkereső kvíz ›</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── VÉLEMÉNYEK ──────────────────────────────────────────────── -->
-  <section class="sh-band sh-band--tight sh-band--gray">
-    <div class="shop-wrap">
-      <div class="sh-section-hd">
-        <span class="sh-label sh-kicker">Vélemények</span>
-        <h2 class="sh-h2">Vásárlóink mondták. <span><b data-count="1000" data-suffix="+" style="color:var(--accent);font-weight:700">0</b> elégedett vásárló.</span></h2>
-      </div>
-      <div class="sh-reviews">
-        <article class="sh-review sh-reveal">
-          <div class="sh-review__stars" aria-label="5 csillag">★★★★★</div>
-          <p>„A fiam nevével készült dínós lámpa azóta is minden este világít. A minőség sokkal jobb, mint amire számítottam."</p>
-          <footer><strong>Kiss Emese</strong><span>Dínós henger-lámpa</span></footer>
-        </article>
-        <article class="sh-review sh-reveal">
-          <div class="sh-review__stars" aria-label="5 csillag">★★★★★</div>
-          <p>„Céges QR-displayt rendeltünk az étterembe — két hét alatt megduplázódtak a Google-értékeléseink."</p>
-          <footer><strong>Balogh Tamás</strong><span>QR + NFC display</span></footer>
-        </article>
-        <article class="sh-review sh-reveal">
-          <div class="sh-review__stars" aria-label="5 csillag">★★★★★</div>
-          <p>„Egyedi ötlettel kerestem meg őket, és pontosan azt kaptam, amit elképzeltem. Minden lépés profi volt."</p>
-          <footer><strong>Szabó Nóra</strong><span>Egyedi rendelés</span></footer>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── GALÉRIA-CSÍK: a műhelyből ───────────────────────────────── -->
-  <section class="sh-gallery-strip" aria-label="Válogatás a munkáinkból">
-    <a href="kategoria.html?cat=lampak"><img src="assets/termekvilag/hero_slider/layero-asset-0009.png" alt="Névre szóló szám-lámpa" loading="lazy"></a>
-    <a href="kategoria.html?cat=lampak"><img src="assets/termekvilag/hero_slider/layero-asset-0011.png" alt="Dínós henger-lámpa" loading="lazy"></a>
-    <a href="kategoria.html?cat=rajongoi"><img src="assets/termekvilag/hero_slider/layero-asset-0012.png" alt="Fan-art világító logó" loading="lazy"></a>
-    <a href="kategoria.html?cat=dekoraciok"><img src="assets/termekvilag/hero_slider/layero-asset-0020.png" alt="Tulipán üvegcső-váza" loading="lazy"></a>
-    <a href="kategoria.html?cat=ceges"><img src="assets/termekvilag/hero_slider/layero-asset-0022.png" alt="QR + NFC display" loading="lazy"></a>
-    <a href="kategoria.html?cat=kulcstartok"><img src="assets/termekvilag/hero_slider/layero-asset-0027.png" alt="Logós kulcstartó" loading="lazy"></a>
-  </section>
-
-  <!-- ── EGYEDI RENDELÉS CTA ─────────────────────────────────────── -->
-  <section class="sh-cta-band">
-    <div class="sh-cta-band__copy">
-      <h2>Nem találod, amit keresel? Legyártjuk neked.</h2>
-      <p>Egyedi tervezés és gyártás — leírás vagy referenciakép alapján, ajánlatkéréstől a kész darabig.</p>
-      <a class="sh-btn sh-btn--white" href="termek.html?id=egyedi-otlet">Egyedi rendelést indítok</a>
-    </div>
-  </section>
-
-  <!-- ── MIÉRT A LAYERO SHOP: bizalom-ikonsor ────────────────────── -->
-  <section class="sh-band sh-band--tight">
-    <div class="shop-wrap">
-      <h2 class="sh-h2 sh-whyshop__title">Miért a Layero Shopban vásárolj?</h2>
-      <div class="sh-whyshop">
-        <article class="sh-reveal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5 7 11l5-6 5 6 3.5-2.5-1.6 9a1.5 1.5 0 0 1-1.48 1.24H6.58A1.5 1.5 0 0 1 5.1 17.5L3.5 8.5Z"/><path d="m9.5 14.5 1.8 1.8 3.2-3.6"/></svg>
-          <p><b>Exkluzív ajánlatok</b> a hivatalos Layero shopban</p>
-        </article>
-        <article class="sh-reveal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.6 8-10V5l-8-3-8 3v7c0 6.4 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
-          <p><b>100%</b> biztonságos fizetés</p>
-        </article>
-        <article class="sh-reveal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M3.5 13a9 9 0 1 0 2.2-8.3L3 7"/><path d="M12 8.5V12l2.5 2"/></svg>
-          <p><b>2 év jótállás</b> minden termékre</p>
-        </article>
-        <article class="sh-reveal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v3.5A1.5 1.5 0 0 0 5.5 18H7v-6H5.5A1.5 1.5 0 0 0 4 13.5"/><path d="M20 13v3.5a1.5 1.5 0 0 1-1.5 1.5H17v-6h1.5a1.5 1.5 0 0 1 1.5 1.5"/><path d="M18 18v1a2 2 0 0 1-2 2h-3"/></svg>
-          <p><b>Emberi ügyfélszolgálat</b> — válasz 24 órán belül</p>
-        </article>
+      <a class="sh-mozaik__stage sh-reveal" href="kategoria.html" aria-label="LAYERO — a felirat az elkészült munkáink fotóiból kirakva; katt az összes termékhez">
+        <svg viewBox="0 0 1207 298" role="img" aria-hidden="true" focusable="false">
+          <defs>
+            <g id="sh-moz-tiles">
+              <image href="assets/termekvilag/mozaik/m01.webp" x="0" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m07.webp" x="101" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m17.webp" x="202" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m10.webp" x="303" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m22.webp" x="404" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m04.webp" x="505" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m13.webp" x="606" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m19.webp" x="707" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m02.webp" x="808" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m15.webp" x="909" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m23.webp" x="1010" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m06.webp" x="1111" y="0" width="96" height="96" preserveAspectRatio="xMidYMid slice"/>
+              <image href="assets/termekvilag/mozaik/m11.webp" x="0" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m20.webp" x="101" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m05.webp" x="202" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m14.webp" x="303" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m08.webp" x="404" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m24.webp" x="505" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m16.webp" x="606" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m03.webp" x="707" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m21.webp" x="808" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m09.webp" x="909" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m18.webp" x="1010" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m12.webp" x="1111" y="101" width="96" height="96" preserveAspectRatio="xMidYMid slice"/>
+              <image href="assets/termekvilag/mozaik/m19.webp" x="0" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m02.webp" x="101" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m13.webp" x="202" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m06.webp" x="303" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m17.webp" x="404" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m01.webp" x="505" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m10.webp" x="606" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m22.webp" x="707" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m04.webp" x="808" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m15.webp" x="909" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m07.webp" x="1010" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/><image href="assets/termekvilag/mozaik/m20.webp" x="1111" y="202" width="96" height="96" preserveAspectRatio="xMidYMid slice"/>
+            </g>
+            <mask id="sh-moz-word" maskUnits="userSpaceOnUse" x="0" y="0" width="1207" height="298">
+              <rect x="0" y="0" width="1207" height="298" fill="#000"/>
+              <text x="603" y="149" text-anchor="middle" dominant-baseline="central" fill="#fff"
+                    font-family="Sora, Inter, sans-serif" font-weight="800" font-size="252"
+                    textLength="1180" lengthAdjust="spacingAndGlyphs">LAYERO</text>
+            </mask>
+          </defs>
+          <use href="#sh-moz-tiles" opacity="0.07"/>
+          <g mask="url(#sh-moz-word)"><use href="#sh-moz-tiles"/></g>
+        </svg>
+      </a>
+      <p class="sh-mozaik__lead">Minden csempe egy elkészült darab — névvel, történettel, egyetlen példányban.</p>
+      <div class="sh-mozaik__ctas">
+        <a class="sh-mozcta sh-reveal" href="kviz.html">
+          <b>Nem tudod, mit válassz?</b>
+          <span>Ajándékkereső kvíz — 4 kérdés, kész ötlet.</span>
+          <i>Kitöltöm ›</i>
+        </a>
+        <a class="sh-mozcta sh-reveal" href="termek.html?id=egyedi-otlet">
+          <b>Van saját ötleted?</b>
+          <span>Egyedi rendelés — leírás vagy referenciakép alapján.</span>
+          <i>Egyedi rendelést indítok ›</i>
+        </a>
       </div>
     </div>
   </section>
@@ -312,7 +417,7 @@
             <input type="email" required placeholder="E-mail címed" aria-label="E-mail cím">
             <button class="sh-btn sh-btn--dark" type="submit">Feliratkozom</button>
           </form>
-          <small class="sh-nlbanner__note">Havonta egyszer írunk — új termékek és szezonális kedvezmények. Bármikor leiratkozhatsz. Részletek az <a href="../adatvedelem.html">adatvédelmi tájékoztatóban</a>. (Demo űrlap.)</small>
+          <small class="sh-nlbanner__note">Havonta egyszer írunk — új termékek és szezonális kedvezmények. Bármikor leiratkozhatsz. Részletek az <a href="adatvedelem.html">adatvédelmi tájékoztatóban</a>. (Demo űrlap.)</small>
         </div>
         <figure class="sh-nlbanner__art" aria-hidden="true">
           <svg viewBox="0 0 440 320" xmlns="http://www.w3.org/2000/svg">
@@ -365,7 +470,7 @@
     <p><sup>3</sup> A PLA növényi (kukoricakeményítő) alapú, ipari komposztálásban lebomló anyag. A műhelyünk áramát napelemek adják, így a gyártás CO₂-kibocsátása közel nulla.</p>
   </div>
 
-  <script src="shop-data.js"></script>
-  <script src="shop.js"></script>
+  <script src="shop-data.js?v=20260716c"></script>
+  <script src="shop.js?v=20260716c"></script>
 </body>
 </html>

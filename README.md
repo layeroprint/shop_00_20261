@@ -6,29 +6,38 @@ A cél: a design, a widgetek, a hero slider, a kategóriák és a Layero élmén
 
 ## Aktuális shop szinkron
 
+A statikus tükör (css/js/data/oldalak/képek) egyetlen paranccsal frissíthető a
+lokális shopból:
+
+```text
+node tools/sync-static.js
+```
+
 A plugin jelenleg a statikus shop alábbi tartalmaira épül:
 
-- 3 főoldali hero slide
-- 6 kategória: `lampak`, `kulcstartok`, `dekoraciok`, `ceges`, `rajongoi`, `egyedi`
-- 20 Layero termék demó/fallback adata
+- a teljes lokális `shop.css` / `shop.js` / `shop-data.js` tükre (`assets/css/layero-static-shop.css`, `assets/js/layero-static-shop.js` + WP URL-adapter, `assets/js/layero-static-data.js`)
+- 14 statikus oldal tükre az `assets/static` alatt (főoldal, kategória, termék, rólunk, GYIK, kapcsolat, kvíz, kosár, pénztár, fiók, kedvencek, 404, ÁSZF, adatvédelem)
+- 8 kategória: `lampak`, `kulcstartok`, `dekoraciok`, `szezonalis`, `rajongoi`, `baba-gyerek`, `ceges`, `egyedi`
+- 25 Layero termék demó/fallback adata
 - népszerű termék sorrend és újdonság válogatás
-- `karacsonyi-lampa` mint hónap terméke fallback
-- shopos trust bar, érték-marquee, folyamatlépések, ajándékkereső CTA, összehasonlító blokk, vélemények, galéria, egyedi rendelés CTA, shop-bizalom, hírlevél és lábjegyzetek
-- demo képek a pluginben: `assets/demo`
+- kiemelt-termék rotáció fallback: `karacsonyi-lampa` (A hónap terméke) + `szam-lampa-nevvel` + `jurassic-lampa` + `holdfeny-lampa`
+- „Kinek keresed?" ikonos pillek, 5 pontos duotone bizalmi sáv (Helyi gyártás — Szatmárnémetiben készül ponttal), érték-marquee, folyamatlépések, ajándékkereső CTA, letisztult összehasonlító kártya (kiemelt Layero-oszloppal), vélemények, galéria, egyedi rendelés CTA, shop-bizalom, hírlevél és lábjegyzetek
+- a hivatkozott demo képek a pluginben: `assets/demo`
 
 ## Elementor widgetek
 
 Az Elementor szerkesztőben a `Layero Shop` kategória alatt:
 
 - `Layero főoldali slider`
+- `Layero „Kinek keresed?" sáv`
 - `Layero bizalmi sáv`
 - `Layero érték-marquee`
 - `Layero kategóriák`
 - `Layero folyamat lépések`
 - `Layero termékrács`
 - `Layero ajándékkereső CTA`
-- `Layero kiemelt termék`
-- `Layero termék-körhinta`
+- `Layero kiemelt termék` (több terméknél auto-váltó slider, származás-chippel)
+- `Layero termék-körhinta` (folyamatos marquee-görgetéssel)
 - `Layero összehasonlító blokk`
 - `Layero vélemények`
 - `Layero galéria csík`
@@ -36,6 +45,7 @@ Az Elementor szerkesztőben a `Layero Shop` kategória alatt:
 - `Layero Shop bizalom ikonok`
 - `Layero hírlevél banner`
 - `Layero lábjegyzetek`
+- `Layero statikus oldal` (a lokális oldalak 1:1 tükre)
 
 ## WooCommerce integráció
 

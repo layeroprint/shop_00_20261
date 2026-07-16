@@ -8,18 +8,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap">
-  <link rel="stylesheet" href="shop.css">
+  <link rel="stylesheet" href="shop.css?v=20260716c">
 </head>
 <body data-page="kategoria">
 
-  <section class="sh-section" style="padding-top: clamp(32px, 5vw, 56px);">
+  <!-- kategória-fejléc: éjkék sáv, halvány glow-val -->
+  <header class="sh-cathead sh-band--dark">
+    <div class="shop-wrap sh-cathead__inner">
+      <span class="sh-label sh-kicker" id="sh-cat-kicker">Kollekció</span>
+      <h1 class="sh-h2" id="sh-cat-title">Összes termék</h1>
+      <p class="sh-cathead__lead" id="sh-cat-lead"></p>
+      <p class="sh-cathead__count" id="sh-cat-count">—</p>
+    </div>
+  </header>
+
+  <section class="sh-section" style="padding-top: clamp(18px, 3vw, 30px);">
     <div class="shop-wrap">
-      <div class="sh-section-hd">
-        <div>
-          <h2 class="sh-h2" id="sh-cat-title">Összes termék</h2>
-          <p id="sh-cat-count">—</p>
-        </div>
-      </div>
       <div class="sh-filterbar">
         <button class="sh-filter-toggle" id="sh-filter-toggle" type="button" aria-controls="sh-filters" aria-expanded="false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
@@ -46,7 +50,7 @@
   </section>
   <div class="sh-filters-ov" id="sh-filters-ov" aria-hidden="true"></div>
 
-  <script src="shop-data.js"></script>
-  <script src="shop.js"></script>
+  <script src="shop-data.js?v=20260716c"></script>
+  <script src="shop.js?v=20260716c"></script>
 </body>
 </html>

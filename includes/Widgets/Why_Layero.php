@@ -60,22 +60,22 @@ class Why_Layero extends Base_Widget {
 			'label' => __('Layero oszlop szín', 'layero-shop-ui'),
 			'type' => Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .lyr-why__row .is-good' => 'color: {{VALUE}};',
-				'{{WRAPPER}} .lyr-why__row .is-good svg' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .sh-whycmp__ok' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .sh-whycmp__row--head .sh-whycmp__us' => 'color: {{VALUE}};',
 			),
 		));
 		$this->add_control('muted_color', array(
 			'label' => __('Hagyományos oszlop szín', 'layero-shop-ui'),
 			'type' => Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .lyr-why__row .is-muted' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .sh-whycmp__them' => 'color: {{VALUE}};',
 			),
 		));
 		$this->add_control('row_border_color', array(
 			'label' => __('Sor szegély', 'layero-shop-ui'),
 			'type' => Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .lyr-why__row' => 'border-color: {{VALUE}};',
+				'{{WRAPPER}} .sh-whycmp__row + .sh-whycmp__row' => 'border-color: {{VALUE}};',
 			),
 		));
 		$this->end_controls_section();
@@ -91,15 +91,17 @@ class Why_Layero extends Base_Widget {
 			<?php if (! empty($settings['lead'])) : ?>
 				<p class="sh-whyus-lead lyr-why__lead"><?php echo wp_kses($settings['lead'], array('b' => array(), 'strong' => array(), 'em' => array())); ?></p>
 			<?php endif; ?>
-			<div class="sh-whyus lyr-why__table">
-				<div class="sh-whyus__row sh-whyus__row--head lyr-why__row lyr-why__row--head">
-					<span></span><b><?php esc_html_e('Layero ajándék', 'layero-shop-ui'); ?></b><b><?php esc_html_e('Hagyományos ajándék', 'layero-shop-ui'); ?></b>
+			<div class="sh-whycmp sh-reveal lyr-why__table">
+				<div class="sh-whycmp__row sh-whycmp__row--head">
+					<span></span>
+					<span class="sh-whycmp__us"><?php esc_html_e('Layero ajándék', 'layero-shop-ui'); ?></span>
+					<span class="sh-whycmp__them"><?php esc_html_e('Hagyományos ajándék', 'layero-shop-ui'); ?></span>
 				</div>
 				<?php foreach ($rows as $row) : ?>
-					<div class="sh-whyus__row lyr-why__row">
-						<span><?php echo esc_html($row['feature'] ?? ''); ?></span>
-						<b class="ok is-good"><?php echo Helpers::icon('check'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html($row['layero'] ?? ''); ?></b>
-						<b class="no is-muted"><?php echo esc_html($row['classic'] ?? ''); ?></b>
+					<div class="sh-whycmp__row">
+						<span class="sh-whycmp__feat"><?php echo esc_html($row['feature'] ?? ''); ?></span>
+						<span class="sh-whycmp__us"><i class="sh-whycmp__ok" aria-hidden="true"><?php echo Helpers::icon('check'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></i></span>
+						<span class="sh-whycmp__them"><?php echo esc_html($row['classic'] ?? ''); ?></span>
 					</div>
 				<?php endforeach; ?>
 			</div>

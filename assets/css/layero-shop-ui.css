@@ -1761,3 +1761,26 @@
 .lyr-gallery-strip a img {
 	transition: transform 0.4s ease;
 }
+
+/* ── Widget-felülírások (a statikus shop.css az autoritatív alap) ──── */
+
+/* bizalmi sáv: az oszlopszám a widget elemszámát követi (a statikus css
+   fixen 5 oszlopos; itt a data-attribútumból jövő CSS-változó dönt) */
+.sh-infobar .sh-infobar__inner {
+	grid-template-columns: repeat(var(--lyr-infobar-cols, 5), 1fr);
+}
+@media (max-width: 900px) {
+	.sh-infobar .sh-infobar__inner {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+@media (max-width: 480px) {
+	.sh-infobar .sh-infobar__inner {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* kiemelt-termék slider: a copy-swap adat-scriptje sose látszódjon */
+[data-lyr-spotlight-items] {
+	display: none;
+}

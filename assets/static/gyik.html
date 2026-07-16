@@ -9,131 +9,196 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap">
-  <link rel="stylesheet" href="shop.css">
+  <link rel="stylesheet" href="shop.css?v=20260716c">
 </head>
 <body data-page="gyik">
 
-  <section class="sh-page-hd">
+  <!-- ikon-sprite (egyszer definiálva, use-al hivatkozva) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="ic-rendeles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20h8"/><path d="M16.5 3.6a2.05 2.05 0 0 1 2.9 2.9L8.1 18.9l-4 1 1-4Z"/>
+      </symbol>
+      <symbol id="ic-szallitas" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 6.5h10.5v9H3z"/><path d="M13.5 9.5H18l3 3v3h-7.5z"/><circle cx="7" cy="18" r="1.7"/><circle cx="17.5" cy="18" r="1.7"/>
+      </symbol>
+      <symbol id="ic-garancia" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3 5 5.8v5c0 4 3 6.6 7 8 4-1.4 7-4 7-8v-5L12 3Z"/><path d="m9 11.8 2 2 4-4"/>
+      </symbol>
+      <symbol id="ic-termek" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="M12 12 20 7.5M12 12v9M12 12 4 7.5"/>
+      </symbol>
+      <symbol id="ic-ceges" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="7.5" width="18" height="12.5" rx="2"/><path d="M8 7.5V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1.5"/><path d="M3 12.5h18"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <section class="sh-page-hd sh-page-hd--faq">
     <div class="shop-wrap">
       <nav class="sh-crumbs" aria-label="Morzsamenü">
         <a href="index.html">Shop</a><span aria-hidden="true">/</span><span>Gyakori kérdések</span>
       </nav>
       <h1>Gyakori kérdések</h1>
       <p>Összeszedtük a leggyakoribb kérdéseket a rendelésről, a személyre szabásról, a szállításról és a garanciáról. Ha nem találod a választ, <a href="kapcsolat.html">írj nekünk</a> — 24 órán belül válaszolunk.</p>
+
+      <form class="sh-faq-search" role="search" onsubmit="return false">
+        <svg class="sh-faq-search__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+        <input type="search" id="sh-faq-q" placeholder="Keress a kérdések között…" aria-label="Keresés a kérdések között" autocomplete="off">
+        <button type="button" class="sh-faq-search__clear" id="sh-faq-clear" hidden aria-label="Keresés törlése">✕</button>
+      </form>
     </div>
   </section>
-
-  <nav class="sh-faq-nav shop-wrap" aria-label="GYIK témák">
-    <a href="#rendeles">Rendelés &amp; személyre szabás</a>
-    <a href="#szallitas">Szállítás &amp; fizetés</a>
-    <a href="#visszakuldes">Visszaküldés &amp; garancia</a>
-    <a href="#termek">Termék &amp; anyag</a>
-    <a href="#ceges">Céges &amp; egyedi</a>
-  </nav>
 
   <section class="sh-band sh-band--tight">
-    <div class="shop-wrap sh-faq">
+    <div class="shop-wrap sh-faq-layout">
 
-      <div class="sh-faq__group" id="rendeles">
-        <h2 class="sh-h2">Rendelés és személyre szabás</h2>
-        <div class="sh-acc">
-          <details open><summary>Hogyan tudok személyre szabott terméket rendelni?</summary><div>
-            <p>Válaszd ki a terméket, add meg a személyre szabás részleteit (név, felirat, motívum), és tedd a kosárba. A rendelés után e-mailben egyeztetjük a pontos szövegeket és részleteket. Komplexebb daraboknál digitális előnézetet küldünk jóváhagyásra, és csak azután indítjuk a gyártást.</p>
-          </div></details>
-          <details><summary>Kérhetek digitális előnézetet gyártás előtt?</summary><div>
-            <p>Igen. Minden egyedi vagy összetettebb személyre szabásnál digitális előnézetet küldünk, amit jóvá kell hagynod a gyártás megkezdése előtt. A módosítási kör az árban van — addig igazítjuk, amíg pontosan az nem lesz, amit elképzeltél.</p>
-          </div></details>
-          <details><summary>Módosíthatom vagy lemondhatom a rendelésem?</summary><div>
-            <p>Amíg a gyártás nem indult el (jellemzően az előnézet jóváhagyásáig), a rendelés díjmentesen módosítható vagy lemondható. Írj a <a href="mailto:layeroprint@gmail.com">layeroprint@gmail.com</a> címre a rendelésszámoddal.</p>
-          </div></details>
-          <details><summary>Meddig kell megadnom a személyre szabás adatait?</summary><div>
-            <p>A rendelés után kapott visszaigazoló e-mailre válaszolva bármikor elküldheted. Minél előbb megkapjuk, annál hamarabb indul a gyártás — a feltüntetett gyártási idő az adatok véglegesítésétől számít.</p>
-          </div></details>
+      <!-- bal: ragadós téma-navigáció + segítség-kártya -->
+      <aside class="sh-faq-rail" aria-label="GYIK témák">
+        <nav class="sh-faq-rail__nav" id="sh-faq-rail">
+          <a href="#rendeles" class="is-active"><span class="sh-faq-rail__ic"><svg><use href="#ic-rendeles"/></svg></span>Rendelés &amp; személyre szabás</a>
+          <a href="#szallitas"><span class="sh-faq-rail__ic"><svg><use href="#ic-szallitas"/></svg></span>Szállítás &amp; fizetés</a>
+          <a href="#visszakuldes"><span class="sh-faq-rail__ic"><svg><use href="#ic-garancia"/></svg></span>Visszaküldés &amp; garancia</a>
+          <a href="#termek"><span class="sh-faq-rail__ic"><svg><use href="#ic-termek"/></svg></span>Termék &amp; anyag</a>
+          <a href="#ceges"><span class="sh-faq-rail__ic"><svg><use href="#ic-ceges"/></svg></span>Céges &amp; egyedi</a>
+        </nav>
+        <div class="sh-faq-help">
+          <strong>Nem találod a választ?</strong>
+          <p>Írj nekünk — 24 órán belül személyesen válaszolunk.</p>
+          <a class="sh-btn sh-btn--dark" href="kapcsolat.html">Kapcsolatfelvétel</a>
         </div>
+      </aside>
+
+      <!-- jobb: témacsoportok kártyás akkordeonnal -->
+      <div class="sh-faq-main">
+
+        <section class="sh-faq-group" id="rendeles">
+          <header class="sh-faq-group__hd">
+            <span class="sh-faq-group__ic"><svg><use href="#ic-rendeles"/></svg></span>
+            <h2>Rendelés és személyre szabás</h2>
+          </header>
+          <div class="sh-faq-acc">
+            <details class="sh-faq-item" open>
+              <summary><span>Hogyan tudok személyre szabott terméket rendelni?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Válaszd ki a terméket, add meg a személyre szabás részleteit (név, felirat, motívum), és tedd a kosárba. A rendelés után e-mailben egyeztetjük a pontos szövegeket és részleteket, és csak a jóváhagyásod után indítjuk a gyártást.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Módosíthatom vagy lemondhatom a rendelésem?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Amíg a gyártás nem indult el, a rendelés díjmentesen módosítható vagy lemondható. Írj a <a href="mailto:layeroprint@gmail.com">layeroprint@gmail.com</a> címre a rendelésszámoddal.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Meddig kell megadnom a személyre szabás adatait?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>A rendelés után kapott visszaigazoló e-mailre válaszolva bármikor elküldheted. Minél előbb megkapjuk, annál hamarabb indul a gyártás — a feltüntetett gyártási idő az adatok véglegesítésétől számít.</p></div>
+            </details>
+          </div>
+        </section>
+
+        <section class="sh-faq-group" id="szallitas">
+          <header class="sh-faq-group__hd">
+            <span class="sh-faq-group__ic"><svg><use href="#ic-szallitas"/></svg></span>
+            <h2>Szállítás és fizetés</h2>
+          </header>
+          <div class="sh-faq-acc">
+            <details class="sh-faq-item">
+              <summary><span>Mennyibe kerül és meddig tart a szállítás?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>A szállítási díj Románia területén 25 lej, <b>200 lej feletti rendelésnél ingyenes</b>. A gyártási idő terméktől függően 3–15 munkanap; ehhez jön a futár 1–3 munkanapja. A pontos várható dátumot a terméknél és a visszaigazoló e-mailben is jelezzük.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Milyen szállítási módok közül választhatok?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Futárszolgálat házhoz, csomagpont (Easybox / posta) átvétel, valamint személyes átvétel a szatmárnémeti műhelyünkben. A választható lehetőségeket a pénztárnál látod.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Hogyan tudok fizetni?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Bankkártyával (VISA, Mastercard), Apple Pay-jel, Google Pay-jel, utánvéttel (fizetés átvételkor, +5 lej), vagy banki átutalással. Céges vásárlóknak proforma díjbekérőt is tudunk küldeni.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Külföldre is szállítotok?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Alapból Románia területére szállítunk. Nemzetközi kiszállításról egyedi egyeztetés alapján tudunk ajánlatot adni — írj nekünk a szállítási címmel, és visszajelzünk a díjról és a határidőről.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Kapok számlát a rendelésről?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Igen, minden rendeléshez elektronikus számlát küldünk a visszaigazoló e-mailben. Céges számlához add meg a cégadatokat és az adószámot a rendeléskor.</p></div>
+            </details>
+          </div>
+        </section>
+
+        <section class="sh-faq-group" id="visszakuldes">
+          <header class="sh-faq-group__hd">
+            <span class="sh-faq-group__ic"><svg><use href="#ic-garancia"/></svg></span>
+            <h2>Visszaküldés, garancia és elállás</h2>
+          </header>
+          <div class="sh-faq-acc">
+            <details class="sh-faq-item">
+              <summary><span>Visszaküldhetem a terméket, ha meggondolom magam?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>A nem egyedi, raktári termékekre a törvényi <b>14 napos elállási jog</b> vonatkozik. Mivel a személyre szabott, egyedileg gyártott darabok kifejezetten a te kérésedre készülnek, ezekre a jogszabály szerint az elállási jog nem terjed ki — de gyártási vagy nyomtatási hiba esetén természetesen cserét vagy visszatérítést adunk.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Mi a teendő, ha sérülten vagy hibásan érkezik a termék?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Küldj egy fotót a sérülésről vagy hibáról a <a href="mailto:layeroprint@gmail.com">layeroprint@gmail.com</a> címre a rendelésszámoddal. Gyártási vagy szállítási hibára cserét vagy teljes visszatérítést adunk, a szállítási költséget mi álljuk.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Van garancia a termékekre?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body">
+                <p>Igen. Minden termékünkre a törvény által előírt <b>2 éves megfelelőségi jótállás (garanție legală de conformitate)</b> vonatkozik, ami a gyártási, anyag- és nyomtatási hibákra terjed ki. A világító daraboknál az elektronikára (LED, kapcsoló) is érvényes.</p>
+                <p>Panasz esetén az <a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a>-hez (Országos Fogyasztóvédelmi Hatóság) vagy az <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">EU online vitarendezési (SOL) platformjához</a> is fordulhatsz.</p>
+              </div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Hogyan zajlik a visszatérítés?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Jóváhagyott visszaküldés vagy reklamáció után a visszatérítést az eredeti fizetési módra indítjuk, jellemzően 14 napon belül. Csere esetén az új darab gyártását azonnal ütemezzük.</p></div>
+            </details>
+          </div>
+        </section>
+
+        <section class="sh-faq-group" id="termek">
+          <header class="sh-faq-group__hd">
+            <span class="sh-faq-group__ic"><svg><use href="#ic-termek"/></svg></span>
+            <h2>Termék, anyag és használat</h2>
+          </header>
+          <div class="sh-faq-acc">
+            <details class="sh-faq-item">
+              <summary><span>Milyen anyagból készülnek a termékek?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Elsősorban PLA biopolimerből nyomtatunk, ami növényi (kukoricakeményítő) alapú, szagtalan, ipari komposztálásban lebomló anyag. A strapabíróbb daraboknál (pl. kulcstartók) PETG-t használunk. A műhelyünk áramát napelemek adják.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Biztonságosak a világító lámpák, gyerekszobába is jók?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Igen. A LED-világítás alacsony hőmérsékletű és USB-ről működik, így nem melegszik fel veszélyesen. A meleg, szűrt fény éjszakai fénynek is ideális a gyerekszobában.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Hogyan tisztítsam és ápoljam a terméket?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Száraz vagy enyhén nedves ruhával törölhető. Kerüld a közvetlen, tartós hőt (pl. radiátor, tűző nap az autóban) és az agresszív tisztítószereket, mivel a PLA hőérzékeny. Így évekig szép marad.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Pontosan akkora lesz, amekkorát a fotón látok?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>A termékeknél megadott méretek tájékoztató jellegűek, és a személyre szabástól függően kis mértékben eltérhetnek. Bizonytalanság esetén nézd meg a <b>mérettáblázatot</b> a termékoldalon, vagy kérj egyedi méretet.</p></div>
+            </details>
+          </div>
+        </section>
+
+        <section class="sh-faq-group" id="ceges">
+          <header class="sh-faq-group__hd">
+            <span class="sh-faq-group__ic"><svg><use href="#ic-ceges"/></svg></span>
+            <h2>Céges és egyedi rendelés</h2>
+          </header>
+          <div class="sh-faq-acc">
+            <details class="sh-faq-item">
+              <summary><span>Van egy ötletem, ami nincs a katalógusban — meg tudjátok csinálni?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Nagy eséllyel igen — a legjobb darabjaink mind egyedi megkeresésből születtek. Írd le az ötletet (képpel, vázlattal, referenciával), és 24–48 órán belül visszajelzünk, hogy mennyiért és mennyi idő alatt tudjuk megvalósítani. <a href="termek.html?id=egyedi-otlet">Indíts egyedi rendelést ›</a></p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Vállaltok nagyobb, céges mennyiséget?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>Igen, logózott ajándéktárgyakat, QR/NFC displayeket és rendezvényes csomagokat is gyártunk, mennyiségi kedvezménnyel. Nézd meg a <a href="kategoria.html?cat=ceges">céges megoldásokat</a>, vagy kérj ajánlatot a darabszámmal.</p></div>
+            </details>
+            <details class="sh-faq-item">
+              <summary><span>Mennyi egy egyedi darab ára?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
+              <div class="sh-faq-item__body"><p>A méret, a komplexitás és az anyag függvénye: egy egyszerűbb egyedi darab jellemzően 100–300 lej, összetettebb projektek egyedi kalkulációval készülnek. Pontos árat az ötlet ismeretében, 24–48 órán belül adunk.</p></div>
+            </details>
+          </div>
+        </section>
+
+        <p class="sh-faq-empty" id="sh-faq-empty" hidden>Nincs találat erre a keresésre. Próbálj más kulcsszót, vagy <a href="kapcsolat.html">írj nekünk</a> — segítünk.</p>
+
       </div>
-
-      <div class="sh-faq__group" id="szallitas">
-        <h2 class="sh-h2">Szállítás és fizetés</h2>
-        <div class="sh-acc">
-          <details><summary>Mennyibe kerül és meddig tart a szállítás?</summary><div>
-            <p>A szállítási díj Románia területén 25 lej, <b>200 lej feletti rendelésnél ingyenes</b>. A gyártási idő terméktől függően 3–15 munkanap; ehhez jön a futár 1–3 munkanapja. A pontos várható dátumot a terméknél és a visszaigazoló e-mailben is jelezzük.</p>
-          </div></details>
-          <details><summary>Milyen szállítási módok közül választhatok?</summary><div>
-            <p>Futárszolgálat házhoz, csomagpont (Easybox / posta) átvétel, valamint személyes átvétel a szatmárnémeti műhelyünkben. A választható lehetőségeket a pénztárnál látod.</p>
-          </div></details>
-          <details><summary>Hogyan tudok fizetni?</summary><div>
-            <p>Bankkártyával (VISA, Mastercard), Apple Pay-jel, Google Pay-jel, utánvéttel (fizetés átvételkor, +5 lej), vagy banki átutalással. Céges vásárlóknak proforma díjbekérőt is tudunk küldeni.</p>
-          </div></details>
-          <details><summary>Külföldre is szállítotok?</summary><div>
-            <p>Alapból Románia területére szállítunk. Nemzetközi kiszállításról egyedi egyeztetés alapján tudunk ajánlatot adni — írj nekünk a szállítási címmel, és visszajelzünk a díjról és a határidőről.</p>
-          </div></details>
-          <details><summary>Kapok számlát a rendelésről?</summary><div>
-            <p>Igen, minden rendeléshez elektronikus számlát küldünk a visszaigazoló e-mailben. Céges számlához add meg a cégadatokat és az adószámot a rendeléskor.</p>
-          </div></details>
-        </div>
-      </div>
-
-      <div class="sh-faq__group" id="visszakuldes">
-        <h2 class="sh-h2">Visszaküldés, garancia és elállás</h2>
-        <div class="sh-acc">
-          <details><summary>Visszaküldhetem a terméket, ha meggondolom magam?</summary><div>
-            <p>A nem egyedi, raktári termékekre a törvényi <b>14 napos elállási jog</b> vonatkozik. Mivel a személyre szabott, egyedileg gyártott darabok kifejezetten a te kérésedre készülnek, ezekre a jogszabály szerint az elállási jog nem terjed ki — de gyártási vagy nyomtatási hiba esetén természetesen cserét vagy visszatérítést adunk.</p>
-          </div></details>
-          <details><summary>Mi a teendő, ha sérülten vagy hibásan érkezik a termék?</summary><div>
-            <p>Küldj egy fotót a sérülésről vagy hibáról a <a href="mailto:layeroprint@gmail.com">layeroprint@gmail.com</a> címre a rendelésszámoddal. Gyártási vagy szállítási hibára cserét vagy teljes visszatérítést adunk, a szállítási költséget mi álljuk.</p>
-          </div></details>
-          <details><summary>Van garancia a termékekre?</summary><div>
-            <p>Igen. Minden termékünkre a törvény által előírt <b>2 éves megfelelőségi jótállás (garanție legală de conformitate)</b> vonatkozik, ami a gyártási, anyag- és nyomtatási hibákra terjed ki. A világító daraboknál az elektronikára (LED, kapcsoló) is érvényes.</p>
-            <p>Panasz esetén az <a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a>-hez (Országos Fogyasztóvédelmi Hatóság) vagy az <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">EU online vitarendezési (SOL) platformjához</a> is fordulhatsz.</p>
-          </div></details>
-          <details><summary>Hogyan zajlik a visszatérítés?</summary><div>
-            <p>Jóváhagyott visszaküldés vagy reklamáció után a visszatérítést az eredeti fizetési módra indítjuk, jellemzően 14 napon belül. Csere esetén az új darab gyártását azonnal ütemezzük.</p>
-          </div></details>
-        </div>
-      </div>
-
-      <div class="sh-faq__group" id="termek">
-        <h2 class="sh-h2">Termék, anyag és használat</h2>
-        <div class="sh-acc">
-          <details><summary>Milyen anyagból készülnek a termékek?</summary><div>
-            <p>Elsősorban PLA biopolimerből nyomtatunk, ami növényi (kukoricakeményítő) alapú, szagtalan, ipari komposztálásban lebomló anyag. A strapabíróbb daraboknál (pl. kulcstartók) PETG-t használunk. A műhelyünk áramát napelemek adják.</p>
-          </div></details>
-          <details><summary>Biztonságosak a világító lámpák, gyerekszobába is jók?</summary><div>
-            <p>Igen. A LED-világítás alacsony hőmérsékletű és USB-ről működik, így nem melegszik fel veszélyesen. A meleg, szűrt fény éjszakai fénynek is ideális a gyerekszobában.</p>
-          </div></details>
-          <details><summary>Hogyan tisztítsam és ápoljam a terméket?</summary><div>
-            <p>Száraz vagy enyhén nedves ruhával törölhető. Kerüld a közvetlen, tartós hőt (pl. radiátor, tűző nap az autóban) és az agresszív tisztítószereket, mivel a PLA hőérzékeny. Így évekig szép marad.</p>
-          </div></details>
-          <details><summary>Pontosan akkora lesz, amekkorát a fotón látok?</summary><div>
-            <p>A termékeknél megadott méretek tájékoztató jellegűek, és a személyre szabástól függően kis mértékben eltérhetnek. Bizonytalanság esetén nézd meg a <b>mérettáblázatot</b> a termékoldalon, vagy kérj egyedi méretet.</p>
-          </div></details>
-        </div>
-      </div>
-
-      <div class="sh-faq__group" id="ceges">
-        <h2 class="sh-h2">Céges és egyedi rendelés</h2>
-        <div class="sh-acc">
-          <details><summary>Van egy ötletem, ami nincs a katalógusban — meg tudjátok csinálni?</summary><div>
-            <p>Nagy eséllyel igen — a legjobb darabjaink mind egyedi megkeresésből születtek. Írd le az ötletet (képpel, vázlattal, referenciával), és 24–48 órán belül visszajelzünk, hogy mennyiért és mennyi idő alatt tudjuk megvalósítani. <a href="termek.html?id=egyedi-otlet">Indíts egyedi rendelést ›</a></p>
-          </div></details>
-          <details><summary>Vállaltok nagyobb, céges mennyiséget?</summary><div>
-            <p>Igen, logózott ajándéktárgyakat, QR/NFC displayeket és rendezvényes csomagokat is gyártunk, mennyiségi kedvezménnyel. Nézd meg a <a href="kategoria.html?cat=ceges">céges megoldásokat</a>, vagy kérj ajánlatot a darabszámmal.</p>
-          </div></details>
-          <details><summary>Mennyi egy egyedi darab ára?</summary><div>
-            <p>A méret, a komplexitás és az anyag függvénye: egy egyszerűbb egyedi darab jellemzően 100–300 lej, összetettebb projektek egyedi kalkulációval készülnek. Pontos árat az ötlet ismeretében, 24–48 órán belül adunk.</p>
-          </div></details>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="sh-cta-band">
-    <img src="assets/termekvilag/hero_slider/layero-asset-0018.png" alt="" loading="lazy">
-    <div class="sh-cta-band__copy">
-      <h2>Nem találtad a választ?</h2>
-      <p>Írj nekünk, és segítünk — akár termékválasztásban, akár egyedi ötletben.</p>
-      <a class="sh-btn sh-btn--white" href="kapcsolat.html">Kapcsolatfelvétel</a>
     </div>
   </section>
 
@@ -142,7 +207,7 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      { "@type": "Question", "name": "Hogyan tudok személyre szabott terméket rendelni?", "acceptedAnswer": { "@type": "Answer", "text": "Válaszd ki a terméket, add meg a személyre szabás részleteit, és tedd a kosárba. A rendelés után e-mailben egyeztetjük a részleteket, és összetettebb daraboknál digitális előnézetet küldünk jóváhagyásra a gyártás előtt." } },
+      { "@type": "Question", "name": "Hogyan tudok személyre szabott terméket rendelni?", "acceptedAnswer": { "@type": "Answer", "text": "Válaszd ki a terméket, add meg a személyre szabás részleteit, és tedd a kosárba. A rendelés után e-mailben egyeztetjük a részleteket, és csak a jóváhagyásod után indítjuk a gyártást." } },
       { "@type": "Question", "name": "Mennyibe kerül és meddig tart a szállítás?", "acceptedAnswer": { "@type": "Answer", "text": "A szállítási díj Románia területén 25 lej, 200 lej feletti rendelésnél ingyenes. A gyártási idő 3–15 munkanap, ehhez jön a futár 1–3 munkanapja." } },
       { "@type": "Question", "name": "Hogyan tudok fizetni?", "acceptedAnswer": { "@type": "Answer", "text": "Bankkártyával, Apple Pay-jel, Google Pay-jel, utánvéttel vagy banki átutalással. Céges vásárlóknak proforma díjbekérőt is küldünk." } },
       { "@type": "Question", "name": "Visszaküldhetem a terméket, ha meggondolom magam?", "acceptedAnswer": { "@type": "Answer", "text": "A nem egyedi termékekre a 14 napos elállási jog vonatkozik. A személyre szabott, egyedi darabokra a jogszabály szerint az elállási jog nem terjed ki, de gyártási hiba esetén cserét vagy visszatérítést adunk." } },
@@ -151,7 +216,7 @@
   }
   </script>
 
-  <script src="shop-data.js"></script>
-  <script src="shop.js"></script>
+  <script src="shop-data.js?v=20260716c"></script>
+  <script src="shop.js?v=20260716c"></script>
 </body>
 </html>
