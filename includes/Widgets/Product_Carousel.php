@@ -11,6 +11,10 @@ if (! defined('ABSPATH')) {
 }
 
 class Product_Carousel extends Base_Widget {
+	protected function is_dynamic_content(): bool {
+		return true;
+	}
+
 	public function get_name() {
 		return 'layero_product_carousel';
 	}

@@ -18,8 +18,9 @@ final class WooCommerce {
 	}
 
 	private function __construct() {
-		add_action('woocommerce_product_options_general_product_data', array($this, 'render_product_badge_fields'));
-		add_action('woocommerce_admin_process_product_object', array($this, 'save_product_badge_fields'));
+		add_filter('woocommerce_product_data_tabs', array($this, 'add_product_visual_tab'));
+		add_action('woocommerce_product_data_panels', array($this, 'render_product_visual_panel'));
+		add_action('woocommerce_admin_process_product_object', array($this, 'save_product_visual_fields'));
 		add_action('woocommerce_before_add_to_cart_button', array($this, 'render_personalization_fields'));
 		add_filter('woocommerce_add_cart_item_data', array($this, 'add_cart_item_data'), 10, 3);
 		add_filter('woocommerce_get_item_data', array($this, 'display_cart_item_data'), 10, 2);
@@ -27,46 +28,173 @@ final class WooCommerce {
 		add_shortcode('layero_mini_cart', array($this, 'mini_cart_shortcode'));
 	}
 
-	public function render_product_badge_fields() {
-		if (! function_exists('woocommerce_wp_text_input') || ! function_exists('woocommerce_wp_textarea_input')) {
+	public function add_product_visual_tab($tabs) {
+		$tabs['layero_visual'] = array(
+			'label' => __('Layero megjelenés', 'layero-shop-ui'),
+			'target' => 'layero_product_visual_data',
+			'class' => array('show_if_simple', 'show_if_variable', 'show_if_grouped', 'show_if_external'),
+			'priority' => 72,
+		);
+
+		return $tabs;
+	}
+
+	public function render_product_visual_panel() {
+		if (! function_exists('woocommerce_wp_select') || ! function_exists('woocommerce_wp_text_input') || ! function_exists('woocommerce_wp_textarea_input')) {
 			return;
 		}
 
-		echo '<div class="options_group layero-product-badges">';
-		woocommerce_wp_text_input(
+		global $post, $product_object;
+		$product = $product_object;
+		if (! $product && ! empty($post->ID) && function_exists('wc_get_product')) {
+			$product = wc_get_product($post->ID);
+		}
+
+		$product_type = $product ? (string) $product->get_meta('_layero_product_type', true) : '';
+		$badge_keys = $product ? Helpers::product_badge_keys($product) : array();
+		$personalizable = $product ? (string) $product->get_meta('_layero_personalizable', true) : '';
+		$lead_time = $product ? (string) $product->get_meta('_layero_lead_time', true) : '';
+
+		echo '<div id="layero_product_visual_data" class="panel woocommerce_options_panel hidden layero-product-visual-panel">';
+		echo '<input type="hidden" name="_layero_visual_fields_present" value="1">';
+		echo '<div class="options_group">';
+		echo '<p class="form-field layero-product-visual-intro"><strong>' . esc_html__('A termékkártya vizuális adatai', 'layero-shop-ui') . '</strong><span>' . esc_html__('Az itt beállított címkék és tulajdonságok automatikusan megjelennek a Layero Elementor termék-widgetjeiben.', 'layero-shop-ui') . '</span></p>';
+
+		$type_options = array('' => __('Automatikus – WooCommerce kategória alapján', 'layero-shop-ui'));
+		foreach (Helpers::product_type_definitions() as $key => $definition) {
+			$type_options[$key] = $definition['label'];
+		}
+		$type_options['custom'] = __('Egyedi megnevezés', 'layero-shop-ui');
+		woocommerce_wp_select(
 			array(
-				'id' => '_layero_card_type_label',
-				'label' => __('Layero kártya típus', 'layero-shop-ui'),
-				'description' => __('Ez jelenik meg a termékkártyán a WooCommerce kategória helyett. Példa: Tematikus lámpák, Céges megoldások, Dekorációk.', 'layero-shop-ui'),
+				'id' => '_layero_product_type',
+				'label' => __('Terméktípus', 'layero-shop-ui'),
+				'value' => $product_type,
+				'options' => $type_options,
+				'description' => __('A kártyán a terméknév felett jelenik meg. Automatikus módban a termékkategóriából számítjuk.', 'layero-shop-ui'),
 				'desc_tip' => true,
 			)
 		);
-		woocommerce_wp_textarea_input(
+		woocommerce_wp_text_input(
 			array(
-				'id' => '_layero_product_badges',
-				'label' => __('Layero kártya címkék', 'layero-shop-ui'),
-				'description' => __('Egy címke soronként. Formátum: Szöveg|stílus. Példa: Bestseller|best, B2B kedvenc|dark, Új|new, Egyedi|info. Stílusok: best, new, sale, dark, accent, gold, eco, coral, info.', 'layero-shop-ui'),
-				'desc_tip' => false,
-				'rows' => 4,
+				'id' => '_layero_card_type_label',
+				'label' => __('Egyedi típusfelirat', 'layero-shop-ui'),
+				'description' => __('Akkor használd, ha a Terméktípus mezőben az „Egyedi megnevezés” opciót választottad. A korábbi Layero típusfeliratok is megmaradnak.', 'layero-shop-ui'),
+				'desc_tip' => true,
 			)
 		);
 		echo '</div>';
+
+		echo '<div class="options_group layero-product-badges">';
+		echo '<p class="form-field layero-badge-picker"><label>' . esc_html__('Vizuális címkék', 'layero-shop-ui') . '</label><span class="layero-badge-picker__content">';
+		foreach (Helpers::badge_definitions() as $key => $definition) {
+			$checked = in_array($key, $badge_keys, true);
+			echo '<label class="layero-badge-option layero-badge-option--' . esc_attr($definition['style']) . '">';
+			echo '<input type="checkbox" name="_layero_badge_keys[]" value="' . esc_attr($key) . '" ' . checked($checked, true, false) . '>';
+			echo '<span>' . esc_html($definition['label']) . '</span><small>' . esc_html($definition['description']) . '</small>';
+			echo '</label>';
+		}
+		echo '<em>' . esc_html__('Legfeljebb 5 címke látszik. Az akciós százalékot a WooCommerce normál és akciós árából automatikusan számítjuk, ezért azt itt nem kell felvenned.', 'layero-shop-ui') . '</em>';
+		echo '</span></p>';
+		woocommerce_wp_textarea_input(
+			array(
+				'id' => '_layero_product_badges',
+				'label' => __('Extra címkék (haladó)', 'layero-shop-ui'),
+				'description' => __('Opcionális egyedi címkék, soronként egy. Formátum: Szöveg|stílus. Példa: Csak ma|coral. A régi címkék kompatibilitás miatt itt továbbra is működnek.', 'layero-shop-ui'),
+				'desc_tip' => false,
+				'rows' => 3,
+			)
+		);
+		echo '</div>';
+
+		echo '<div class="options_group">';
+		woocommerce_wp_select(
+			array(
+				'id' => '_layero_personalizable',
+				'label' => __('Személyre szabható', 'layero-shop-ui'),
+				'value' => $personalizable,
+				'options' => array(
+					'' => __('Automatikus – terméktípus alapján', 'layero-shop-ui'),
+					'yes' => __('Igen – címke és mezők megjelenítése', 'layero-shop-ui'),
+					'no' => __('Nem – ne jelenjen meg', 'layero-shop-ui'),
+				),
+				'description' => __('Igen esetén a „Névre szabható” jelölés és a személyre szabási mezők is megjelennek.', 'layero-shop-ui'),
+				'desc_tip' => true,
+			)
+		);
+
+		$lead_options = array('' => __('Automatikus – terméktípus alapján', 'layero-shop-ui')) + Helpers::lead_time_options();
+		woocommerce_wp_select(
+			array(
+				'id' => '_layero_lead_time',
+				'label' => __('Gyártási idő', 'layero-shop-ui'),
+				'value' => $lead_time,
+				'options' => $lead_options,
+				'description' => __('A termékkártyán kis információs címkeként jelenik meg.', 'layero-shop-ui'),
+				'desc_tip' => true,
+			)
+		);
+		woocommerce_wp_text_input(
+			array(
+				'id' => '_layero_lead_time_custom',
+				'label' => __('Egyedi gyártási idő', 'layero-shop-ui'),
+				'placeholder' => __('pl. 2–4 munkanap', 'layero-shop-ui'),
+				'description' => __('Akkor érvényes, ha a Gyártási idő mezőben az „Egyedi szöveg” opciót választod.', 'layero-shop-ui'),
+				'desc_tip' => true,
+			)
+		);
+		echo '</div>';
+
+		echo '<style>
+			#woocommerce-product-data ul.wc-tabs li.layero_visual_options a::before{content:"\\f177"}
+			.layero-product-visual-intro{display:flex;flex-direction:column;gap:5px;padding-top:4px!important}.layero-product-visual-intro span{color:#646970;max-width:720px}
+			.layero-badge-picker__content{display:grid!important;grid-template-columns:repeat(2,minmax(180px,1fr));gap:8px;max-width:680px}
+			.layero-badge-option{display:grid;grid-template-columns:20px 1fr;column-gap:8px;align-items:center;margin:0;padding:10px 12px;border:1px solid #dcdcde;border-radius:8px;background:#fff}
+			.layero-badge-option input{grid-row:1 / span 2;margin:0}.layero-badge-option span{font-weight:700}.layero-badge-option small{color:#646970}.layero-badge-picker__content em{grid-column:1/-1;color:#646970;font-style:normal;font-size:12px;line-height:1.5}
+			@media(max-width:782px){.layero-badge-picker__content{grid-template-columns:1fr}.layero-badge-picker__content em{grid-column:auto}}
+		</style>';
+		echo '</div>';
 	}
 
-	public function save_product_badge_fields($product) {
+	public function save_product_visual_fields($product) {
 		if (! $product || ! is_a($product, 'WC_Product')) {
 			return;
 		}
+		if (empty($_POST['_layero_visual_fields_present'])) {
+			return;
+		}
 
+		$type = isset($_POST['_layero_product_type']) ? sanitize_key(wp_unslash($_POST['_layero_product_type'])) : '';
+		$allowed_types = array_merge(array_keys(Helpers::product_type_definitions()), array('custom'));
+		$type = in_array($type, $allowed_types, true) ? $type : '';
 		$type_label = isset($_POST['_layero_card_type_label']) ? sanitize_text_field(wp_unslash($_POST['_layero_card_type_label'])) : '';
 		$badges = isset($_POST['_layero_product_badges']) ? sanitize_textarea_field(wp_unslash($_POST['_layero_product_badges'])) : '';
+		$badge_keys = isset($_POST['_layero_badge_keys']) ? array_map('sanitize_key', (array) wp_unslash($_POST['_layero_badge_keys'])) : array();
+		$badge_keys = array_values(array_intersect(array_unique($badge_keys), array_keys(Helpers::badge_definitions())));
+		$personalizable = isset($_POST['_layero_personalizable']) ? sanitize_key(wp_unslash($_POST['_layero_personalizable'])) : '';
+		$personalizable = in_array($personalizable, array('yes', 'no'), true) ? $personalizable : '';
+		$lead_time = isset($_POST['_layero_lead_time']) ? sanitize_key(wp_unslash($_POST['_layero_lead_time'])) : '';
+		$lead_time = array_key_exists($lead_time, Helpers::lead_time_options()) ? $lead_time : '';
+		$lead_time_custom = isset($_POST['_layero_lead_time_custom']) ? sanitize_text_field(wp_unslash($_POST['_layero_lead_time_custom'])) : '';
 
+		$product->update_meta_data('_layero_product_type', $type);
 		$product->update_meta_data('_layero_card_type_label', $type_label);
+		$product->update_meta_data('_layero_badge_keys', $badge_keys);
 		$product->update_meta_data('_layero_product_badges', $badges);
+		$product->update_meta_data('_layero_personalizable', $personalizable);
+		$product->update_meta_data('_layero_lead_time', $lead_time);
+		$product->update_meta_data('_layero_lead_time_custom', $lead_time_custom);
 	}
 
 	public function render_personalization_fields() {
-		if (! apply_filters('layero_shop_ui_show_personalization_fields', true, get_the_ID())) {
+		global $product;
+		$current_product = $product;
+		if (! $current_product && function_exists('wc_get_product')) {
+			$current_product = wc_get_product(get_the_ID());
+		}
+		$show_fields = Helpers::product_is_personalizable($current_product);
+
+		if (! apply_filters('layero_shop_ui_show_personalization_fields', $show_fields, get_the_ID(), $current_product)) {
 			return;
 		}
 		?>
@@ -95,6 +223,10 @@ final class WooCommerce {
 	}
 
 	public function add_cart_item_data($cart_item_data, $product_id, $variation_id) {
+		if (function_exists('wc_get_product') && ! Helpers::product_is_personalizable(wc_get_product($product_id))) {
+			return $cart_item_data;
+		}
+
 		$text = isset($_POST['layero_personalization_text']) ? sanitize_text_field(wp_unslash($_POST['layero_personalization_text'])) : '';
 		$size = isset($_POST['layero_personalization_size']) ? sanitize_text_field(wp_unslash($_POST['layero_personalization_size'])) : '';
 		$color = isset($_POST['layero_personalization_color']) ? sanitize_text_field(wp_unslash($_POST['layero_personalization_color'])) : '';

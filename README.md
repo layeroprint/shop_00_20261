@@ -84,10 +84,15 @@ Ezek bekerülnek:
 - checkout tételadatba
 - rendelési tétel metaadatba
 
-A WooCommerce termék szerkesztőben két Layero kártyamező is elérhető:
+A WooCommerce termékszerkesztő `Termékadatok → Layero megjelenés` fülén termékenként beállítható:
 
-- `Layero kártya típus`: felülírja a termékkártyán látható kategóriasort.
-- `Layero kártya címkék`: több badge soronként, `Szöveg|stílus` formában. Példák: `Bestseller|best`, `B2B kedvenc|dark`, `Új|new`, `Egyedi|info`. A támogatott stílusok: `best`, `new`, `sale`, `dark`, `accent`, `gold`, `eco`, `coral`, `info`.
+- a terméktípus (vagy automatikus felismerés a WooCommerce kategória alapján),
+- vizuális címkék: `Bestseller`, `B2B kedvenc`, `Új`, `Egyedi`, `Limitált`, `Szezonális`, `Környezettudatos`, `Kézzel készül`, `Exkluzív`,
+- személyre szabhatóság és a `Névre szabható` kártyajelölés,
+- a termékkártyán megjelenő gyártási idő,
+- haladó, szabad szöveges extra címkék `Szöveg|stílus` formátumban.
+
+Az akciós százalék automatikusan a WooCommerce normál és akciós árából készül. A WooCommerce `Kiemelt` kapcsolója automatikusan `Bestseller` címkét ad, ha nincs már ilyen címke. A korábbi `_layero_card_type_label` és `_layero_product_badges` metaadatok változtatás nélkül tovább működnek.
 
 Shortcode:
 

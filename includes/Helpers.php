@@ -222,12 +222,164 @@ final class Helpers {
 		return function_exists('wc_placeholder_img') ? wc_placeholder_img($size) : '';
 	}
 
+	public static function product_type_definitions() {
+		return array(
+			'lampak' => array('label' => __('Tematikus lámpák', 'layero-shop-ui')),
+			'kulcstartok' => array('label' => __('Kulcstartók', 'layero-shop-ui')),
+			'dekoraciok' => array('label' => __('Dekorációk', 'layero-shop-ui')),
+			'szezonalis' => array('label' => __('Szezonális & ünnepi', 'layero-shop-ui')),
+			'rajongoi' => array('label' => __('Gyűjtői / rajongói', 'layero-shop-ui')),
+			'baba-gyerek' => array('label' => __('Baba & gyerek', 'layero-shop-ui')),
+			'ceges' => array('label' => __('Céges megoldások', 'layero-shop-ui')),
+			'egyedi' => array('label' => __('Egyedi rendelés', 'layero-shop-ui')),
+		);
+	}
+
+	public static function badge_definitions() {
+		return array(
+			'bestseller' => array(
+				'label' => __('Bestseller', 'layero-shop-ui'),
+				'style' => 'best',
+				'description' => __('Kiemelten népszerű termék', 'layero-shop-ui'),
+			),
+			'b2b' => array(
+				'label' => __('B2B kedvenc', 'layero-shop-ui'),
+				'style' => 'b2b',
+				'description' => __('Céges vásárlóknak ajánlott', 'layero-shop-ui'),
+			),
+			'new' => array(
+				'label' => __('Új', 'layero-shop-ui'),
+				'style' => 'new',
+				'description' => __('Újdonság a kínálatban', 'layero-shop-ui'),
+			),
+			'custom' => array(
+				'label' => __('Egyedi', 'layero-shop-ui'),
+				'style' => 'custom',
+				'description' => __('Egyedi tervezésű vagy kérhető', 'layero-shop-ui'),
+			),
+			'limited' => array(
+				'label' => __('Limitált', 'layero-shop-ui'),
+				'style' => 'limited',
+				'description' => __('Korlátozottan elérhető', 'layero-shop-ui'),
+			),
+			'seasonal' => array(
+				'label' => __('Szezonális', 'layero-shop-ui'),
+				'style' => 'gold',
+				'description' => __('Ünnepi vagy időszakos termék', 'layero-shop-ui'),
+			),
+			'eco' => array(
+				'label' => __('Környezettudatos', 'layero-shop-ui'),
+				'style' => 'eco',
+				'description' => __('Fenntarthatóbb anyag vagy gyártás', 'layero-shop-ui'),
+			),
+			'handmade' => array(
+				'label' => __('Kézzel készül', 'layero-shop-ui'),
+				'style' => 'accent',
+				'description' => __('Kézi utómunkával készül', 'layero-shop-ui'),
+			),
+			'exclusive' => array(
+				'label' => __('Exkluzív', 'layero-shop-ui'),
+				'style' => 'dark',
+				'description' => __('Prémium vagy különleges darab', 'layero-shop-ui'),
+			),
+		);
+	}
+
+	public static function lead_time_options() {
+		return array(
+			'none' => __('Ne jelenjen meg', 'layero-shop-ui'),
+			'3-7' => __('3–7 munkanap', 'layero-shop-ui'),
+			'5-10' => __('5–10 munkanap', 'layero-shop-ui'),
+			'7-12' => __('7–12 munkanap', 'layero-shop-ui'),
+			'10-15' => __('10–15 munkanap', 'layero-shop-ui'),
+			'custom' => __('Egyedi szöveg', 'layero-shop-ui'),
+		);
+	}
+
+	public static function product_card_type_key($product) {
+		if (! $product || ! method_exists($product, 'get_meta')) {
+			return '';
+		}
+
+		$type = sanitize_key((string) $product->get_meta('_layero_product_type', true));
+		if (array_key_exists($type, self::product_type_definitions())) {
+			return $type;
+		}
+
+		$product_id = method_exists($product, 'get_id') ? (int) $product->get_id() : 0;
+		$slugs = array();
+		if ($product_id && function_exists('wc_get_product_terms')) {
+			$slugs = wc_get_product_terms($product_id, 'product_cat', array('fields' => 'slugs'));
+		} elseif ($product_id && function_exists('wp_get_post_terms')) {
+			$slugs = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'slugs'));
+		}
+		if (! is_array($slugs) || (function_exists('is_wp_error') && is_wp_error($slugs))) {
+			return '';
+		}
+
+		$aliases = array(
+			'lampak' => array('lampak', 'lampa', 'tematikus-lampak'),
+			'kulcstartok' => array('kulcstartok', 'kulcstarto'),
+			'dekoraciok' => array('dekoraciok', 'dekoracio'),
+			'szezonalis' => array('szezonalis', 'unnepi'),
+			'rajongoi' => array('rajongoi', 'gyujtoi'),
+			'baba-gyerek' => array('baba-gyerek', 'gyerek'),
+			'ceges' => array('ceges', 'b2b'),
+			'egyedi' => array('egyedi', 'egyedi-rendeles'),
+		);
+		foreach ($aliases as $key => $needles) {
+			foreach ($slugs as $slug) {
+				$slug = sanitize_title((string) $slug);
+				foreach ($needles as $needle) {
+					if ($slug === $needle || false !== strpos($slug, $needle . '-')) {
+						return $key;
+					}
+				}
+			}
+		}
+
+		return '';
+	}
+
 	public static function product_card_type_label($product) {
 		if (! $product || ! method_exists($product, 'get_meta')) {
 			return '';
 		}
 
-		return trim((string) $product->get_meta('_layero_card_type_label', true));
+		$selected_type = sanitize_key((string) $product->get_meta('_layero_product_type', true));
+		$custom_label = trim((string) $product->get_meta('_layero_card_type_label', true));
+		if ('custom' === $selected_type) {
+			return $custom_label;
+		}
+
+		$types = self::product_type_definitions();
+		if (isset($types[$selected_type])) {
+			return $types[$selected_type]['label'];
+		}
+		if ($custom_label) {
+			return $custom_label;
+		}
+
+		$derived_type = self::product_card_type_key($product);
+		return isset($types[$derived_type]) ? $types[$derived_type]['label'] : '';
+	}
+
+	public static function product_badge_keys($product) {
+		if (! $product || ! method_exists($product, 'get_meta')) {
+			return array();
+		}
+
+		$keys = $product->get_meta('_layero_badge_keys', true);
+		if (is_string($keys)) {
+			$decoded = json_decode($keys, true);
+			$keys = is_array($decoded) ? $decoded : preg_split('/[\s,|]+/', $keys);
+		}
+		if (! is_array($keys)) {
+			return array();
+		}
+
+		$keys = array_map('sanitize_key', $keys);
+		return array_values(array_intersect(array_unique($keys), array_keys(self::badge_definitions())));
 	}
 
 	public static function product_badges($product) {
@@ -244,17 +396,86 @@ final class Helpers {
 		}
 
 		if (method_exists($product, 'get_meta')) {
+			$definitions = self::badge_definitions();
+			foreach (self::product_badge_keys($product) as $key) {
+				$badges[] = array(
+					'label' => $definitions[$key]['label'],
+					'style' => $definitions[$key]['style'],
+				);
+			}
 			$badges = array_merge($badges, self::parse_badge_lines((string) $product->get_meta('_layero_product_badges', true)));
 		}
 
 		if (method_exists($product, 'is_featured') && $product->is_featured() && ! self::has_badge_like($badges, array('kiemelt', 'bestseller'))) {
 			$badges[] = array(
-				'label' => __('Kiemelt', 'layero-shop-ui'),
+				'label' => __('Bestseller', 'layero-shop-ui'),
 				'style' => 'best',
 			);
 		}
 
-		return array_slice($badges, 0, 5);
+		return array_slice(self::dedupe_badges($badges), 0, 5);
+	}
+
+	public static function product_is_personalizable($product) {
+		if (! $product || ! method_exists($product, 'get_meta')) {
+			return false;
+		}
+
+		$value = sanitize_key((string) $product->get_meta('_layero_personalizable', true));
+		if ('yes' === $value) {
+			return true;
+		}
+		if ('no' === $value) {
+			return false;
+		}
+
+		$type = self::product_card_type_key($product);
+		if ('dekoraciok' === $type) {
+			return false;
+		}
+
+		return in_array($type, array('lampak', 'kulcstartok', 'szezonalis', 'rajongoi', 'baba-gyerek', 'ceges', 'egyedi'), true) || '' === $type;
+	}
+
+	public static function product_lead_time_label($product) {
+		if (! $product || ! method_exists($product, 'get_meta')) {
+			return '';
+		}
+
+		$value = sanitize_key((string) $product->get_meta('_layero_lead_time', true));
+		$options = self::lead_time_options();
+		if ('none' === $value) {
+			return '';
+		}
+		if ('custom' === $value) {
+			return trim((string) $product->get_meta('_layero_lead_time_custom', true));
+		}
+		if (isset($options[$value])) {
+			return $options[$value];
+		}
+
+		$type = self::product_card_type_key($product);
+		if (in_array($type, array('kulcstartok', 'dekoraciok'), true)) {
+			return $options['3-7'];
+		}
+		if (in_array($type, array('ceges', 'egyedi'), true)) {
+			return $options['7-12'];
+		}
+
+		return $options['5-10'];
+	}
+
+	public static function product_card_chips_html($product) {
+		$chips = array();
+		if (self::product_is_personalizable($product)) {
+			$chips[] = array('label' => __('Névre szabható', 'layero-shop-ui'), 'style' => 'personal');
+		}
+		$lead_time = self::product_lead_time_label($product);
+		if ($lead_time) {
+			$chips[] = array('label' => $lead_time, 'style' => 'time');
+		}
+
+		return self::product_card_chips_from_array($chips);
 	}
 
 	public static function demo_product_badges($product) {
@@ -391,6 +612,65 @@ final class Helpers {
 		return false;
 	}
 
+	private static function dedupe_badges($badges) {
+		$unique = array();
+		$seen = array();
+		foreach ($badges as $badge) {
+			$label = trim((string) ($badge['label'] ?? ''));
+			if ('' === $label) {
+				continue;
+			}
+			$normalized = function_exists('remove_accents') ? remove_accents($label) : $label;
+			$normalized = strtolower($normalized);
+			if (isset($seen[$normalized])) {
+				continue;
+			}
+			$seen[$normalized] = true;
+			$unique[] = array(
+				'label' => $label,
+				'style' => self::normalize_badge_style($badge['style'] ?? '', $label),
+			);
+		}
+
+		return $unique;
+	}
+
+	private static function product_card_chips_from_array($chips) {
+		if (empty($chips)) {
+			return '';
+		}
+
+		$html = '<div class="lyr-product-card__chips">';
+		foreach ($chips as $chip) {
+			if (empty($chip['label'])) {
+				continue;
+			}
+			$style = sanitize_html_class($chip['style'] ?? 'info');
+			$html .= '<span class="lyr-product-chip lyr-product-chip--' . esc_attr($style) . '">' . esc_html($chip['label']) . '</span>';
+		}
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	private static function demo_product_card_chips_html($product) {
+		$category = sanitize_key((string) ($product['category'] ?? ''));
+		$chips = array();
+		if ('dekoraciok' !== $category) {
+			$chips[] = array('label' => __('Névre szabható', 'layero-shop-ui'), 'style' => 'personal');
+		}
+		if (in_array($category, array('kulcstartok', 'dekoraciok'), true)) {
+			$lead_time = __('3–7 munkanap', 'layero-shop-ui');
+		} elseif (in_array($category, array('ceges', 'egyedi'), true)) {
+			$lead_time = __('7–12 munkanap', 'layero-shop-ui');
+		} else {
+			$lead_time = __('5–10 munkanap', 'layero-shop-ui');
+		}
+		$chips[] = array('label' => $lead_time, 'style' => 'time');
+
+		return self::product_card_chips_from_array($chips);
+	}
+
 	public static function product_card($product, $args = array()) {
 		if (! $product) {
 			return '';
@@ -419,6 +699,9 @@ final class Helpers {
 		$excerpt = wp_trim_words(wp_strip_all_tags($product->get_short_description() ?: $product->get_description()), 18);
 		$card_type_label = self::product_card_type_label($product);
 		$badges = self::product_badges($product);
+		$chips_html = self::product_card_chips_html($product);
+		$rating = (float) $product->get_average_rating();
+		$rating_count = method_exists($product, 'get_rating_count') ? (int) $product->get_rating_count() : 0;
 
 		ob_start();
 		?>
@@ -441,8 +724,13 @@ final class Helpers {
 				<?php if (false && $args['show_excerpt'] && $excerpt) : ?>
 					<p><?php echo esc_html($excerpt); ?></p>
 				<?php endif; ?>
-				<?php if (function_exists('wc_get_rating_html')) : ?>
-					<div class="sh-rate lyr-product-card__rating"><?php echo wc_get_rating_html($product->get_average_rating()); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+				<?php echo $chips_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php if ($rating > 0 && function_exists('wc_get_rating_html')) : ?>
+					<div class="sh-rate lyr-product-card__rating">
+						<?php echo wc_get_rating_html($rating, $rating_count); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<b><?php echo esc_html(number_format_i18n($rating, 1)); ?></b>
+						<?php if ($rating_count) : ?><span>(<?php echo esc_html(number_format_i18n($rating_count)); ?>)</span><?php endif; ?>
+					</div>
 				<?php endif; ?>
 				<span class="sh-prod-card__price lyr-product-card__price"><?php echo wp_kses_post($product->get_price_html()); ?></span>
 				<a
@@ -478,6 +766,7 @@ final class Helpers {
 		$category_link = self::products_url($product['category']);
 		$price = ! empty($product['price']) ? number_format_i18n($product['price'], 0) . ' RON' : __('Ajánlatkérés', 'layero-shop-ui');
 		$badges = self::demo_product_badges($product);
+		$chips_html = self::demo_product_card_chips_html($product);
 
 		ob_start();
 		?>
@@ -498,6 +787,7 @@ final class Helpers {
 				<?php if (false && $args['show_excerpt']) : ?>
 					<p><?php echo esc_html($product['description']); ?></p>
 				<?php endif; ?>
+				<?php echo $chips_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<span class="sh-prod-card__price lyr-product-card__price">
 					<?php if (! empty($product['regular_price']) && $product['regular_price'] > $product['price']) : ?>
 						<del><?php echo esc_html(number_format_i18n($product['regular_price'], 0) . ' RON'); ?></del>
