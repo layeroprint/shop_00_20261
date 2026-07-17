@@ -243,9 +243,62 @@ final class Customer_Account {
 		}
 
 		$atts = shortcode_atts(array('recent_limit' => 3), $atts, 'layero_account');
+		$endpoint = $this->current_account_endpoint();
+		$content = $this->render_account_endpoint($endpoint, $atts);
+		$endpoint_class = $endpoint ? sanitize_html_class($endpoint) : 'dashboard';
+
 		return '<div class="lyr-account-shell"><div class="lyr-account-layout"><aside class="lyr-account-sidebar">' .
 			$this->render_profile_summary() . $this->render_navigation() .
-			'</aside><main class="lyr-account-main">' . $this->render_dashboard($atts) . '</main></div></div>';
+			'</aside><main class="lyr-account-main"><div class="lyr-account-endpoint lyr-account-endpoint--' . esc_attr($endpoint_class) . '">' .
+			$content . '</div></main></div></div>';
+	}
+
+	private function current_account_endpoint() {
+		if (function_exists('WC') && WC() && isset(WC()->query) && method_exists(WC()->query, 'get_current_endpoint')) {
+			return (string) WC()->query->get_current_endpoint();
+		}
+
+		$endpoints = array('orders', 'view-order', 'downloads', 'edit-address', 'payment-methods', 'add-payment-method', 'edit-account', self::FAVORITES_ENDPOINT);
+		foreach ($endpoints as $endpoint) {
+			if (function_exists('is_wc_endpoint_url') && is_wc_endpoint_url($endpoint)) {
+				return $endpoint;
+			}
+		}
+
+		return '';
+	}
+
+	private function render_account_endpoint($endpoint, $atts) {
+		if (! $endpoint) {
+			return $this->render_dashboard($atts);
+		}
+
+		if ('orders' === $endpoint) {
+			return $this->render_orders(array(
+				'limit' => 50,
+				'title' => __('Rendelési előzmények', 'layero-shop-ui'),
+			));
+		}
+
+		if (self::FAVORITES_ENDPOINT === $endpoint) {
+			return $this->render_favorites(array('title' => __('Kedvenc termékeim', 'layero-shop-ui')));
+		}
+
+		$allowed_native_endpoints = array('view-order', 'downloads', 'edit-address', 'payment-methods', 'add-payment-method', 'edit-account');
+		if (! in_array($endpoint, $allowed_native_endpoints, true)) {
+			return $this->render_dashboard($atts);
+		}
+
+		$value = function_exists('get_query_var') ? get_query_var($endpoint, '') : '';
+		ob_start();
+		do_action('woocommerce_account_' . $endpoint . '_endpoint', $value);
+		$native_content = ob_get_clean();
+
+		if (! trim($native_content)) {
+			return '<div class="lyr-account-empty"><h3>' . esc_html__('Ez a fiókrész jelenleg nem érhető el.', 'layero-shop-ui') . '</h3><p>' . esc_html__('Próbáld újra később, vagy térj vissza a profil főoldalára.', 'layero-shop-ui') . '</p><a class="lyr-btn lyr-btn--primary" href="' . esc_url($this->account_url('dashboard')) . '">' . esc_html__('Vissza a fiókhoz', 'layero-shop-ui') . '</a></div>';
+		}
+
+		return '<div class="woocommerce lyr-account-native"><div class="woocommerce-MyAccount-content">' . $native_content . '</div></div>';
 	}
 
 	public function dashboard_shortcode($atts = array()) {
@@ -591,6 +644,12 @@ final class Customer_Account {
 	private function is_current_endpoint($endpoint) {
 		if ('dashboard' === $endpoint) {
 			return function_exists('is_account_page') && is_account_page() && function_exists('is_wc_endpoint_url') && ! is_wc_endpoint_url();
+		}
+		if ('orders' === $endpoint && function_exists('is_wc_endpoint_url') && is_wc_endpoint_url('view-order')) {
+			return true;
+		}
+		if ('payment-methods' === $endpoint && function_exists('is_wc_endpoint_url') && is_wc_endpoint_url('add-payment-method')) {
+			return true;
 		}
 
 		return function_exists('is_wc_endpoint_url') && is_wc_endpoint_url($endpoint);

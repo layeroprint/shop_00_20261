@@ -113,10 +113,40 @@ body.layero-account-page .lyr-account-layout {
 
 body.layero-account-page .lyr-account-main,
 body.layero-account-page .lyr-account-dashboard,
+body.layero-account-page .lyr-account-endpoint,
 body.layero-account-page .lyr-orders,
 body.layero-account-page .lyr-favorites,
 body.layero-account-page .lyr-account-details {
 	min-width: 0;
+}
+
+body.layero-account-page .lyr-account-endpoint {
+	width: 100%;
+}
+
+body.layero-account-page .lyr-account-native.woocommerce {
+	display: block !important;
+	width: 100% !important;
+	max-width: none;
+	min-height: 0;
+	margin: 0 !important;
+	padding: 0;
+}
+
+body.layero-account-page .lyr-account-native .woocommerce-MyAccount-content {
+	width: 100% !important;
+}
+
+body.layero-account-page .lyr-account-endpoint--orders .lyr-orders > h2,
+body.layero-account-page .lyr-account-endpoint--layero_favorites .lyr-account-section-head h2 {
+	margin-top: 0;
+	font-size: clamp(1.65rem, 3vw, 2.25rem);
+}
+
+body.layero-account-page .lyr-account-endpoint--orders .lyr-account-empty,
+body.layero-account-page .lyr-account-endpoint--downloads .woocommerce-info,
+body.layero-account-page .lyr-account-endpoint--payment-methods .woocommerce-MyAccount-paymentMethods {
+	margin-top: 18px;
 }
 
 body.layero-account-page .lyr-account-sidebar {
