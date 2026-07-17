@@ -94,6 +94,10 @@ final class Customer_Account {
 			}
 		}
 
+		if (function_exists('is_page') && is_page(self::FAVORITES_SLUG)) {
+			$classes[] = 'layero-favorites-page';
+		}
+
 		return $classes;
 	}
 
@@ -381,11 +385,18 @@ final class Customer_Account {
 	public function render_favorites($args = array()) {
 		$args = wp_parse_args($args, array(
 			'title' => __('Kedvenc termékeim', 'layero-shop-ui'),
+			'eyebrow' => __('Saját válogatás', 'layero-shop-ui'),
+			'description' => __('Mentsd el, ami megtetszik, hasonlítsd össze nyugodtan, és térj vissza hozzá bármikor.', 'layero-shop-ui'),
 			'empty_text' => __('A termékkártyák szív ikonjával menthetsz ide termékeket.', 'layero-shop-ui'),
+			'browse_label' => __('Termékek böngészése', 'layero-shop-ui'),
+			'browse_url' => Helpers::products_url(),
 			'limit' => self::MAX_FAVORITES,
 		));
 		$limit = min(self::MAX_FAVORITES, max(1, absint($args['limit'])));
-		$heading_tag = function_exists('is_page') && is_page(self::FAVORITES_SLUG) ? 'h1' : 'h2';
+		$standalone = function_exists('is_page') && is_page(self::FAVORITES_SLUG);
+		$heading_tag = $standalone ? 'h1' : 'h2';
+		$browse_url = $args['browse_url'] ? $args['browse_url'] : Helpers::products_url();
+		$account_url = $this->account_url('dashboard');
 		$products = array();
 		if (is_user_logged_in()) {
 			$ids = array_slice(self::get_favorite_ids(), 0, $limit);
@@ -396,22 +407,53 @@ final class Customer_Account {
 
 		ob_start();
 		?>
-		<section class="lyr-favorites" data-layero-favorites-widget data-limit="<?php echo esc_attr($limit); ?>">
+		<section class="lyr-favorites <?php echo $standalone ? 'lyr-favorites--standalone' : 'lyr-favorites--embedded'; ?>" data-layero-favorites-widget data-limit="<?php echo esc_attr($limit); ?>">
 			<?php if ($args['title']) : ?>
-				<header class="lyr-account-section-head"><div><span class="lyr-eyebrow"><?php esc_html_e('Mentett termékek', 'layero-shop-ui'); ?></span><<?php echo esc_html($heading_tag); ?>><?php echo esc_html($args['title']); ?></<?php echo esc_html($heading_tag); ?>></div><b data-layero-favorites-count><?php echo esc_html(count($products)); ?></b></header>
+				<?php if ($standalone) : ?>
+					<header class="lyr-favorites-hero">
+						<div class="lyr-favorites-hero-copy">
+							<span class="lyr-eyebrow"><?php echo esc_html($args['eyebrow']); ?></span>
+							<<?php echo esc_html($heading_tag); ?>><?php echo esc_html($args['title']); ?></<?php echo esc_html($heading_tag); ?>>
+							<?php if ($args['description']) : ?><p><?php echo esc_html($args['description']); ?></p><?php endif; ?>
+						</div>
+						<div class="lyr-favorites-hero-side">
+							<div class="lyr-favorites-count-card">
+								<span><?php echo Helpers::icon('heart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+								<div><b data-layero-favorites-count><?php echo esc_html(count($products)); ?></b><small><?php esc_html_e('mentett termék', 'layero-shop-ui'); ?></small></div>
+							</div>
+							<a class="lyr-btn lyr-btn--white" href="<?php echo esc_url($browse_url); ?>"><?php echo esc_html($args['browse_label']); ?> <span aria-hidden="true">&rsaquo;</span></a>
+						</div>
+					</header>
+				<?php else : ?>
+					<header class="lyr-account-section-head"><div><span class="lyr-eyebrow"><?php esc_html_e('Mentett termékek', 'layero-shop-ui'); ?></span><<?php echo esc_html($heading_tag); ?>><?php echo esc_html($args['title']); ?></<?php echo esc_html($heading_tag); ?>></div><b data-layero-favorites-count><?php echo esc_html(count($products)); ?></b></header>
+				<?php endif; ?>
 			<?php endif; ?>
-			<div class="sh-prod-grid lyr-product-grid lyr-favorites-grid" data-layero-favorites-grid-target>
-				<?php foreach ($products as $product) : ?>
-					<?php echo Helpers::product_card($product); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				<?php endforeach; ?>
+			<div class="lyr-favorites-content">
+				<?php if ($standalone) : ?>
+					<div class="lyr-favorites-toolbar">
+						<div>
+							<?php echo Helpers::icon(is_user_logged_in() ? 'spark' : 'user'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<span><?php echo esc_html(is_user_logged_in() ? __('A mentéseid a Layero fiókoddal szinkronban maradnak.', 'layero-shop-ui') : __('Jelentkezz be, hogy a mentéseid minden eszközödön megmaradjanak.', 'layero-shop-ui')); ?></span>
+						</div>
+						<a href="<?php echo esc_url($account_url); ?>"><?php echo esc_html(is_user_logged_in() ? __('Fiókom megnyitása', 'layero-shop-ui') : __('Belépés és szinkronizálás', 'layero-shop-ui')); ?> &rsaquo;</a>
+					</div>
+				<?php endif; ?>
+				<div class="sh-prod-grid lyr-product-grid lyr-favorites-grid" data-layero-favorites-grid-target>
+					<?php foreach ($products as $product) : ?>
+						<?php echo Helpers::product_card($product); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php endforeach; ?>
+				</div>
+				<div class="lyr-account-empty" data-layero-favorites-widget-empty <?php echo ! empty($products) ? 'hidden' : ''; ?>>
+					<span class="lyr-favorites-empty-icon"><?php echo Helpers::icon('heart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+					<h3><?php esc_html_e('Még nincs kedvenc terméked.', 'layero-shop-ui'); ?></h3>
+					<p><?php echo esc_html($args['empty_text']); ?></p>
+					<div class="lyr-favorites-empty-actions">
+						<a class="lyr-btn lyr-btn--primary" href="<?php echo esc_url($browse_url); ?>"><?php echo esc_html($args['browse_label']); ?></a>
+						<?php if ($standalone) : ?><a class="lyr-btn lyr-btn--quiet" href="<?php echo esc_url(home_url('/kviz/')); ?>"><?php esc_html_e('Ajándékkereső', 'layero-shop-ui'); ?></a><?php endif; ?>
+					</div>
+				</div>
+				<p class="lyr-favorites-status" data-layero-favorites-status aria-live="polite"></p>
 			</div>
-			<div class="lyr-account-empty" data-layero-favorites-widget-empty <?php echo ! empty($products) ? 'hidden' : ''; ?>>
-				<?php echo Helpers::icon('heart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				<h3><?php esc_html_e('Még nincs kedvenc terméked.', 'layero-shop-ui'); ?></h3>
-				<p><?php echo esc_html($args['empty_text']); ?></p>
-				<a class="lyr-btn lyr-btn--primary" href="<?php echo esc_url(Helpers::products_url()); ?>"><?php esc_html_e('Termékek böngészése', 'layero-shop-ui'); ?></a>
-			</div>
-			<p class="lyr-favorites-status" data-layero-favorites-status aria-live="polite"></p>
 		</section>
 		<?php
 		return ob_get_clean();

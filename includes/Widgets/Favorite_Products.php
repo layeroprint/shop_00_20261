@@ -29,10 +29,30 @@ class Favorite_Products extends Base_Widget {
 			'type' => Controls_Manager::TEXT,
 			'default' => __('Kedvenc termékeim', 'layero-shop-ui'),
 		));
+		$this->add_control('eyebrow', array(
+			'label' => __('Felső címke', 'layero-shop-ui'),
+			'type' => Controls_Manager::TEXT,
+			'default' => __('Saját válogatás', 'layero-shop-ui'),
+		));
+		$this->add_control('description', array(
+			'label' => __('Bevezető szöveg', 'layero-shop-ui'),
+			'type' => Controls_Manager::TEXTAREA,
+			'default' => __('Mentsd el, ami megtetszik, hasonlítsd össze nyugodtan, és térj vissza hozzá bármikor.', 'layero-shop-ui'),
+		));
 		$this->add_control('empty_text', array(
 			'label' => __('Üres állapot szövege', 'layero-shop-ui'),
 			'type' => Controls_Manager::TEXTAREA,
 			'default' => __('A termékkártyák szív ikonjával menthetsz ide termékeket.', 'layero-shop-ui'),
+		));
+		$this->add_control('browse_label', array(
+			'label' => __('Böngészés gomb felirata', 'layero-shop-ui'),
+			'type' => Controls_Manager::TEXT,
+			'default' => __('Termékek böngészése', 'layero-shop-ui'),
+		));
+		$this->add_control('browse_url', array(
+			'label' => __('Böngészés gomb linkje', 'layero-shop-ui'),
+			'type' => Controls_Manager::URL,
+			'placeholder' => '/termekek/',
 		));
 		$this->add_control('limit', array(
 			'label' => __('Maximum termékszám', 'layero-shop-ui'),
@@ -57,7 +77,11 @@ class Favorite_Products extends Base_Widget {
 		$settings = $this->get_settings_for_display();
 		echo Customer_Account::instance()->render_favorites(array(
 			'title' => (string) ($settings['title'] ?? ''),
+			'eyebrow' => (string) ($settings['eyebrow'] ?? ''),
+			'description' => (string) ($settings['description'] ?? ''),
 			'empty_text' => (string) ($settings['empty_text'] ?? ''),
+			'browse_label' => (string) ($settings['browse_label'] ?? ''),
+			'browse_url' => (string) ($settings['browse_url']['url'] ?? ''),
 			'limit' => absint($settings['limit'] ?? 100),
 		)); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}

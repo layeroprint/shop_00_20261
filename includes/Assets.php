@@ -75,7 +75,9 @@ final class Assets {
 		wp_enqueue_style('layero-shop-ui');
 		wp_enqueue_style('layero-static-shop');
 
-		if (function_exists('is_account_page') && is_account_page()) {
+		$is_account_page = function_exists('is_account_page') && is_account_page();
+		$is_favorites_page = function_exists('is_page') && is_page(Customer_Account::FAVORITES_SLUG);
+		if ($is_account_page || $is_favorites_page) {
 			wp_enqueue_style('layero-account');
 		}
 

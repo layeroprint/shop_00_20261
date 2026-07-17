@@ -450,7 +450,10 @@ final class Page_Builder {
 		return array(
 			self::wrap_in_section(array(self::make_widget('layero_favorite_products', array(
 				'title' => 'Kedvenc termékeim',
+				'eyebrow' => 'Saját válogatás',
+				'description' => 'Mentsd el, ami megtetszik, hasonlítsd össze nyugodtan, és térj vissza hozzá bármikor.',
 				'empty_text' => 'A termékkártyák szív ikonjával menthetsz ide termékeket.',
+				'browse_label' => 'Termékek böngészése',
 				'limit' => 100,
 			)))),
 		);
