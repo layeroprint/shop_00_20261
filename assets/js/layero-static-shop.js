@@ -3396,7 +3396,7 @@
   if (page === 'kategoria') renderKategoria();
   if (page === 'termek') renderTermek();
   if (page === 'kosar') renderKosar();
-  if (page === 'kapcsolat') renderKapcsolat();
+  if (page === 'kapcsolat' || $('#sh-contact-form')) renderKapcsolat();
   if (page === 'kedvencek') renderKedvencek();
   if (page === 'penztar') renderPenztar();
   if (page === 'fiok') renderFiok();

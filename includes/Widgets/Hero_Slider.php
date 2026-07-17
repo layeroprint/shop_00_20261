@@ -169,7 +169,7 @@ class Hero_Slider extends Base_Widget {
 		$title_tag = $settings['title_tag'] ?? 'h1';
 		$hero_style = $settings['hero_style'] ?? 'studio';
 		if (! in_array($title_tag, array('h1', 'h2', 'h3'), true)) {
-			$title_tag = 'h2';
+			$title_tag = 'h1';
 		}
 		if (! in_array($hero_style, array('studio', 'aurora', 'editorial', 'neon', 'sunset'), true)) {
 			$hero_style = 'studio';

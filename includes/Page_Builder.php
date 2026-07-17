@@ -234,7 +234,10 @@ final class Page_Builder {
 
 		$sections = array();
 		foreach ($widgets as $type) {
-			$sections[] = self::wrap_in_section(array(self::make_widget($type)));
+			$settings = 'layero_hero_slider' === $type
+				? array('title_tag' => 'h1')
+				: array();
+			$sections[] = self::wrap_in_section(array(self::make_widget($type, $settings)));
 		}
 
 		return $sections;
@@ -434,7 +437,7 @@ final class Page_Builder {
 
 	private static function quiz_data() {
 		return array(
-			self::html_section('<div id="sh-quiz-mount"></div>'),
+			self::html_section('<div data-layero-page="kviz"><div id="sh-quiz-mount"></div></div>'),
 		);
 	}
 
