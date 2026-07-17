@@ -163,21 +163,19 @@ abstract class Base_Widget extends \Elementor\Widget_Base {
 		}
 		?>
 		<div class="lyr-section__head sh-section-hd <?php echo esc_attr($class); ?>">
-			<div>
-				<?php if (! empty($settings['eyebrow'])) : ?>
-					<span class="lyr-eyebrow sh-label sh-kicker"><?php echo esc_html($settings['eyebrow']); ?></span>
-				<?php endif; ?>
-				<?php if (! empty($settings['title'])) : ?>
-					<<?php echo esc_html($tag); ?> class="sh-h2"><?php echo wp_kses($settings['title'], array('em' => array(), 'span' => array(), 'br' => array())); ?></<?php echo esc_html($tag); ?>>
-				<?php endif; ?>
-				<?php if (! empty($settings['text'])) : ?>
-					<p><?php echo esc_html($settings['text']); ?></p>
-				<?php endif; ?>
-			</div>
+			<?php if (! empty($settings['eyebrow'])) : ?>
+				<span class="lyr-eyebrow sh-label sh-kicker"><?php echo esc_html($settings['eyebrow']); ?></span>
+			<?php endif; ?>
+			<?php if (! empty($settings['title'])) : ?>
+				<<?php echo esc_html($tag); ?> class="sh-h2"><?php echo wp_kses($settings['title'], array('em' => array(), 'span' => array(), 'br' => array())); ?></<?php echo esc_html($tag); ?>>
+			<?php endif; ?>
 			<?php if (! empty($settings['button_text'])) : ?>
 				<a class="lyr-link sh-link" href="<?php echo esc_url($this->get_link_url($settings['button_url'] ?? array())); ?>">
 					<?php echo esc_html($settings['button_text']); ?> &rsaquo;
 				</a>
+			<?php endif; ?>
+			<?php if (! empty($settings['text'])) : ?>
+				<p class="lyr-section__desc"><?php echo esc_html($settings['text']); ?></p>
 			<?php endif; ?>
 		</div>
 		<?php

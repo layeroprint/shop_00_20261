@@ -27,6 +27,7 @@ class Testimonials extends Base_Widget {
 	protected function register_controls() {
 		$this->start_controls_section('content_section', array('label' => __('Tartalom', 'layero-shop-ui')));
 		$this->add_section_header_controls(array(
+			'eyebrow' => 'Vélemények',
 			'title' => 'Vásárlóink mondták. <span>1000+ elégedett vásárló.</span>',
 		));
 		$this->add_heading_tag_control();

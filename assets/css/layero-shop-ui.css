@@ -56,14 +56,19 @@
 
 .lyr-section__head {
 	display: flex;
-	align-items: end;
+	align-items: flex-end;
 	justify-content: space-between;
-	gap: 24px;
-	margin-bottom: clamp(22px, 3vw, 38px);
+	flex-wrap: wrap;
+	gap: 10px 24px;
+	margin-bottom: clamp(26px, 4vw, 44px);
 }
 
 .lyr-section__head > div {
-	min-width: 0;
+	display: contents;
+}
+
+.lyr-section__head .lyr-eyebrow {
+	flex-basis: 100%;
 }
 
 .lyr-section__head h2,
@@ -77,15 +82,20 @@
 	font-weight: 780;
 }
 
+.lyr-section__head h2 {
+	flex: 1 1 auto;
+}
+
 .lyr-section__head h2 span {
-	display: block;
+	display: inline;
 	color: var(--lyr-muted);
-	font-weight: 680;
+	font-weight: inherit;
 }
 
 .lyr-section__head p {
+	flex-basis: 100%;
 	max-width: 58ch;
-	margin: 10px 0 0;
+	margin: 0;
 	color: var(--lyr-muted);
 	font-size: 0.98rem;
 	line-height: 1.55;
@@ -772,6 +782,50 @@
 	margin-top: 6px;
 	font-size: 1.45rem;
 	line-height: 1.1;
+}
+
+/* A kategória widget a statikus shop eredeti bento-anatómiáját használja. */
+.lyr-categories .lyr-categories__head {
+	align-items: flex-end;
+	flex-wrap: wrap;
+	gap: 10px 24px;
+	margin-bottom: clamp(26px, 4vw, 44px);
+}
+
+.lyr-categories .lyr-categories__head .lyr-eyebrow {
+	flex-basis: 100%;
+	margin-bottom: 0;
+	font-size: 0.68rem;
+	font-weight: 650;
+	letter-spacing: 0.16em;
+}
+
+.lyr-categories .lyr-categories__head h1,
+.lyr-categories .lyr-categories__head h2,
+.lyr-categories .lyr-categories__head h3,
+.lyr-categories .lyr-categories__head h4,
+.lyr-categories .lyr-categories__head h5,
+.lyr-categories .lyr-categories__head h6 {
+	flex: 1;
+	font-family: var(--font-display);
+	font-size: clamp(1.7rem, 3.5vw, 2.7rem);
+	font-weight: 700;
+	letter-spacing: -0.022em;
+	line-height: 1.08;
+}
+
+.lyr-categories__intro {
+	flex-basis: 100%;
+}
+
+.lyr-categories__quote-head {
+	margin-top: 38px;
+}
+
+.lyr-categories__quote-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 18px;
 }
 
 .lyr-process__grid,
