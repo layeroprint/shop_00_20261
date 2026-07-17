@@ -46,6 +46,28 @@ Az Elementor szerkesztőben a `Layero Shop` kategória alatt:
 - `Layero hírlevél banner`
 - `Layero lábjegyzetek`
 - `Layero statikus oldal` (a lokális oldalak 1:1 tükre)
+- `Layero profil irányítópult`
+- `Layero profil navigáció`
+- `Layero rendelési előzmények`
+- `Layero kedvenc termékek`
+- `Layero fiók és címek`
+
+## Vásárlói fiók
+
+A profilmodul a WooCommerce saját ügyfél-, rendelés-, cím- és jogosultságkezelését használja, így HPOS-kompatibilis. A kedvencek bejelentkezett vásárlóknál user metában tárolódnak, vendégeknél a böngészőben maradnak, majd belépéskor automatikusan egyesülnek a fiók kedvenceivel.
+
+A WooCommerce `Fiókom` navigáció új `Kedvencek` végpontot kap. A meglévő rendelés-, letöltés-, cím-, fizetési mód- és profiloldalak továbbra is a WooCommerce ellenőrzött űrlapjait használják.
+
+Elérhető shortcode-ok:
+
+```text
+[layero_account]
+[layero_account_dashboard]
+[layero_account_navigation]
+[layero_order_history limit="10"]
+[layero_favorites]
+[layero_account_details]
+```
 
 ## WooCommerce integráció
 

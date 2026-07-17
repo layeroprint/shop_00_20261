@@ -2,6 +2,40 @@
 	'use strict';
 
 	var WISH_KEY = 'sh_wishlist';
+	var WISH_OWNER_KEY = 'layero_wishlist_owner';
+	var wishlistBootPromise = null;
+	var wishQueue = Promise.resolve();
+
+	function accountConfig() {
+		return window.LayeroShopUI || {};
+	}
+
+	function accountRequest(action, data) {
+		var config = accountConfig();
+		if (!config.ajaxUrl || !config.accountNonce || !window.fetch) {
+			return Promise.reject(new Error('Layero account AJAX is unavailable.'));
+		}
+
+		var body = new window.FormData();
+		body.append('action', action);
+		body.append('nonce', config.accountNonce);
+		Object.keys(data || {}).forEach(function (key) {
+			body.append(key, data[key]);
+		});
+
+		return window.fetch(config.ajaxUrl, {
+			method: 'POST',
+			credentials: 'same-origin',
+			body: body
+		}).then(function (response) {
+			return response.json().then(function (payload) {
+				if (!response.ok || !payload || !payload.success) {
+					throw new Error(payload && payload.data && payload.data.message ? payload.data.message : 'Layero account request failed.');
+				}
+				return payload.data || {};
+			});
+		});
+	}
 
 	function initSlider(root) {
 		if (root.dataset.layeroSliderReady === '1') return;
@@ -127,9 +161,62 @@
 	}
 
 	function wishSet(items) {
+		items = (Array.isArray(items) ? items : []).map(String).filter(function (item, index, all) {
+			return item && all.indexOf(item) === index;
+		});
 		try {
 			window.localStorage.setItem(WISH_KEY, JSON.stringify(items));
 		} catch (error) {}
+	}
+
+	function wishOwnerGet() {
+		try { return String(window.localStorage.getItem(WISH_OWNER_KEY) || ''); } catch (error) { return ''; }
+	}
+
+	function wishOwnerSet(owner) {
+		try {
+			if (owner) window.localStorage.setItem(WISH_OWNER_KEY, String(owner));
+			else window.localStorage.removeItem(WISH_OWNER_KEY);
+		} catch (error) {}
+	}
+
+	function bootstrapWishlist() {
+		if (wishlistBootPromise) return wishlistBootPromise;
+
+		var config = accountConfig();
+		var owner = wishOwnerGet();
+		var userId = String(config.userId || '');
+		var merged = wishGet();
+		if (!config.isLoggedIn && owner) {
+			merged = [];
+			wishOwnerSet('');
+		} else if (config.isLoggedIn && owner && owner !== userId) {
+			merged = [];
+		}
+		(Array.isArray(config.favoriteIds) ? config.favoriteIds : []).map(String).forEach(function (id) {
+			if (id && merged.indexOf(id) === -1) merged.push(id);
+		});
+		wishSet(merged);
+		if (config.isLoggedIn) wishOwnerSet(userId);
+		refreshWishButtons(document);
+		refreshFavoritesGrid(document);
+
+		if (!config.isLoggedIn) {
+			wishlistBootPromise = Promise.resolve(merged);
+			return wishlistBootPromise;
+		}
+
+		wishlistBootPromise = accountRequest('layero_sync_favorites', { ids: JSON.stringify(merged) })
+			.then(function (result) {
+				var ids = Array.isArray(result.ids) ? result.ids.map(String) : merged;
+				wishSet(ids);
+				refreshWishButtons(document);
+				refreshFavoritesGrid(document);
+				return ids;
+			})
+			.catch(function () { return merged; });
+
+		return wishlistBootPromise;
 	}
 
 	function refreshWishButtons(context) {
@@ -140,6 +227,9 @@
 			button.classList.toggle('is-on', active);
 			button.classList.toggle('is-active', active);
 			button.setAttribute('aria-pressed', active ? 'true' : 'false');
+			if (accountConfig().i18n) {
+				button.setAttribute('aria-label', active ? accountConfig().i18n.favoriteRemove : accountConfig().i18n.favoriteAdd);
+			}
 		});
 	}
 
@@ -174,10 +264,81 @@
 				wishSet(items);
 				refreshWishButtons(document);
 				refreshFavoritesGrid(document);
+
+				if (!accountConfig().isLoggedIn) {
+					refreshFavoritesWidgets(document, true);
+					return;
+				}
+
+				wishQueue = wishQueue
+					.then(function () { return bootstrapWishlist(); })
+					.then(function () {
+						return accountRequest('layero_toggle_favorite', { product_id: id });
+					})
+					.then(function (result) {
+						if (Array.isArray(result.ids)) wishSet(result.ids);
+						refreshWishButtons(document);
+						refreshFavoritesGrid(document);
+						refreshFavoritesWidgets(document, true);
+					})
+					.catch(function () {
+						refreshFavoritesWidgets(document, true);
+					});
 			});
 		});
-		refreshWishButtons(context || document);
-		refreshFavoritesGrid(context || document);
+		bootstrapWishlist().then(function () {
+			refreshWishButtons(context || document);
+			refreshFavoritesGrid(context || document);
+		});
+	}
+
+	function loadFavoritesWidget(root, force) {
+		if (!root) return;
+		if (!force && root.dataset.layeroFavoritesReady === '1') return;
+		root.dataset.layeroFavoritesReady = '1';
+		var grid = root.querySelector('[data-layero-favorites-grid-target]');
+		var empty = root.querySelector('[data-layero-favorites-widget-empty]');
+		var count = root.querySelector('[data-layero-favorites-count]');
+		var status = root.querySelector('[data-layero-favorites-status]');
+		if (!grid) return;
+
+		root.classList.add('is-loading');
+		if (status) status.textContent = accountConfig().i18n && accountConfig().i18n.favoritesLoading ? accountConfig().i18n.favoritesLoading : '';
+		accountRequest('layero_load_favorites', {
+			ids: JSON.stringify(wishGet()),
+			limit: parseInt(root.getAttribute('data-limit'), 10) || 100
+		}).then(function (result) {
+			if (Array.isArray(result.ids)) wishSet(result.ids);
+			grid.innerHTML = result.html || '';
+			if (count) count.textContent = String(result.count || 0);
+			if (empty) empty.hidden = (result.count || 0) > 0;
+			if (status) status.textContent = '';
+			root.classList.remove('is-loading');
+			initWishlist(grid);
+		}).catch(function () {
+			root.classList.remove('is-loading');
+			if (status) status.textContent = accountConfig().i18n && accountConfig().i18n.favoritesError ? accountConfig().i18n.favoritesError : '';
+		});
+	}
+
+	function refreshFavoritesWidgets(context, force) {
+		(context || document).querySelectorAll('[data-layero-favorites-widget]').forEach(function (root) {
+			loadFavoritesWidget(root, force);
+		});
+	}
+
+	function upgradeLegacyFavoritesMount(context) {
+		(context || document).querySelectorAll('#sh-wish-mount').forEach(function (mount) {
+			mount.removeAttribute('id');
+			mount.className = (mount.className + ' lyr-favorites').trim();
+			mount.setAttribute('data-layero-favorites-widget', '');
+			mount.setAttribute('data-limit', '100');
+			mount.innerHTML = '<div class="shop-wrap">' +
+				'<header class="lyr-account-section-head"><div><span class="lyr-eyebrow">Mentett termékek</span><h1>Kedvenc termékeim</h1></div><b data-layero-favorites-count>0</b></header>' +
+				'<div class="sh-prod-grid lyr-product-grid lyr-favorites-grid" data-layero-favorites-grid-target></div>' +
+				'<div class="lyr-account-empty" data-layero-favorites-widget-empty><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 20s-7-4.6-9.3-9.2A5.2 5.2 0 0 1 12 6.1a5.2 5.2 0 0 1 9.3 4.7C19 15.4 12 20 12 20Z"/></svg><h3>Még nincs kedvenc terméked.</h3><p>A termékkártyák szív ikonjával menthetsz ide termékeket.</p><a class="lyr-btn lyr-btn--primary" href="' + escapeHtml(accountConfig().productsUrl || '/termekek/') + '">Termékek böngészése</a></div>' +
+				'<p class="lyr-favorites-status" data-layero-favorites-status aria-live="polite"></p></div>';
+		});
 	}
 
 	function escapeHtml(value) {
@@ -508,6 +669,7 @@
 	}
 
 	function boot(context) {
+		upgradeLegacyFavoritesMount(context || document);
 		(context || document).querySelectorAll('[data-layero-slider]').forEach(initSlider);
 		(context || document).querySelectorAll('[data-layero-quiz]').forEach(initQuiz);
 		(context || document).querySelectorAll('[data-layero-carousel]').forEach(initCarousel);
@@ -515,6 +677,7 @@
 		(context || document).querySelectorAll('[data-layero-newsletter]').forEach(initNewsletter);
 		(context || document).querySelectorAll('.lyr-mini-cart').forEach(initMiniCart);
 		initWishlist(context || document);
+		bootstrapWishlist().then(function () { refreshFavoritesWidgets(context || document, false); });
 	}
 
 	document.addEventListener('DOMContentLoaded', function () { boot(document); });

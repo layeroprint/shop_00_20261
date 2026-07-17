@@ -63,6 +63,14 @@ class Static_Page extends Base_Widget {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$page = sanitize_key($settings['page'] ?? 'home');
+		if ('fiok' === $page) {
+			echo do_shortcode('[layero_account]'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			return;
+		}
+		if ('kedvencek' === $page) {
+			echo do_shortcode('[layero_favorites]'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			return;
+		}
 		$html = $this->get_static_body($page);
 
 		echo '<div class="layero-static-page" data-layero-page="' . esc_attr($page) . '">';

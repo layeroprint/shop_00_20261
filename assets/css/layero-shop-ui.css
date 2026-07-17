@@ -1838,3 +1838,630 @@
 [data-lyr-spotlight-items] {
 	display: none;
 }
+
+/* ── Layero customer account ─────────────────────────────────────────── */
+
+.lyr-account-shell,
+.lyr-account-dashboard,
+.lyr-orders,
+.lyr-favorites,
+.lyr-account-details {
+	--lyr-account-accent: var(--accent, #0a7c92);
+	color: var(--ink, #15171a);
+}
+
+.lyr-account-layout {
+	display: grid;
+	grid-template-columns: minmax(230px, 280px) minmax(0, 1fr);
+	gap: clamp(24px, 4vw, 48px);
+	align-items: start;
+}
+
+.lyr-account-sidebar {
+	display: grid;
+	gap: 16px;
+	position: sticky;
+	top: 88px;
+}
+
+.lyr-account-profile {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 16px;
+	border: 1px solid var(--line, #dfe3e6);
+	border-radius: var(--r-md, 14px);
+	background: var(--card, #fff);
+}
+
+.lyr-account-profile img {
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.lyr-account-profile div {
+	min-width: 0;
+}
+
+.lyr-account-profile strong,
+.lyr-account-profile span {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.lyr-account-profile strong {
+	font-size: 0.92rem;
+}
+
+.lyr-account-profile span {
+	margin-top: 3px;
+	color: var(--muted, #69737d);
+	font-size: 0.72rem;
+}
+
+.lyr-account-nav {
+	display: grid;
+	overflow: hidden;
+	border: 1px solid var(--line, #dfe3e6);
+	border-radius: var(--r-md, 14px);
+	background: var(--card, #fff);
+}
+
+.lyr-account-nav a {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 48px;
+	padding: 11px 15px 11px 13px;
+	border-bottom: 1px solid var(--line, #dfe3e6);
+	border-left: 3px solid transparent;
+	color: var(--ink, #15171a);
+	font-size: 0.84rem;
+	font-weight: 600;
+	text-decoration: none;
+	transition: background 0.2s ease, color 0.2s ease;
+}
+
+.lyr-account-nav a:last-child {
+	border-bottom: 0;
+}
+
+.lyr-account-nav a:hover,
+.lyr-account-nav a.is-active {
+	background: var(--surface, #f4f6f7);
+	color: var(--lyr-account-accent);
+}
+
+.lyr-account-nav a.is-active {
+	border-left-color: currentColor;
+}
+
+.lyr-account-nav svg {
+	width: 18px;
+	height: 18px;
+	flex: 0 0 auto;
+}
+
+.lyr-account-heading {
+	margin-bottom: clamp(22px, 3vw, 34px);
+}
+
+.lyr-account-heading h2 {
+	margin: 5px 0 8px;
+	font-size: clamp(1.8rem, 4vw, 2.8rem);
+	font-weight: 750;
+	letter-spacing: -0.045em;
+	line-height: 1.08;
+}
+
+.lyr-account-heading p {
+	max-width: 65ch;
+	color: var(--muted, #69737d);
+	font-size: 0.94rem;
+	line-height: 1.65;
+}
+
+.lyr-account-stats {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 12px;
+	margin-bottom: clamp(28px, 4vw, 42px);
+}
+
+.lyr-account-stat {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+	padding: 16px;
+	border: 1px solid var(--line, #dfe3e6);
+	border-radius: var(--r-md, 14px);
+	background: var(--card, #fff);
+	color: var(--ink, #15171a);
+	text-decoration: none;
+	transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lyr-account-stat:hover {
+	transform: translateY(-2px);
+	border-color: var(--lyr-account-accent);
+	box-shadow: var(--shadow, 0 10px 28px rgba(0, 0, 0, 0.08));
+}
+
+.lyr-account-stat > span,
+.lyr-account-detail-icon {
+	display: grid;
+	place-items: center;
+	width: 38px;
+	height: 38px;
+	flex: 0 0 auto;
+	border-radius: 50%;
+	background: var(--accent-soft, #dff5f8);
+	color: var(--lyr-account-accent);
+}
+
+.lyr-account-stat svg,
+.lyr-account-detail-icon svg {
+	width: 19px;
+	height: 19px;
+}
+
+.lyr-account-stat div {
+	min-width: 0;
+}
+
+.lyr-account-stat small,
+.lyr-account-stat strong {
+	display: block;
+	white-space: nowrap;
+}
+
+.lyr-account-stat small {
+	color: var(--muted, #69737d);
+	font-size: 0.67rem;
+	font-weight: 650;
+	letter-spacing: 0.02em;
+}
+
+.lyr-account-stat strong {
+	margin-top: 3px;
+	font-size: 1.05rem;
+	font-weight: 750;
+}
+
+.lyr-account-stat strong .woocommerce-Price-currencySymbol {
+	font-size: 0.75em;
+}
+
+.lyr-account-section-head {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 18px;
+	margin: 0 0 18px;
+}
+
+.lyr-account-section-head h2,
+.lyr-account-section-head h3 {
+	margin: 3px 0 0;
+	font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+	font-weight: 750;
+	letter-spacing: -0.035em;
+}
+
+.lyr-account-section-head > a,
+.lyr-account-detail-grid article > a {
+	color: var(--lyr-account-accent);
+	font-size: 0.79rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.lyr-account-section-head > b {
+	display: grid;
+	place-items: center;
+	min-width: 32px;
+	height: 32px;
+	padding: 0 9px;
+	border-radius: 999px;
+	background: var(--accent-soft, #dff5f8);
+	color: var(--lyr-account-accent);
+	font-size: 0.8rem;
+}
+
+.lyr-orders > h2,
+.lyr-account-details > h2 {
+	margin: 0 0 18px;
+	font-size: clamp(1.35rem, 2.6vw, 1.8rem);
+	letter-spacing: -0.035em;
+}
+
+.lyr-orders-list {
+	display: grid;
+	gap: 14px;
+}
+
+.lyr-order-card {
+	overflow: hidden;
+	border: 1px solid var(--line, #dfe3e6);
+	border-radius: var(--r-md, 14px);
+	background: var(--card, #fff);
+}
+
+.lyr-order-card > header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 17px;
+	border-bottom: 1px solid var(--line, #dfe3e6);
+	background: var(--surface, #f4f6f7);
+}
+
+.lyr-order-card > header strong,
+.lyr-order-card > header span {
+	display: block;
+}
+
+.lyr-order-card > header strong {
+	font-size: 0.89rem;
+}
+
+.lyr-order-card > header div > span {
+	margin-top: 2px;
+	color: var(--muted, #69737d);
+	font-size: 0.71rem;
+}
+
+.lyr-order-status {
+	padding: 5px 10px;
+	border-radius: 999px;
+	background: var(--accent-soft, #dff5f8);
+	color: var(--lyr-account-accent);
+	font-size: 0.65rem;
+	font-weight: 750;
+	letter-spacing: 0.045em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.lyr-order-status--completed {
+	background: #e2f5e8;
+	color: #267143;
+}
+
+.lyr-order-status--cancelled,
+.lyr-order-status--failed,
+.lyr-order-status--refunded {
+	background: #fde9e8;
+	color: #a23b35;
+}
+
+.lyr-order-card-body {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 15px 17px;
+}
+
+.lyr-order-thumbs {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	min-height: 48px;
+}
+
+.lyr-order-thumbs span {
+	display: block;
+}
+
+.lyr-order-thumbs img {
+	display: block;
+	width: 48px;
+	height: 48px;
+	object-fit: cover;
+	border: 1px solid var(--line, #dfe3e6);
+	border-radius: 8px;
+	background: var(--surface, #f4f6f7);
+}
+
+.lyr-order-total {
+	text-align: right;
+}
+
+.lyr-order-total span,
+.lyr-order-total strong {
+	display: block;
+}
+
+.lyr-order-total span {
+	color: var(--muted, #69737d);
+	font-size: 0.72rem;
+}
+
+.lyr-order-total strong {
+	margin-top: 2px;
+	font-size: 0.98rem;
+}
+
+.lyr-order-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 0 17px 16px;
+}
+
+.lyr-order-actions .lyr-btn {
+	min-height: 36px;
+	padding: 8px 13px;
+	font-size: 0.72rem;
+}
+
+.lyr-account-details {
+	margin-top: clamp(28px, 4vw, 42px);
+}
+
+.lyr-account-detail-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 13px;
+}
+
+.lyr-account-detail-grid article {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	min-width: 0;
+	padding: 18px;
+	border: 1px solid var(--line, #dfe3e6);
+	border-radius: var(--r-md, 14px);
+	background: var(--card, #fff);
+}
+
+.lyr-account-detail-grid h3 {
+	margin: 13px 0 7px;
+	font-size: 0.94rem;
+}
+
+.lyr-account-detail-grid p,
+.lyr-account-detail-grid address {
+	margin: 0 0 14px;
+	color: var(--muted, #69737d);
+	font-size: 0.78rem;
+	font-style: normal;
+	line-height: 1.55;
+}
+
+.lyr-account-detail-grid article > a {
+	margin-top: auto;
+}
+
+.lyr-favorites-grid {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.lyr-favorites-status {
+	min-height: 20px;
+	margin: 10px 0 0;
+	color: var(--muted, #69737d);
+	font-size: 0.76rem;
+}
+
+.lyr-favorites.is-loading .lyr-favorites-grid {
+	opacity: 0.45;
+	pointer-events: none;
+}
+
+.lyr-account-empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 220px;
+	padding: 34px 20px;
+	border: 1px dashed var(--line, #dfe3e6);
+	border-radius: var(--r-md, 14px);
+	background: var(--surface, #f4f6f7);
+	text-align: center;
+}
+
+.lyr-account-empty[hidden] {
+	display: none;
+}
+
+.lyr-account-empty > svg {
+	width: 34px;
+	height: 34px;
+	margin-bottom: 12px;
+	color: var(--lyr-account-accent);
+}
+
+.lyr-account-empty h3 {
+	margin: 0 0 7px;
+	font-size: 1.05rem;
+}
+
+.lyr-account-empty p {
+	max-width: 50ch;
+	margin: 0 0 17px;
+	color: var(--muted, #69737d);
+	font-size: 0.82rem;
+	line-height: 1.55;
+}
+
+/* Existing WooCommerce My Account remains the canonical form/endpoint layer. */
+.layero-account-page .woocommerce {
+	width: 100%;
+}
+
+.layero-account-page .woocommerce::after {
+	display: table;
+	clear: both;
+	content: '';
+}
+
+.layero-account-page .woocommerce-MyAccount-navigation {
+	width: 24%;
+}
+
+.layero-account-page .woocommerce-MyAccount-navigation ul {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	border: 1px solid var(--line, #dfe3e6);
+	border-radius: var(--r-md, 14px);
+	background: var(--card, #fff);
+	list-style: none;
+}
+
+.layero-account-page .woocommerce-MyAccount-navigation li {
+	margin: 0;
+	border-bottom: 1px solid var(--line, #dfe3e6);
+}
+
+.layero-account-page .woocommerce-MyAccount-navigation li:last-child {
+	border-bottom: 0;
+}
+
+.layero-account-page .woocommerce-MyAccount-navigation a {
+	display: block;
+	padding: 13px 16px;
+	color: var(--ink, #15171a);
+	font-size: 0.83rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.layero-account-page .woocommerce-MyAccount-navigation li:hover a,
+.layero-account-page .woocommerce-MyAccount-navigation li.is-active a {
+	background: var(--surface, #f4f6f7);
+	color: var(--lyr-account-accent, var(--accent, #0a7c92));
+}
+
+.layero-account-page .woocommerce-MyAccount-content {
+	width: 72%;
+}
+
+.layero-account-dashboard-active .woocommerce-MyAccount-content > p {
+	display: none;
+}
+
+.layero-account-page .woocommerce form,
+.lyr-account-auth .woocommerce form {
+	padding: clamp(20px, 3vw, 32px);
+	border: 1px solid var(--line, #dfe3e6);
+	border-radius: var(--r-md, 14px);
+	background: var(--card, #fff);
+}
+
+.layero-account-page .woocommerce input.input-text,
+.layero-account-page .woocommerce select,
+.layero-account-page .woocommerce textarea,
+.lyr-account-auth .woocommerce input.input-text {
+	width: 100%;
+	min-height: 44px;
+	padding: 10px 12px;
+	border: 1px solid var(--line, #dfe3e6);
+	border-radius: 8px;
+	background: var(--card, #fff);
+}
+
+.layero-account-page .woocommerce button.button,
+.layero-account-page .woocommerce a.button,
+.lyr-account-auth .woocommerce button.button {
+	min-height: 42px;
+	padding: 10px 17px;
+	border: 0;
+	border-radius: 8px;
+	background: var(--ink, #15171a);
+	color: #fff;
+	font-weight: 650;
+}
+
+.layero-account-page .woocommerce table.shop_table {
+	overflow: hidden;
+	border: 1px solid var(--line, #dfe3e6);
+	border-radius: var(--r-md, 14px);
+	background: var(--card, #fff);
+}
+
+@media (max-width: 1024px) {
+	.lyr-account-stats {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.lyr-account-detail-grid,
+	.lyr-favorites-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 860px) {
+	.lyr-account-layout {
+		grid-template-columns: 1fr;
+	}
+
+	.lyr-account-sidebar {
+		position: static;
+	}
+
+	.layero-account-page .woocommerce-MyAccount-navigation,
+	.layero-account-page .woocommerce-MyAccount-content {
+		float: none;
+		width: 100%;
+	}
+
+	.layero-account-page .woocommerce-MyAccount-navigation {
+		margin-bottom: 26px;
+	}
+
+	.layero-account-page .woocommerce-MyAccount-navigation ul {
+		display: flex;
+		overflow-x: auto;
+	}
+
+	.layero-account-page .woocommerce-MyAccount-navigation li {
+		flex: 0 0 auto;
+		border-right: 1px solid var(--line, #dfe3e6);
+		border-bottom: 0;
+	}
+}
+
+@media (max-width: 600px) {
+	.lyr-account-stats,
+	.lyr-account-detail-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.lyr-favorites-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.lyr-order-card > header,
+	.lyr-order-card-body {
+		align-items: flex-start;
+	}
+
+	.lyr-order-card-body {
+		flex-direction: column;
+	}
+
+	.lyr-order-total {
+		text-align: left;
+	}
+
+	.lyr-account-section-head {
+		align-items: flex-start;
+	}
+}
+
+@media (max-width: 420px) {
+	.lyr-favorites-grid {
+		grid-template-columns: 1fr;
+	}
+}

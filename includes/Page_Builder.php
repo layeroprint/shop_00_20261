@@ -370,7 +370,11 @@ final class Page_Builder {
 
 	private static function favorites_data() {
 		return array(
-			self::html_section('<div id="sh-wish-mount"></div>'),
+			self::wrap_in_section(array(self::make_widget('layero_favorite_products', array(
+				'title' => 'Kedvenc termékeim',
+				'empty_text' => 'A termékkártyák szív ikonjával menthetsz ide termékeket.',
+				'limit' => 100,
+			)))),
 		);
 	}
 
@@ -495,7 +499,7 @@ final class Page_Builder {
 		);
 
 		$sections[] = self::wrap_in_section(array(self::make_widget('shortcode', array(
-			'shortcode' => '[woocommerce_my_account]',
+			'shortcode' => '[layero_account]',
 		))));
 
 		return $sections;
