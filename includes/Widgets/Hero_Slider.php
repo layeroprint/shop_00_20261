@@ -180,7 +180,7 @@ class Hero_Slider extends Base_Widget {
 		?>
 		<section class="sh-slider" id="sh-slider" data-hero-style="<?php echo esc_attr($hero_style); ?>" aria-label="<?php esc_attr_e('Kiemelt ajánlatok', 'layero-shop-ui'); ?>">
 			<?php foreach ($slides as $index => $slide) : ?>
-				<?php $this->render_slide($slide, $index, 'h1' === $title_tag && $index > 0 ? 'h2' : $title_tag); ?>
+				<?php $this->render_slide($slide, $index, 0 === $index ? 'h1' : ('h1' === $title_tag ? 'h2' : $title_tag)); ?>
 			<?php endforeach; ?>
 			<?php if ('yes' === ($settings['show_arrows'] ?? 'yes') && count($slides) > 1) : ?>
 				<button class="sh-slider__nav sh-slider__nav--prev" type="button" data-slide-prev aria-label="<?php esc_attr_e('Előző', 'layero-shop-ui'); ?>">&lsaquo;</button>

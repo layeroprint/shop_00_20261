@@ -654,6 +654,84 @@
 		});
 	}
 
+	function initCorporateForm(form) {
+		if (form.dataset.layeroCorporateReady === '1') return;
+		form.dataset.layeroCorporateReady = '1';
+
+		var status = form.querySelector('[data-layero-corporate-status]');
+		var submit = form.querySelector('button[type="submit"]');
+		var originalText = submit ? submit.textContent : '';
+
+		function showStatus(message, type) {
+			if (!status) return;
+			status.textContent = message || '';
+			status.className = 'lyr-corp-form__status is-visible ' + ('success' === type ? 'is-success' : 'is-error');
+		}
+
+		function validate() {
+			var firstInvalid = null;
+			form.querySelectorAll('input[required], textarea[required], select[required]').forEach(function (field) {
+				var invalid = !field.checkValidity();
+				field.classList.toggle('is-error', invalid);
+				if (invalid && !firstInvalid) firstInvalid = field;
+			});
+			if (firstInvalid) firstInvalid.focus();
+			return !firstInvalid;
+		}
+
+		form.addEventListener('input', function (event) {
+			if (event.target && event.target.checkValidity && event.target.checkValidity()) event.target.classList.remove('is-error');
+		});
+
+		form.addEventListener('submit', function (event) {
+			event.preventDefault();
+			if (!validate()) {
+				showStatus('Kérjük, töltsd ki a kötelező mezőket.', 'error');
+				return;
+			}
+
+			var config = accountConfig();
+			if (!config.ajaxUrl || !config.contactNonce || !window.fetch) {
+				showStatus('Az ajánlatkérés most nem küldhető el. Kérjük, írj a layeroprint@gmail.com címre.', 'error');
+				return;
+			}
+
+			var data = new window.FormData(form);
+			data.append('action', 'layero_contact_submit');
+			data.append('nonce', config.contactNonce);
+			data.append('topic', 'Céges ajánlatkérés');
+
+			if (submit) {
+				submit.disabled = true;
+				submit.textContent = 'Küldés…';
+			}
+			if (status) status.className = 'lyr-corp-form__status';
+
+			window.fetch(config.ajaxUrl, {
+				method: 'POST',
+				credentials: 'same-origin',
+				body: data
+			}).then(function (response) {
+				return response.json().then(function (payload) {
+					if (!response.ok || !payload || !payload.success) {
+						throw new Error(payload && payload.data && payload.data.message ? payload.data.message : 'Az ajánlatkérést most nem sikerült elküldeni.');
+					}
+					return payload.data || {};
+				});
+			}).then(function (payload) {
+				form.reset();
+				showStatus(payload.message || 'Köszönjük! Megkaptuk az ajánlatkérést.', 'success');
+			}).catch(function (error) {
+				showStatus(error.message || 'Az ajánlatkérést most nem sikerült elküldeni.', 'error');
+			}).finally(function () {
+				if (submit) {
+					submit.disabled = false;
+					submit.textContent = originalText;
+				}
+			});
+		});
+	}
+
 	function initMiniCart(root) {
 		if (root.dataset.layeroCartReady === '1') return;
 		root.dataset.layeroCartReady = '1';
@@ -675,6 +753,7 @@
 		(context || document).querySelectorAll('[data-layero-carousel]').forEach(initCarousel);
 		(context || document).querySelectorAll('[data-lyr-spotlight]').forEach(initSpotlight);
 		(context || document).querySelectorAll('[data-layero-newsletter]').forEach(initNewsletter);
+		(context || document).querySelectorAll('[data-layero-corporate-form]').forEach(initCorporateForm);
 		(context || document).querySelectorAll('.lyr-mini-cart').forEach(initMiniCart);
 		initWishlist(context || document);
 		bootstrapWishlist().then(function () { refreshFavoritesWidgets(context || document, false); });

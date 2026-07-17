@@ -144,6 +144,7 @@ class Static_Page extends Base_Widget {
 
 		$page_map = array(
 			'index.html' => home_url('/'),
+			'cegeknek.html' => home_url('/cegeknek/'),
 			'kategoria.html' => home_url('/termekek/'),
 			'rolunk.html' => home_url('/rolunk/'),
 			'gyik.html' => home_url('/gyik/'),

@@ -63,7 +63,7 @@ final class Shop_Content {
 			array('icon' => 'bulb', 'label' => 'Neki — fénnyel', 'url' => array('url' => '/termekek/?cat=lampak')),
 			array('icon' => 'home', 'label' => 'Otthonra', 'url' => array('url' => '/termekek/?cat=dekoraciok')),
 			array('icon' => 'gift', 'label' => 'Ünnepre', 'url' => array('url' => '/termekek/?cat=szezonalis')),
-			array('icon' => 'briefcase', 'label' => 'Cégeknek', 'url' => array('url' => '/termekek/?cat=ceges')),
+			array('icon' => 'briefcase', 'label' => 'Cégeknek', 'url' => array('url' => '/cegeknek/')),
 		);
 	}
 
@@ -266,7 +266,7 @@ final class Shop_Content {
 			array('image' => array('url' => self::asset_url('termekvilag/hero_slider/layero-asset-0011.webp')), 'alt' => 'Dínós henger-lámpa', 'url' => array('url' => '/termekek/?cat=lampak')),
 			array('image' => array('url' => self::asset_url('termekvilag/hero_slider/layero-asset-0012.webp')), 'alt' => 'Fan-art világító logó', 'url' => array('url' => '/termekek/?cat=rajongoi')),
 			array('image' => array('url' => self::asset_url('termekvilag/hero_slider/layero-asset-0020.webp')), 'alt' => 'Tulipán üvegcső-váza', 'url' => array('url' => '/termekek/?cat=dekoraciok')),
-			array('image' => array('url' => self::asset_url('termekvilag/hero_slider/layero-asset-0022.webp')), 'alt' => 'QR + NFC display', 'url' => array('url' => '/termekek/?cat=ceges')),
+			array('image' => array('url' => self::asset_url('termekvilag/hero_slider/layero-asset-0022.webp')), 'alt' => 'QR + NFC display', 'url' => array('url' => '/cegeknek/')),
 			array('image' => array('url' => self::asset_url('termekvilag/hero_slider/layero-asset-0027.webp')), 'alt' => 'Logós kulcstartó', 'url' => array('url' => '/termekek/?cat=kulcstartok')),
 		);
 	}

@@ -93,6 +93,7 @@ final class Assets {
 					'productUrls' => $this->product_urls(),
 					'urls' => array(
 						'index.html' => home_url('/'),
+						'cegeknek.html' => home_url('/cegeknek/'),
 						'kategoria.html' => home_url('/termekek/'),
 						'rolunk.html' => home_url('/rolunk/'),
 						'gyik.html' => home_url('/gyik/'),

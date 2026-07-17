@@ -107,6 +107,7 @@ final class Helpers {
 
 		$page_map = array(
 			'index.html' => '/',
+			'cegeknek.html' => '/cegeknek/',
 			'rolunk.html' => '/rolunk/',
 			'gyik.html' => '/gyik/',
 			'kapcsolat.html' => '/kapcsolat/',

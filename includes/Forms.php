@@ -36,6 +36,10 @@ final class Forms {
 		$email = sanitize_email(wp_unslash($_POST['email'] ?? ''));
 		$topic = sanitize_text_field(wp_unslash($_POST['topic'] ?? ''));
 		$message = sanitize_textarea_field(wp_unslash($_POST['message'] ?? ''));
+		$company = sanitize_text_field(wp_unslash($_POST['company'] ?? ''));
+		$phone = sanitize_text_field(wp_unslash($_POST['phone'] ?? ''));
+		$quantity = sanitize_text_field(wp_unslash($_POST['quantity'] ?? ''));
+		$deadline = sanitize_text_field(wp_unslash($_POST['deadline'] ?? ''));
 
 		if ('' === $name || ! is_email($email) || strlen($message) < 10) {
 			wp_send_json_error(array('message' => __('Ellenőrizd a nevet, az e-mail-címet és az üzenetet.', 'layero-shop-ui')), 422);
@@ -53,19 +57,28 @@ final class Forms {
 
 		$site_name = wp_specialchars_decode((string) get_bloginfo('name'), ENT_QUOTES);
 		$subject = sprintf('[%s] %s', $site_name, $topic ?: __('Új kapcsolatfelvétel', 'layero-shop-ui'));
-		$body = implode(
-			"\n",
-			array(
-				__('Új üzenet érkezett a Layero kapcsolati űrlapjáról.', 'layero-shop-ui'),
-				'',
-				__('Név:', 'layero-shop-ui') . ' ' . $name,
-				__('E-mail:', 'layero-shop-ui') . ' ' . $email,
-				__('Téma:', 'layero-shop-ui') . ' ' . ($topic ?: '—'),
-				'',
-				__('Üzenet:', 'layero-shop-ui'),
-				$message,
-			)
+		$body_lines = array(
+			__('Új üzenet érkezett a Layero kapcsolati űrlapjáról.', 'layero-shop-ui'),
+			'',
+			__('Név:', 'layero-shop-ui') . ' ' . $name,
+			__('E-mail:', 'layero-shop-ui') . ' ' . $email,
+			__('Téma:', 'layero-shop-ui') . ' ' . ($topic ?: '—'),
 		);
+		$optional_fields = array(
+			__('Cégnév:', 'layero-shop-ui') => $company,
+			__('Telefonszám:', 'layero-shop-ui') => $phone,
+			__('Darabszám:', 'layero-shop-ui') => $quantity,
+			__('Kívánt határidő:', 'layero-shop-ui') => $deadline,
+		);
+		foreach ($optional_fields as $label => $value) {
+			if ('' !== $value) {
+				$body_lines[] = $label . ' ' . $value;
+			}
+		}
+		$body_lines[] = '';
+		$body_lines[] = __('Üzenet:', 'layero-shop-ui');
+		$body_lines[] = $message;
+		$body = implode("\n", $body_lines);
 		$headers = array(
 			'Content-Type: text/plain; charset=UTF-8',
 			'Reply-To: ' . $name . ' <' . $email . '>',

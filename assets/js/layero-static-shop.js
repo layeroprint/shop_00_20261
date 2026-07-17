@@ -886,7 +886,7 @@
               '</div>' +
             '</div>' +
           '</div>' +
-          '<a href="kategoria.html?cat=ceges">Cégeknek</a>' +
+          '<a href="cegeknek.html">Cégeknek</a>' +
           '<a href="termek.html?id=egyedi-otlet">Egyedi rendelés</a>' +
           '<a href="kapcsolat.html"' + (page === 'kapcsolat' ? ' aria-current="page"' : '') + '>Kapcsolat</a>' +
         '</nav>' +
@@ -945,7 +945,7 @@
         '<div><h4>Layero</h4>' +
           '<a href="rolunk.html">Rólunk</a>' +
           '<a href="fiok.html">Fiókom</a>' +
-          '<a href="kategoria.html?cat=ceges">Cégeknek</a>' +
+          '<a href="cegeknek.html">Cégeknek</a>' +
           '<a href="termek.html?id=egyedi-otlet">Egyedi rendelés</a>' +
           '<a href="kapcsolat.html">Kapcsolat</a>' +
         '</div>' +

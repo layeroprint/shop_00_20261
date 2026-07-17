@@ -200,6 +200,7 @@ final class Page_Builder {
 			array('title' => 'Kedvencek', 'method' => 'favorites_data'),
 			array('title' => '404', 'method' => 'error_404_data'),
 			array('title' => 'Egyedi rendelés', 'slug' => 'egyedi-rendeles', 'method' => 'custom_order_data', 'ensure' => true),
+			array('title' => 'Cégeknek', 'slug' => 'cegeknek', 'method' => 'corporate_data', 'ensure' => true),
 			array('title' => 'Kosár', 'method' => 'cart_data'),
 			array('title' => 'Pénztár', 'method' => 'checkout_data'),
 			array('title' => 'Fiókom', 'method' => 'account_data'),
@@ -377,7 +378,7 @@ final class Page_Builder {
 
 		$faq_html .= '<div class="sh-faq__group" id="ceges"><h2 class="sh-h2">Céges és egyedi rendelés</h2><div class="sh-acc">';
 		$faq_html .= '<details><summary>Van egy ötletem, ami nincs a katalógusban — meg tudjátok csinálni?</summary><div><p>Nagy eséllyel igen — a legjobb darabjaink mind egyedi megkeresésből születtek. Írd le az ötletet (képpel, vázlattal, referenciával), és 24–48 órán belül visszajelzünk, hogy mennyiért és mennyi idő alatt tudjuk megvalósítani. <a href="/egyedi-rendeles/">Indíts egyedi rendelést ›</a></p></div></details>';
-		$faq_html .= '<details><summary>Vállaltok nagyobb, céges mennyiséget?</summary><div><p>Igen, logózott ajándéktárgyakat, QR/NFC displayeket és rendezvényes csomagokat is gyártunk, mennyiségi kedvezménnyel. Nézd meg a <a href="/termekek/?cat=ceges">céges megoldásokat</a>, vagy kérj ajánlatot a darabszámmal.</p></div></details>';
+		$faq_html .= '<details><summary>Vállaltok nagyobb, céges mennyiséget?</summary><div><p>Igen, logózott ajándéktárgyakat, QR/NFC displayeket és rendezvényes csomagokat is gyártunk, mennyiségi kedvezménnyel. Nézd meg a <a href="/cegeknek/">céges megoldásokat</a>, vagy kérj ajánlatot a darabszámmal.</p></div></details>';
 		$faq_html .= '<details><summary>Mennyi egy egyedi darab ára?</summary><div><p>A méret, a komplexitás és az anyag függvénye: egy egyszerűbb egyedi darab jellemzően 100–300 lej, összetettebb projektek egyedi kalkulációval készülnek. Pontos árat az ötlet ismeretében, 24–48 órán belül adunk.</p></div></details>';
 		$faq_html .= '</div></div>';
 
@@ -578,6 +579,59 @@ final class Page_Builder {
 		$sections[] = self::wrap_in_section(array(self::make_widget('shortcode', array(
 			'shortcode' => '[layero_account]',
 		))));
+
+		return $sections;
+	}
+
+	private static function corporate_data() {
+		$sections = array();
+
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_corporate_hero')));
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_corporate_solutions')));
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_corporate_benefits')));
+		$sections[] = self::wrap_in_section(
+			array(
+				self::make_widget(
+					'layero_product_grid',
+					array(
+						'eyebrow' => 'Választható kiindulópontok',
+						'title' => 'Céges termékek. <span>Teljesen a márkádra szabva.</span>',
+						'text' => 'A feltüntetett árak kiinduló árak; mennyiségi rendeléshez egyedi ajánlatot adunk.',
+						'button_text' => 'Ajánlatot kérek',
+						'button_url' => array('url' => '#ceges-ajanlat'),
+						'category' => 'ceges',
+						'collection' => 'all',
+						'limit' => 4,
+						'columns' => '2',
+						'show_excerpt' => 'yes',
+					)
+				),
+			)
+		);
+		$sections[] = self::wrap_in_section(
+			array(
+				self::make_widget(
+					'layero_process_steps',
+					array(
+						'eyebrow' => 'Egy átlátható folyamat',
+						'title' => 'Az első ötlettől <span>a kész céges szériáig.</span>',
+						'text' => 'Minden döntési pontot előre egyeztetünk, így nincs meglepetés a gyártás végén.',
+						'button_text' => 'Projektet indítok',
+						'button_url' => array('url' => '#ceges-ajanlat'),
+						'columns' => '4',
+						'steps' => array(
+							array('number' => '01', 'title' => 'Igényfelmérés', 'text' => 'Leírod a célt, mennyiséget, határidőt és elküldöd az arculati anyagokat.'),
+							array('number' => '02', 'title' => 'Terv és ajánlat', 'text' => 'Pontosítunk, megtervezzük a megoldást és tételes ajánlatot küldünk.'),
+							array('number' => '03', 'title' => 'Jóváhagyás', 'text' => 'Digitális látványtervet vagy igény esetén mintadarabot hagysz jóvá.'),
+							array('number' => '04', 'title' => 'Gyártás és átadás', 'text' => 'Legyártjuk, ellenőrizzük és a megbeszélt csomagolásban átadjuk a szériát.'),
+						),
+					)
+				),
+			)
+		);
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_corporate_quote')));
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_corporate_faq')));
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_trust_bar')));
 
 		return $sections;
 	}

@@ -198,6 +198,10 @@ class Category_Bento extends Base_Widget {
 	}
 
 	private function category_link($slug) {
+		if ('ceges' === $slug) {
+			return home_url('/cegeknek/');
+		}
+
 		if (taxonomy_exists('product_cat')) {
 			$term = get_term_by('slug', $slug, 'product_cat');
 			if ($term && ! is_wp_error($term)) {
