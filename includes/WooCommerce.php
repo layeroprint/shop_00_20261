@@ -24,6 +24,7 @@ final class WooCommerce {
 		add_filter('woocommerce_add_cart_item_data', array($this, 'add_cart_item_data'), 10, 3);
 		add_filter('woocommerce_get_item_data', array($this, 'display_cart_item_data'), 10, 2);
 		add_action('woocommerce_checkout_create_order_line_item', array($this, 'add_order_item_meta'), 10, 4);
+		add_action('rest_api_init', array($this, 'register_analytics_routes'));
 		add_shortcode('layero_mini_cart', array($this, 'mini_cart_shortcode'));
 	}
 
@@ -148,6 +149,13 @@ final class WooCommerce {
 	}
 
 	public function add_order_item_meta($item, $cart_item_key, $values, $order) {
+		$product = isset($values['data']) && is_a($values['data'], 'WC_Product') ? $values['data'] : null;
+		if ($product) {
+			$unit_cost = (float) $product->get_meta('_layero_cost_price', true);
+			if ($unit_cost > 0) {
+				$item->add_meta_data('_layero_cost_at_sale', $unit_cost, true);
+			}
+		}
 		if (empty($values['layero_personalization'])) {
 			return;
 		}
@@ -165,6 +173,107 @@ final class WooCommerce {
 		if (! empty($data['note'])) {
 			$item->add_meta_data(__('Egyedi megjegyzés', 'layero-shop-ui'), $data['note'], true);
 		}
+	}
+
+	public function register_analytics_routes() {
+		register_rest_route(
+			'layero/v1',
+			'/product-analytics',
+			array(
+				'methods' => 'GET',
+				'callback' => array($this, 'get_product_analytics'),
+				'permission_callback' => array($this, 'analytics_permission'),
+				'args' => array(
+					'after' => array('sanitize_callback' => 'sanitize_text_field'),
+					'before' => array('sanitize_callback' => 'sanitize_text_field'),
+				),
+			)
+		);
+	}
+
+	public function analytics_permission() {
+		return current_user_can('manage_woocommerce');
+	}
+
+	private function analytics_order_args($request) {
+		$after = $request->get_param('after');
+		$before = $request->get_param('before');
+		$args = array(
+			'limit' => -1,
+			'return' => 'objects',
+			'status' => array('wc-pending', 'wc-on-hold', 'wc-processing', 'wc-completed', 'wc-cancelled', 'wc-refunded', 'wc-failed'),
+		);
+		if ($after || $before) {
+			$args['date_created'] = ($after ? $after : '1970-01-01') . '...' . ($before ? $before : gmdate('Y-m-d H:i:s'));
+		}
+		return $args;
+	}
+
+	public function get_product_analytics($request) {
+		if (! function_exists('wc_get_orders')) {
+			return new \WP_Error('woocommerce_unavailable', __('A WooCommerce nem érhető el.', 'layero-shop-ui'), array('status' => 503));
+		}
+
+		$orders = array();
+		$daily = array();
+		foreach (wc_get_orders($this->analytics_order_args($request)) as $order) {
+			$status = $order->get_status();
+			$ordered_at = $order->get_date_created();
+			$updated_at = $order->get_date_modified();
+			$order_items = array();
+			foreach ($order->get_items('line_item') as $item_id => $item) {
+				$product = $item->get_product();
+				if (! $product) {
+					continue;
+				}
+				$quantity = (int) $item->get_quantity();
+				$refund = abs((float) $order->get_total_refunded_for_item($item_id));
+				$actual_cost = (float) $item->get_meta('_wc_cog_item_total_cost', true);
+				$estimated_unit = (float) $item->get_meta('_layero_cost_at_sale', true);
+				$row = array(
+					'product_id' => $item->get_product_id(),
+					'variation_id' => $item->get_variation_id() ?: null,
+					'sku' => $product->get_sku(),
+					'quantity' => $quantity,
+					'returned_quantity' => $refund > 0 ? min($quantity, max(1, (int) round($quantity * $refund / max(0.01, (float) $item->get_total())))) : 0,
+					'net_revenue' => (float) $item->get_total(),
+					'discount' => max(0, (float) $item->get_subtotal() - (float) $item->get_total()),
+					'refund' => $refund,
+				);
+				if ($actual_cost > 0) {
+					$row['cost_actual'] = $actual_cost;
+				} elseif ($estimated_unit > 0) {
+					$row['cost_estimated'] = $estimated_unit;
+				}
+				$order_items[] = $row;
+
+				$date = $ordered_at ? $ordered_at->date('Y-m-d') : gmdate('Y-m-d');
+				$key = $date . ':' . $item->get_product_id();
+				if (! isset($daily[$key])) {
+					$daily[$key] = array('date' => $date, 'product_id' => $item->get_product_id(), 'orders' => 0, 'units' => 0, 'net_revenue' => 0, 'refunds' => 0);
+				}
+				$daily[$key]['orders']++;
+				$daily[$key]['units'] += $quantity;
+				$daily[$key]['net_revenue'] += (float) $item->get_total();
+				$daily[$key]['refunds'] += $refund;
+			}
+			$orders[] = array(
+				'external_order_id' => (string) $order->get_id(),
+				'channel' => 'woocommerce',
+				'status' => $status,
+				'currency' => $order->get_currency(),
+				'ordered_at' => $ordered_at ? $ordered_at->date(DATE_ATOM) : gmdate(DATE_ATOM),
+				'source_updated_at' => $updated_at ? $updated_at->date(DATE_ATOM) : null,
+				'items' => $order_items,
+			);
+		}
+
+		return rest_ensure_response(array(
+			'privacy' => 'business_data_only',
+			'orders' => $orders,
+			'daily' => array_values($daily),
+			'generated_at' => gmdate(DATE_ATOM),
+		));
 	}
 
 	public function mini_cart_shortcode() {
