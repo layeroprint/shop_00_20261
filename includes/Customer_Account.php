@@ -16,7 +16,7 @@ final class Customer_Account {
 	const FAVORITES_META = '_layero_favorite_products';
 	const FAVORITES_ENDPOINT = 'layero_favorites';
 	const FAVORITES_SLUG = 'kedvencek';
-	const ROUTES_VERSION = '1';
+	const ROUTES_VERSION = '2';
 	const MAX_FAVORITES = 100;
 
 	private static $instance = null;
@@ -52,7 +52,7 @@ final class Customer_Account {
 	}
 
 	public function register_endpoint() {
-		add_rewrite_endpoint(self::FAVORITES_SLUG, EP_ROOT | EP_PAGES);
+		add_rewrite_endpoint(self::FAVORITES_SLUG, EP_PAGES);
 	}
 
 	public function maybe_flush_routes() {
