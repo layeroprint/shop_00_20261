@@ -1,0 +1,845 @@
+body.layero-account-page {
+  --lp-navy: #061827;
+  --lp-navy-2: #0a2b3c;
+  --lp-teal: #0d91a7;
+  --lp-teal-2: #27b4c5;
+  --lp-cyan: #86edf4;
+  --lp-ink: #10212e;
+  --lp-muted: #667985;
+  --lp-bg: #f2f6f8;
+  --lp-card: #ffffff;
+  --lp-line: #dce7eb;
+  --lp-soft: #eaf7f9;
+  --lp-shadow: 0 18px 48px rgba(6, 24, 39, .09);
+  --lp-shadow-sm: 0 8px 26px rgba(6, 24, 39, .07);
+  background: var(--lp-bg);
+  color: var(--lp-ink);
+}
+
+body.layero-account-page .sh-page-hd {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 190px;
+  padding: 54px 24px 50px;
+  background:
+    radial-gradient(circle at 78% -20%, rgba(134, 237, 244, .28), transparent 34%),
+    linear-gradient(125deg, var(--lp-navy) 0%, #082638 56%, #0b4352 100%);
+  color: #fff;
+}
+
+body.layero-account-page .sh-page-hd::before,
+body.layero-account-page .sh-page-hd::after {
+  position: absolute;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 50%;
+  content: '';
+}
+
+body.layero-account-page .sh-page-hd::before {
+  top: -120px;
+  right: 6%;
+  width: 310px;
+  height: 310px;
+}
+
+body.layero-account-page .sh-page-hd::after {
+  right: 17%;
+  bottom: -170px;
+  width: 240px;
+  height: 240px;
+}
+
+body.layero-account-page .sh-page-hd .shop-wrap {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+body.layero-account-page .sh-page-hd .shop-wrap::before {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--lp-cyan);
+  content: 'LAYERO ÜGYFÉLKÖZPONT';
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+
+body.layero-account-page .sh-page-hd h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2.15rem, 4vw, 3.45rem);
+  font-weight: 800;
+  letter-spacing: -.055em;
+  line-height: 1;
+}
+
+body.layero-account-page .elementor-widget-shortcode,
+body.layero-account-page .elementor-widget-shortcode > .elementor-widget-container {
+  background: var(--lp-bg);
+}
+
+body.layero-account-page .woocommerce {
+  display: grid !important;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 34px;
+  align-items: start;
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: 1240px;
+  min-height: 560px;
+  margin: 0 auto !important;
+  padding: 42px 24px 86px;
+}
+
+body.layero-account-page .woocommerce::before,
+body.layero-account-page .woocommerce::after {
+  display: none !important;
+  content: none !important;
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation {
+  position: sticky;
+  top: 108px;
+  float: none !important;
+  width: auto !important;
+  min-width: 0;
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation ul {
+  overflow: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 22px !important;
+  background: var(--lp-card) !important;
+  box-shadow: var(--lp-shadow-sm);
+  list-style: none;
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation ul::before {
+  display: block;
+  padding: 28px 22px 25px;
+  background:
+    radial-gradient(circle at 90% 0, rgba(134, 237, 244, .22), transparent 38%),
+    linear-gradient(140deg, var(--lp-navy), var(--lp-navy-2));
+  color: #fff;
+  content: 'Személyes fiók\A Rendelések és adatok egy helyen';
+  font-size: .78rem;
+  font-weight: 750;
+  letter-spacing: .015em;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation li {
+  position: relative;
+  margin: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid #edf2f4 !important;
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation li:last-child {
+  border-bottom: 0 !important;
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation a {
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  min-height: 54px;
+  padding: 13px 16px 13px 52px !important;
+  background: transparent !important;
+  color: #263946 !important;
+  font-size: .84rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  transition: background .2s ease, color .2s ease, padding .2s ease;
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation a::before {
+  position: absolute;
+  left: 19px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: #f0f6f7;
+  color: #69808b;
+  content: '•';
+  font-size: 1rem;
+  font-weight: 800;
+  transition: inherit;
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation-link--dashboard a::before { content: '⌂'; }
+body.layero-account-page .woocommerce-MyAccount-navigation-link--orders a::before { content: '□'; }
+body.layero-account-page .woocommerce-MyAccount-navigation-link--downloads a::before { content: '↓'; }
+body.layero-account-page .woocommerce-MyAccount-navigation-link--edit-address a::before { content: '⌖'; }
+body.layero-account-page .woocommerce-MyAccount-navigation-link--edit-account a::before { content: '○'; }
+body.layero-account-page .woocommerce-MyAccount-navigation-link--layero_favorites a::before { content: '♡'; }
+body.layero-account-page .woocommerce-MyAccount-navigation-link--customer-logout a::before { content: '↗'; }
+
+body.layero-account-page .woocommerce-MyAccount-navigation li:hover a,
+body.layero-account-page .woocommerce-MyAccount-navigation li.is-active a {
+  padding-left: 56px !important;
+  background: linear-gradient(90deg, #eaf8fa, #f7fbfc) !important;
+  color: var(--lp-teal) !important;
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation li.is-active::before {
+  position: absolute;
+  z-index: 2;
+  top: 11px;
+  bottom: 11px;
+  left: 0;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(var(--lp-teal-2), var(--lp-teal));
+  content: '';
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation li:hover a::before,
+body.layero-account-page .woocommerce-MyAccount-navigation li.is-active a::before {
+  background: var(--lp-teal);
+  color: #fff;
+  box-shadow: 0 5px 13px rgba(13, 145, 167, .2);
+}
+
+body.layero-account-page .woocommerce-MyAccount-navigation-link--customer-logout a {
+  color: #a84e55 !important;
+}
+
+body.layero-account-page .woocommerce-MyAccount-content {
+  float: none !important;
+  width: auto !important;
+  min-width: 0;
+  color: var(--lp-ink);
+}
+
+body.layero-account-page .lyr-account-heading {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 0 0 22px;
+  padding: clamp(27px, 4vw, 40px);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 86% 10%, rgba(134, 237, 244, .2), transparent 35%),
+    linear-gradient(130deg, var(--lp-navy) 0%, #0a3142 72%, #0b4955 100%);
+  box-shadow: var(--lp-shadow);
+  color: #fff;
+}
+
+body.layero-account-page .lyr-account-heading::after {
+  position: absolute;
+  z-index: -1;
+  right: -62px;
+  bottom: -86px;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(255, 255, 255, .09);
+  border-radius: 50%;
+  content: '';
+}
+
+body.layero-account-page .lyr-account-heading .lyr-eyebrow,
+body.layero-account-page .lyr-account-heading > span {
+  color: var(--lp-cyan) !important;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+body.layero-account-page .lyr-account-heading h2 {
+  margin: 8px 0 10px;
+  color: #fff;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -.055em;
+}
+
+body.layero-account-page .lyr-account-heading p {
+  max-width: 58ch;
+  margin: 0;
+  color: rgba(255, 255, 255, .7);
+  font-size: .94rem;
+  line-height: 1.65;
+}
+
+body.layero-account-page .lyr-account-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 36px;
+}
+
+body.layero-account-page .lyr-account-stat {
+  position: relative;
+  overflow: hidden;
+  min-height: 108px;
+  padding: 19px 17px;
+  border: 1px solid rgba(220, 231, 235, .8);
+  border-radius: 19px;
+  background: var(--lp-card);
+  box-shadow: 0 8px 24px rgba(6, 24, 39, .05);
+}
+
+body.layero-account-page .lyr-account-stat::after {
+  position: absolute;
+  right: -20px;
+  bottom: -28px;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: rgba(13, 145, 167, .055);
+  content: '';
+}
+
+body.layero-account-page .lyr-account-stat:hover {
+  transform: translateY(-4px);
+  border-color: rgba(13, 145, 167, .36);
+  box-shadow: 0 16px 34px rgba(6, 24, 39, .1);
+}
+
+body.layero-account-page .lyr-account-stat > span,
+body.layero-account-page .lyr-account-detail-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #dcf7fa, #eefbfc);
+  color: var(--lp-teal);
+}
+
+body.layero-account-page .lyr-account-stat small {
+  color: #758691;
+  font-size: .66rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+body.layero-account-page .lyr-account-stat strong {
+  margin-top: 5px;
+  color: var(--lp-ink);
+  font-size: 1.24rem;
+  font-weight: 800;
+}
+
+body.layero-account-page .lyr-account-section-head {
+  margin-bottom: 17px;
+}
+
+body.layero-account-page .lyr-account-section-head .lyr-eyebrow {
+  color: var(--lp-teal);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+body.layero-account-page .lyr-account-section-head h2,
+body.layero-account-page .lyr-account-section-head h3,
+body.layero-account-page .lyr-account-details > h2,
+body.layero-account-page .lyr-orders > h2 {
+  color: var(--lp-ink);
+  font-weight: 800;
+  letter-spacing: -.04em;
+}
+
+body.layero-account-page .lyr-account-section-head > a,
+body.layero-account-page .lyr-account-detail-grid article > a {
+  color: var(--lp-teal);
+  font-weight: 800;
+}
+
+body.layero-account-page .lyr-account-empty {
+  min-height: 255px;
+  padding: 40px 24px;
+  border: 1px solid var(--lp-line);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 0, rgba(134, 237, 244, .14), transparent 35%),
+    var(--lp-card);
+  box-shadow: var(--lp-shadow-sm);
+}
+
+body.layero-account-page .lyr-account-empty > svg {
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  border-radius: 13px;
+  background: var(--lp-soft);
+  color: var(--lp-teal);
+}
+
+body.layero-account-page .lyr-account-empty h3 {
+  margin-top: 4px;
+  color: var(--lp-ink);
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+body.layero-account-page .lyr-account-empty p {
+  color: var(--lp-muted);
+}
+
+body.layero-account-page .lyr-btn,
+body.layero-account-page .woocommerce button.button,
+body.layero-account-page .woocommerce a.button {
+  min-height: 46px;
+  padding: 12px 19px;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, var(--lp-teal), #087a90) !important;
+  box-shadow: 0 9px 20px rgba(13, 145, 167, .2);
+  color: #fff !important;
+  font-size: .82rem;
+  font-weight: 800 !important;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+body.layero-account-page .lyr-btn:hover,
+body.layero-account-page .woocommerce button.button:hover,
+body.layero-account-page .woocommerce a.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 13px 26px rgba(13, 145, 167, .26);
+  filter: brightness(1.04);
+}
+
+body.layero-account-page .lyr-account-details {
+  margin-top: 38px;
+}
+
+body.layero-account-page .lyr-account-detail-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+body.layero-account-page .lyr-account-detail-grid article {
+  min-height: 215px;
+  padding: 22px;
+  border: 1px solid var(--lp-line);
+  border-radius: 20px;
+  background: var(--lp-card);
+  box-shadow: 0 8px 24px rgba(6, 24, 39, .045);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+body.layero-account-page .lyr-account-detail-grid article:hover {
+  transform: translateY(-3px);
+  border-color: rgba(13, 145, 167, .28);
+  box-shadow: var(--lp-shadow-sm);
+}
+
+body.layero-account-page .lyr-account-detail-grid h3 {
+  margin: 15px 0 8px;
+  color: var(--lp-ink);
+  font-size: .96rem;
+  font-weight: 800;
+}
+
+body.layero-account-page .lyr-account-detail-grid p,
+body.layero-account-page .lyr-account-detail-grid address {
+  color: var(--lp-muted);
+}
+
+body.layero-account-page .lyr-orders-list {
+  gap: 16px;
+}
+
+body.layero-account-page .lyr-order-card {
+  border: 1px solid var(--lp-line);
+  border-radius: 20px;
+  background: var(--lp-card);
+  box-shadow: var(--lp-shadow-sm);
+}
+
+body.layero-account-page .lyr-order-card > header {
+  padding: 16px 19px;
+  border-bottom: 1px solid var(--lp-line);
+  background: #f6fafb;
+}
+
+body.layero-account-page .lyr-order-card-body {
+  padding: 19px;
+}
+
+body.layero-account-page .lyr-favorites {
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--lp-line);
+  border-radius: 22px;
+  background: var(--lp-card);
+  box-shadow: var(--lp-shadow-sm);
+}
+
+body.layero-account-page .lyr-favorites-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+body.layero-account-page .woocommerce form,
+body.layero-account-page .lyr-account-auth .woocommerce form {
+  margin: 0;
+  padding: clamp(24px, 4vw, 38px);
+  border: 1px solid var(--lp-line);
+  border-radius: 22px;
+  background: var(--lp-card);
+  box-shadow: var(--lp-shadow-sm);
+}
+
+body.layero-account-page form.woocommerce-EditAccountForm::before {
+  display: block;
+  margin: 0 0 24px;
+  color: var(--lp-ink);
+  content: 'Fiókadatok és biztonság';
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -.04em;
+}
+
+body.layero-account-page .woocommerce form .form-row {
+  margin: 0 0 18px;
+}
+
+body.layero-account-page .woocommerce form label {
+  display: block;
+  margin-bottom: 7px;
+  color: #304653;
+  font-size: .79rem;
+  font-weight: 750;
+}
+
+body.layero-account-page .woocommerce form .required {
+  color: #dc5a63;
+}
+
+body.layero-account-page .woocommerce input.input-text,
+body.layero-account-page .woocommerce select,
+body.layero-account-page .woocommerce textarea {
+  min-height: 50px;
+  padding: 12px 14px;
+  border: 1px solid #d6e3e7;
+  border-radius: 12px;
+  background: #fbfdfe;
+  color: var(--lp-ink);
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(6, 24, 39, .025);
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+body.layero-account-page .woocommerce input.input-text:focus,
+body.layero-account-page .woocommerce select:focus,
+body.layero-account-page .woocommerce textarea:focus {
+  border-color: var(--lp-teal);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(13, 145, 167, .1);
+}
+
+body.layero-account-page .woocommerce form em {
+  color: var(--lp-muted);
+  font-size: .75rem;
+}
+
+body.layero-account-page .woocommerce form fieldset {
+  margin: 24px 0;
+  padding: 22px;
+  border: 1px solid var(--lp-line);
+  border-radius: 17px;
+  background: #f6fafb;
+}
+
+body.layero-account-page .woocommerce form fieldset legend {
+  padding: 0 9px;
+  color: var(--lp-ink);
+  font-size: .9rem;
+  font-weight: 800;
+}
+
+body.layero-account-page .woocommerce-Addresses {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+
+body.layero-account-page .woocommerce-Address {
+  float: none !important;
+  width: auto !important;
+  min-height: 220px;
+  padding: 25px;
+  border: 1px solid var(--lp-line);
+  border-radius: 21px;
+  background: var(--lp-card);
+  box-shadow: var(--lp-shadow-sm);
+}
+
+body.layero-account-page .woocommerce-Address-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+body.layero-account-page .woocommerce-Address-title h2 {
+  margin: 0;
+  color: var(--lp-ink);
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+
+body.layero-account-page .woocommerce-Address-title a.edit {
+  float: none;
+  color: var(--lp-teal);
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+body.layero-account-page .woocommerce-Address address {
+  margin-top: 24px;
+  color: var(--lp-muted);
+  font-size: .86rem;
+  font-style: normal;
+  line-height: 1.7;
+}
+
+body.layero-account-page .woocommerce table.shop_table {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--lp-line);
+  border-radius: 20px;
+  background: var(--lp-card);
+  box-shadow: var(--lp-shadow-sm);
+  border-collapse: separate;
+}
+
+body.layero-account-page .woocommerce table.shop_table th {
+  padding: 15px 17px;
+  background: #f5fafb;
+  color: #425761;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+body.layero-account-page .woocommerce table.shop_table td {
+  padding: 16px 17px;
+  border-top-color: var(--lp-line);
+}
+
+body.layero-account-page .woocommerce-info,
+body.layero-account-page .woocommerce-message,
+body.layero-account-page .woocommerce-error {
+  margin: 0 0 20px;
+  padding: 18px 20px 18px 54px;
+  border: 1px solid var(--lp-line);
+  border-top: 0;
+  border-left: 4px solid var(--lp-teal);
+  border-radius: 15px;
+  background: var(--lp-card);
+  box-shadow: var(--lp-shadow-sm);
+  color: #40545f;
+}
+
+body.layero-account-page .woocommerce-info::before,
+body.layero-account-page .woocommerce-message::before {
+  top: 18px;
+  color: var(--lp-teal);
+}
+
+body.woocommerce-orders .woocommerce-MyAccount-content::before,
+body.woocommerce-downloads .woocommerce-MyAccount-content::before,
+body.woocommerce-edit-address .woocommerce-MyAccount-content::before,
+body.woocommerce-edit-account .woocommerce-MyAccount-content::before,
+body.woocommerce-view-order .woocommerce-MyAccount-content::before {
+  display: block;
+  margin: 0 0 18px;
+  color: var(--lp-ink);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -.045em;
+  line-height: 1.15;
+}
+
+body.woocommerce-orders .woocommerce-MyAccount-content::before { content: 'Rendeléseim'; }
+body.woocommerce-downloads .woocommerce-MyAccount-content::before { content: 'Letöltéseim'; }
+body.woocommerce-edit-address .woocommerce-MyAccount-content::before { content: 'Számlázási és szállítási címek'; }
+body.woocommerce-edit-account .woocommerce-MyAccount-content::before { content: 'Személyes adatok'; }
+body.woocommerce-view-order .woocommerce-MyAccount-content::before { content: 'Rendelés részletei'; }
+
+body.layero-account-page :focus-visible {
+  outline: 3px solid rgba(39, 180, 197, .32);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1100px) {
+  body.layero-account-page .woocommerce {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  body.layero-account-page .lyr-account-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.layero-account-page .lyr-account-detail-grid,
+  body.layero-account-page .lyr-favorites-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  body.layero-account-page .woocommerce {
+    display: block !important;
+    padding-top: 28px;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation {
+    position: static;
+    margin: 0 0 26px;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-radius: 19px !important;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation ul::before {
+    grid-column: 1 / -1;
+    padding: 20px 22px;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation li {
+    border-right: 1px solid #edf2f4 !important;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation a {
+    min-height: 50px;
+    padding: 11px 12px 11px 44px !important;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation a::before {
+    left: 13px;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation li:hover a,
+  body.layero-account-page .woocommerce-MyAccount-navigation li.is-active a {
+    padding-left: 47px !important;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation li.is-active::before {
+    top: auto;
+    right: 10px;
+    bottom: 0;
+    left: 10px;
+    width: auto;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+  }
+}
+
+@media (max-width: 640px) {
+  body.layero-account-page .sh-page-hd {
+    min-height: 148px;
+    padding: 38px 18px 34px;
+  }
+
+  body.layero-account-page .sh-page-hd .shop-wrap {
+    padding: 0;
+  }
+
+  body.layero-account-page .woocommerce {
+    padding: 22px 16px 60px;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation ul {
+    display: flex;
+    overflow-x: auto;
+    border-radius: 16px !important;
+    scroll-snap-type: x proximity;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation ul::before {
+    display: none;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation li {
+    flex: 0 0 auto;
+    min-width: 150px;
+    scroll-snap-align: start;
+  }
+
+  body.layero-account-page .lyr-account-heading {
+    padding: 25px 22px;
+    border-radius: 20px;
+  }
+
+  body.layero-account-page .lyr-account-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  body.layero-account-page .lyr-account-stat {
+    min-height: 100px;
+    padding: 15px 13px;
+  }
+
+  body.layero-account-page .lyr-account-stat > span {
+    width: 38px;
+    height: 38px;
+  }
+
+  body.layero-account-page .lyr-account-detail-grid,
+  body.layero-account-page .lyr-favorites-grid,
+  body.layero-account-page .woocommerce-Addresses {
+    grid-template-columns: 1fr;
+  }
+
+  body.layero-account-page .woocommerce form {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  body.layero-account-page .woocommerce form .form-row-first,
+  body.layero-account-page .woocommerce form .form-row-last {
+    float: none;
+    width: 100%;
+  }
+
+  body.layero-account-page .woocommerce form fieldset {
+    padding: 17px 14px;
+  }
+
+  body.layero-account-page .lyr-account-section-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  body.layero-account-page .lyr-order-card > header,
+  body.layero-account-page .lyr-order-card-body {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  body.layero-account-page .lyr-order-total {
+    text-align: left;
+  }
+}
+
+@media (max-width: 430px) {
+  body.layero-account-page .lyr-account-stats {
+    grid-template-columns: 1fr;
+  }
+
+  body.layero-account-page .woocommerce-MyAccount-navigation li {
+    min-width: 138px;
+  }
+}

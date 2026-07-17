@@ -39,6 +39,13 @@ final class Assets {
 			LAYERO_SHOP_UI_VERSION
 		);
 
+		wp_register_style(
+			'layero-account',
+			LAYERO_SHOP_UI_URL . 'assets/css/layero-account.css',
+			array('layero-shop-ui'),
+			LAYERO_SHOP_UI_VERSION
+		);
+
 		wp_register_script(
 			'layero-shop-ui',
 			LAYERO_SHOP_UI_URL . 'assets/js/layero-shop-ui.js',
@@ -67,6 +74,11 @@ final class Assets {
 	public function enqueue() {
 		wp_enqueue_style('layero-shop-ui');
 		wp_enqueue_style('layero-static-shop');
+
+		if (function_exists('is_account_page') && is_account_page()) {
+			wp_enqueue_style('layero-account');
+		}
+
 		wp_enqueue_script('layero-shop-ui');
 		wp_enqueue_script('layero-static-data');
 		wp_enqueue_script('layero-static-shop');
