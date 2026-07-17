@@ -28,11 +28,8 @@ final class Helpers {
 	}
 
 	public static function product_url($product_id = '', $args = array()) {
+		$product_id = sanitize_title($product_id);
 		$query = array();
-
-		if ('' !== $product_id) {
-			$query['id'] = sanitize_title($product_id);
-		}
 
 		foreach ((array) $args as $key => $value) {
 			if ('' !== $value && null !== $value) {
@@ -40,7 +37,20 @@ final class Helpers {
 			}
 		}
 
-		return ! empty($query) ? add_query_arg($query, home_url('/termek/')) : home_url('/termek/');
+		if ('' === $product_id) {
+			return ! empty($query) ? add_query_arg($query, self::products_url()) : self::products_url();
+		}
+
+		if ('egyedi-otlet' === $product_id) {
+			$url = home_url('/egyedi-rendeles/');
+		} else {
+			$product = get_page_by_path($product_id, OBJECT, 'product');
+			$url = $product && 'publish' === $product->post_status
+				? get_permalink($product)
+				: add_query_arg('otlet', $product_id, home_url('/egyedi-rendeles/'));
+		}
+
+		return ! empty($query) ? add_query_arg($query, $url) : $url;
 	}
 
 	public static function normalize_shop_url($url) {

@@ -89,6 +89,8 @@ final class Assets {
 				array(
 					'assetBase' => trailingslashit(LAYERO_SHOP_UI_URL . 'assets/demo'),
 					'homeUrl' => home_url('/'),
+					'customOrderUrl' => home_url('/egyedi-rendeles/'),
+					'productUrls' => $this->product_urls(),
 					'urls' => array(
 						'index.html' => home_url('/'),
 						'kategoria.html' => home_url('/termekek/'),
@@ -100,7 +102,7 @@ final class Assets {
 						'penztar.html' => home_url('/penztar/'),
 						'fiok.html' => home_url('/fiok/'),
 						'kedvencek.html' => home_url('/kedvencek/'),
-						'termek.html' => home_url('/termek/'),
+						'termek.html' => home_url('/termekek/'),
 						'aszf.html' => home_url('/aszf/'),
 						'adatvedelem.html' => home_url('/adatvedelem/'),
 					),
@@ -121,6 +123,7 @@ final class Assets {
 				'userId' => get_current_user_id(),
 				'favoriteIds' => is_user_logged_in() ? Customer_Account::get_favorite_ids() : array(),
 				'accountNonce' => wp_create_nonce('layero_account'),
+				'contactNonce' => wp_create_nonce('layero_contact'),
 				'i18n' => array(
 					'favoritesLoading' => __('Kedvencek betöltése...', 'layero-shop-ui'),
 					'favoritesError' => __('A kedvencek most nem tölthetők be. Kérjük, frissítsd az oldalt.', 'layero-shop-ui'),
@@ -131,5 +134,29 @@ final class Assets {
 				),
 			)
 		);
+	}
+
+	private function product_urls() {
+		$urls = array();
+		$product_ids = get_posts(
+			array(
+				'post_type' => 'product',
+				'post_status' => 'publish',
+				'posts_per_page' => -1,
+				'fields' => 'ids',
+				'no_found_rows' => true,
+				'orderby' => 'none',
+			)
+		);
+
+		foreach ($product_ids as $product_id) {
+			$slug = (string) get_post_field('post_name', $product_id);
+			$url = get_permalink($product_id);
+			if ('' !== $slug && $url) {
+				$urls[$slug] = $url;
+			}
+		}
+
+		return $urls;
 	}
 }

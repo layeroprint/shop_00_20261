@@ -11,6 +11,8 @@ final class Page_Builder {
 	private static $id_counter = 0;
 
 	public static function init() {
+		add_action('init', array(__CLASS__, 'maybe_ensure_required_pages'), 20);
+		add_filter('wp_robots', array(__CLASS__, 'legal_draft_robots'));
 		add_action('admin_action_layero_build_pages', array(__CLASS__, 'handle_build'));
 		add_action('admin_notices', array(__CLASS__, 'admin_notice'));
 		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
@@ -114,6 +116,76 @@ final class Page_Builder {
 		return $results;
 	}
 
+	public static function maybe_ensure_required_pages() {
+		$option_name = 'layero_shop_ui_required_pages_version';
+		if (LAYERO_SHOP_UI_VERSION === get_option($option_name)) {
+			return;
+		}
+
+		$created = false;
+		$complete = true;
+
+		foreach (self::page_definitions() as $cfg) {
+			if (empty($cfg['ensure']) || empty($cfg['slug'])) {
+				continue;
+			}
+
+			if (self::find_page_by_slug($cfg['slug'])) {
+				continue;
+			}
+
+			$post_id = wp_insert_post(
+				array(
+					'post_type' => 'page',
+					'post_status' => 'publish',
+					'post_title' => $cfg['title'],
+					'post_name' => $cfg['slug'],
+					'post_content' => '',
+				),
+				true
+			);
+
+			if (is_wp_error($post_id) || ! $post_id) {
+				$complete = false;
+				continue;
+			}
+
+			$data = call_user_func(array(__CLASS__, $cfg['method']));
+			self::set_elementor_data($post_id, $data);
+			update_post_meta($post_id, '_wp_page_template', 'elementor_canvas');
+			update_post_meta($post_id, '_layero_auto_created', LAYERO_SHOP_UI_VERSION);
+
+			if (! empty($cfg['legal_draft'])) {
+				update_post_meta($post_id, '_layero_legal_draft', '1');
+			}
+
+			$created = true;
+		}
+
+		if ($created) {
+			flush_rewrite_rules(false);
+			if (class_exists('\Elementor\Plugin')) {
+				\Elementor\Plugin::$instance->files_manager->clear_cache();
+			}
+		}
+
+		if ($complete) {
+			update_option($option_name, LAYERO_SHOP_UI_VERSION, false);
+		}
+	}
+
+	public static function legal_draft_robots($robots) {
+		if (function_exists('is_page') && is_page()) {
+			$post_id = get_queried_object_id();
+			if ($post_id && get_post_meta($post_id, '_layero_legal_draft', true)) {
+				$robots['noindex'] = true;
+				$robots['nofollow'] = true;
+			}
+		}
+
+		return $robots;
+	}
+
 	/* ──────────────────────────────────────────────────────────────
 	   Page definitions
 	   ────────────────────────────────────────────────────────────── */
@@ -127,10 +199,12 @@ final class Page_Builder {
 			array('title' => 'Ajándékkereső', 'method' => 'quiz_data'),
 			array('title' => 'Kedvencek', 'method' => 'favorites_data'),
 			array('title' => '404', 'method' => 'error_404_data'),
-			array('title' => 'Egyedi rendelés', 'method' => 'custom_order_data'),
+			array('title' => 'Egyedi rendelés', 'slug' => 'egyedi-rendeles', 'method' => 'custom_order_data', 'ensure' => true),
 			array('title' => 'Kosár', 'method' => 'cart_data'),
 			array('title' => 'Pénztár', 'method' => 'checkout_data'),
 			array('title' => 'Fiókom', 'method' => 'account_data'),
+			array('title' => 'Általános Szerződési Feltételek', 'slug' => 'aszf', 'method' => 'terms_data', 'ensure' => true, 'legal_draft' => true),
+			array('title' => 'Adatvédelmi tájékoztató', 'slug' => 'adatvedelem', 'method' => 'privacy_data', 'ensure' => true, 'legal_draft' => true),
 		);
 	}
 
@@ -392,7 +466,7 @@ final class Page_Builder {
 				'<div class="sh-404__actions">' .
 				'<a class="sh-btn sh-btn--primary" href="/">Vissza a főoldalra</a>' .
 				'<a class="sh-btn sh-btn--ghost" href="/termekek/">Összes termék</a>' .
-				'<a class="sh-btn sh-btn--ghost" href="/ajandekkereso/">Ajándékkereső</a>' .
+				'<a class="sh-btn sh-btn--ghost" href="/kviz/">Ajándékkereső</a>' .
 				'</div>' .
 				'<div class="sh-404__cats" id="sh-404-cats"></div>' .
 				'</section>'
@@ -505,6 +579,26 @@ final class Page_Builder {
 		return $sections;
 	}
 
+	private static function terms_data() {
+		return array(
+			self::wrap_in_section(
+				array(
+					self::make_widget('layero_static_page', array('page' => 'aszf')),
+				)
+			),
+		);
+	}
+
+	private static function privacy_data() {
+		return array(
+			self::wrap_in_section(
+				array(
+					self::make_widget('layero_static_page', array('page' => 'adatvedelem')),
+				)
+			),
+		);
+	}
+
 	/* ══════════════════════════════════════════════════════════════
 	   Helpers
 	   ══════════════════════════════════════════════════════════════ */
@@ -519,6 +613,12 @@ final class Page_Builder {
 		));
 
 		return $query->have_posts() ? $query->posts[0] : null;
+	}
+
+	private static function find_page_by_slug($slug) {
+		$page = get_page_by_path(sanitize_title($slug), OBJECT, 'page');
+
+		return $page instanceof \WP_Post ? $page : null;
 	}
 
 	private static function set_elementor_data($post_id, $data) {

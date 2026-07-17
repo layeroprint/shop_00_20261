@@ -20,11 +20,38 @@
   }
   function normalizePageUrl(value) {
     if (!value || value.charAt(0) === '#' || /^(mailto:|tel:|https?:|data:)/.test(value)) return value;
-    var clean = value.replace(/^\.?\//, '');
+    var clean = value.replace(/^(?:\.{1,2}\/)+/, '').replace(/^\/+/, '');
+    var hash = '';
+    var hashAt = clean.indexOf('#');
+    if (hashAt !== -1) {
+      hash = clean.slice(hashAt);
+      clean = clean.slice(0, hashAt);
+    }
     var parts = clean.split('?');
-    var mapped = STATIC_CFG.urls && STATIC_CFG.urls[parts[0]];
+    var file = parts.shift();
+    var query = parts.join('?');
+
+    if (file === 'termek.html') {
+      var productParams = new URLSearchParams(query);
+      var productId = (productParams.get('id') || '').trim();
+      productParams.delete('id');
+      if (productId) {
+        var productUrl = productId === 'egyedi-otlet'
+          ? STATIC_CFG.customOrderUrl
+          : STATIC_CFG.productUrls && STATIC_CFG.productUrls[productId];
+        if (!productUrl) {
+          var customOrderUrl = STATIC_CFG.customOrderUrl || ((STATIC_CFG.homeUrl || '/') + 'egyedi-rendeles/');
+          productUrl = customOrderUrl + (customOrderUrl.indexOf('?') === -1 ? '?' : '&') +
+            'otlet=' + encodeURIComponent(productId);
+        }
+        var productQuery = productParams.toString();
+        return productUrl + (productQuery ? (productUrl.indexOf('?') === -1 ? '?' : '&') + productQuery : '') + hash;
+      }
+    }
+
+    var mapped = STATIC_CFG.urls && STATIC_CFG.urls[file];
     if (!mapped) return value;
-    return mapped + (parts[1] ? '?' + parts[1] : '');
+    return mapped + (query ? '?' + query : '') + hash;
   }
   function fixStaticUrls(root) {
     $all('img[src]', root).forEach(function (img) {
@@ -43,6 +70,10 @@
     $all('a[href]', root).forEach(function (link) {
       var next = normalizePageUrl(link.getAttribute('href'));
       if (next && next !== link.getAttribute('href')) link.setAttribute('href', next);
+    });
+    $all('form[action]', root).forEach(function (form) {
+      var next = normalizePageUrl(form.getAttribute('action'));
+      if (next && next !== form.getAttribute('action')) form.setAttribute('action', next);
     });
   }
   function prodById(id) {
@@ -1146,7 +1177,7 @@
       var quote = e.target.closest('[data-add-quote]');
       if (quote) {
         e.preventDefault(); e.stopPropagation();
-        window.location.href = 'termek.html?id=' + quote.getAttribute('data-add-quote');
+        window.location.href = normalizePageUrl('termek.html?id=' + quote.getAttribute('data-add-quote'));
       }
     });
   }
@@ -1769,7 +1800,7 @@
           $('[data-f-name]', spot).textContent = p.nev;
           $('[data-f-desc]', spot).textContent = p.leiras;
           $('[data-f-price]', spot).innerHTML = fmtAr(p.ar);
-          fLink.href = 'termek.html?id=' + p.id;
+          fLink.href = normalizePageUrl('termek.html?id=' + p.id);
         }
         function fShow(n) {
           fi = (n + featured.length) % featured.length;
@@ -1801,7 +1832,7 @@
         $('[data-f-name]', spot).textContent = f0.nev;
         $('[data-f-desc]', spot).textContent = f0.leiras;
         $('[data-f-price]', spot).innerHTML = fmtAr(f0.ar);
-        $('[data-f-link]', spot).href = 'termek.html?id=' + f0.id;
+        $('[data-f-link]', spot).href = normalizePageUrl('termek.html?id=' + f0.id);
         $('[data-f-badge]', spot).textContent = featBadge[0];
       }
     }
@@ -2040,7 +2071,11 @@
       if (!b) return;
       active = b.getAttribute('data-cat');
       query = '';
-      history.replaceState(null, '', active === 'all' ? 'kategoria.html' : 'kategoria.html?cat=' + active);
+      history.replaceState(
+        null,
+        '',
+        normalizePageUrl(active === 'all' ? 'kategoria.html' : 'kategoria.html?cat=' + active)
+      );
       draw();
     });
     sortSel.addEventListener('change', draw);
@@ -2727,32 +2762,87 @@
       });
       if (bad) { bad.focus(); return; }
 
-      var btn = $('.sh-ctform__send', form);
-      if (btn) { btn.classList.add('is-busy'); btn.setAttribute('disabled', ''); btn.textContent = 'Küldés…'; }
+      var btn = $('.sh-ctform__send', form) || $('button[type="submit"]', form);
+      var originalButton = btn ? btn.innerHTML : '';
+      var config = window.LayeroShopUI || {};
+      var originalChildren = Array.prototype.slice.call(form.children);
+      var topicField = $('#cf-tema', form);
+      var payload = new URLSearchParams();
+      payload.set('action', 'layero_contact_submit');
+      payload.set('nonce', config.contactNonce || '');
+      payload.set('name', ($('#cf-nev', form) || {}).value || '');
+      payload.set('email', ($('#cf-email', form) || {}).value || '');
+      payload.set('topic', topicField ? topicField.value : '');
+      payload.set('message', msg ? msg.value : '');
+      payload.set('website', '');
 
-      // demo: nincs backend — rövid „küldés" után siker-panel
-      setTimeout(function () {
-        if (fields) fields.hidden = true;
-        var done = document.createElement('div');
-        done.className = 'sh-ct-done';
-        done.innerHTML =
-          '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-            '<circle cx="32" cy="32" r="28"/><path d="m21 33 8 8 15-16"/>' +
-          '</svg>' +
-          '<h2>Köszönjük, megkaptuk!</h2>' +
-          '<p>Az üzeneted megérkezett (demo) — általában 24 órán belül válaszolunk a megadott e-mail címre.</p>' +
-          '<button class="sh-btn sh-btn--ghost" type="button">Új üzenet írása</button>';
-        form.appendChild(done);
-        $('button', done).addEventListener('click', function () {
-          done.remove();
-          form.reset();
-          if (msg && count) count.textContent = '0 / ' + msg.getAttribute('maxlength');
-          if (fields) fields.hidden = false;
-          if (btn) { btn.classList.remove('is-busy'); btn.removeAttribute('disabled'); btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-11 11"/><path d="M22 2 15 22l-4-9-9-4Z"/></svg>Üzenet küldése';
+      if (btn) {
+        btn.classList.add('is-busy');
+        btn.setAttribute('disabled', '');
+        btn.textContent = 'Küldés…';
+      }
+
+      fetch(config.ajaxUrl || '/wp-admin/admin-ajax.php', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        body: payload.toString()
+      })
+        .then(function (response) {
+          return response.json().catch(function () {
+            throw new Error('A szerver válasza nem értelmezhető.');
+          });
+        })
+        .then(function (response) {
+          if (!response || !response.success) {
+            throw new Error(response && response.data && response.data.message
+              ? response.data.message
+              : 'Az üzenetet most nem sikerült elküldeni.');
           }
-          $('#cf-nev', form).focus();
+
+          originalChildren.forEach(function (child) { child.hidden = true; });
+          var done = document.createElement('div');
+          done.className = 'sh-ct-done';
+          done.innerHTML =
+            '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              '<circle cx="32" cy="32" r="28"/><path d="m21 33 8 8 15-16"/>' +
+            '</svg>' +
+            '<h2>Köszönjük, megkaptuk!</h2>' +
+            '<p></p>' +
+            '<button class="sh-btn sh-btn--ghost" type="button">Új üzenet írása</button>';
+          $('p', done).textContent = response.data.message;
+          form.appendChild(done);
+
+          $('button', done).addEventListener('click', function () {
+            done.remove();
+            form.reset();
+            if (msg && count) count.textContent = '0 / ' + msg.getAttribute('maxlength');
+            originalChildren.forEach(function (child) { child.hidden = false; });
+            if (btn) {
+              btn.classList.remove('is-busy');
+              btn.removeAttribute('disabled');
+              btn.innerHTML = originalButton;
+            }
+            var nameField = $('#cf-nev', form);
+            if (nameField) nameField.focus();
+          });
+        })
+        .catch(function (error) {
+          if (btn) {
+            btn.classList.remove('is-busy');
+            btn.removeAttribute('disabled');
+            btn.innerHTML = originalButton;
+          }
+
+          var status = $('.sh-form__status', form);
+          if (!status) {
+            status = document.createElement('p');
+            status.className = 'sh-form__status';
+            status.setAttribute('role', 'alert');
+            form.appendChild(status);
+          }
+          status.textContent = error.message + ' Írhatsz közvetlenül a layeroprint@gmail.com címre is.';
         });
-      }, 650);
     });
   }
 
@@ -3160,13 +3250,13 @@
     // egyedi ötlet + segítség — hoverre kinyíló pill
     var fabIdea = document.createElement('a');
     fabIdea.className = 'sh-fab__btn sh-fab__btn--idea';
-    fabIdea.href = 'termek.html?id=egyedi-otlet';
+    fabIdea.href = normalizePageUrl('termek.html?id=egyedi-otlet');
     fabIdea.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V18h6v-1.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2Z"/><path d="M9.5 21h5"/></svg><i>Egyedi ötletem van</i>';
     fab.appendChild(fabIdea);
 
     var fabHelp = document.createElement('a');
     fabHelp.className = 'sh-fab__btn sh-fab__btn--help';
-    fabHelp.href = 'kapcsolat.html';
+    fabHelp.href = normalizePageUrl('kapcsolat.html');
     fabHelp.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H5.5L3 21l1-3.4A8 8 0 1 1 21 12Z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01"/></svg><i>Segítség</i>';
     fab.appendChild(fabHelp);
 

@@ -39,7 +39,7 @@ final class Shop_Content {
 				'text' => 'Küldd el az ötleted vagy egy referenciaképet — megtervezzük, és egyetlen példányban legyártjuk.',
 				'image' => array('url' => self::asset_url('termekvilag/hero_slider/layero-asset-0010.webp')),
 				'button_text' => 'Ajánlatot kérek',
-				'button_url' => array('url' => '/termek/?id=egyedi-otlet'),
+				'button_url' => array('url' => '/egyedi-rendeles/'),
 				'secondary_text' => '',
 				'secondary_url' => array('url' => ''),
 			),
@@ -276,7 +276,7 @@ final class Shop_Content {
 			'title' => 'Nem találod, amit keresel? Legyártjuk neked.',
 			'text' => 'Egyedi tervezés és gyártás — leírás vagy referenciakép alapján, ajánlatkéréstől a kész darabig.',
 			'button_text' => 'Egyedi rendelést indítok',
-			'button_url' => array('url' => '/termek/?id=egyedi-otlet'),
+			'button_url' => array('url' => '/egyedi-rendeles/'),
 			'image' => array('url' => self::asset_url('termekvilag/hero_slider/layero-asset-0018.webp')),
 		);
 	}

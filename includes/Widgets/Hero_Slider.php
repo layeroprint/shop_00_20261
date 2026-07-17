@@ -149,7 +149,7 @@ class Hero_Slider extends Base_Widget {
 		$this->add_control('title_tag', array(
 			'label' => __('Cím HTML tag', 'layero-shop-ui'),
 			'type' => Controls_Manager::SELECT,
-			'default' => 'h2',
+			'default' => 'h1',
 			'options' => array('h1' => 'H1', 'h2' => 'H2', 'h3' => 'H3'),
 		));
 		$this->add_group_control(
@@ -166,7 +166,7 @@ class Hero_Slider extends Base_Widget {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$slides = ! empty($settings['slides']) ? $settings['slides'] : $this->default_slides();
-		$title_tag = $settings['title_tag'] ?? 'h2';
+		$title_tag = $settings['title_tag'] ?? 'h1';
 		$hero_style = $settings['hero_style'] ?? 'studio';
 		if (! in_array($title_tag, array('h1', 'h2', 'h3'), true)) {
 			$title_tag = 'h2';
@@ -174,10 +174,13 @@ class Hero_Slider extends Base_Widget {
 		if (! in_array($hero_style, array('studio', 'aurora', 'editorial', 'neon', 'sunset'), true)) {
 			$hero_style = 'studio';
 		}
+		if (function_exists('is_front_page') && is_front_page()) {
+			$title_tag = 'h1';
+		}
 		?>
 		<section class="sh-slider" id="sh-slider" data-hero-style="<?php echo esc_attr($hero_style); ?>" aria-label="<?php esc_attr_e('Kiemelt ajánlatok', 'layero-shop-ui'); ?>">
 			<?php foreach ($slides as $index => $slide) : ?>
-				<?php $this->render_slide($slide, $index, $title_tag); ?>
+				<?php $this->render_slide($slide, $index, 'h1' === $title_tag && $index > 0 ? 'h2' : $title_tag); ?>
 			<?php endforeach; ?>
 			<?php if ('yes' === ($settings['show_arrows'] ?? 'yes') && count($slides) > 1) : ?>
 				<button class="sh-slider__nav sh-slider__nav--prev" type="button" data-slide-prev aria-label="<?php esc_attr_e('Előző', 'layero-shop-ui'); ?>">&lsaquo;</button>
@@ -344,7 +347,7 @@ class Hero_Slider extends Base_Widget {
 			array('layout' => 'split', 'eyebrow' => 'Asztali lámpák', 'title' => 'A fény, ami a <em>nevedet</em> mondja.', 'text' => 'Egyedi tervezésű lámpák meleg LED-fénnyel — a te szövegeddel, a te dátumoddal.', 'image' => array('url' => Shop_Content::asset_url('termekvilag/hero_slider/layero-asset-0016.webp')), 'button_text' => 'Lámpák megnézése', 'button_url' => array('url' => '/termekek/?cat=lampak'), 'secondary_text' => 'Összes termék', 'secondary_url' => array('url' => '/termekek/')),
 			array('layout' => 'festive', 'eyebrow' => 'Ünnepi kollekció', 'title' => 'Karácsonyi <em>fény</em>, névre szabva.', 'text' => 'Ünnepi lámpák és mécses-szettek — rendeld időben, hogy biztosan ott legyen a fa alatt.', 'image' => array('url' => Shop_Content::asset_url('termekvilag/hero_slider/layero-asset-0017.webp')), 'button_text' => 'Ünnepi kollekció', 'button_url' => array('url' => '/termekek/?cat=szezonalis'), 'secondary_text' => 'Összes termék', 'secondary_url' => array('url' => '/termekek/')),
 			array('layout' => 'sale', 'eyebrow' => 'Szezonvég', 'title' => '<em>-20%</em> minden lámpára', 'text' => 'Csak most: a teljes lámpa-kollekcióra, a pénztárnál automatikusan levonva.', 'image' => array('url' => Shop_Content::asset_url('termekvilag/hero_slider/layero-asset-0009.webp')), 'button_text' => 'Irány a lámpák', 'button_url' => array('url' => '/termekek/?cat=lampak'), 'secondary_text' => 'Összes termék', 'secondary_url' => array('url' => '/termekek/')),
-			array('layout' => 'statement', 'eyebrow' => 'Layero — személyre szabott 3D', 'title' => 'Nem ajándék. <em>Emlék</em>, amit kinyomtatunk.', 'text' => 'Küldd el az ötleted vagy egy referenciaképet — megtervezzük, és egyetlen példányban legyártjuk.', 'button_text' => 'Ajánlatot kérek', 'button_url' => array('url' => '/termek/?id=egyedi-otlet'), 'secondary_text' => 'Nem tudom, mit — kvíz', 'secondary_url' => array('url' => '/kviz/')),
+			array('layout' => 'statement', 'eyebrow' => 'Layero — személyre szabott 3D', 'title' => 'Nem ajándék. <em>Emlék</em>, amit kinyomtatunk.', 'text' => 'Küldd el az ötleted vagy egy referenciaképet — megtervezzük, és egyetlen példányban legyártjuk.', 'button_text' => 'Ajánlatot kérek', 'button_url' => array('url' => '/egyedi-rendeles/'), 'secondary_text' => 'Nem tudom, mit — kvíz', 'secondary_url' => array('url' => '/kviz/')),
 		);
 	}
 }

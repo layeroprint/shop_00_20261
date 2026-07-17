@@ -37,6 +37,7 @@ final class Plugin {
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Assets.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/WooCommerce.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Customer_Account.php';
+		require_once LAYERO_SHOP_UI_PATH . 'includes/Forms.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Elementor.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Page_Builder.php';
 	}
@@ -47,6 +48,7 @@ final class Plugin {
 
 	public function boot() {
 		Customer_Account::instance();
+		Forms::instance();
 		Assets::instance();
 		WooCommerce::instance();
 		Elementor::instance();

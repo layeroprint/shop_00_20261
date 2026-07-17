@@ -385,6 +385,7 @@ final class Customer_Account {
 			'limit' => self::MAX_FAVORITES,
 		));
 		$limit = min(self::MAX_FAVORITES, max(1, absint($args['limit'])));
+		$heading_tag = function_exists('is_page') && is_page(self::FAVORITES_SLUG) ? 'h1' : 'h2';
 		$products = array();
 		if (is_user_logged_in()) {
 			$ids = array_slice(self::get_favorite_ids(), 0, $limit);
@@ -397,7 +398,7 @@ final class Customer_Account {
 		?>
 		<section class="lyr-favorites" data-layero-favorites-widget data-limit="<?php echo esc_attr($limit); ?>">
 			<?php if ($args['title']) : ?>
-				<header class="lyr-account-section-head"><div><span class="lyr-eyebrow"><?php esc_html_e('Mentett termékek', 'layero-shop-ui'); ?></span><h2><?php echo esc_html($args['title']); ?></h2></div><b data-layero-favorites-count><?php echo esc_html(count($products)); ?></b></header>
+				<header class="lyr-account-section-head"><div><span class="lyr-eyebrow"><?php esc_html_e('Mentett termékek', 'layero-shop-ui'); ?></span><<?php echo esc_html($heading_tag); ?>><?php echo esc_html($args['title']); ?></<?php echo esc_html($heading_tag); ?>></div><b data-layero-favorites-count><?php echo esc_html(count($products)); ?></b></header>
 			<?php endif; ?>
 			<div class="sh-prod-grid lyr-product-grid lyr-favorites-grid" data-layero-favorites-grid-target>
 				<?php foreach ($products as $product) : ?>

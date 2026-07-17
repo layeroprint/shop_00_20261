@@ -107,6 +107,7 @@ class Quiz_CTA extends Base_Widget {
 	}
 
 	private function render_quiz($settings) {
+		$title_tag = $this->is_quiz_page() ? 'h1' : 'h2';
 		?>
 		<section class="lyr-quiz" data-layero-quiz>
 			<div class="lyr-quiz__head">
@@ -114,7 +115,7 @@ class Quiz_CTA extends Base_Widget {
 				<div class="lyr-quiz__progress"><i data-layero-quiz-progress style="width:25%"></i></div>
 				<span class="lyr-quiz__count" data-layero-quiz-count>1 / 4</span>
 			</div>
-			<h2 data-layero-quiz-title><?php echo esc_html($settings['title'] ?? ''); ?></h2>
+			<<?php echo esc_html($title_tag); ?> data-layero-quiz-title><?php echo esc_html($settings['title'] ?? ''); ?></<?php echo esc_html($title_tag); ?>>
 			<p class="lyr-quiz__lead" data-layero-quiz-lead><?php echo esc_html($settings['text'] ?? ''); ?></p>
 			<div class="lyr-quiz__options" data-layero-quiz-options></div>
 			<button class="lyr-quiz__back" type="button" data-layero-quiz-back hidden><?php esc_html_e('Vissza', 'layero-shop-ui'); ?></button>

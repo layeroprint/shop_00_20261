@@ -3,6 +3,7 @@
 namespace LayeroShop\Widgets;
 
 use Elementor\Controls_Manager;
+use LayeroShop\Helpers;
 
 if (! defined('ABSPATH')) {
 	exit;
@@ -125,6 +126,22 @@ class Static_Page extends Base_Widget {
 			$html
 		);
 
+		$html = preg_replace_callback(
+			'/(href\s*=\s*["\'])(?:\.\.?\/)*termek\.html(?:\?([^"\']*))?/i',
+			function ($matches) {
+				$query_args = array();
+				if (! empty($matches[2])) {
+					parse_str(html_entity_decode($matches[2], ENT_QUOTES, get_bloginfo('charset') ?: 'UTF-8'), $query_args);
+				}
+
+				$product_id = isset($query_args['id']) ? sanitize_title($query_args['id']) : '';
+				unset($query_args['id']);
+
+				return $matches[1] . esc_url(Helpers::product_url($product_id, $query_args));
+			},
+			$html
+		);
+
 		$page_map = array(
 			'index.html' => home_url('/'),
 			'kategoria.html' => home_url('/termekek/'),
@@ -136,7 +153,7 @@ class Static_Page extends Base_Widget {
 			'penztar.html' => home_url('/penztar/'),
 			'fiok.html' => home_url('/fiok/'),
 			'kedvencek.html' => home_url('/kedvencek/'),
-			'termek.html' => home_url('/termek/'),
+			'termek.html' => home_url('/termekek/'),
 			'aszf.html' => home_url('/aszf/'),
 			'adatvedelem.html' => home_url('/adatvedelem/'),
 		);

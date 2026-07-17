@@ -1438,6 +1438,16 @@ a.sh-ct-card:hover .sh-ct-card__arr { transform: translateX(3px); color: var(--a
   box-shadow: 0 0 0 4px rgba(201, 59, 47, 0.08);
 }
 .sh-field__err { display: block; margin-top: 6px; font-size: 0.74rem; color: #c93b2f; }
+.sh-form__status {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #f1c7c2;
+  border-radius: 10px;
+  background: #fff5f3;
+  color: #9d3027;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
 
 /* küldés gomb + adatvédelmi lábjegyzet */
 .sh-ctform__send svg { width: 17px; height: 17px; }
