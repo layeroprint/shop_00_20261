@@ -11,6 +11,10 @@ if (! defined('ABSPATH')) {
 }
 
 class Hero_Slider extends Base_Widget {
+	protected function is_dynamic_content(): bool {
+		return true;
+	}
+
 	public function get_name() {
 		return 'layero_hero_slider';
 	}

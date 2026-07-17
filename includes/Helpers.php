@@ -410,6 +410,11 @@ final class Helpers {
 		$classes = implode(' ', array_map('sanitize_html_class', wc_get_product_class('lyr-product-card', $product)));
 		$classes = trim($classes . ' sh-prod-card sh-reveal');
 		$is_simple_ajax = $product->supports('ajax_add_to_cart') && $product->is_purchasable() && $product->is_in_stock();
+		$add_to_cart_url = $product->add_to_cart_url();
+		if ($is_simple_ajax) {
+			$cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/kosar/');
+			$add_to_cart_url = add_query_arg('add-to-cart', $product->get_id(), $cart_url);
+		}
 		$button_text = $args['button_text'] ? $args['button_text'] : $product->add_to_cart_text();
 		$excerpt = wp_trim_words(wp_strip_all_tags($product->get_short_description() ?: $product->get_description()), 18);
 		$card_type_label = self::product_card_type_label($product);
@@ -441,7 +446,7 @@ final class Helpers {
 				<?php endif; ?>
 				<span class="sh-prod-card__price lyr-product-card__price"><?php echo wp_kses_post($product->get_price_html()); ?></span>
 				<a
-					href="<?php echo esc_url($product->add_to_cart_url()); ?>"
+					href="<?php echo esc_url($add_to_cart_url); ?>"
 					data-quantity="1"
 					data-product_id="<?php echo esc_attr($product->get_id()); ?>"
 					data-product_sku="<?php echo esc_attr($product->get_sku()); ?>"

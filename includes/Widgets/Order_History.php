@@ -10,6 +10,10 @@ if (! defined('ABSPATH')) {
 }
 
 class Order_History extends Base_Widget {
+	protected function is_dynamic_content(): bool {
+		return true;
+	}
+
 	public function get_name() {
 		return 'layero_order_history';
 	}
