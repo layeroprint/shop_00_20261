@@ -177,9 +177,9 @@ class Hero_Slider extends Base_Widget {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$slides = ! empty($settings['slides']) ? $settings['slides'] : $this->default_slides();
-		$migrated_defaults = $this->is_legacy_default_set($slides);
+		$migrated_defaults = $this->is_default_set($slides, $this->legacy_default_slides()) || $this->is_default_set($slides, $this->lifestyle_slides());
 		if ($migrated_defaults) { $slides = $this->default_slides(); }
-		$lifestyle = 0 === strpos($slides[0]['layout'] ?? '', 'lifestyle-');
+		$lifestyle = (bool) array_filter($slides, static function ($slide) { return 0 === strpos($slide['layout'] ?? '', 'lifestyle-'); });
 		$title_tag = $settings['title_tag'] ?? 'h1';
 		$hero_style = $settings['hero_style'] ?? 'studio';
 		if (! in_array($title_tag, array('h1', 'h2', 'h3'), true)) {
@@ -376,6 +376,10 @@ class Hero_Slider extends Base_Widget {
 	}
 
 	private function default_slides() {
+		return array_merge(array_slice($this->legacy_default_slides(), 0, 2), $this->lifestyle_slides());
+	}
+
+	private function lifestyle_slides() {
 		return array(
 			array('layout' => 'lifestyle-gift', 'eyebrow' => 'Ajándék, ami csak neki szól', 'title' => 'Egy ajándék.<br>És az a bizonyos <em>mosoly.</em>', 'text' => 'A neve. A kedvenc világa. Egy apró részlet, amitől tudja: ezt neki választottad.', 'button_text' => 'Megtalálom az ajándékát', 'button_url' => array('url' => '/termekek/'), 'secondary_text' => 'Segíts választani', 'secondary_url' => array('url' => '/kviz/'), 'badge_text' => 'Személyre szabható • Szatmárnémetiben készül'),
 			array('layout' => 'lifestyle-home', 'eyebrow' => 'A közös pillanataitokhoz', 'title' => 'Egy kis fény.<br><em>Sok közös este.</em>', 'text' => 'Lepd meg egy különleges lámpával, amely minden este a közös otthonotok része lesz.', 'button_text' => 'Lámpát választok neki', 'button_url' => array('url' => '/termekek/?cat=lampak'), 'secondary_text' => 'Saját ötletem van', 'secondary_url' => array('url' => '/egyedi-rendeles/'), 'badge_text' => 'Egyedi tervezés • Szatmárnémetiből'),
@@ -383,19 +387,18 @@ class Hero_Slider extends Base_Widget {
 		);
 	}
 
-	private function is_legacy_default_set($slides) {
-		$legacy = $this->legacy_default_slides();
+	private function is_default_set($slides, $legacy) {
 		if (count($slides) !== count($legacy)) { return false; }
 		foreach ($legacy as $index => $default) {
 			$slide = $slides[$index];
-			foreach (array('eyebrow', 'title', 'text', 'button_text', 'secondary_text') as $key) {
+			foreach (array('eyebrow', 'title', 'text', 'button_text', 'secondary_text', 'badge_text') as $key) {
 				if (($slide[$key] ?? '') !== ($default[$key] ?? '')) { return false; }
 			}
 			if (! empty($slide['layout']) && $slide['layout'] !== $default['layout']) { return false; }
 			foreach (array('button_url', 'secondary_url') as $key) {
 				if ($this->get_link_url($slide[$key] ?? array()) !== $this->get_link_url($default[$key] ?? array())) { return false; }
 			}
-			foreach (array('badge_text', 'mobile_image', 'secondary_image', 'spotlight_image_2', 'spotlight_image_3', 'spotlight_image_4') as $key) {
+			foreach (array('mobile_image', 'secondary_image', 'spotlight_image_2', 'spotlight_image_3', 'spotlight_image_4') as $key) {
 				if (is_array($slide[$key] ?? null) ? ! empty($slide[$key]['url']) : ! empty($slide[$key])) { return false; }
 			}
 			$image = $slide['image']['url'] ?? '';

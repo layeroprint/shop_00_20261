@@ -9,23 +9,84 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap">
-  <link rel="stylesheet" href="shop.css?v=20260929-lifestyle">
+  <link rel="stylesheet" href="shop.css?v=20260929-five-slides">
   <link rel="stylesheet" href="assets/layero-origin/lyo-origin.css?v=20260922">
   <link rel="stylesheet" href="assets/layero-origin/integration.css?v=20260922-map">
 </head>
 <body data-page="home">
 
-  <!-- Teljes szélességű életképek; kézi lapozás, külön mobilkompozíció. -->
+  <!-- Eredeti lámpa-összehasonlító és rajongói ajánló, majd három életképes banner. -->
   <section class="sh-slider sh-slider--lifestyle" id="sh-slider" data-autoplay="0" data-hero-style="studio" aria-label="Kiemelt ajánlatok">
-    <article class="sh-slide sh-slide--lifestyle is-on">
+    <article class="sh-slide sh-slide--ba is-on">
+      <div class="shop-wrap sh-slide__ba-inner">
+        <div class="sh-slide__ba-copy">
+          <span class="sh-slide__eyebrow">Személyre szabott 3D ajándékok</span>
+          <h1>Ajándék, ami <em>rólad</em> szól.</h1>
+          <p>Névre szóló lámpák, kulcstartók és dekorációk — egyetlen példányban, a te ötletedből nyomtatva.</p>
+          <div class="sh-slide__cta">
+            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=lampak">Lámpák felfedezése</a>
+            <a class="sh-link--light" href="kategoria.html">Összes termék ›</a>
+          </div>
+          <p class="sh-slide__eta" id="sh-hero-eta"></p>
+        </div>
+        <div class="sh-slide__ba-stage">
+          <div class="ro-ba" data-lamp-ba tabindex="0" role="img" aria-label="Egyedi Jurassic Park lámpa felkapcsolt és lekapcsolt állapotának összehasonlítása">
+            <img class="ro-ba__img" src="assets/termekvilag/lampa-ba/layero-asset-0179-600.webp" srcset="assets/termekvilag/lampa-ba/layero-asset-0179-600.webp 600w, assets/termekvilag/lampa-ba/layero-asset-0179-720.webp 720w, assets/termekvilag/lampa-ba/layero-asset-0179-900.webp 900w" sizes="(max-width: 900px) min(78vw, 340px), min(38vw, 400px)" alt="" draggable="false" fetchpriority="high" decoding="async" width="600" height="747">
+            <div class="ro-ba__top" aria-hidden="true">
+              <img class="ro-ba__img" src="assets/termekvilag/lampa-ba/layero-asset-0180-600.webp" srcset="assets/termekvilag/lampa-ba/layero-asset-0180-600.webp 600w, assets/termekvilag/lampa-ba/layero-asset-0180-720.webp 720w, assets/termekvilag/lampa-ba/layero-asset-0180-900.webp 900w" sizes="(max-width: 900px) min(78vw, 340px), min(38vw, 400px)" alt="" draggable="false" fetchpriority="high" decoding="async" width="600" height="750">
+            </div>
+            <div class="ro-ba__handle" aria-hidden="true"><span class="ro-ba__grip">&lsaquo;&rsaquo;</span></div>
+            <span class="ro-ba__tag ro-ba__tag--on" aria-hidden="true">Felkapcsolva</span>
+            <span class="ro-ba__tag ro-ba__tag--off" aria-hidden="true">Lekapcsolva</span>
+          </div>
+          <p class="sh-slide__ba-hint" aria-hidden="true">Húzd el a csúszkát — így világít este</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="sh-slide sh-slide--spot">
+      <div class="shop-wrap sh-slide__spot-inner">
+        <div class="sh-slide__spot-copy">
+          <span class="sh-slide__eyebrow">Népszerű termékek</span>
+          <h2>Ajándék minden <em>szenvedélyre</em>.</h2>
+          <p>F1-naptár, borosüveg-tartó, filmes falidísz vagy névre szóló kulcstartó — 3D nyomtatva, a te ötleted szerint, egyetlen példányban.</p>
+          <div class="sh-slide__cta">
+            <a class="sh-btn sh-btn--white" href="kategoria.html">Összes termék</a>
+            <a class="sh-link--light" href="kviz.html">Segíts választani ›</a>
+          </div>
+        </div>
+        <div class="sh-slide__spot-stage">
+          <div class="sh-spot" data-spot>
+            <div class="sh-spot__frame">
+              <span class="sh-spot__badge" data-spot-badge>F1 2026 naptár</span>
+              <span class="sh-fchip sh-fchip--bl"><i>✦</i> Egyedi darab</span>
+              <div class="sh-spot__imgs">
+                <img class="sh-spot__img is-on" data-theme="F1 2026 naptár" src="assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-01.jpg" alt="Formula 1 2026-os versenynaptár, 3D nyomtatott piros-fekete fali tábla" decoding="async">
+                <img class="sh-spot__img" data-theme="Borosüveg-tartó" src="assets/termekvilag/hero_slider/layero-asset-0021.webp" alt="Szarvas formájú, kőhatású borosüveg-tartó szobor" decoding="async">
+                <img class="sh-spot__img" data-theme="Gyűrűk Ura" src="assets/kulcstartok/65-lord-of-the-rings-plakat-tabla/65-lord-of-the-rings-plakat-tabla-03.jpg" alt="Gyűrűk Ura plakát tábla, dombornyomott 3D falidísz" decoding="async">
+                <img class="sh-spot__img" data-theme="Logós kulcstartó" src="assets/termekvilag/hero_slider/layero-asset-0027.webp" alt="Egyedi logós kulcstartó, kétszínű 3D nyomtatással" decoding="async">
+              </div>
+            </div>
+            <div class="sh-spot__dots" role="tablist" aria-label="Termékek">
+              <button class="sh-spot__dot is-on" type="button" data-spot-dot="0" role="tab" aria-selected="true" aria-label="F1 2026 naptár"></button>
+              <button class="sh-spot__dot" type="button" data-spot-dot="1" role="tab" aria-selected="false" aria-label="Borosüveg-tartó"></button>
+              <button class="sh-spot__dot" type="button" data-spot-dot="2" role="tab" aria-selected="false" aria-label="Gyűrűk Ura"></button>
+              <button class="sh-spot__dot" type="button" data-spot-dot="3" role="tab" aria-selected="false" aria-label="Logós kulcstartó"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="sh-slide sh-slide--lifestyle">
       <picture class="sh-lifestyle__media">
         <source media="(max-width: 820px)" srcset="assets/banners/lifestyle-gift-mobile.webp">
-        <img src="assets/banners/lifestyle-gift.webp" alt="Egy kisfiú édesanyjától kapja meg a névre szóló dínós lámpáját" decoding="async" fetchpriority="high">
+        <img src="assets/banners/lifestyle-gift.webp" alt="Egy kisfiú édesanyjától kapja meg a névre szóló dínós lámpáját" decoding="async" loading="lazy">
       </picture>
       <div class="shop-wrap sh-lifestyle__inner">
         <div class="sh-lifestyle__copy">
           <span class="sh-slide__eyebrow">Ajándék, ami csak neki szól</span>
-          <h1>Egy ajándék.<br>És az a bizonyos <em>mosoly.</em></h1>
+          <h2>Egy ajándék.<br>És az a bizonyos <em>mosoly.</em></h2>
           <p>A neve. A kedvenc világa. Egy apró részlet, amitől tudja: ezt neki választottad.</p>
           <div class="sh-slide__cta">
             <a class="sh-btn sh-btn--white" href="kategoria.html">Megtalálom az ajándékát</a>
@@ -388,6 +449,6 @@
   <script src="shop-data.js?v=20260717d"></script>
   <script src="assets/layero-origin/mount.js?v=20260922" defer></script>
   <script src="assets/layero-origin/lyo-origin.js?v=20260922" defer></script>
-  <script src="shop.js?v=20260929-lifestyle"></script>
+  <script src="shop.js?v=20260929-five-slides"></script>
 </body>
 </html>

@@ -3320,7 +3320,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
   padding-bottom: clamp(40px, 6vw, 64px);
 }
 .sh-slide__ba-copy { color: var(--hero-copy); text-align: left; }
-.sh-slide__ba-copy h2 {
+.sh-slide__ba-copy :is(h1,h2,h3) {
   font-family: var(--font-display);
   font-size: clamp(2.2rem, 4.6vw, 3.9rem);
   font-weight: 700; letter-spacing: -0.03em; line-height: 1.04;
@@ -3328,7 +3328,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
 }
 /* Kiemelés a hero-slide címekben: tömör szín (nem gradiens-szöveg), a coming
    soon oldal színes kiemelései nyomán — meleg amber a sötét éjkék háttéren. */
-.sh-slide__ba-copy h2 em,
+.sh-slide__ba-copy :is(h1,h2,h3) em,
 .sh-slide__spot-copy h2 em,
 .sh-slide__copy h2 em {
   font-style: normal;
@@ -3429,7 +3429,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
     padding-top: 30px; padding-bottom: 64px;
   }
   .sh-slide__ba-copy { text-align: center; }
-  .sh-slide__ba-copy h2 { margin: 0 auto; }
+  .sh-slide__ba-copy :is(h1,h2,h3) { margin: 0 auto; }
   .sh-slide__ba-copy > p { margin-left: auto; margin-right: auto; }
   .sh-slide__ba-copy .sh-slide__cta { justify-content: center; }
   .ro-ba { width: min(78vw, 340px); }
@@ -3682,7 +3682,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
 
 /* — SCENE: BORÍTÓ (teljes-képes lifestyle fotó + mozis fátyol) — */
 /* Életképes hero: teljes felületű fotó, élő HTML-szöveg és mobil art direction. */
-.sh-slider.sh-slider--lifestyle { min-height: clamp(620px, calc(100svh - 96px), 880px); }
+.sh-slider.sh-slider--lifestyle:has(> .sh-slide--lifestyle.is-on) { min-height: clamp(620px, calc(100svh - 96px), 880px); }
 .sh-slide--lifestyle { align-items: stretch; background: var(--brand-navy); isolation: isolate; }
 .sh-lifestyle__media { position: absolute; inset: 0; display: block; z-index: -2; }
 .sh-slide--lifestyle .sh-lifestyle__media img {
@@ -3714,7 +3714,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
 .sh-lifestyle__copy > .sh-lifestyle__note { margin: 24px 0 0; max-width: none; color: #d6dce1; font-size: .71rem; letter-spacing: .015em; }
 .sh-slider--lifestyle .sh-slider__dots { bottom: 28px; }
 @media (max-width: 820px) {
-  .sh-slider.sh-slider--lifestyle { min-height: max(720px, calc(100svh - 112px)); }
+  .sh-slider.sh-slider--lifestyle:has(> .sh-slide--lifestyle.is-on) { min-height: max(720px, calc(100svh - 112px)); }
   .sh-slide--lifestyle .sh-lifestyle__media img { object-position: center top; }
   .sh-slide--lifestyle::after { background: linear-gradient(180deg, transparent 30%, rgba(2,8,18,.08) 45%, rgba(2,8,18,.55) 58%, rgba(2,8,18,.93) 77%); }
   .sh-lifestyle__inner { align-items: flex-end; padding: 320px 24px 72px; }
@@ -3730,7 +3730,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
   body.sh-lifestyle-in-view .sh-fab { visibility: hidden; pointer-events: none; }
 }
 @media (min-width: 600px) and (max-width: 820px) {
-  .sh-slider.sh-slider--lifestyle { min-height: 1040px; }
+  .sh-slider.sh-slider--lifestyle:has(> .sh-slide--lifestyle.is-on) { min-height: 1040px; }
   .sh-lifestyle__inner { padding-top: 620px; }
 }
 

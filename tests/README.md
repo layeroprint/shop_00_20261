@@ -24,6 +24,7 @@ A webshop gyökeréből, a helyi adatbázis elindítása után:
 php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/setup-wordpress.php --path=output/wp-test/wordpress
 php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/wordpress.php --path=output/wp-test/wordpress
 php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/forms-wordpress.php --path=output/wp-test/wordpress
+php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/hero-wordpress.php --path=output/wp-test/wordpress
 ```
 
 A böngészős próbához használt helyi webszerver:
