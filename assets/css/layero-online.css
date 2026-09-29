@@ -57,4 +57,6 @@ body.woocommerce div.product .woocommerce-tabs ul.tabs li { border-radius:12px 1
   .lyr-products--listing .lyr-product-search input { font-size: 16px; }
   .lyr-products--listing .lyr-product-search button { width: auto; padding: 0 14px; }
   .elementor .lyr-products--listing .lyr-product-grid.sh-prod-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  /* Help and custom-order links remain in the navigation and footer. */
+  body:has(.lyr-products--listing) .sh-fab { display: none; }
 }
