@@ -1244,12 +1244,14 @@
     var slides = $all('.sh-slide', slider);
     var dotsWrap = $('#sh-slider-dots');
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var autoplayAttr = slider.getAttribute('data-autoplay');
+    var autoplayMs = autoplayAttr === null ? 8000 : Math.max(0, Number(autoplayAttr) || 0);
     var cur = 0, timer = null;
 
-    dotsWrap.innerHTML = slides.map(function (_, i) {
-      return '<button type="button" role="tab" aria-label="' + (i + 1) + '. slide"' + (i === 0 ? ' class="is-on"' : '') + '></button>';
+    if (dotsWrap) dotsWrap.innerHTML = slides.map(function (_, i) {
+      return '<button type="button" role="tab" aria-label="' + (i + 1) + '. slide" aria-selected="' + (i === 0 ? 'true' : 'false') + '" tabindex="' + (i === 0 ? '0' : '-1') + '"' + (i === 0 ? ' class="is-on"' : '') + '></button>';
     }).join('');
-    var dots = $all('button', dotsWrap);
+    var dots = dotsWrap ? $all('button', dotsWrap) : [];
 
     // lágy crossfade: a régi slide a helyén marad (is-leaving), amíg az új
     // teljesen rá nem úszik; a szöveg elemenként, finoman érkezik (is-entering)
@@ -1289,14 +1291,34 @@
       slides[0].classList.add('is-entering');
       transT = setTimeout(function () { slides[0].classList.remove('is-entering'); }, 1600);
     }
-    function start() { if (!reduceMotion && !timer) timer = setInterval(function () { goTo(cur + 1); }, 8000); }
+    function start() { if (!reduceMotion && autoplayMs > 0 && slides.length > 1 && !timer) timer = setInterval(function () { goTo(cur + 1); }, Math.max(3000, autoplayMs)); }
     function stop() { clearInterval(timer); timer = null; }
 
-    dots.forEach(function (d, i) { d.addEventListener('click', function () { stop(); goTo(i); start(); }); });
-    $('[data-slide-prev]', slider).addEventListener('click', function () { stop(); goTo(cur - 1); start(); });
-    $('[data-slide-next]', slider).addEventListener('click', function () { stop(); goTo(cur + 1); start(); });
+    dots.forEach(function (d, i) {
+      d.addEventListener('click', function () { stop(); goTo(i); start(); });
+      d.addEventListener('keydown', function (event) {
+        if (event.ctrlKey || event.metaKey || event.altKey) return;
+        var target;
+        if (event.key === 'ArrowRight') target = (i + 1) % slides.length;
+        else if (event.key === 'ArrowLeft') target = (i + slides.length - 1) % slides.length;
+        else if (event.key === 'Home') target = 0;
+        else if (event.key === 'End') target = slides.length - 1;
+        else return;
+        event.preventDefault(); stop(); goTo(target); dots[target].focus();
+      });
+    });
+    var prevButton = $('[data-slide-prev]', slider), nextButton = $('[data-slide-next]', slider);
+    if (prevButton) prevButton.addEventListener('click', function () { stop(); goTo(cur - 1); start(); });
+    if (nextButton) nextButton.addEventListener('click', function () { stop(); goTo(cur + 1); start(); });
     slider.addEventListener('mouseenter', stop);
     slider.addEventListener('mouseleave', start);
+    slider.addEventListener('focusin', stop);
+    slider.addEventListener('focusout', function (event) { if (!slider.contains(event.relatedTarget)) start(); });
+    if (slider.classList.contains('sh-slider--lifestyle') && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        document.body.classList.toggle('sh-lifestyle-in-view', entries[0].intersectionRatio > 0.25);
+      }, { threshold: [0, 0.25] }).observe(slider);
+    }
 
     // swipe/drag minden nézetre — a lámpa-összehasonlítón belül nem indul,
     // ott a húzás az összehasonlító elválasztóját mozgatja

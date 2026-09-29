@@ -37,6 +37,9 @@ class Hero_Slider extends Base_Widget {
 			'default' => '',
 			'options' => array(
 				'' => __('Automatikus (sorszám alapján)', 'layero-shop-ui'),
+				'lifestyle-gift' => __('Életkép — személyes ajándék', 'layero-shop-ui'),
+				'lifestyle-home' => __('Életkép — közös pillanatok', 'layero-shop-ui'),
+				'lifestyle-festive' => __('Életkép — ünnepi meglepetés', 'layero-shop-ui'),
 				'comparison' => __('Lámpa előtte / utána', 'layero-shop-ui'),
 				'spotlight' => __('Termék-spotlight', 'layero-shop-ui'),
 				'cover' => __('Teljes képes borító', 'layero-shop-ui'),
@@ -66,6 +69,10 @@ class Hero_Slider extends Base_Widget {
 		));
 		$repeater->add_control('secondary_image', array(
 			'label' => __('Másodlagos kép (előtte / utána)', 'layero-shop-ui'),
+			'type' => Controls_Manager::MEDIA,
+		));
+		$repeater->add_control('mobile_image', array(
+			'label' => __('Álló mobilkép (életképes banner)', 'layero-shop-ui'),
 			'type' => Controls_Manager::MEDIA,
 		));
 		for ($i = 2; $i <= 4; $i++) {
@@ -130,7 +137,7 @@ class Hero_Slider extends Base_Widget {
 		$this->add_control('autoplay_speed', array(
 			'label' => __('Automatikus váltás (ms)', 'layero-shop-ui'),
 			'type' => Controls_Manager::NUMBER,
-			'default' => 6500,
+			'default' => 0,
 			'min' => 0,
 			'step' => 500,
 		));
@@ -170,6 +177,9 @@ class Hero_Slider extends Base_Widget {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$slides = ! empty($settings['slides']) ? $settings['slides'] : $this->default_slides();
+		$migrated_defaults = $this->is_legacy_default_set($slides);
+		if ($migrated_defaults) { $slides = $this->default_slides(); }
+		$lifestyle = 0 === strpos($slides[0]['layout'] ?? '', 'lifestyle-');
 		$title_tag = $settings['title_tag'] ?? 'h1';
 		$hero_style = $settings['hero_style'] ?? 'studio';
 		if (! in_array($title_tag, array('h1', 'h2', 'h3'), true)) {
@@ -182,7 +192,7 @@ class Hero_Slider extends Base_Widget {
 			$title_tag = 'h1';
 		}
 		?>
-		<section class="sh-slider" id="sh-slider" data-hero-style="<?php echo esc_attr($hero_style); ?>" aria-label="<?php esc_attr_e('Kiemelt ajánlatok', 'layero-shop-ui'); ?>">
+		<section class="sh-slider<?php echo $lifestyle ? ' sh-slider--lifestyle' : ''; ?>" id="sh-slider" data-autoplay="<?php echo esc_attr($migrated_defaults ? 0 : max(0, (int) ($settings['autoplay_speed'] ?? 0))); ?>" data-hero-style="<?php echo esc_attr($hero_style); ?>" aria-label="<?php esc_attr_e('Kiemelt ajánlatok', 'layero-shop-ui'); ?>">
 			<?php foreach ($slides as $index => $slide) : ?>
 				<?php $this->render_slide($slide, $index, 0 === $index ? 'h1' : ('h1' === $title_tag ? 'h2' : $title_tag)); ?>
 			<?php endforeach; ?>
@@ -210,6 +220,10 @@ class Hero_Slider extends Base_Widget {
 			$this->render_spotlight_slide($slide, $is_on, $title_tag);
 			return;
 		}
+		if (in_array($layout, array('cover', 'split', 'festive', 'lifestyle-gift', 'lifestyle-home', 'lifestyle-festive'), true)) {
+			$this->render_campaign_slide($slide, $layout, $is_on, $title_tag);
+			return;
+		}
 
 		$image_fallbacks = array(
 			'cover' => 'termekvilag/hero_slider/layero-asset-0010.webp',
@@ -218,17 +232,6 @@ class Hero_Slider extends Base_Widget {
 			'sale' => 'termekvilag/hero_slider/layero-asset-0009.webp',
 		);
 		$image_url = $this->slide_image($slide, $image_fallbacks[$layout] ?? '');
-
-		if ('cover' === $layout) {
-			?>
-			<article class="sh-slide sh-slide--cover<?php echo esc_attr($is_on); ?>">
-				<div class="sh-slide__media"><img src="<?php echo esc_url($image_url); ?>" alt="" decoding="async"></div>
-				<span class="sh-fchip sh-fchip--tr"><i>✦</i> <?php echo esc_html(! empty($slide['badge_text']) ? $slide['badge_text'] : 'Kézzel készített'); ?></span>
-				<div class="sh-cover-copy"><?php $this->render_copy($slide, $title_tag); ?></div>
-			</article>
-			<?php
-			return;
-		}
 
 		if ('statement' === $layout) {
 			?>
@@ -317,6 +320,35 @@ class Hero_Slider extends Base_Widget {
 		<?php
 	}
 
+	private function render_campaign_slide($slide, $layout, $is_on, $title_tag) {
+		$art = array(
+			'cover' => array('gift', 'layero-asset-0010', 'hero-collection.webp', 'Egy kisfiú édesanyjától kapja meg a névre szóló dínós lámpáját'),
+			'split' => array('home', 'layero-asset-0016', 'hero-lamp.webp', 'Meghitt közös este a Hullám lámpa meleg fényében'),
+			'festive' => array('festive', 'layero-asset-0017', 'hero-festive.webp', 'Ünnepi ajándékbontás a karácsonyi kedvenc-lámpával'),
+		);
+		$aliases = array('lifestyle-gift' => 'cover', 'lifestyle-home' => 'split', 'lifestyle-festive' => 'festive');
+		$reference = $art[$aliases[$layout] ?? $layout];
+		$image = $slide['image']['url'] ?? '';
+		$filename = basename(wp_parse_url($image, PHP_URL_PATH) ?: '');
+		$uses_default = ! $image || in_array($filename, array($reference[1] . '.webp', $reference[1] . '.png', $reference[2], 'lifestyle-' . $reference[0] . '.webp'), true);
+		if ($uses_default) { $image = Shop_Content::asset_url('banners/lifestyle-' . $reference[0] . '.webp'); }
+		$mobile = $slide['mobile_image']['url'] ?? '';
+		if (! $mobile && $uses_default) { $mobile = Shop_Content::asset_url('banners/lifestyle-' . $reference[0] . '-mobile.webp'); }
+		?>
+		<article class="sh-slide sh-slide--lifestyle<?php echo esc_attr($is_on); ?>">
+			<picture class="sh-lifestyle__media">
+				<?php if ($mobile) : ?><source media="(max-width: 820px)" srcset="<?php echo esc_url($mobile); ?>"><?php endif; ?>
+				<img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($uses_default ? $reference[3] : ''); ?>" decoding="async"<?php echo $is_on ? ' fetchpriority="high"' : ' loading="lazy"'; ?>>
+			</picture>
+			<div class="shop-wrap sh-lifestyle__inner">
+				<div class="sh-lifestyle__copy"><?php $this->render_copy($slide, $title_tag); ?>
+					<?php if (! empty($slide['badge_text'])) : ?><p class="sh-lifestyle__note"><?php echo esc_html($slide['badge_text']); ?></p><?php endif; ?>
+				</div>
+			</div>
+		</article>
+		<?php
+	}
+
 	private function render_copy($slide, $title_tag, $sale = false) {
 		if (! empty($slide['eyebrow'])) {
 			echo '<span class="sh-slide__eyebrow">' . esc_html($slide['eyebrow']) . '</span>';
@@ -344,6 +376,35 @@ class Hero_Slider extends Base_Widget {
 	}
 
 	private function default_slides() {
+		return array(
+			array('layout' => 'lifestyle-gift', 'eyebrow' => 'Ajándék, ami csak neki szól', 'title' => 'Egy ajándék.<br>És az a bizonyos <em>mosoly.</em>', 'text' => 'A neve. A kedvenc világa. Egy apró részlet, amitől tudja: ezt neki választottad.', 'button_text' => 'Megtalálom az ajándékát', 'button_url' => array('url' => '/termekek/'), 'secondary_text' => 'Segíts választani', 'secondary_url' => array('url' => '/kviz/'), 'badge_text' => 'Személyre szabható • Szatmárnémetiben készül'),
+			array('layout' => 'lifestyle-home', 'eyebrow' => 'A közös pillanataitokhoz', 'title' => 'Egy kis fény.<br><em>Sok közös este.</em>', 'text' => 'Lepd meg egy különleges lámpával, amely minden este a közös otthonotok része lesz.', 'button_text' => 'Lámpát választok neki', 'button_url' => array('url' => '/termekek/?cat=lampak'), 'secondary_text' => 'Saját ötletem van', 'secondary_url' => array('url' => '/egyedi-rendeles/'), 'badge_text' => 'Egyedi tervezés • Szatmárnémetiből'),
+			array('layout' => 'lifestyle-festive', 'eyebrow' => 'A legszemélyesebb meglepetés', 'title' => 'Amikor kibontja,<br><em>magára ismer.</em>', 'text' => 'A közös történetetek, a kedvencetek, egy nektek fontos emlék. Idén ez legyen az ajándék.', 'button_text' => 'Ünnepi ajándékot keresek', 'button_url' => array('url' => '/termekek/?cat=szezonalis'), 'secondary_text' => 'Egyedi ajándékot kérek', 'secondary_url' => array('url' => '/egyedi-rendeles/'), 'badge_text' => 'Személyes részletek • Egyedi ajándékok'),
+		);
+	}
+
+	private function is_legacy_default_set($slides) {
+		$legacy = $this->legacy_default_slides();
+		if (count($slides) !== count($legacy)) { return false; }
+		foreach ($legacy as $index => $default) {
+			$slide = $slides[$index];
+			foreach (array('eyebrow', 'title', 'text', 'button_text', 'secondary_text') as $key) {
+				if (($slide[$key] ?? '') !== ($default[$key] ?? '')) { return false; }
+			}
+			if (! empty($slide['layout']) && $slide['layout'] !== $default['layout']) { return false; }
+			foreach (array('button_url', 'secondary_url') as $key) {
+				if ($this->get_link_url($slide[$key] ?? array()) !== $this->get_link_url($default[$key] ?? array())) { return false; }
+			}
+			foreach (array('badge_text', 'mobile_image', 'secondary_image', 'spotlight_image_2', 'spotlight_image_3', 'spotlight_image_4') as $key) {
+				if (is_array($slide[$key] ?? null) ? ! empty($slide[$key]['url']) : ! empty($slide[$key])) { return false; }
+			}
+			$image = $slide['image']['url'] ?? '';
+			if ($image && $image !== ($default['image']['url'] ?? '')) { return false; }
+		}
+		return true;
+	}
+
+	private function legacy_default_slides() {
 		return array(
 			array('layout' => 'comparison', 'eyebrow' => 'Személyre szabott 3D ajándékok', 'title' => 'Ajándék, ami <em>rólad</em> szól.', 'text' => 'Névre szóló lámpák, kulcstartók és dekorációk — egyetlen példányban, a te ötletedből nyomtatva.', 'button_text' => 'Lámpák felfedezése', 'button_url' => array('url' => '/termekek/?cat=lampak'), 'secondary_text' => 'Összes termék', 'secondary_url' => array('url' => '/termekek/')),
 			array('layout' => 'spotlight', 'eyebrow' => 'Népszerű termékek', 'title' => 'Ajándék minden <em>szenvedélyre</em>.', 'text' => 'F1-naptár, borosüveg-tartó, filmes falidísz vagy névre szóló kulcstartó — 3D nyomtatva, a te ötleted szerint.', 'button_text' => 'Összes termék', 'button_url' => array('url' => '/termekek/'), 'secondary_text' => 'Segíts választani', 'secondary_url' => array('url' => '/kviz/')),

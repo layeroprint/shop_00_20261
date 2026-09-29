@@ -679,7 +679,7 @@ button { font-family: inherit; cursor: pointer; }
 /* spotlight-slider: váltó termékfotók a hero 2. slide-jának mintájára */
 .sh-spotlight__stage { display: grid; gap: 14px; justify-items: center; min-width: 0; }
 .sh-spotlight__frame {
-  position: relative; width: 100%; aspect-ratio: 4 / 3;
+  position: relative; width: min(100%, 420px); aspect-ratio: 4 / 5;
   border-radius: var(--r-md); overflow: hidden;
   background: #020812;
   border: 1px solid rgba(0, 194, 224, 0.18);
@@ -689,12 +689,13 @@ button { font-family: inherit; cursor: pointer; }
   content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
   background: radial-gradient(58% 42% at 50% 0%, rgba(0, 194, 224, 0.12), transparent 70%);
 }
-.sh-spotlight__img {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  opacity: 0; transform: scale(1.04);
-  transition: opacity 0.8s ease, transform 1.2s ease;
+.sh-spotlight__frame .sh-spotlight__img {
+  position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-height: 100%;
+  object-fit: contain; object-position: center;
+  opacity: 0; transform: none;
+  transition: opacity 0.8s ease;
 }
-.sh-spotlight__img.is-on { opacity: 1; transform: scale(1); }
+.sh-spotlight__frame .sh-spotlight__img.is-on { opacity: 1; }
 .sh-spotlight__badge {
   position: absolute; top: 14px; left: 14px; z-index: 3;
   padding: 6px 14px; border-radius: var(--r-pill);
@@ -3174,7 +3175,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
   position: relative;
   min-height: clamp(520px, 74vh, 720px);
   background: var(--hero-surface-1);
-  overflow: hidden;
+  overflow: clip; /* A fókusz/lapozás ne görgethesse el a belső képteret. */
 
   /* ── HERO STÍLUS-TOKENEK ────────────────────────────────────────────
      A hero minden hangsúly-színe innen jön. Az itteni alapértékek adják
@@ -3202,11 +3203,12 @@ input, select, textarea, progress { accent-color: var(--accent); }
 }
 .sh-slide {
   position: absolute; inset: 0;
-  opacity: 0; pointer-events: none;
+  opacity: 0; visibility: hidden; pointer-events: none;
   transition: opacity 0.9s ease;
   display: flex; align-items: flex-end;
 }
-.sh-slide.is-on { opacity: 1; pointer-events: auto; z-index: 1; }
+.sh-slide.is-on { position: relative; min-height: inherit; opacity: 1; visibility: visible; pointer-events: auto; z-index: 1; }
+.sh-slide.is-leaving { visibility: visible; }
 .sh-slide__media { position: absolute; inset: 0; }
 .sh-slide__media img {
   width: 100%; height: 100%; object-fit: cover;
@@ -3679,6 +3681,59 @@ input, select, textarea, progress { accent-color: var(--accent); }
 .sh-slide--mid { align-items: center; }
 
 /* — SCENE: BORÍTÓ (teljes-képes lifestyle fotó + mozis fátyol) — */
+/* Életképes hero: teljes felületű fotó, élő HTML-szöveg és mobil art direction. */
+.sh-slider.sh-slider--lifestyle { min-height: clamp(620px, calc(100svh - 96px), 880px); }
+.sh-slide--lifestyle { align-items: stretch; background: var(--brand-navy); isolation: isolate; }
+.sh-lifestyle__media { position: absolute; inset: 0; display: block; z-index: -2; }
+.sh-slide--lifestyle .sh-lifestyle__media img {
+  display: block; width: 100%; height: 100%; max-height: none;
+  object-fit: cover; object-position: 64% top; border-radius: 0; transform: none;
+}
+.sh-slide--lifestyle::after {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(2,8,18,.90) 0%, rgba(2,8,18,.69) 27%, rgba(2,8,18,.20) 51%, transparent 72%),
+    linear-gradient(0deg, rgba(2,8,18,.42), transparent 28%);
+}
+.sh-lifestyle__inner {
+  position: relative; width: 100%; max-width: 1440px; min-height: inherit;
+  display: flex; align-items: center; padding: 80px clamp(64px, 6vw, 100px) 100px;
+}
+.sh-lifestyle__copy { width: min(46%, 540px); color: #fff; }
+.sh-lifestyle__copy .sh-slide__eyebrow { color: var(--brand-gold); font-size: .7rem; letter-spacing: .16em; margin-bottom: 24px; }
+.sh-lifestyle__copy :is(h1,h2,h3) {
+  color: #fff; margin: 0; font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2.65rem, 4.1vw, 3.8rem); line-height: 1.08;
+  letter-spacing: -.045em; text-wrap: balance;
+}
+.sh-lifestyle__copy :is(h1,h2,h3) em { color: var(--brand-gold); font-style: normal; }
+.sh-lifestyle__copy > p { max-width: 37ch; margin: 26px 0 30px; color: #ecedf0; font-size: 1.04rem; line-height: 1.65; }
+.sh-lifestyle__copy .sh-slide__cta { justify-content: flex-start; gap: 20px; }
+.sh-lifestyle__copy .sh-btn { min-height: 54px; padding: 16px 25px; font-size: .91rem; }
+.sh-lifestyle__copy .sh-link--light { color: #fff; font-size: .85rem; text-underline-offset: 5px; }
+.sh-lifestyle__copy .sh-link--light:hover { text-decoration: underline; }
+.sh-lifestyle__copy > .sh-lifestyle__note { margin: 24px 0 0; max-width: none; color: #d6dce1; font-size: .71rem; letter-spacing: .015em; }
+.sh-slider--lifestyle .sh-slider__dots { bottom: 28px; }
+@media (max-width: 820px) {
+  .sh-slider.sh-slider--lifestyle { min-height: max(720px, calc(100svh - 112px)); }
+  .sh-slide--lifestyle .sh-lifestyle__media img { object-position: center top; }
+  .sh-slide--lifestyle::after { background: linear-gradient(180deg, transparent 30%, rgba(2,8,18,.08) 45%, rgba(2,8,18,.55) 58%, rgba(2,8,18,.93) 77%); }
+  .sh-lifestyle__inner { align-items: flex-end; padding: 320px 24px 72px; }
+  .sh-lifestyle__copy { width: 100%; max-width: 520px; margin-inline: auto; }
+  .sh-lifestyle__copy .sh-slide__eyebrow { font-size: .60rem; margin-bottom: 13px; }
+  .sh-lifestyle__copy :is(h1,h2,h3) { font-size: clamp(1.85rem, 8.4vw, 2.7rem); line-height: 1.08; }
+  .sh-lifestyle__copy > p { margin: 16px 0 22px; font-size: .9rem; line-height: 1.55; max-width: 38ch; }
+  .sh-lifestyle__copy .sh-slide__cta { align-items: stretch; flex-direction: column; gap: 14px; }
+  .sh-lifestyle__copy .sh-btn { min-height: 50px; justify-content: center; font-size: .89rem; }
+  .sh-lifestyle__copy .sh-link--light { align-self: center; font-size: .79rem; }
+  .sh-lifestyle__copy > .sh-lifestyle__note { margin-top: 19px; font-size: .62rem; text-align: center; }
+  .sh-slider--lifestyle .sh-slider__dots { bottom: 24px; }
+  body.sh-lifestyle-in-view .sh-fab { visibility: hidden; pointer-events: none; }
+}
+@media (min-width: 600px) and (max-width: 820px) {
+  .sh-slider.sh-slider--lifestyle { min-height: 1040px; }
+  .sh-lifestyle__inner { padding-top: 620px; }
+}
+
 .sh-slide--cover { align-items: flex-end; }
 .sh-slide--cover .sh-slide__media::after {
   background:
@@ -3773,15 +3828,15 @@ input, select, textarea, progress { accent-color: var(--accent); }
 
 /* ═══════════════════════════════════════════════════════════════════
    PREMIUM TURBO — „wow" réteg a termék-színpadokra és a jelenetekre
-   • a kép PEREMIG tölti a keretet (nincs üres fekete sáv)
+   • a teljes termékfotó a keretbe illeszkedik, képkivágás nélkül
    • izzó, élő keret: finom lebegés + pulzáló fény
    • lebegő üveg-chipek, akció-pecsét, extra fény-hangsúlyok
    Minden mozgás prefers-reduced-motion alatt kikapcsol.
    ─────────────────────────────────────────────────────────────────── */
 
-/* — kép peremig (spot + hframe): cover, nulla padding — */
-.sh-spot__img { object-fit: cover; padding: 0; }
-.sh-hframe img { object-fit: cover; padding: 0; filter: none; }
+/* Teljes termékfotó: az Elementor height:auto szabályánál erősebb méretezés. */
+.sh-spot__imgs .sh-spot__img,
+.sh-slide .sh-hframe img { width: 100%; height: 100%; max-height: 100%; object-fit: contain; padding: 0; filter: none; transform: none; }
 
 /* — élő, izzó keret: lebegés + fénypulzálás egy animációban — */
 .sh-spot__frame, .sh-hframe {

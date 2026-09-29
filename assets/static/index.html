@@ -9,168 +9,68 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap">
-  <link rel="stylesheet" href="shop.css?v=20260929-workshop">
+  <link rel="stylesheet" href="shop.css?v=20260929-lifestyle">
   <link rel="stylesheet" href="assets/layero-origin/lyo-origin.css?v=20260922">
   <link rel="stylesheet" href="assets/layero-origin/integration.css?v=20260922-map">
-  <link rel="preload" as="image" imagesrcset="assets/termekvilag/lampa-ba/layero-asset-0179-600.webp 600w, assets/termekvilag/lampa-ba/layero-asset-0179-720.webp 720w, assets/termekvilag/lampa-ba/layero-asset-0179-900.webp 900w" imagesizes="(max-width: 900px) min(78vw, 340px), min(38vw, 400px)" fetchpriority="high">
-  <link rel="preload" as="image" imagesrcset="assets/termekvilag/lampa-ba/layero-asset-0180-600.webp 600w, assets/termekvilag/lampa-ba/layero-asset-0180-720.webp 720w, assets/termekvilag/lampa-ba/layero-asset-0180-900.webp 900w" imagesizes="(max-width: 900px) min(78vw, 340px), min(38vw, 400px)" fetchpriority="high">
 </head>
 <body data-page="home">
 
-  <!-- ── HERO SLIDER: 1. slide a húzható lámpa-összehasonlítóval ────
-       data-hero-style = az induló stílus (aurora | studio | editorial | neon | sunset).
-       Élő próba/váltás: nyisd meg az index.html?herolab címet. -->
-  <section class="sh-slider" id="sh-slider" data-hero-style="studio" aria-label="Kiemelt ajánlatok">
-
-    <article class="sh-slide sh-slide--ba is-on">
-      <div class="shop-wrap sh-slide__ba-inner">
-        <div class="sh-slide__ba-copy">
-          <span class="sh-slide__eyebrow">Személyre szabott 3D ajándékok</span>
-          <h2>Ajándék, ami <em>rólad</em> szól.</h2>
-          <p>Névre szóló lámpák, kulcstartók és dekorációk — egyetlen példányban, a te ötletedből nyomtatva.</p>
+  <!-- Teljes szélességű életképek; kézi lapozás, külön mobilkompozíció. -->
+  <section class="sh-slider sh-slider--lifestyle" id="sh-slider" data-autoplay="0" data-hero-style="studio" aria-label="Kiemelt ajánlatok">
+    <article class="sh-slide sh-slide--lifestyle is-on">
+      <picture class="sh-lifestyle__media">
+        <source media="(max-width: 820px)" srcset="assets/banners/lifestyle-gift-mobile.webp">
+        <img src="assets/banners/lifestyle-gift.webp" alt="Egy kisfiú édesanyjától kapja meg a névre szóló dínós lámpáját" decoding="async" fetchpriority="high">
+      </picture>
+      <div class="shop-wrap sh-lifestyle__inner">
+        <div class="sh-lifestyle__copy">
+          <span class="sh-slide__eyebrow">Ajándék, ami csak neki szól</span>
+          <h1>Egy ajándék.<br>És az a bizonyos <em>mosoly.</em></h1>
+          <p>A neve. A kedvenc világa. Egy apró részlet, amitől tudja: ezt neki választottad.</p>
           <div class="sh-slide__cta">
-            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=lampak">Lámpák felfedezése</a>
-            <a class="sh-link--light" href="kategoria.html">Összes termék ›</a>
-          </div>
-          <p class="sh-slide__eta" id="sh-hero-eta"></p>
-        </div>
-        <div class="sh-slide__ba-stage">
-          <div class="ro-ba" data-lamp-ba tabindex="0" role="img" aria-label="Egyedi Jurassic Park lámpa felkapcsolt és lekapcsolt állapotának összehasonlítása">
-            <img class="ro-ba__img" src="assets/termekvilag/lampa-ba/layero-asset-0179-600.webp" srcset="assets/termekvilag/lampa-ba/layero-asset-0179-600.webp 600w, assets/termekvilag/lampa-ba/layero-asset-0179-720.webp 720w, assets/termekvilag/lampa-ba/layero-asset-0179-900.webp 900w" sizes="(max-width: 900px) min(78vw, 340px), min(38vw, 400px)" alt="" draggable="false" fetchpriority="high" decoding="async" width="600" height="747">
-            <div class="ro-ba__top" aria-hidden="true">
-              <img class="ro-ba__img" src="assets/termekvilag/lampa-ba/layero-asset-0180-600.webp" srcset="assets/termekvilag/lampa-ba/layero-asset-0180-600.webp 600w, assets/termekvilag/lampa-ba/layero-asset-0180-720.webp 720w, assets/termekvilag/lampa-ba/layero-asset-0180-900.webp 900w" sizes="(max-width: 900px) min(78vw, 340px), min(38vw, 400px)" alt="" draggable="false" fetchpriority="high" decoding="async" width="600" height="750">
-            </div>
-            <div class="ro-ba__handle" aria-hidden="true"><span class="ro-ba__grip">&lsaquo;&rsaquo;</span></div>
-            <span class="ro-ba__tag ro-ba__tag--on" aria-hidden="true">Felkapcsolva</span>
-            <span class="ro-ba__tag ro-ba__tag--off" aria-hidden="true">Lekapcsolva</span>
-          </div>
-          <p class="sh-slide__ba-hint" aria-hidden="true">Húzd el a csúszkát — így világít este</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="sh-slide sh-slide--spot">
-      <div class="shop-wrap sh-slide__spot-inner">
-        <div class="sh-slide__spot-copy">
-          <span class="sh-slide__eyebrow">Népszerű termékek</span>
-          <h2>Ajándék minden <em>szenvedélyre</em>.</h2>
-          <p>F1-naptár, borosüveg-tartó, filmes falidísz vagy névre szóló kulcstartó — 3D nyomtatva, a te ötleted szerint, egyetlen példányban.</p>
-          <div class="sh-slide__cta">
-            <a class="sh-btn sh-btn--white" href="kategoria.html">Összes termék</a>
+            <a class="sh-btn sh-btn--white" href="kategoria.html">Megtalálom az ajándékát</a>
             <a class="sh-link--light" href="kviz.html">Segíts választani ›</a>
           </div>
-        </div>
-        <div class="sh-slide__spot-stage">
-          <div class="sh-spot" data-spot>
-            <div class="sh-spot__frame">
-              <span class="sh-spot__badge" data-spot-badge>F1 2026 naptár</span>
-              <span class="sh-fchip sh-fchip--bl"><i>✦</i> Egyedi darab</span>
-              <div class="sh-spot__imgs">
-                <img class="sh-spot__img is-on" data-theme="F1 2026 naptár" src="assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-01.jpg" alt="Formula 1 2026-os versenynaptár, 3D nyomtatott piros-fekete fali tábla" decoding="async">
-                <img class="sh-spot__img" data-theme="Borosüveg-tartó" src="assets/termekvilag/hero_slider/layero-asset-0021.webp" alt="Szarvas formájú, kőhatású borosüveg-tartó szobor" decoding="async">
-                <img class="sh-spot__img" data-theme="Gyűrűk Ura" src="assets/kulcstartok/65-lord-of-the-rings-plakat-tabla/65-lord-of-the-rings-plakat-tabla-03.jpg" alt="Gyűrűk Ura plakát tábla, dombornyomott 3D falidísz" decoding="async">
-                <img class="sh-spot__img" data-theme="Logós kulcstartó" src="assets/termekvilag/hero_slider/layero-asset-0027.webp" alt="Egyedi logós kulcstartó, kétszínű 3D nyomtatással" decoding="async">
-              </div>
-            </div>
-            <div class="sh-spot__dots" role="tablist" aria-label="Termékek">
-              <button class="sh-spot__dot is-on" type="button" data-spot-dot="0" role="tab" aria-selected="true" aria-label="F1 2026 naptár"></button>
-              <button class="sh-spot__dot" type="button" data-spot-dot="1" role="tab" aria-selected="false" aria-label="Borosüveg-tartó"></button>
-              <button class="sh-spot__dot" type="button" data-spot-dot="2" role="tab" aria-selected="false" aria-label="Gyűrűk Ura"></button>
-              <button class="sh-spot__dot" type="button" data-spot-dot="3" role="tab" aria-selected="false" aria-label="Logós kulcstartó"></button>
-            </div>
-          </div>
+          <p class="sh-lifestyle__note">Személyre szabható • Szatmárnémetiben készül</p>
         </div>
       </div>
     </article>
-
-    <!-- 3. slide — BORÍTÓ: teljes-képes lifestyle fotó, mozis fátyollal -->
-    <article class="sh-slide sh-slide--cover">
-      <div class="sh-slide__media"><img src="assets/termekvilag/hero_slider/layero-asset-0010.webp" alt="" width="1122" height="1402" decoding="async"></div>
-      <span class="sh-fchip sh-fchip--tr"><i>✦</i> Kézzel készült</span>
-      <div class="sh-cover-copy">
-        <span class="sh-slide__eyebrow">Új kollekció</span>
-        <h2>Az ajándék, amire <em>évekig</em> emlékeznek.</h2>
-        <p>Névre szóló lámpák és dekorációk — kézzel tervezve, 3D-ben nyomtatva, egyetlen példányban.</p>
-        <div class="sh-slide__cta">
-          <a class="sh-btn sh-btn--white" href="kategoria.html">Kollekció felfedezése</a>
-          <a class="sh-link--light" href="kviz.html">Segíts választani ›</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- 4. slide — SPLIT-PANEL: kétszínű háttér, bold tipó + termék -->
-    <article class="sh-slide sh-slide--mid sh-slide--split2">
-      <div class="shop-wrap sh-slide__inner sh-slide__inner--2col">
-        <div class="sh-hc sh-hc--xl">
-          <span class="sh-slide__eyebrow">Asztali lámpák</span>
-          <h2>A fény, ami a <em>nevedet</em> mondja.</h2>
-          <p>Egyedi tervezésű lámpák meleg LED-fénnyel — a te szövegeddel, a te dátumoddal, egyetlen példányban.</p>
+    <article class="sh-slide sh-slide--lifestyle">
+      <picture class="sh-lifestyle__media">
+        <source media="(max-width: 820px)" srcset="assets/banners/lifestyle-home-mobile.webp">
+        <img src="assets/banners/lifestyle-home.webp" alt="Meghitt közös este a Hullám lámpa meleg fényében" decoding="async" loading="lazy">
+      </picture>
+      <div class="shop-wrap sh-lifestyle__inner">
+        <div class="sh-lifestyle__copy">
+          <span class="sh-slide__eyebrow">A közös pillanataitokhoz</span>
+          <h2>Egy kis fény.<br><em>Sok közös este.</em></h2>
+          <p>Lepd meg egy különleges lámpával, amely minden este a közös otthonotok része lesz.</p>
           <div class="sh-slide__cta">
-            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=lampak">Lámpák megnézése</a>
-            <a class="sh-link--light" href="kategoria.html">Összes termék ›</a>
+            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=lampak">Lámpát választok neki</a>
+            <a class="sh-link--light" href="egyedi-rendeles.html">Saját ötletem van ›</a>
           </div>
-        </div>
-        <div class="sh-hframe">
-          <img src="assets/termekvilag/hero_slider/layero-asset-0016.webp" alt="Hullám asztali lámpa" decoding="async">
-          <span class="sh-fchip sh-fchip--tr"><i>✦</i> Névre szabható</span>
+          <p class="sh-lifestyle__note">Egyedi tervezés • Szatmárnémetiből</p>
         </div>
       </div>
     </article>
-
-    <!-- 5. slide — ÜNNEPI KAMPÁNY: saját fenyő+arany háttér, akció-tag -->
-    <article class="sh-slide sh-slide--mid sh-slide--festive">
-      <div class="shop-wrap sh-slide__inner sh-slide__inner--2col">
-        <div class="sh-hc">
-          <span class="sh-promo-badge">Ünnepi kollekció</span>
-          <h2>Karácsonyi <em>fény</em>, névre szabva.</h2>
-          <p>Ünnepi lámpák és mécses-szettek — rendeld időben, hogy karácsonyra biztosan ott legyen a fa alatt.</p>
+    <article class="sh-slide sh-slide--lifestyle">
+      <picture class="sh-lifestyle__media">
+        <source media="(max-width: 820px)" srcset="assets/banners/lifestyle-festive-mobile.webp">
+        <img src="assets/banners/lifestyle-festive.webp" alt="Ünnepi ajándékbontás a karácsonyi kedvenc-lámpával" decoding="async" loading="lazy">
+      </picture>
+      <div class="shop-wrap sh-lifestyle__inner">
+        <div class="sh-lifestyle__copy">
+          <span class="sh-slide__eyebrow">A legszemélyesebb meglepetés</span>
+          <h2>Amikor kibontja,<br><em>magára ismer.</em></h2>
+          <p>A közös történetetek, a kedvencetek, egy nektek fontos emlék. Idén ez legyen az ajándék.</p>
           <div class="sh-slide__cta">
-            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=szezonalis">Ünnepi kollekció</a>
-            <a class="sh-link--light" href="kategoria.html">Összes termék ›</a>
+            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=szezonalis">Ünnepi ajándékot keresek</a>
+            <a class="sh-link--light" href="egyedi-rendeles.html">Egyedi ajándékot kérek ›</a>
           </div>
-        </div>
-        <div class="sh-hframe">
-          <img src="assets/termekvilag/hero_slider/layero-asset-0017.webp" alt="Karácsonyi kedvenc-lámpa" decoding="async">
-          <span class="sh-hframe__tag">-20%</span>
-          <span class="sh-fchip sh-fchip--bl"><i>🎁</i> Ünnepi kedvenc</span>
+          <p class="sh-lifestyle__note">Személyes részletek • Egyedi ajándékok</p>
         </div>
       </div>
     </article>
-
-    <!-- 6. slide — AKCIÓ: bold meleg háttér, óriás szám + termék -->
-    <article class="sh-slide sh-slide--mid sh-slide--sale">
-      <div class="shop-wrap sh-slide__inner sh-slide__inner--2col">
-        <div class="sh-hc">
-          <span class="sh-slide__eyebrow">Szezonvég</span>
-          <h2 class="sh-sale-big"><em>-20%</em> minden lámpára</h2>
-          <p class="sh-sale-sub">Csak most: a teljes lámpa-kollekcióra, a pénztárnál automatikusan levonva.</p>
-          <div class="sh-slide__cta">
-            <a class="sh-btn sh-btn--white" href="kategoria.html?cat=lampak">Irány a lámpák</a>
-            <a class="sh-link--light" href="kategoria.html">Összes termék ›</a>
-          </div>
-        </div>
-        <div class="sh-hframe">
-          <img src="assets/termekvilag/hero_slider/layero-asset-0009.webp" alt="Névre szóló szám-lámpa" decoding="async">
-          <span class="sh-sale-seal">AKCIÓ</span>
-        </div>
-      </div>
-    </article>
-
-    <!-- 7. slide — EDITORIAL STATEMENT: mély tinta, kép nélküli állítás -->
-    <article class="sh-slide sh-slide--mid sh-slide--ink">
-      <div class="shop-wrap sh-slide__inner">
-        <div class="sh-hc sh-hc--center sh-hc--hero">
-          <span class="sh-slide__eyebrow">Layero — személyre szabott 3D</span>
-          <h2>Nem ajándék. <em>Emlék</em>, amit kinyomtatunk.</h2>
-          <p>Küldd el az ötleted vagy egy referenciaképet — megtervezzük, és egyetlen példányban legyártjuk.</p>
-          <div class="sh-slide__cta">
-            <a class="sh-btn sh-btn--white" href="egyedi-rendeles.html">Ajánlatot kérek</a>
-            <a class="sh-link--light" href="kviz.html">Nem tudom, mit — kvíz ›</a>
-          </div>
-        </div>
-      </div>
-    </article>
-
     <button class="sh-slider__nav sh-slider__nav--prev" type="button" data-slide-prev aria-label="Előző">‹</button>
     <button class="sh-slider__nav sh-slider__nav--next" type="button" data-slide-next aria-label="Következő">›</button>
     <div class="sh-slider__dots" id="sh-slider-dots" role="tablist" aria-label="Slide választó"></div>
@@ -488,6 +388,6 @@
   <script src="shop-data.js?v=20260717d"></script>
   <script src="assets/layero-origin/mount.js?v=20260922" defer></script>
   <script src="assets/layero-origin/lyo-origin.js?v=20260922" defer></script>
-  <script src="shop.js?v=20260929-woo"></script>
+  <script src="shop.js?v=20260929-lifestyle"></script>
 </body>
 </html>

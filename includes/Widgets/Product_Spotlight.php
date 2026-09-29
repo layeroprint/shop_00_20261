@@ -148,7 +148,15 @@ class Product_Spotlight extends Base_Widget {
 							<span class="sh-spotlight__chip sh-spotlight__chip--tr"><?php echo Helpers::icon('pin'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo esc_html($origin_chip); ?></span>
 						<?php endif; ?>
 						<?php foreach ($items as $index => $item) : ?>
-							<img class="sh-spotlight__img<?php echo 0 === $index ? ' is-on' : ''; ?>" src="<?php echo esc_url($item['image_url']); ?>" alt="<?php echo esc_attr($item['name']); ?>"<?php echo 0 === $index ? '' : ' loading="lazy"'; ?> decoding="async">
+							<?php if (! empty($item['image_id'])) : ?>
+								<?php echo wp_get_attachment_image($item['image_id'], 'full', false, array(
+									'class' => 'sh-spotlight__img' . (0 === $index ? ' is-on' : ''),
+									'alt' => $item['name'], 'loading' => 0 === $index ? 'eager' : 'lazy', 'decoding' => 'async',
+									'sizes' => '(max-width: 460px) calc(100vw - 36px), 420px',
+								)); // WordPress preserves the original image ratio and generates srcset. ?>
+							<?php else : ?>
+								<img class="sh-spotlight__img<?php echo 0 === $index ? ' is-on' : ''; ?>" src="<?php echo esc_url($item['image_url']); ?>" alt="<?php echo esc_attr($item['name']); ?>"<?php echo 0 === $index ? '' : ' loading="lazy"'; ?> decoding="async">
+							<?php endif; ?>
 						<?php endforeach; ?>
 					</div>
 					<?php if (count($items) > 1) : ?>
@@ -190,7 +198,8 @@ class Product_Spotlight extends Base_Widget {
 					'desc' => wp_trim_words(wp_strip_all_tags($product->get_short_description() ?: $product->get_description()), 28),
 					'price_html' => $product->get_price_html(),
 					'url' => get_permalink($product->get_id()),
-					'image_url' => $image_id ? (string) wp_get_attachment_image_url($image_id, 'large') : wc_placeholder_img_src(),
+					'image_id' => $image_id,
+					'image_url' => $image_id ? (string) wp_get_attachment_image_url($image_id, 'full') : wc_placeholder_img_src(),
 					'badge' => 0 === $index
 						? ($settings['first_badge'] ?? 'A hónap terméke')
 						: __('Kiemelt darab', 'layero-shop-ui'),
