@@ -113,6 +113,7 @@ class Product_Grid extends Base_Widget {
 		$collection = $settings['collection'] ?? 'popular';
 		$is_listing = $this->is_page_context(array('termekek', 'shop'));
 		$is_favorites = $this->is_page_context(array('kedvencek'));
+		$is_home_popular = function_exists('is_front_page') && is_front_page() && ! $is_listing && ! $is_favorites && 'popular' === $collection;
 		$active_category = sanitize_title($settings['category'] ?? '');
 		$search = '';
 		$sort = 'recommended';
@@ -148,23 +149,41 @@ class Product_Grid extends Base_Widget {
 			'order' => $woo_sort['order'],
 			'search' => $search,
 		);
+		$preferred_ids = array();
+		if ($is_home_popular && Helpers::is_woo_active() && '' === $active_category && ! $query_settings['featured'] && ! $query_settings['on_sale']) {
+			foreach (array_slice(Shop_Content::popular_product_ids(), 0, $limit) as $slug) {
+				$post = get_page_by_path($slug, OBJECT, 'product');
+				if ($post) { $preferred_ids[] = (int) $post->ID; }
+			}
+			if ($preferred_ids) { $query_settings['product_ids'] = $preferred_ids; }
+		}
 		if ($is_listing && Helpers::is_woo_active()) {
 			$query_settings['matching_ids'] = $facets['ids'];
 			$query_settings['search'] = ''; // Already matched against the visible catalogue, including descriptions.
 		}
 		$result = Helpers::query_products($query_settings);
 		$products = is_object($result) ? $result->products : $result;
+		if ($preferred_ids && count($products) < $limit) {
+			$fallback_settings = $query_settings;
+			unset($fallback_settings['product_ids']);
+			$fallback = Helpers::query_products($fallback_settings);
+			foreach ($fallback as $product) {
+				if (count($products) >= $limit) { break; }
+				if (! in_array($product->get_id(), array_map(function ($item) { return $item->get_id(); }, $products), true)) { $products[] = $product; }
+			}
+		}
 		$total = is_object($result) ? (int) $result->total : count($products);
 		$has_next = $is_listing && $page * $limit < $total;
 		$use_demo = ! Helpers::is_woo_active();
 		$columns = in_array(($settings['columns'] ?? '4'), array('1', '2', '3', '4'), true) ? ($settings['columns'] ?? '4') : '4';
-		$card_args = array('show_excerpt' => 'yes' === ($settings['show_excerpt'] ?? 'yes'));
+		$card_args = array('show_excerpt' => 'yes' === ($settings['show_excerpt'] ?? 'yes'), 'home_style' => $is_home_popular);
 		$demo_products = $use_demo ? $this->demo_products($limit, $active_category, $collection, $search, $sort) : array();
 		$grid_attrs = $is_favorites ? ' data-layero-favorites-grid' : '';
 		$section_classes = 'sh-band sh-band--tight lyr-products';
 		$section_classes .= (! $is_listing && ! $is_favorites) ? ' sh-band--gray' : '';
 		$section_classes .= $is_listing ? ' lyr-products--listing' : '';
 		$section_classes .= $is_favorites ? ' lyr-products--favorites' : '';
+		$section_classes .= $is_home_popular ? ' lyr-products--home' : '';
 		?>
 		<section class="<?php echo esc_attr($section_classes); ?>">
 			<?php if ($is_listing) : ?>
