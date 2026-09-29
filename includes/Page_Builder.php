@@ -13,6 +13,7 @@ final class Page_Builder {
 	public static function init() {
 		add_action('init', array(__CLASS__, 'maybe_ensure_required_pages'), 20);
 		add_action('admin_init', array(__CLASS__, 'maybe_upgrade_faq'));
+		add_action('admin_init', array(__CLASS__, 'maybe_upgrade_catalog'));
 		add_filter('wp_robots', array(__CLASS__, 'legal_draft_robots'));
 		add_action('admin_action_layero_build_pages', array(__CLASS__, 'handle_build'));
 		add_action('admin_notices', array(__CLASS__, 'admin_notice'));
@@ -196,6 +197,7 @@ final class Page_Builder {
 			array('title' => 'Layero Kezdőlap', 'method' => 'home_data'),
 			array('title' => 'Rólunk', 'method' => 'about_data'),
 			array('title' => 'Gyakori kérdések', 'method' => 'faq_data'),
+			array('title' => 'Termékek', 'method' => 'catalog_data'),
 			array('title' => 'Kapcsolat', 'method' => 'contact_data'),
 			array('title' => 'Ajándékkereső', 'method' => 'quiz_data'),
 			array('title' => 'Kedvencek', 'method' => 'favorites_data'),
@@ -325,6 +327,35 @@ final class Page_Builder {
 	/* ──────────────────────────────────────────────────────────────
 	   GYIK (FAQ)
 	   ────────────────────────────────────────────────────────────── */
+
+	private static function catalog_data($settings = array()) {
+		$settings = array_merge($settings, array('title_tag' => 'h1', 'category' => '', 'collection' => 'all', 'featured' => '', 'on_sale' => '', 'limit' => 24));
+		return array(self::wrap_in_section(array(self::make_widget('layero_product_grid', $settings))));
+	}
+
+	/** Replace only the recognizable catalogue landing layout, with a full backup. */
+	public static function maybe_upgrade_catalog() {
+		if (! current_user_can('manage_options')) { return; }
+		$page = self::find_page_by_slug('termekek');
+		if (! $page || get_post_meta($page->ID, '_layero_catalog_revision', true)) { return; }
+		$raw = get_post_meta($page->ID, '_elementor_data', true);
+		$data = json_decode($raw, true);
+		if (! is_array($data)) { return; }
+		$widgets = self::faq_widgets($data);
+		$types = wp_list_pluck($widgets, 'widgetType');
+		$legacy_types = array('heading', 'text-editor', 'layero_category_bento', 'layero_product_grid', 'layero_product_carousel', 'layero_custom_cta', 'layero_trust_bar');
+		if ($types !== $legacy_types || 'Termékek' !== ($widgets[0]['settings']['title'] ?? '')) { return; }
+		$backup = array('elementor_data' => $raw, 'post_content' => $page->post_content, 'saved_at' => gmdate('c'));
+		if (! add_post_meta($page->ID, '_layero_catalog_backup_0_10_9', wp_slash($backup), true)) { return; }
+		self::set_elementor_data($page->ID, self::catalog_data($widgets[3]['settings'] ?? array()));
+		delete_post_meta($page->ID, '_elementor_element_cache');
+		delete_post_meta($page->ID, '_elementor_css');
+		if (class_exists('\\Elementor\\Core\\Files\\CSS\\Post')) {
+			(new \Elementor\Core\Files\CSS\Post($page->ID))->delete();
+		}
+		clean_post_cache($page->ID);
+		update_post_meta($page->ID, '_layero_catalog_revision', '0.10.9');
+	}
 
 	private static function faq_data() {
 		return array(self::wrap_in_section(array(self::make_widget('layero_static_page', array('page' => 'gyik')))));

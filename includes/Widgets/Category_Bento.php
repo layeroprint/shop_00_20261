@@ -207,16 +207,6 @@ class Category_Bento extends Base_Widget {
 		}
 		if ('egyedi' === $slug) { return home_url('/egyedi-rendeles/'); }
 
-		if (taxonomy_exists('product_cat')) {
-			$term = get_term_by('slug', $slug, 'product_cat');
-			if ($term && ! is_wp_error($term)) {
-				$link = get_term_link($term);
-				if (! is_wp_error($link)) {
-					return $link;
-				}
-			}
-		}
-
 		return Helpers::products_url($slug);
 	}
 

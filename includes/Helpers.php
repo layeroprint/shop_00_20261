@@ -187,6 +187,7 @@ final class Helpers {
 		}
 		if (! empty($settings['page'])) { $args['page'] = max(1, absint($settings['page'])); }
 		if (isset($settings['offset'])) { $args['offset'] = max(0, (int) $settings['offset']); }
+		if (! empty($settings['paginate'])) { $args['paginate'] = true; }
 
 		if (! empty($settings['category'])) {
 			$args['category'] = array(sanitize_title($settings['category']));
