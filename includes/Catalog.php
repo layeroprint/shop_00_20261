@@ -60,6 +60,53 @@ final class Catalog {
 		return $count;
 	}
 
+	public static function filter_labels() {
+		return array('sale' => 'Akciós', 'new' => 'Újdonság', 'bestseller' => 'Bestseller', 'personalizable' => 'Személyre szabható', 'top_rated' => '4,8 ★ és fölötte');
+	}
+
+	public static function filter_state($request) {
+		$filters = array();
+		foreach (array('min_price', 'max_price') as $key) {
+			if (isset($request[$key]) && is_string($request[$key]) && preg_match('/^\d{1,9}(?:[.,]\d{1,2})?$/', $request[$key])) {
+				$filters[$key] = (float) str_replace(',', '.', $request[$key]);
+			}
+		}
+		if (isset($filters['min_price'], $filters['max_price']) && $filters['min_price'] > $filters['max_price']) {
+			$filters = array('min_price' => $filters['max_price'], 'max_price' => $filters['min_price']);
+		}
+		foreach (self::filter_labels() as $key => $label) {
+			if (isset($request[$key]) && '1' === $request[$key]) { $filters[$key] = '1'; }
+		}
+		return $filters;
+	}
+
+	/** Reuse the request's public catalogue; then let WooCommerce sort and paginate matching IDs. */
+	public static function listing_facets($category, $search, $filters) {
+		$counts = array_fill_keys(array_keys(self::filter_labels()), 0);
+		$ids = array(); $prices = array();
+		$needle = strtolower(remove_accents($search));
+		foreach (self::products() as $product) {
+			if ($category && ! in_array($category, self::category_slugs($product), true)) { continue; }
+			if ('' !== $needle && false === strpos(strtolower(remove_accents(wp_strip_all_tags($product->get_name() . ' ' . $product->get_short_description() . ' ' . $product->get_description()))), $needle)) { continue; }
+			$has_price = '' !== $product->get_price();
+			$low = $has_price ? (float) wc_get_price_to_display($product) : 0;
+			$high = $product->is_type('variable') ? (float) wc_get_price_to_display($product, array('price' => $product->get_variation_price('max'))) : $low;
+			if ($has_price) { $prices[] = $low; $prices[] = $high; }
+			$badges = Helpers::product_badge_keys($product);
+			$values = array('sale' => $product->is_on_sale(), 'new' => in_array('new', $badges, true),
+				'bestseller' => $product->is_featured() || in_array('bestseller', $badges, true),
+				'personalizable' => Helpers::product_is_personalizable($product),
+				'top_rated' => $product->get_rating_count() > 0 && (float) $product->get_average_rating() >= 4.8);
+			foreach ($values as $key => $value) { if ($value) { $counts[$key]++; } }
+			if ((isset($filters['min_price']) || isset($filters['max_price'])) && ! $has_price) { continue; }
+			if (isset($filters['min_price']) && $high < $filters['min_price']) { continue; }
+			if (isset($filters['max_price']) && $low > $filters['max_price']) { continue; }
+			foreach ($values as $key => $value) { if (! empty($filters[$key]) && ! $value) { continue 2; } }
+			$ids[] = $product->get_id();
+		}
+		return array('ids' => $ids, 'counts' => $counts, 'min' => $prices ? floor(min($prices)) : 0, 'max' => $prices ? ceil(max($prices)) : 0);
+	}
+
 	public static function snapshot() {
 		$items = array();
 		$urls = array();

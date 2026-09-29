@@ -5,6 +5,7 @@ namespace LayeroShop\Widgets;
 use Elementor\Controls_Manager;
 use LayeroShop\Helpers;
 use LayeroShop\Shop_Content;
+use LayeroShop\Catalog;
 
 if (! defined('ABSPATH')) {
 	exit;
@@ -133,7 +134,9 @@ class Product_Grid extends Base_Widget {
 		}
 
 		$woo_sort = $this->woo_sort_args($sort, $collection);
-		$result = Helpers::query_products(array(
+		$filters = $is_listing ? Catalog::filter_state($_GET) : array();
+		$facets = $is_listing ? Catalog::listing_facets($active_category, $search, $filters) : null;
+		$query_settings = array(
 			'limit' => $limit,
 			'paginate' => $is_listing,
 			'page' => 1,
@@ -144,7 +147,12 @@ class Product_Grid extends Base_Widget {
 			'orderby' => $woo_sort['orderby'],
 			'order' => $woo_sort['order'],
 			'search' => $search,
-		));
+		);
+		if ($is_listing && Helpers::is_woo_active()) {
+			$query_settings['matching_ids'] = $facets['ids'];
+			$query_settings['search'] = ''; // Already matched against the visible catalogue, including descriptions.
+		}
+		$result = Helpers::query_products($query_settings);
 		$products = is_object($result) ? $result->products : $result;
 		$total = is_object($result) ? (int) $result->total : count($products);
 		$has_next = $is_listing && $page * $limit < $total;
@@ -159,14 +167,18 @@ class Product_Grid extends Base_Widget {
 		$section_classes .= $is_favorites ? ' lyr-products--favorites' : '';
 		?>
 		<section class="<?php echo esc_attr($section_classes); ?>">
-			<div class="shop-wrap">
 			<?php if ($is_listing) : ?>
 				<?php $this->render_listing_header($active_category, $search, $use_demo ? count($demo_products) : $total); ?>
-			<?php else : ?>
+			<?php endif; ?>
+			<div class="shop-wrap">
+			<?php if (! $is_listing) : ?>
 				<?php $this->render_section_header($settings); ?>
 			<?php endif; ?>
 			<?php if ($is_listing) : ?>
-				<?php $this->render_listing_toolbar($active_category, $search, $sort); ?>
+				<?php $this->render_listing_toolbar($active_category, $search, $sort, $filters); ?>
+				<div class="lyr-catalog-layout">
+				<?php $this->render_listing_filters($active_category, $search, $sort, $filters, $facets); ?>
+				<div class="lyr-catalog-results">
 			<?php endif; ?>
 			<?php if ($is_favorites) : ?>
 				<div class="lyr-products-empty" data-layero-favorites-empty hidden>
@@ -188,9 +200,9 @@ class Product_Grid extends Base_Widget {
 			</div>
 			<?php if ($is_listing && ($has_next || $page > 1)) : ?>
 				<nav class="lyr-pagination" aria-label="<?php esc_attr_e('Terméklista lapozása', 'layero-shop-ui'); ?>">
-					<?php if ($page > 1) : ?><a class="sh-btn sh-btn--ghost" href="<?php echo esc_url(Helpers::products_url($active_category, array('q' => $search, 'sort' => $sort, 'ly_page' => $page - 1))); ?>"><?php esc_html_e('Előző oldal', 'layero-shop-ui'); ?></a><?php endif; ?>
+					<?php if ($page > 1) : ?><a class="sh-btn sh-btn--ghost" href="<?php echo esc_url(Helpers::products_url($active_category, array_merge($filters, array('q' => $search, 'sort' => $sort, 'ly_page' => $page - 1)))); ?>"><?php esc_html_e('Előző oldal', 'layero-shop-ui'); ?></a><?php endif; ?>
 					<span><?php echo esc_html(sprintf(__('%d. oldal', 'layero-shop-ui'), $page)); ?></span>
-					<?php if ($has_next) : ?><a class="sh-btn sh-btn--ghost" href="<?php echo esc_url(Helpers::products_url($active_category, array('q' => $search, 'sort' => $sort, 'ly_page' => $page + 1))); ?>"><?php esc_html_e('Következő oldal', 'layero-shop-ui'); ?></a><?php endif; ?>
+					<?php if ($has_next) : ?><a class="sh-btn sh-btn--ghost" href="<?php echo esc_url(Helpers::products_url($active_category, array_merge($filters, array('q' => $search, 'sort' => $sort, 'ly_page' => $page + 1)))); ?>"><?php esc_html_e('Következő oldal', 'layero-shop-ui'); ?></a><?php endif; ?>
 				</nav>
 			<?php endif; ?>
 			<?php if (($use_demo && empty($demo_products)) || (! $use_demo && empty($products))) : ?>
@@ -201,6 +213,7 @@ class Product_Grid extends Base_Widget {
 					<a class="lyr-btn lyr-btn--primary" href="<?php echo esc_url(Helpers::products_url()); ?>"><?php esc_html_e('Összes termék', 'layero-shop-ui'); ?></a>
 				</div>
 			<?php endif; ?>
+			<?php if ($is_listing) : ?></div></div><?php endif; ?>
 			</div>
 		</section>
 		<?php
@@ -288,7 +301,7 @@ class Product_Grid extends Base_Widget {
 		$title = $category ? $category['name'] : ('' !== $active_category ? __('Nem található kategória', 'layero-shop-ui') : __('Összes termék', 'layero-shop-ui'));
 		$description = $category ? $category['description'] : __('Találd meg a hozzá illő ajándékot — válassz kategóriát, vagy keress egy konkrét ötletre.', 'layero-shop-ui');
 		?>
-		<header class="lyr-catalog-head">
+		<header class="lyr-catalog-head sh-band--dark"><div class="shop-wrap">
 			<nav class="lyr-catalog-crumbs" aria-label="<?php esc_attr_e('Morzsamenü', 'layero-shop-ui'); ?>">
 				<a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Főoldal', 'layero-shop-ui'); ?></a><span aria-hidden="true">/</span>
 				<?php if ('' !== $active_category) : ?><a href="<?php echo esc_url(Helpers::products_url()); ?>"><?php esc_html_e('Termékek', 'layero-shop-ui'); ?></a><span aria-hidden="true">/</span><?php endif; ?>
@@ -297,57 +310,76 @@ class Product_Grid extends Base_Widget {
 			<div class="lyr-catalog-title"><h1><?php echo esc_html($title); ?></h1><span class="lyr-catalog-count"><?php echo esc_html(sprintf(__('%d termék', 'layero-shop-ui'), $total)); ?></span></div>
 			<p><?php echo esc_html($description); ?></p>
 			<?php if ('' !== $search) : ?><div class="lyr-catalog-query"><?php echo esc_html(sprintf(__('Keresés: „%s”', 'layero-shop-ui'), $search)); ?> <a href="<?php echo esc_url(Helpers::products_url($active_category)); ?>"><?php esc_html_e('Keresés törlése', 'layero-shop-ui'); ?></a></div><?php endif; ?>
-		</header>
+		</div></header>
 		<?php
 	}
 
-	private function render_listing_toolbar($active_category, $search, $sort) {
-		$base_args = array();
-		if ('' !== $search) {
-			$base_args['q'] = $search;
+	private function hidden_filters($args) {
+		foreach ($args as $key => $value) {
+			if ('' !== $value && null !== $value) { echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">'; }
 		}
-		if ('recommended' !== $sort) {
-			$base_args['sort'] = $sort;
-		}
+	}
+
+	private function render_listing_toolbar($active_category, $search, $sort, $filters) {
+		$base = array_merge($filters, array('q' => $search, 'sort' => $sort));
 		?>
-		<div class="lyr-product-tools">
-			<form class="lyr-catalog-category" action="<?php echo esc_url(Helpers::products_url()); ?>" method="get">
-				<label for="lyr-category-<?php echo esc_attr($this->get_id()); ?>"><?php esc_html_e('Kategória', 'layero-shop-ui'); ?></label>
-				<select id="lyr-category-<?php echo esc_attr($this->get_id()); ?>" name="cat" onchange="this.form.submit()">
-					<option value=""><?php esc_html_e('Összes termék', 'layero-shop-ui'); ?></option>
-					<?php if ('' !== $active_category && ! Shop_Content::category_by_slug($active_category)) : ?>
-						<option value="<?php echo esc_attr($active_category); ?>" selected><?php echo esc_html(($this->listing_category($active_category)['name'] ?? __('Nem található kategória', 'layero-shop-ui'))); ?></option>
-					<?php endif; ?>
-					<?php foreach (Shop_Content::categories() as $category) : ?><option value="<?php echo esc_attr($category['id']); ?>" <?php selected($active_category, $category['id']); ?>><?php echo esc_html($category['name']); ?></option><?php endforeach; ?>
-				</select>
-				<?php foreach ($base_args as $key => $value) : ?><input type="hidden" name="<?php echo esc_attr($key); ?>" value="<?php echo esc_attr($value); ?>"><?php endforeach; ?>
-				<noscript><button type="submit"><?php esc_html_e('Kiválasztás', 'layero-shop-ui'); ?></button></noscript>
-			</form>
-			<form class="lyr-product-search" action="<?php echo esc_url(Helpers::products_url()); ?>" method="get" role="search">
-				<input type="hidden" name="sort" value="<?php echo esc_attr($sort); ?>">
-				<?php if ('' !== $active_category) : ?>
-					<input type="hidden" name="cat" value="<?php echo esc_attr($active_category); ?>">
-				<?php endif; ?>
-				<input type="search" name="q" aria-label="<?php esc_attr_e('Keresés a kiválasztott termékek között', 'layero-shop-ui'); ?>" value="<?php echo esc_attr($search); ?>" placeholder="<?php echo esc_attr('' !== $active_category ? __('Keresés ebben a kategóriában', 'layero-shop-ui') : __('Milyen ajándékot keresel?', 'layero-shop-ui')); ?>">
-				<button class="lyr-btn lyr-btn--dark" type="submit"><?php esc_html_e('Keresés', 'layero-shop-ui'); ?></button>
-			</form>
-			<form class="lyr-product-sort" action="<?php echo esc_url(Helpers::products_url()); ?>" method="get">
-				<?php if ('' !== $active_category) : ?>
-					<input type="hidden" name="cat" value="<?php echo esc_attr($active_category); ?>">
-				<?php endif; ?>
-				<?php if ('' !== $search) : ?>
-					<input type="hidden" name="q" value="<?php echo esc_attr($search); ?>">
-				<?php endif; ?>
-				<select name="sort" aria-label="<?php esc_attr_e('Rendezés', 'layero-shop-ui'); ?>" onchange="this.form.submit()">
-					<option value="recommended" <?php selected($sort, 'recommended'); ?>><?php esc_html_e('Ajánlott sorrend', 'layero-shop-ui'); ?></option>
-					<option value="price_asc" <?php selected($sort, 'price_asc'); ?>><?php esc_html_e('Ár szerint növekvő', 'layero-shop-ui'); ?></option>
-					<option value="price_desc" <?php selected($sort, 'price_desc'); ?>><?php esc_html_e('Ár szerint csökkenő', 'layero-shop-ui'); ?></option>
-					<option value="new" <?php selected($sort, 'new'); ?>><?php esc_html_e('Újdonságok', 'layero-shop-ui'); ?></option>
-					<option value="name" <?php selected($sort, 'name'); ?>><?php esc_html_e('Név szerint', 'layero-shop-ui'); ?></option>
-				</select>
-				<noscript><button type="submit"><?php esc_html_e('Rendezés', 'layero-shop-ui'); ?></button></noscript>
-			</form>
+		<div class="lyr-catalog-toolbar">
+			<nav class="lyr-catalog-pills sh-pills" aria-label="Termékkategóriák">
+				<a class="sh-pill <?php echo '' === $active_category ? 'is-active' : ''; ?>" <?php if ('' === $active_category) { echo 'aria-current="page"'; } ?> href="<?php echo esc_url(Helpers::products_url('', $base)); ?>">Mind</a>
+				<?php foreach (Shop_Content::categories() as $category) : ?>
+				<a class="sh-pill <?php echo $active_category === $category['id'] ? 'is-active' : ''; ?>" <?php if ($active_category === $category['id']) { echo 'aria-current="page"'; } ?> href="<?php echo esc_url(Helpers::products_url($category['id'], $base)); ?>"><?php echo esc_html($category['name']); ?></a>
+				<?php endforeach; ?>
+			</nav>
+			<div class="lyr-catalog-tools">
+				<form class="lyr-product-search" action="<?php echo esc_url(Helpers::products_url()); ?>" method="get" role="search">
+					<?php $this->hidden_filters(array_merge($filters, array('cat' => $active_category, 'sort' => $sort))); ?>
+					<input type="search" name="q" aria-label="Keresés a kiválasztott termékek között" value="<?php echo esc_attr($search); ?>" placeholder="Keresés a termékek között…">
+					<button class="sh-btn sh-btn--ghost" type="submit">Keresés</button>
+				</form>
+				<form class="lyr-product-sort" action="<?php echo esc_url(Helpers::products_url()); ?>" method="get">
+					<?php $this->hidden_filters(array_merge($filters, array('cat' => $active_category, 'q' => $search))); ?>
+					<select name="sort" aria-label="Rendezés" onchange="this.form.submit()">
+						<?php foreach (array('recommended' => 'Ajánlott sorrend', 'price_asc' => 'Ár szerint növekvő', 'price_desc' => 'Ár szerint csökkenő', 'new' => 'Legújabb elöl', 'name' => 'Név szerint') as $key => $label) : ?>
+						<option value="<?php echo esc_attr($key); ?>" <?php selected($sort, $key); ?>><?php echo esc_html($label); ?></option>
+						<?php endforeach; ?>
+					</select><noscript><button type="submit">Rendezés</button></noscript>
+				</form>
+			</div>
 		</div>
+		<?php
+	}
+
+	private function render_listing_filters($category, $search, $sort, $filters, $facets) {
+		$min = $filters['min_price'] ?? $facets['min'];
+		$max = $filters['max_price'] ?? $facets['max'];
+		$low_bound = min($facets['min'], $min);
+		$high_bound = max($facets['max'], $max, $low_bound + 1);
+		?>
+		<aside class="lyr-catalog-sidebar" aria-label="Termékszűrők">
+			<details class="lyr-catalog-filters" open>
+				<summary>Szűrők <?php if ($filters) : ?><span><?php echo esc_html(count($filters)); ?> aktív</span><?php endif; ?><i aria-hidden="true">+</i></summary>
+				<form action="<?php echo esc_url(Helpers::products_url()); ?>" method="get">
+					<?php $this->hidden_filters(array('cat' => $category, 'q' => $search, 'sort' => $sort)); ?>
+					<a class="lyr-catalog-reset" href="<?php echo esc_url(Helpers::products_url($category, array('q' => $search, 'sort' => $sort))); ?>">Szűrők törlése</a>
+					<fieldset><legend>Ár · <?php echo esc_html(function_exists('get_woocommerce_currency') ? get_woocommerce_currency() : 'RON'); ?></legend>
+						<div class="sh-range lyr-catalog-range">
+							<div class="sh-range__track"><i></i></div>
+							<input type="range" data-price-range="min_price" aria-label="Minimum ár csúszka" min="<?php echo esc_attr($low_bound); ?>" max="<?php echo esc_attr($high_bound); ?>" step="0.01" value="<?php echo esc_attr($min); ?>">
+							<input type="range" data-price-range="max_price" aria-label="Maximum ár csúszka" min="<?php echo esc_attr($low_bound); ?>" max="<?php echo esc_attr($high_bound); ?>" step="0.01" value="<?php echo esc_attr($max); ?>">
+						</div>
+						<div class="lyr-catalog-price"><label>Minimum<input type="number" name="min_price" aria-label="Minimum ár" min="0" step="0.01" placeholder="<?php echo esc_attr($facets['min']); ?>" value="<?php echo isset($filters['min_price']) ? esc_attr($min) : ''; ?>"></label><span>–</span><label>Maximum<input type="number" name="max_price" aria-label="Maximum ár" min="0" step="0.01" placeholder="<?php echo esc_attr($facets['max']); ?>" value="<?php echo isset($filters['max_price']) ? esc_attr($max) : ''; ?>"></label></div>
+					</fieldset>
+					<?php foreach (array('Ajánlatok' => array('sale', 'new', 'bestseller'), 'Tulajdonságok' => array('personalizable'), 'Értékelés' => array('top_rated')) as $title => $keys) : ?>
+					<fieldset><legend><?php echo esc_html($title); ?></legend>
+						<?php foreach ($keys as $key) : ?>
+						<label class="lyr-catalog-check"><input type="checkbox" name="<?php echo esc_attr($key); ?>" value="1" <?php checked(! empty($filters[$key])); ?>><span><?php echo esc_html(Catalog::filter_labels()[$key]); ?></span><small><?php echo esc_html($facets['counts'][$key]); ?></small></label>
+						<?php endforeach; ?>
+					</fieldset>
+					<?php endforeach; ?>
+					<button class="sh-btn sh-btn--primary" type="submit">Szűrés alkalmazása</button>
+				</form>
+			</details>
+		</aside>
 		<?php
 	}
 }

@@ -70,3 +70,42 @@
   }, true);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
+
+// Progressive enhancement: server-rendered catalogue filters also work without JS.
+(function () {
+  'use strict';
+  function initCatalogueFilters() {
+    document.querySelectorAll('.lyr-catalog-filters').forEach(function (panel) {
+      if (window.matchMedia('(max-width: 900px)').matches) panel.open = false;
+      panel.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && panel.open) { panel.open = false; panel.querySelector('summary').focus(); }
+      });
+      var form = panel.querySelector('form');
+      var low = form.querySelector('[data-price-range="min_price"]');
+      var high = form.querySelector('[data-price-range="max_price"]');
+      var bar = form.querySelector('.sh-range__track i');
+      function draw() {
+        var span = Number(high.max) - Number(low.min) || 1;
+        bar.style.left = ((Number(low.value) - Number(low.min)) / span * 100) + '%';
+        bar.style.right = (100 - (Number(high.value) - Number(low.min)) / span * 100) + '%';
+      }
+      [low, high].forEach(function (range) {
+        var field = form.elements[range.dataset.priceRange];
+        range.addEventListener('input', function () {
+          if (Number(low.value) > Number(high.value)) range.value = range === low ? high.value : low.value;
+          field.value = range.value; draw();
+        });
+        field.addEventListener('input', function () {
+          range.value = field.value === '' ? (range === low ? range.min : range.max) : field.value;
+          draw();
+        });
+      });
+      draw();
+    });
+    var pills = document.querySelector('.lyr-catalog-pills');
+    var active = pills && pills.querySelector('[aria-current="page"]');
+    if (active) pills.scrollLeft = Math.max(0, active.offsetLeft - pills.offsetLeft - 20);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCatalogueFilters);
+  else initCatalogueFilters();
+})();
