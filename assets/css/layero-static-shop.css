@@ -3173,6 +3173,8 @@ input, select, textarea, progress { accent-color: var(--accent); }
    ═══════════════════════════════════════════════════════════════════ */
 .sh-slider {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   min-height: clamp(520px, 74vh, 720px);
   background: var(--hero-surface-1);
   overflow: clip; /* A fókusz/lapozás ne görgethesse el a belső képteret. */
@@ -3202,12 +3204,14 @@ input, select, textarea, progress { accent-color: var(--accent); }
   --hero-stage-rgb:    240, 194, 122;
 }
 .sh-slide {
-  position: absolute; inset: 0;
+  /* All slides share one grid cell: even hidden content reserves its height,
+     so changing the active slide cannot move the content below the hero. */
+  position: relative; grid-area: 1 / 1; min-width: 0; min-height: inherit;
   opacity: 0; visibility: hidden; pointer-events: none;
   transition: opacity 0.9s ease;
   display: flex; align-items: flex-end;
 }
-.sh-slide.is-on { position: relative; min-height: inherit; opacity: 1; visibility: visible; pointer-events: auto; z-index: 1; }
+.sh-slide.is-on { opacity: 1; visibility: visible; pointer-events: auto; z-index: 1; }
 .sh-slide.is-leaving { visibility: visible; }
 .sh-slide__media { position: absolute; inset: 0; }
 .sh-slide__media img {
@@ -3444,6 +3448,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
    Bal oldalt szöveg (amber kiemelés), jobb oldalt világító keretben a
    termékfotó, ami 3-4 téma közt vált (cross-fade); lebegő téma-badge +
    kattintható pöttyök. Csak a meglévő fotókból — nincs mozaik, nincs csík. */
+.sh-slide--spot { align-items: center; }
 .sh-slide--spot::before {
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
@@ -3682,7 +3687,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
 
 /* — SCENE: BORÍTÓ (teljes-képes lifestyle fotó + mozis fátyol) — */
 /* Életképes hero: teljes felületű fotó, élő HTML-szöveg és mobil art direction. */
-.sh-slider.sh-slider--lifestyle:has(> .sh-slide--lifestyle.is-on) { min-height: clamp(620px, calc(100svh - 96px), 880px); }
+.sh-slider.sh-slider--lifestyle { min-height: clamp(620px, calc(100svh - 96px), 880px); }
 .sh-slide--lifestyle { align-items: stretch; background: var(--brand-navy); isolation: isolate; }
 .sh-lifestyle__ambient { display: none; pointer-events: none; }
 .sh-lifestyle__media { position: absolute; inset: 0; display: block; z-index: -2; }
@@ -3739,7 +3744,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
   .sh-slider:has(> .sh-slide--lifestyle.is-on) .sh-slider__nav--next { right: calc((100% - 1920px) / 2 + 24px); }
 }
 @media (max-width: 820px) {
-  .sh-slider.sh-slider--lifestyle:has(> .sh-slide--lifestyle.is-on) { min-height: max(720px, calc(100svh - 112px)); }
+  .sh-slider.sh-slider--lifestyle { min-height: max(720px, calc(100svh - 112px)); }
   .sh-slide--lifestyle .sh-lifestyle__media img { object-position: center top; }
   .sh-slide--lifestyle::after { background: linear-gradient(180deg, transparent 30%, rgba(2,8,18,.08) 45%, rgba(2,8,18,.55) 58%, rgba(2,8,18,.93) 77%); }
   .sh-lifestyle__inner { align-items: flex-end; padding: 320px 24px 72px; }
@@ -3755,7 +3760,7 @@ input, select, textarea, progress { accent-color: var(--accent); }
   body.sh-lifestyle-in-view .sh-fab { visibility: hidden; pointer-events: none; }
 }
 @media (min-width: 600px) and (max-width: 820px) {
-  .sh-slider.sh-slider--lifestyle:has(> .sh-slide--lifestyle.is-on) { min-height: 1040px; }
+  .sh-slider.sh-slider--lifestyle { min-height: 1040px; }
   .sh-lifestyle__inner { padding-top: 620px; }
 }
 
