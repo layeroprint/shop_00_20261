@@ -94,6 +94,9 @@ final class Assets {
 		wp_enqueue_script('layero-static-shop');
 		wp_enqueue_script('layero-online', LAYERO_SHOP_UI_URL . 'assets/js/layero-online.js', array('layero-static-shop', 'layero-shop-ui'), LAYERO_SHOP_UI_VERSION, true);
 		wp_enqueue_style('layero-online', LAYERO_SHOP_UI_URL . 'assets/css/layero-online.css', array('layero-static-shop', 'layero-shop-ui'), LAYERO_SHOP_UI_VERSION);
+		if (function_exists('is_product') && is_product()) {
+			wp_enqueue_script('layero-single-product', LAYERO_SHOP_UI_URL . 'assets/js/layero-single-product.js', array(), LAYERO_SHOP_UI_VERSION, true);
+		}
 
 		wp_add_inline_script(
 			'layero-static-data',
