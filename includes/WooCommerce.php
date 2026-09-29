@@ -22,10 +22,17 @@ final class WooCommerce {
 		add_action('woocommerce_product_data_panels', array($this, 'render_product_visual_panel'));
 		add_action('woocommerce_admin_process_product_object', array($this, 'save_product_visual_fields'));
 		add_action('woocommerce_before_add_to_cart_button', array($this, 'render_personalization_fields'));
+		add_filter('woocommerce_add_to_cart_validation', array($this, 'validate_personalization'), 10, 3);
 		add_filter('woocommerce_add_cart_item_data', array($this, 'add_cart_item_data'), 10, 3);
 		add_filter('woocommerce_get_item_data', array($this, 'display_cart_item_data'), 10, 2);
 		add_action('woocommerce_checkout_create_order_line_item', array($this, 'add_order_item_meta'), 10, 4);
 		add_shortcode('layero_mini_cart', array($this, 'mini_cart_shortcode'));
+		add_filter('woocommerce_loop_add_to_cart_link', array($this, 'personalization_link'), 10, 2);
+	}
+
+	public function personalization_link($html, $product) {
+		if (! Helpers::product_is_personalizable($product)) { return $html; }
+		return '<a class="button" href="' . esc_url($product->get_permalink()) . '">' . esc_html__('Személyre szabás', 'layero-shop-ui') . '</a>';
 	}
 
 	public function add_product_visual_tab($tabs) {
@@ -123,6 +130,14 @@ final class WooCommerce {
 			)
 		);
 
+		$fields = $product ? $product->get_meta('_layero_personalization_fields', true) : '';
+		woocommerce_wp_textarea_input(array(
+			'id' => '_layero_personalization_fields', 'label' => __('Személyre szabási mezők (JSON)', 'layero-shop-ui'),
+			'value' => is_array($fields) ? wp_json_encode($fields, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : $fields,
+			'rows' => 6,
+			'description' => __('Termékkezelőből importálható mezőséma. Üres: korábbi felirat/megjegyzés; []: nincs mező. Támogatott típusok: text, textarea, number, select, checkbox. A méret és szín csak akkor jelenik meg, ha a sémában szerepel.', 'layero-shop-ui'),
+		));
+
 		$lead_options = array('' => __('Automatikus – terméktípus alapján', 'layero-shop-ui')) + Helpers::lead_time_options();
 		woocommerce_wp_select(
 			array(
@@ -177,6 +192,18 @@ final class WooCommerce {
 		$lead_time = array_key_exists($lead_time, Helpers::lead_time_options()) ? $lead_time : '';
 		$lead_time_custom = isset($_POST['_layero_lead_time_custom']) ? sanitize_text_field(wp_unslash($_POST['_layero_lead_time_custom'])) : '';
 
+		if (isset($_POST['_layero_personalization_fields'])) {
+			$raw = is_string($_POST['_layero_personalization_fields']) ? trim(wp_unslash($_POST['_layero_personalization_fields'])) : '{invalid';
+			$probe = clone $product;
+			$probe->update_meta_data('_layero_personalization_fields', $raw);
+			if (is_wp_error(Personalization::schema($probe))) {
+				\WC_Admin_Meta_Boxes::add_error(__('Hibás személyre szabási JSON: a korábbi mezőbeállítás megmaradt.', 'layero-shop-ui'));
+			} elseif ('' === $raw) {
+				$product->delete_meta_data('_layero_personalization_fields');
+			} else {
+				$product->update_meta_data('_layero_personalization_fields', $raw);
+			}
+		}
 		$product->update_meta_data('_layero_product_type', $type);
 		$product->update_meta_data('_layero_card_type_label', $type_label);
 		$product->update_meta_data('_layero_badge_keys', $badge_keys);
@@ -197,29 +224,58 @@ final class WooCommerce {
 		if (! apply_filters('layero_shop_ui_show_personalization_fields', $show_fields, get_the_ID(), $current_product)) {
 			return;
 		}
+		$schema = Personalization::schema($current_product);
+		if (null !== $schema) { Personalization::render($schema); return; }
 		?>
 		<div class="lyr-personalization" data-layero-personalization>
 			<label for="layero_personalization_text"><?php echo esc_html__('Felirat / név', 'layero-shop-ui'); ?></label>
 			<input id="layero_personalization_text" name="layero_personalization_text" type="text" maxlength="40" placeholder="<?php echo esc_attr__('pl. Olivér', 'layero-shop-ui'); ?>">
-			<div class="lyr-personalization__row">
-				<label for="layero_personalization_size"><?php echo esc_html__('Méret', 'layero-shop-ui'); ?></label>
-				<select id="layero_personalization_size" name="layero_personalization_size">
-					<option value="Közepes"><?php echo esc_html__('Közepes', 'layero-shop-ui'); ?></option>
-					<option value="Kicsi"><?php echo esc_html__('Kicsi', 'layero-shop-ui'); ?></option>
-					<option value="Nagy"><?php echo esc_html__('Nagy', 'layero-shop-ui'); ?></option>
-				</select>
-				<label for="layero_personalization_color"><?php echo esc_html__('Szín', 'layero-shop-ui'); ?></label>
-				<select id="layero_personalization_color" name="layero_personalization_color">
-					<option value="Natúr"><?php echo esc_html__('Natúr', 'layero-shop-ui'); ?></option>
-					<option value="Fekete"><?php echo esc_html__('Fekete', 'layero-shop-ui'); ?></option>
-					<option value="Fehér"><?php echo esc_html__('Fehér', 'layero-shop-ui'); ?></option>
-				</select>
-			</div>
 			<label for="layero_personalization_note"><?php echo esc_html__('Egyedi megjegyzés', 'layero-shop-ui'); ?></label>
-			<textarea id="layero_personalization_note" name="layero_personalization_note" rows="3" placeholder="<?php echo esc_attr__('Színek, alkalom, referencia vagy extra kérés...', 'layero-shop-ui'); ?>"></textarea>
-			<p><?php echo esc_html__('Ez csak illusztráció - a pontos elhelyezést a tervezéskor egyeztetjük.', 'layero-shop-ui'); ?></p>
+			<textarea id="layero_personalization_note" name="layero_personalization_note" rows="3" maxlength="1000" placeholder="<?php echo esc_attr__('Színek, alkalom, referencia vagy extra kérés...', 'layero-shop-ui'); ?>"></textarea>
+			<p><?php echo esc_html__('Add meg a feliratot vagy írd le az egyedi kérésedet. A pontos elhelyezést a tervezéskor egyeztetjük.', 'layero-shop-ui'); ?></p>
 		</div>
 		<?php
+	}
+
+	private function personalization_data($product_id = 0) {
+		if (class_exists(__NAMESPACE__ . '\\Personalization')) {
+			$schema = Personalization::schema(wc_get_product($product_id));
+			if (null !== $schema) { return Personalization::values($schema, $_POST['layero_fields'] ?? array()); }
+		}
+		$data = array();
+		foreach (array('text' => 40, 'size' => 20, 'color' => 20, 'note' => 1000) as $key => $limit) {
+			$raw = $_POST['layero_personalization_' . $key] ?? '';
+			if (! is_string($raw)) {
+				return new \WP_Error('layero_invalid_personalization', __('A személyre szabás egyik mezője hibás. Kérjük, válaszd ki újra a termékoldalon.', 'layero-shop-ui'));
+			}
+			$value = 'note' === $key ? sanitize_textarea_field(wp_unslash($raw)) : sanitize_text_field(wp_unslash($raw));
+			$length = function_exists('mb_strlen') ? mb_strlen($value, 'UTF-8') : preg_match_all('/./us', $value);
+			if (false === $length || $length > $limit) {
+				return new \WP_Error('layero_personalization_too_long', __('A felirat legfeljebb 40, a megjegyzés legfeljebb 1000 karakter lehet.', 'layero-shop-ui'));
+			}
+			$data[$key] = $value;
+		}
+		foreach (array('size' => array('Kicsi', 'Közepes', 'Nagy'), 'color' => array('Natúr', 'Fekete', 'Fehér')) as $key => $allowed) {
+			if ('' !== $data[$key] && ! in_array($data[$key], $allowed, true)) {
+				return new \WP_Error('layero_invalid_option', __('A kiválasztott méret vagy szín nem érhető el. Kérjük, válaszd ki újra a termékoldalon.', 'layero-shop-ui'));
+			}
+		}
+		if ('' === $data['text'] && '' === $data['note']) {
+			return new \WP_Error('layero_personalization_required', __('Add meg a feliratot vagy írd le az egyedi kérésedet a termékoldalon.', 'layero-shop-ui'));
+		}
+		return $data;
+	}
+
+	public function validate_personalization($passed, $product_id, $quantity) {
+		if (! $passed || ! Helpers::product_is_personalizable(wc_get_product($product_id))) {
+			return $passed;
+		}
+		$data = $this->personalization_data($product_id);
+		if (is_wp_error($data)) {
+			wc_add_notice($data->get_error_message(), 'error');
+			return false;
+		}
+		return $passed;
 	}
 
 	public function add_cart_item_data($cart_item_data, $product_id, $variation_id) {
@@ -227,19 +283,13 @@ final class WooCommerce {
 			return $cart_item_data;
 		}
 
-		$text = isset($_POST['layero_personalization_text']) ? sanitize_text_field(wp_unslash($_POST['layero_personalization_text'])) : '';
-		$size = isset($_POST['layero_personalization_size']) ? sanitize_text_field(wp_unslash($_POST['layero_personalization_size'])) : '';
-		$color = isset($_POST['layero_personalization_color']) ? sanitize_text_field(wp_unslash($_POST['layero_personalization_color'])) : '';
-		$note = isset($_POST['layero_personalization_note']) ? sanitize_textarea_field(wp_unslash($_POST['layero_personalization_note'])) : '';
-
-		if ($text || $size || $color || $note) {
-			$cart_item_data['layero_personalization'] = array(
-				'text' => $text,
-				'size' => $size,
-				'color' => $color,
-				'note' => $note,
-			);
-			$cart_item_data['layero_unique_key'] = md5($product_id . '|' . $variation_id . '|' . $text . '|' . $size . '|' . $color . '|' . $note);
+		$data = $this->personalization_data($product_id);
+		if (is_wp_error($data)) {
+			throw new \Exception($data->get_error_message());
+		}
+		if (count(array_filter($data, static function ($value) { return '' !== $value; }))) {
+			$cart_item_data['layero_personalization'] = $data;
+			$cart_item_data['layero_unique_key'] = md5(wp_json_encode(array($product_id, $variation_id, $data)));
 		}
 
 		return $cart_item_data;
@@ -251,7 +301,10 @@ final class WooCommerce {
 		}
 
 		$data = $cart_item['layero_personalization'];
-		if (! empty($data['text'])) {
+		foreach ($data['fields'] ?? array() as $field) {
+			$item_data[] = array('name' => $field['label'], 'value' => esc_html($field['value']));
+		}
+		if (isset($data['text']) && '' !== $data['text']) {
 			$item_data[] = array(
 				'name' => __('Felirat / név', 'layero-shop-ui'),
 				'value' => esc_html($data['text']),
@@ -269,7 +322,7 @@ final class WooCommerce {
 				'value' => esc_html($data['color']),
 			);
 		}
-		if (! empty($data['note'])) {
+		if (isset($data['note']) && '' !== $data['note']) {
 			$item_data[] = array(
 				'name' => __('Egyedi megjegyzés', 'layero-shop-ui'),
 				'value' => esc_html($data['note']),
@@ -285,7 +338,10 @@ final class WooCommerce {
 		}
 
 		$data = $values['layero_personalization'];
-		if (! empty($data['text'])) {
+		foreach ($data['fields'] ?? array() as $field) {
+			$item->add_meta_data($field['label'], $field['value'], false);
+		}
+		if (isset($data['text']) && '' !== $data['text']) {
 			$item->add_meta_data(__('Felirat / név', 'layero-shop-ui'), $data['text'], true);
 		}
 		if (! empty($data['size'])) {
@@ -294,7 +350,7 @@ final class WooCommerce {
 		if (! empty($data['color'])) {
 			$item->add_meta_data(__('Szín', 'layero-shop-ui'), $data['color'], true);
 		}
-		if (! empty($data['note'])) {
+		if (isset($data['note']) && '' !== $data['note']) {
 			$item->add_meta_data(__('Egyedi megjegyzés', 'layero-shop-ui'), $data['note'], true);
 		}
 	}

@@ -115,13 +115,15 @@ class Product_Grid extends Base_Widget {
 		$active_category = sanitize_title($settings['category'] ?? '');
 		$search = '';
 		$sort = 'recommended';
+		$page = 1;
 
 		if ($is_listing) {
-			$active_category = isset($_GET['cat']) ? sanitize_title(wp_unslash($_GET['cat'])) : $active_category;
-			$search = isset($_GET['q']) ? sanitize_text_field(wp_unslash($_GET['q'])) : '';
-			$sort = isset($_GET['sort']) ? sanitize_key(wp_unslash($_GET['sort'])) : 'recommended';
+			$active_category = isset($_GET['cat']) && is_string($_GET['cat']) ? sanitize_title(wp_unslash($_GET['cat'])) : $active_category;
+			$search = isset($_GET['q']) && is_string($_GET['q']) ? sanitize_text_field(wp_unslash($_GET['q'])) : '';
+			$sort = isset($_GET['sort']) && is_string($_GET['sort']) ? sanitize_key(wp_unslash($_GET['sort'])) : 'recommended';
 			$collection = 'all';
 			$limit = max(24, $limit);
+			$page = isset($_GET['ly_page']) && is_scalar($_GET['ly_page']) ? max(1, absint($_GET['ly_page'])) : 1;
 		}
 
 		if ($is_favorites) {
@@ -131,7 +133,9 @@ class Product_Grid extends Base_Widget {
 
 		$woo_sort = $this->woo_sort_args($sort, $collection);
 		$products = Helpers::query_products(array(
-			'limit' => $limit,
+			'limit' => $is_listing ? $limit + 1 : $limit,
+			'page' => 1,
+			'offset' => ($page - 1) * $limit,
 			'category' => $active_category,
 			'featured' => 'yes' === ($settings['featured'] ?? ''),
 			'on_sale' => 'yes' === ($settings['on_sale'] ?? ''),
@@ -139,8 +143,10 @@ class Product_Grid extends Base_Widget {
 			'order' => $woo_sort['order'],
 			'search' => $search,
 		));
-		$use_demo = ! Helpers::is_woo_active() || empty($products);
-		$columns = in_array(($settings['columns'] ?? '4'), array('2', '3', '4'), true) ? $settings['columns'] : '4';
+		$has_next = $is_listing && count($products) > $limit;
+		$products = array_slice($products, 0, $limit);
+		$use_demo = ! Helpers::is_woo_active();
+		$columns = in_array(($settings['columns'] ?? '4'), array('1', '2', '3', '4'), true) ? ($settings['columns'] ?? '4') : '4';
 		$card_args = array('show_excerpt' => 'yes' === ($settings['show_excerpt'] ?? 'yes'));
 		$demo_products = $use_demo ? $this->demo_products($limit, $active_category, $collection, $search, $sort) : array();
 		$grid_attrs = $is_favorites ? ' data-layero-favorites-grid' : '';
@@ -173,6 +179,13 @@ class Product_Grid extends Base_Widget {
 					<?php endforeach; ?>
 				<?php endif; ?>
 			</div>
+			<?php if ($is_listing && ($has_next || $page > 1)) : ?>
+				<nav class="lyr-pagination" aria-label="<?php esc_attr_e('Terméklista lapozása', 'layero-shop-ui'); ?>">
+					<?php if ($page > 1) : ?><a class="sh-btn sh-btn--ghost" href="<?php echo esc_url(Helpers::products_url($active_category, array('q' => $search, 'sort' => $sort, 'ly_page' => $page - 1))); ?>"><?php esc_html_e('Előző oldal', 'layero-shop-ui'); ?></a><?php endif; ?>
+					<span><?php echo esc_html(sprintf(__('%d. oldal', 'layero-shop-ui'), $page)); ?></span>
+					<?php if ($has_next) : ?><a class="sh-btn sh-btn--ghost" href="<?php echo esc_url(Helpers::products_url($active_category, array('q' => $search, 'sort' => $sort, 'ly_page' => $page + 1))); ?>"><?php esc_html_e('Következő oldal', 'layero-shop-ui'); ?></a><?php endif; ?>
+				</nav>
+			<?php endif; ?>
 			<?php if (($use_demo && empty($demo_products)) || (! $use_demo && empty($products))) : ?>
 				<div class="lyr-products-empty">
 					<h3><?php esc_html_e('Nincs találat.', 'layero-shop-ui'); ?></h3>
@@ -264,6 +277,7 @@ class Product_Grid extends Base_Widget {
 		?>
 		<div class="lyr-product-tools">
 			<form class="lyr-product-search" action="<?php echo esc_url(Helpers::products_url()); ?>" method="get" role="search">
+				<input type="hidden" name="sort" value="<?php echo esc_attr($sort); ?>">
 				<?php if ('' !== $active_category) : ?>
 					<input type="hidden" name="cat" value="<?php echo esc_attr($active_category); ?>">
 				<?php endif; ?>

@@ -1,0 +1,45 @@
+/* Match the compact round controls in the webshop's floating toolbar. */
+.sh-fab .lyo-launcher {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
+  padding: 5px;
+  gap: 0;
+  border: 1px solid rgba(10, 20, 30, 0.06);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(10, 20, 30, 0.16);
+  transform: none;
+  text-decoration: none;
+  transition: box-shadow .2s, border-color .2s;
+}
+.sh-fab .lyo-launcher:hover {
+  border-color: rgba(10, 124, 146, 0.3);
+  box-shadow: 0 8px 26px rgba(10, 20, 30, 0.22);
+  transform: none;
+}
+.sh-fab .lyo-launcher:focus-visible {
+  outline: 2px solid #0c87a2;
+  outline-offset: 3px;
+}
+.sh-fab .lyo-launcher__map {
+  display: block;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 28px;
+  max-width: none;
+}
+
+/* The same original brand mark is used in the shop header and this dialog. */
+.lyo-dialog .lyo-brand__mark { width: 29px; height: 29px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sh-fab .lyo-launcher { transition: none; }
+}

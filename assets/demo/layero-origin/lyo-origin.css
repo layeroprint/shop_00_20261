@@ -1,0 +1,380 @@
+/*
+ * Layero / Origin — self-contained component styles.
+ * No global reset, no :root tokens, no .btn/.container/.hero selectors.
+ * Load AFTER the host site's CSS. All sizes include their own box model.
+ */
+.lyo-dialog {
+  --lyo-bg: #050c16;
+  --lyo-surface: #0a1420;
+  --lyo-gold: #f0c27a;
+  --lyo-cyan: #70e3ed;
+  --lyo-white: #f7f9fc;
+  --lyo-muted: #b8c3cf;
+  --lyo-faint: #91a0b2;
+  --lyo-line: rgba(168, 190, 208, .14);
+  --lyo-font: Arial, "Helvetica Neue", sans-serif;
+  --lyo-radius: 26px;
+  --lyo-ease: cubic-bezier(.2,.75,.25,1);
+  box-sizing: border-box;
+  position: fixed;
+  inset: 0;
+  width: min(1200px, calc(100% - 48px));
+  max-width: none;
+  max-height: calc(100dvh - 48px);
+  margin: auto;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid rgba(156, 188, 207, .24);
+  border-radius: var(--lyo-radius);
+  color: var(--lyo-white);
+  background: var(--lyo-bg);
+  box-shadow: 0 45px 150px -25px #000b, 0 0 0 1px #02070e, 0 0 100px -45px #16bace35;
+  font: 400 16px/1.5 var(--lyo-font);
+  text-align: left;
+  color-scheme: dark;
+  scrollbar-width: thin;
+  scrollbar-color: #465260 #07101c;
+  isolation: isolate;
+}
+.lyo-dialog:not([open]) { display: none; }
+.lyo-dialog::backdrop { background: rgba(2, 7, 14, .76); backdrop-filter: blur(6px); }
+.lyo-dialog[open]:not(.lyo-closing) { animation: lyo-open .5s var(--lyo-ease) both; }
+.lyo-dialog.lyo-closing { animation: lyo-close .17s ease both; }
+.lyo-dialog *, .lyo-dialog *::before, .lyo-dialog *::after { box-sizing: border-box; }
+.lyo-dialog [hidden] { display: none !important; }
+.lyo-dialog button, .lyo-dialog a, .lyo-dialog input { -webkit-tap-highlight-color: transparent; }
+.lyo-dialog button, .lyo-dialog input { font: inherit; }
+.lyo-dialog button { -webkit-appearance: none; appearance: none; cursor: pointer; }
+.lyo-dialog button:disabled { cursor: default; opacity: .48; }
+.lyo-dialog a { color: inherit; text-decoration: none; }
+.lyo-dialog :is(button,a,input):focus-visible { outline: 2px solid var(--lyo-cyan); outline-offset: 5px; }
+.lyo-dialog :is(h2,h3,p,figure) { margin: 0; }
+.lyo-dialog :is(h2,h3)[tabindex="-1"]:focus { outline: none; }
+.lyo-dialog img { max-width: 100%; display: block; }
+.lyo-dialog ::selection { color: #03101a; background: #f0c27a; }
+.lyo-sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); clip-path: inset(50%); white-space: nowrap; }
+.lyo-icon { display: inline-block; flex: 0 0 auto; width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
+.lyo-shell { position: relative; min-width: 0; overflow: hidden; background: radial-gradient(ellipse at 0 37%, #08445952, transparent 47%), radial-gradient(ellipse at 100% 26%, #ad69291b, transparent 49%), var(--lyo-bg); }
+.lyo-shell::before { content: ""; position: absolute; z-index: 0; inset: 0; pointer-events: none; background: url("images/filament-field.svg") 60% 30%/cover no-repeat; opacity: .66; }
+.lyo-shell::after { content: ""; position: absolute; z-index: 2; pointer-events: none; inset: 0 30px auto; height: 1px; background: linear-gradient(90deg, transparent, #79dce433 10%, #f0c27a55 78%, transparent); }
+.lyo-header, .lyo-main, .lyo-proof, .lyo-footer, .lyo-workshop { position: relative; z-index: 1; }
+.lyo-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 78px; padding: 18px 28px 17px 52px; border-bottom: 1px solid var(--lyo-line); }
+.lyo-brand { display: inline-flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.lyo-brand__mark { width: 29px; height: 27px; object-fit: contain; filter: drop-shadow(0 0 9px #4cd5e629); }
+.lyo-brand__name { font-size: 21px; line-height: 1; font-weight: 750; letter-spacing: -.65px; }
+.lyo-brand__shop { font-size: 8px; font-weight: 700; letter-spacing: 2.7px; margin-left: 1px; color: #c1c8d3; }
+.lyo-header__label { padding-left: 22px; margin-left: 22px; border-left: 1px solid #a3b8c427; font-size: 9px; letter-spacing: 2.1px; font-weight: 600; color: var(--lyo-faint); }
+.lyo-header__left { display: flex; align-items: center; }
+.lyo-header__right { display: flex; align-items: center; gap: 24px; }
+.lyo-country { display: inline-flex; align-items: center; gap: 10px; font-size: 9px; font-weight: 600; letter-spacing: 1.5px; color: #c0c9d3; }
+.lyo-country__flag { display: inline-block; width: 18px; height: 12px; border-radius: 2px; background: linear-gradient(90deg, #3569c8 0 33.333%, #f5cb60 33.333% 66.666%, #e3787b 66.666%); box-shadow: 0 0 0 1px #ffffff12; }
+.lyo-close { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #adc0d22e; border-radius: 50%; color: #c5cdd6; background: #ffffff03; transition: color .2s, background .2s, border-color .2s, transform .2s; }
+.lyo-close:hover { color: #fff; background: #ffffff0a; border-color: #e4bf7d7d; transform: rotate(8deg); }
+.lyo-close .lyo-icon { width: 18px; height: 18px; }
+.lyo-main { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.16fr); gap: 10px; padding: 17px 27px 23px 54px; align-items: center; }
+.lyo-copy { padding: 26px 0 20px; position: relative; z-index: 2; }
+.lyo-eyebrow { display: flex; align-items: center; gap: 11px; color: var(--lyo-gold); font-size: 9px; font-weight: 700; letter-spacing: 2px; line-height: 1.5; }
+.lyo-eyebrow::before { content: ""; flex: 0 0 22px; height: 1px; background: var(--lyo-gold); }
+.lyo-dialog .lyo-title { margin-top: 22px; font-family: var(--lyo-font); font-size: clamp(45px, 4.85vw, 66px); font-weight: 800; letter-spacing: -3px; line-height: 1.045; text-wrap: balance; }
+.lyo-title > span { display: block; white-space: nowrap; }
+.lyo-title > span:last-child { margin-top: 4px; color: var(--lyo-gold); }
+.lyo-dialog .lyo-lead { margin-top: 23px; font-size: 17px; line-height: 1.7; letter-spacing: -.2px; color: #d2dae3; }
+.lyo-dialog .lyo-body { max-width: 365px; margin-top: 17px; font-size: 13px; line-height: 1.85; color: #aab7c7; }
+.lyo-location { display: flex; align-items: center; gap: 13px; margin-top: 24px; }
+.lyo-location__icon { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #f0c27a33; border-radius: 12px; background: #f0c27a06; color: var(--lyo-gold); }
+.lyo-location__icon .lyo-icon { width: 19px; height: 19px; }
+.lyo-location__text { display: grid; gap: 1px; }
+.lyo-location__text strong { font-size: 14px; font-weight: 700; color: var(--lyo-white); }
+.lyo-location__text small { font-size: 11px; color: #9eaec0; }
+.lyo-location__line { width: 34px; height: 1px; background: #90b2c43b; margin-left: 3px; }
+.lyo-location__note { max-width: 90px; font-size: 9px; line-height: 1.55; letter-spacing: .2px; color: #9cabbd; }
+.lyo-stage { min-width: 0; position: relative; margin: 0; padding-top: 12px; }
+.lyo-stage__toolbar { display: flex; align-items: center; justify-content: space-between; padding: 0 20px 0 23px; gap: 12px; }
+.lyo-stage__eyebrow { color: #9fb0c2; font-size: 8px; letter-spacing: 1.65px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+.lyo-stage__eyebrow i { display: inline-block; width: 4px; height: 4px; background: var(--lyo-cyan); border-radius: 50%; }
+.lyo-mode { display: flex; align-items: center; padding: 3px; gap: 1px; border: 1px solid #a5bac420; background: #030a1359; border-radius: 999px; }
+.lyo-mode__button { border: 0; border-radius: 999px; min-height: 32px; padding: 0 13px; color: #a6b4c5; background: transparent; font-size: 10px !important; font-weight: 600 !important; display: inline-flex; align-items: center; justify-content: center; gap: 7px; transition: color .2s, background .2s, box-shadow .2s; }
+.lyo-mode__button .lyo-icon { width: 13px; height: 13px; }
+.lyo-mode__button:hover { color: #fff; }
+.lyo-mode__button[aria-pressed="true"] { background: #23303b; color: #f3e3ca; box-shadow: inset 0 0 0 1px #d5bd9230; }
+.lyo-mapframe { position: relative; perspective: 1300px; display: grid; align-items: center; justify-items: stretch; margin: -3px -10px -6px -22px; height: 373px; }
+.lyo-map { display: block; width: 100%; max-height: 100%; height: auto; transform-origin: 50% 55%; transform: rotateX(var(--lyo-tilt-x, 0deg)) rotateY(var(--lyo-tilt-y, 0deg)); transition: transform .22s ease-out; }
+.lyo-mapframe::after { content: ""; position: absolute; pointer-events: none; z-index: -1; inset: 15% 2% 1%; background: radial-gradient(ellipse at 50% 60%, #00a9c113, transparent 60%); }
+.lyo-stage__caption { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 0 25px; margin-top: -14px; font-size: 8px; font-weight: 600; color: #99a9bc; letter-spacing: 1.35px; }
+.lyo-stage__caption > span:last-child { color: #94a6b7; }
+.lyo-controls { display: grid; grid-template-columns: auto minmax(70px,1fr) 30px auto; align-items: center; gap: 13px; margin: 23px 23px 0; padding: 11px 13px 10px 15px; background: #070f1b9e; border: 1px solid #a5bac423; border-radius: 12px; }
+.lyo-controls label { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 600; color: #c6d1dc; white-space: nowrap; }
+.lyo-controls label .lyo-icon { width: 15px; height: 15px; color: var(--lyo-cyan); }
+.lyo-range { -webkit-appearance: none; appearance: none; display: block; min-width: 0; width: 100%; height: 28px; margin: 0; padding: 0; background: transparent; cursor: ew-resize; --lyo-progress: 0%; }
+.lyo-range::-webkit-slider-runnable-track { height: 3px; border-radius: 5px; background: linear-gradient(to right, var(--lyo-gold) var(--lyo-progress), #485465 var(--lyo-progress)); }
+.lyo-range::-moz-range-track { height: 3px; border-radius: 5px; background: #485465; }
+.lyo-range::-moz-range-progress { height: 3px; background: var(--lyo-gold); }
+.lyo-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 13px; height: 13px; margin-top: -5px; border-radius: 50%; border: 3px solid #16222f; background: #f0c27a; box-shadow: 0 0 0 1px #f0c27a8c, 0 0 12px #f0c27a23; }
+.lyo-range::-moz-range-thumb { width: 9px; height: 9px; border-radius: 50%; border: 3px solid #16222f; background: #f0c27a; box-shadow: 0 0 0 1px #f0c27a8c; }
+.lyo-controls output { text-align: right; color: #b8c3d1; font-size: 9px; font-variant-numeric: tabular-nums; }
+.lyo-reset { width: 28px; min-height: 28px; display: grid; place-items: center; color: #9cadbf; border: 0; padding: 0; border-radius: 50%; background: transparent; }
+.lyo-reset .lyo-icon { width: 14px; height: 14px; }
+.lyo-reset:hover { color: var(--lyo-gold); background: #fff1; }
+.lyo-dialog .lyo-interaction-hint { text-align: center; margin-top: 9px; font-size: 9px; color: #a0aebf; letter-spacing: .1px; }
+.lyo-proof { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); padding: 17px 53px 18px; border-top: 1px solid var(--lyo-line); background: #04121d45; }
+.lyo-proof__item { display: flex; align-items: center; gap: 14px; padding: 0 26px; border-left: 1px solid #8b9eae29; }
+.lyo-proof__item:first-child { border-left: 0; padding-left: 0; }
+.lyo-proof__item:last-child { padding-right: 0; }
+.lyo-proof__icon { width: 28px; height: 28px; display: grid; place-items: center; color: var(--lyo-cyan); }
+.lyo-proof__item:nth-child(2) .lyo-proof__icon { color: var(--lyo-gold); }
+.lyo-proof__text { display: grid; gap: 1px; }
+.lyo-proof__text strong { font-size: 11px; font-weight: 600; color: #e3e9ee; }
+.lyo-proof__text small { font-size: 10px; color: #9faec0; }
+.lyo-footer { display: flex; justify-content: space-between; align-items: center; gap: 30px; padding: 23px 51px 25px 54px; border-top: 1px solid #b4c7d627; background: linear-gradient(110deg, #0f1e2cda, #101721f5 60%, #191c23e8); }
+.lyo-name { display: grid; gap: 12px; }
+.lyo-name__eyebrow { color: #9bafbf; font-size: 8px; letter-spacing: 1.9px; font-weight: 500; }
+.lyo-equation { display: flex; align-items: center; gap: 18px; }
+.lyo-equation__part { display: grid; gap: 4px; }
+.lyo-equation__part strong { font-size: 19px; font-weight: 750; line-height: 1; letter-spacing: -.35px; }
+.lyo-equation__part:first-child strong { color: #dcebf2; }
+.lyo-equation__part:nth-of-type(2) strong { color: var(--lyo-gold); }
+.lyo-equation__part small { font-size: 8px; color: #a7b4c1; white-space: nowrap; }
+.lyo-equation__sign { align-self: flex-start; padding-top: 3px; color: #95aabc; font-size: 13px; font-weight: 400; }
+.lyo-equation__brand { padding-bottom: 9px; font-size: 27px; line-height: 1; font-weight: 800; letter-spacing: -1.3px; }
+.lyo-equation__brand span { color: var(--lyo-cyan); }
+.lyo-footer__action { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.lyo-cta { display: inline-flex; align-items: center; justify-content: center; gap: 20px; min-height: 47px; padding: 0 21px; background: #f6f8fa; color: #0d1824 !important; border: 1px solid #fff; border-radius: 999px; font-size: 12px !important; font-weight: 700 !important; box-shadow: 0 6px 24px #0002; transition: background .2s, box-shadow .2s, transform .2s; }
+.lyo-cta .lyo-icon { width: 17px; height: 17px; transition: transform .2s; }
+.lyo-cta:hover { background: #fff; box-shadow: 0 6px 25px #f0c27a25; transform: translateY(-2px); }
+.lyo-cta:hover .lyo-icon { transform: translate(2px,-2px); }
+.lyo-footer__sub { display: flex; align-items: center; gap: 7px; font-size: 9px; color: #a6b5c3; padding-right: 4px; }
+.lyo-footer__sub .lyo-icon { width: 12px; height: 12px; color: #88b7c8; }
+/* The story is a real second view, not a dead CTA or a new popup. */
+.lyo-workshop { padding: 26px 52px 33px; }
+.lyo-back { display: inline-flex; align-items: center; gap: 8px; border: 0; padding: 5px 0; background: transparent; color: #b6c8d7; font-size: 11px !important; min-height: 36px; }
+.lyo-back .lyo-icon { width: 15px; height: 15px; }
+.lyo-back:hover { color: var(--lyo-gold); }
+.lyo-workshop__intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 35px; margin: 18px 0 22px; }
+.lyo-dialog .lyo-workshop__title { font-size: clamp(30px,3.2vw,42px); font-weight: 750; letter-spacing: -1.4px; line-height: 1.15; }
+.lyo-workshop__title span { color: var(--lyo-gold); }
+.lyo-workshop__intro p { max-width: 285px; font-size: 12px; line-height: 1.8; color: #b4c2d0; }
+.lyo-cards { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.lyo-card { min-width: 0; position: relative; background: linear-gradient(145deg, #11233277, #0a1420bb); border: 1px solid #9ebfd124; border-radius: 16px; overflow: hidden; transition: border-color .25s, transform .25s; }
+.lyo-card:hover { transform: translateY(-3px); border-color: #f0c27a55; }
+.lyo-card__figure { display: block; width: 100%; aspect-ratio: 360/218; object-fit: cover; object-position: center; }
+.lyo-card__text { padding: 0 23px 25px; }
+.lyo-card__number { color: #9cb5c7; font-size: 9px; letter-spacing: 2px; }
+.lyo-dialog .lyo-card h3 { font-size: 18px; line-height: 1.3; margin: 9px 0 9px; font-weight: 700; letter-spacing: -.25px; }
+.lyo-dialog .lyo-card p { font-size: 12px; line-height: 1.8; color: #afbecd; }
+.lyo-workshop__links { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-top: 23px; }
+.lyo-textlink { min-height: 44px; display: inline-flex; align-items: center; gap: 9px; color: var(--lyo-cyan) !important; font-size: 12px; font-weight: 600; }
+.lyo-textlink .lyo-icon { width: 15px; height: 15px; }
+.lyo-textlink:hover { text-decoration: underline; text-underline-offset: 4px; }
+/* Floating entry point. Not shown inside the modal. */
+.lyo-launcher { box-sizing: border-box; position: fixed; z-index: 900; right: 26px; bottom: 27px; display: inline-flex; align-items: center; gap: 13px; min-height: 62px; padding: 10px 17px 10px 13px; border: 1px solid #94c6d454; border-radius: 18px; background: linear-gradient(125deg,#12303e,#081321 68%); color: #f4f7fb; box-shadow: 0 12px 38px #02111b42; font: 400 13px/1.4 Arial,sans-serif; text-align: left; cursor: pointer; transition: border-color .2s, transform .2s; }
+.lyo-launcher:hover { transform: translateY(-3px); border-color: #f0c27a99; }
+.lyo-launcher:focus-visible { outline: 2px solid #0c87a2; outline-offset: 5px; }
+.lyo-launcher > .lyo-icon { width: 31px; height: 31px; color: #efc581; }
+.lyo-launcher > .lyo-icon:last-child { width: 16px; height: 16px; margin-left: 15px; color: #88deea; }
+.lyo-launcher__copy { display: grid; gap: 1px; }
+.lyo-launcher__copy strong { font-size: 12px; font-weight: 700; }
+.lyo-launcher__copy small { font-size: 10px; color: #c0d0d9; }
+/* Custom event and browser fallback support, not used by modern native dialog. */
+.lyo-fallback-shade { position: fixed; inset: 0; background: #02070ec2; backdrop-filter: blur(6px); z-index: 2147483645; }
+.lyo-dialog.lyo-fallback { z-index: 2147483646; }
+@keyframes lyo-open { from { opacity: 0; transform: translateY(15px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes lyo-close { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(7px) scale(.992); } }
+@media (max-width: 1100px) and (min-width: 761px) {
+  .lyo-header { padding-left: 34px; }
+  .lyo-main { padding-left: 35px; padding-right: 20px; grid-template-columns: minmax(0,.9fr) minmax(0,1.12fr); }
+  .lyo-dialog .lyo-title { font-size: clamp(38px,5.1vw,55px); letter-spacing: -2.2px; }
+  .lyo-eyebrow { font-size: 8px; letter-spacing: 1.25px; }
+  .lyo-dialog .lyo-lead { font-size: 15px; }
+  .lyo-dialog .lyo-body { font-size: 12px; max-width: 320px; }
+  .lyo-stage__eyebrow { font-size: 7px; letter-spacing: 1.1px; }
+  .lyo-mapframe { height: 345px; margin-left: -30px; }
+  .lyo-controls { margin-left: 10px; margin-right: 8px; gap: 9px; padding-left: 10px; }
+  .lyo-controls label { font-size: 9px; }
+  .lyo-location__note,.lyo-location__line { display: none; }
+  .lyo-proof { padding-left: 35px; padding-right: 30px; }
+  .lyo-proof__item { gap: 9px; padding-inline: 16px; }
+  .lyo-proof__text small { font-size: 9px; }
+  .lyo-footer { padding-left: 35px; padding-right: 33px; }
+  .lyo-workshop { padding-left: 35px; padding-right: 35px; }
+}
+@media (max-height: 820px) and (min-width: 761px) {
+  .lyo-dialog { max-height: calc(100dvh - 24px); }
+  .lyo-header { min-height: 69px; padding-top: 11px; padding-bottom: 11px; }
+  .lyo-main { padding-top: 6px; padding-bottom: 16px; }
+  .lyo-copy { padding-top: 20px; padding-bottom: 12px; }
+  .lyo-dialog .lyo-title { font-size: 55px; margin-top: 18px; }
+  .lyo-dialog .lyo-lead { margin-top: 17px; font-size: 15px; }
+  .lyo-dialog .lyo-body { margin-top: 12px; line-height: 1.75; }
+  .lyo-location { margin-top: 18px; }
+  .lyo-mapframe { height: 328px; }
+  .lyo-controls { margin-top: 18px; }
+  .lyo-proof { padding-block: 14px; }
+  .lyo-footer { padding-block: 18px; }
+  .lyo-card__figure { aspect-ratio: 360/190; }
+  .lyo-workshop { padding-top: 18px; padding-bottom: 22px; }
+}
+@media (max-width: 760px) {
+  .lyo-dialog { width: calc(100% - 22px); max-height: calc(100dvh - 22px); border-radius: 22px; }
+  .lyo-shell { background: radial-gradient(ellipse at 0 30%, #08445945, transparent 60%), radial-gradient(ellipse at 100% 50%, #aa69201a, transparent 60%), var(--lyo-bg); }
+  .lyo-header { min-height: 68px; padding: 12px 16px 12px 23px; gap: 10px; }
+  .lyo-header__label { display: none; }
+  .lyo-header__right { gap: 15px; }
+  .lyo-brand { gap: 9px; }
+  .lyo-brand__name { font-size: 19px; }
+  .lyo-brand__shop { font-size: 7px; letter-spacing: 1.6px; }
+  .lyo-country { font-size: 8px; letter-spacing: .8px; gap: 7px; }
+  .lyo-country__label { display: none; }
+  .lyo-country__flag { width: 18px; height: 12px; }
+  .lyo-close { width: 42px; height: 42px; }
+  .lyo-main { grid-template-columns: minmax(0,1fr); padding: 0 24px 22px; gap: 15px; }
+  .lyo-copy { padding: 30px 0 5px; }
+  .lyo-eyebrow { font-size: 8px; letter-spacing: 1.3px; gap: 9px; }
+  .lyo-eyebrow::before { flex-basis: 18px; }
+  .lyo-dialog .lyo-title { font-size: clamp(36px, 8.9vw, 59px); letter-spacing: -1.9px; margin-top: 18px; line-height: 1.06; text-wrap: initial; }
+  .lyo-title > span:last-child { margin-top: 3px; }
+  .lyo-dialog .lyo-lead { font-size: 15px; margin-top: 19px; line-height: 1.65; }
+  .lyo-dialog .lyo-body { max-width: 480px; font-size: 12px; margin-top: 14px; line-height: 1.8; }
+  .lyo-location { margin-top: 19px; gap: 11px; }
+  .lyo-location__icon { width: 37px; height: 37px; border-radius: 10px; }
+  .lyo-location__text strong { font-size: 12px; }
+  .lyo-location__text small { font-size: 10px; }
+  .lyo-location__line { width: 25px; }
+  .lyo-location__note { font-size: 8px; }
+  .lyo-stage { padding-top: 16px; border-top: 1px solid #91b3c524; }
+  .lyo-stage__toolbar { padding: 0; gap: 5px; }
+  .lyo-stage__eyebrow { font-size: 7px; letter-spacing: 1px; gap: 5px; }
+  .lyo-mode__button { padding: 0 11px; min-height: 34px; font-size: 9px !important; }
+  .lyo-mode__button .lyo-icon { width: 12px; height: 12px; }
+  .lyo-mapframe { height: auto; aspect-ratio: 720/505; margin: 9px -21px 0 -21px; }
+  .lyo-map { width: 100%; height: 100%; max-height: none; }
+  .lyo-stage__caption { padding: 0; margin-top: -10px; font-size: 7px; letter-spacing: 1px; }
+  .lyo-controls { margin: 18px 0 0; gap: 10px; padding: 9px 10px; }
+  .lyo-controls label { font-size: 9px; gap: 6px; }
+  .lyo-controls label .lyo-icon { width: 14px; height: 14px; }
+  .lyo-dialog .lyo-interaction-hint { margin-top: 10px; font-size: 9px; }
+  .lyo-proof { padding: 18px 22px; }
+  .lyo-proof__item { flex-direction: column; align-items: flex-start; gap: 7px; padding: 0 12px; }
+  .lyo-proof__icon { height: 22px; width: 22px; }
+  .lyo-proof__icon .lyo-icon { width: 19px; height: 19px; }
+  .lyo-proof__text strong { font-size: 9px; line-height: 1.5; }
+  .lyo-proof__text small { font-size: 8px; line-height: 1.65; }
+  .lyo-footer { padding: 22px 24px 25px; gap: 23px; flex-direction: column; align-items: stretch; }
+  .lyo-name { gap: 13px; }
+  .lyo-name__eyebrow { font-size: 7px; letter-spacing: 1.7px; }
+  .lyo-equation { gap: 20px; }
+  .lyo-equation__part strong { font-size: 18px; }
+  .lyo-equation__part small { font-size: 8px; }
+  .lyo-equation__brand { font-size: 26px; margin-left: auto; }
+  .lyo-footer__action { align-items: stretch; }
+  .lyo-cta { min-height: 48px; width: 100%; }
+  .lyo-footer__sub { justify-content: center; }
+  .lyo-workshop { padding: 20px 23px 26px; }
+  .lyo-workshop__intro { flex-direction: column; align-items: stretch; gap: 16px; margin-top: 15px; }
+  .lyo-dialog .lyo-workshop__title { font-size: 34px; }
+  .lyo-workshop__intro p { max-width: none; }
+  .lyo-cards { grid-template-columns: 1fr; }
+  .lyo-card { display: grid; grid-template-columns: .9fr 1.2fr; align-items: center; }
+  .lyo-card__figure { height: 100%; min-height: 170px; aspect-ratio: auto; object-fit: cover; }
+  .lyo-card__text { padding: 23px 15px 23px 0; }
+  .lyo-dialog .lyo-card h3 { font-size: 16px; }
+  .lyo-dialog .lyo-card p { font-size: 11px; }
+  .lyo-workshop__links { flex-direction: column; align-items: stretch; gap: 9px; }
+  .lyo-textlink { justify-content: center; }
+  .lyo-launcher { right: 18px; bottom: 20px; }
+}
+@media (max-width: 360px) {
+  .lyo-header { padding-left: 18px; }
+  .lyo-main { padding-left: 18px; padding-right: 18px; }
+  .lyo-dialog .lyo-title { font-size: 33px; letter-spacing: -1.45px; }
+  .lyo-eyebrow { font-size: 7px; letter-spacing: 1px; }
+  .lyo-location__line, .lyo-location__note { display: none; }
+  .lyo-stage__eyebrow { font-size: 6px; letter-spacing: .8px; }
+  .lyo-mode__button { padding-inline: 9px; }
+  .lyo-controls { grid-template-columns: auto minmax(45px,1fr) 25px; gap: 8px; }
+  .lyo-reset { display: none; }
+  .lyo-footer { padding-inline: 18px; }
+  .lyo-equation { gap: 15px; }
+  .lyo-equation__part strong { font-size: 16px; }
+  .lyo-equation__brand { font-size: 23px; }
+  .lyo-proof { padding-inline: 18px; }
+  .lyo-proof__item { padding-inline: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lyo-dialog[open],.lyo-dialog.lyo-closing { animation: none; }
+  .lyo-dialog *, .lyo-dialog *::before, .lyo-dialog *::after { transition-duration: 0s !important; animation: none !important; scroll-behavior: auto !important; }
+  .lyo-map { transform: none !important; }
+  .lyo-launcher { transition: none; }
+}
+@media (forced-colors: active) {
+  .lyo-dialog { border: 1px solid CanvasText; }
+  .lyo-close,.lyo-mode,.lyo-controls,.lyo-card,.lyo-cta { border: 1px solid ButtonText; }
+  .lyo-mode__button[aria-pressed="true"] { outline: 1px solid Highlight; }
+  .lyo-range { appearance: auto; }
+  .lyo-map { forced-color-adjust: none; }
+}
+.lyo-dialog:not([data-ready]) [data-enhanced-only] { display: none !important; }
+.lyo-dialog[data-ready] .lyo-nojs-link { display: none !important; }
+/* Final legibility pass and sticky close control inside the scrollable dialog. */
+.lyo-shell { overflow: clip; }
+.lyo-header { position: sticky; top: 0; z-index: 5; background: #07111de8; backdrop-filter: blur(12px); }
+.lyo-country__flag { background: linear-gradient(90deg,#234cb0 0 33.333%,#f4cc55 33.333% 66.666%,#d94d58 66.666%); }
+.lyo-dialog .lyo-body { font-size: 14px; }
+.lyo-dialog .lyo-lead { font-size: 18px; }
+.lyo-location__text strong { font-size: 15px; }
+.lyo-location__text small { font-size: 12px; }
+.lyo-location__note { font-size: 10px; max-width: 112px; }
+.lyo-stage__eyebrow { font-size: 9px; letter-spacing: 1.2px; }
+.lyo-mode__button { font-size: 11px !important; }
+.lyo-stage__caption { font-size: 9px; letter-spacing: 1.1px; }
+.lyo-controls label { font-size: 11px; }
+.lyo-controls output { font-size: 10px; }
+.lyo-dialog .lyo-interaction-hint { font-size: 10px; }
+.lyo-proof__text strong { font-size: 12px; }
+.lyo-proof__text small { font-size: 11px; }
+.lyo-equation__part:nth-of-type(3) strong { color: var(--lyo-gold); }
+.lyo-cta { font-size: 13px !important; }
+.lyo-name__eyebrow { font-size: 9px; letter-spacing: 1.6px; }
+.lyo-equation__part small { font-size: 9px; }
+.lyo-footer__sub { font-size: 10px; }
+.lyo-workshop__intro p { font-size: 13px; }
+.lyo-dialog .lyo-card p { font-size: 13px; }
+@media (max-width: 1100px) and (min-width:761px) {
+ .lyo-dialog .lyo-title { font-size: clamp(37px,4.9vw,55px); }
+ .lyo-dialog .lyo-lead { font-size: 16px; }
+ .lyo-dialog .lyo-body { font-size: 13px; }
+ .lyo-stage__eyebrow { font-size: 7px; }
+ .lyo-controls label { font-size: 10px; }
+ .lyo-proof__text strong { font-size: 11px; }
+ .lyo-proof__text small { font-size: 10px; }
+}
+@media (max-height:820px) and (min-width:761px) {
+ .lyo-dialog .lyo-lead { font-size: 16px; }
+ .lyo-dialog .lyo-body { font-size: 13px; }
+}
+@media (max-width:760px) {
+ .lyo-dialog .lyo-lead { font-size: 15px; }
+ .lyo-dialog .lyo-body { font-size: 13px; }
+ .lyo-location__text strong { font-size: 13px; }
+ .lyo-location__text small { font-size: 11px; }
+ .lyo-location__note,.lyo-location__line { display: none; }
+ .lyo-stage__eyebrow { font-size: 8px; letter-spacing: .7px; }
+ .lyo-mode__button { font-size: 10px !important; min-height: 36px; }
+ .lyo-stage__caption { font-size: 8px; letter-spacing: .7px; }
+ .lyo-controls label { font-size: 10px; }
+ .lyo-proof__text strong { font-size: 10px; }
+ .lyo-proof__text small { font-size: 9px; }
+ .lyo-name__eyebrow { font-size: 8px; }
+ .lyo-dialog .lyo-card p { font-size: 12px; }
+}
+@media (max-width:360px) {
+ .lyo-stage__eyebrow { font-size: 7px; letter-spacing: .4px; }
+ .lyo-controls label { font-size: 9px; }
+ .lyo-stage__caption { font-size: 7px; }
+ .lyo-mode__button { font-size: 9px !important; }
+ .lyo-proof__text strong { font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lyo-dialog[open]:not(.lyo-closing), .lyo-dialog.lyo-closing { animation: none; }
+}

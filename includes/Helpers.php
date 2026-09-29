@@ -108,6 +108,7 @@ final class Helpers {
 		$page_map = array(
 			'index.html' => '/',
 			'cegeknek.html' => '/cegeknek/',
+			'egyedi-rendeles.html' => '/egyedi-rendeles/',
 			'rolunk.html' => '/rolunk/',
 			'gyik.html' => '/gyik/',
 			'kapcsolat.html' => '/kapcsolat/',
@@ -156,6 +157,9 @@ final class Helpers {
 			'home' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 11 8-7 8 7"/><path d="M6 9.5V20h12V9.5"/></svg>',
 			'gift' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 13h16M12 9v11"/><path d="M12 9c-4.5 0-5-2.5-4-3.8C9 4 11 4.5 12 9Zm0 0c4.5 0 5-2.5 4-3.8C15 4 13 4.5 12 9Z"/></svg>',
 			'briefcase' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5"/><path d="M3.5 12.5h17"/></svg>',
+			'chat' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H5.5L3 21l1-3.4A8 8 0 1 1 21 12Z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01"/></svg>',
+			'file' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5H14l4.5 4.5v12.5h-12z"/><path d="M14 3.5V8h4.5"/><path d="M9.5 13h5.5M9.5 16h5.5"/></svg>',
+			'send' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-11 11"/><path d="M22 2 15 22l-4-9-9-4Z"/></svg>',
 		);
 
 		return isset($icons[$name]) ? $icons[$name] : $icons['spark'];
@@ -170,9 +174,19 @@ final class Helpers {
 		$args = array(
 			'limit' => $limit ? $limit : 8,
 			'status' => 'publish',
+			'visibility' => 'catalog',
+			'layero_stable_order' => true,
 			'orderby' => isset($settings['orderby']) ? sanitize_key($settings['orderby']) : 'date',
 			'order' => isset($settings['order']) ? sanitize_key($settings['order']) : 'DESC',
 		);
+		if ('price' === $args['orderby']) {
+			$args['layero_price_order'] = strtoupper($args['order']);
+		}
+		if ('yes' === get_option('woocommerce_hide_out_of_stock_items')) {
+			$args['stock_status'] = array('instock', 'onbackorder');
+		}
+		if (! empty($settings['page'])) { $args['page'] = max(1, absint($settings['page'])); }
+		if (isset($settings['offset'])) { $args['offset'] = max(0, (int) $settings['offset']); }
 
 		if (! empty($settings['category'])) {
 			$args['category'] = array(sanitize_title($settings['category']));
@@ -422,7 +436,12 @@ final class Helpers {
 		}
 
 		$value = sanitize_key((string) $product->get_meta('_layero_personalizable', true));
-		if ('yes' === $value) {
+		if ('no' === $value || '0' === $value) { return false; }
+		if (class_exists(__NAMESPACE__ . '\\Personalization')) {
+			$schema = Personalization::schema($product);
+			if (null !== $schema) { return is_wp_error($schema) || ! empty($schema); }
+		}
+		if ('yes' === $value || '1' === $value) {
 			return true;
 		}
 		if ('no' === $value) {
@@ -689,13 +708,14 @@ final class Helpers {
 		$cat_names = function_exists('wc_get_product_category_list') ? wc_get_product_category_list($product->get_id(), ', ') : '';
 		$classes = implode(' ', array_map('sanitize_html_class', wc_get_product_class('lyr-product-card', $product)));
 		$classes = trim($classes . ' sh-prod-card sh-reveal');
-		$is_simple_ajax = $product->supports('ajax_add_to_cart') && $product->is_purchasable() && $product->is_in_stock();
-		$add_to_cart_url = $product->add_to_cart_url();
+		$personalizable = self::product_is_personalizable($product);
+		$is_simple_ajax = ! $personalizable && $product->supports('ajax_add_to_cart') && $product->is_purchasable() && $product->is_in_stock();
+		$add_to_cart_url = $personalizable ? $link : $product->add_to_cart_url();
 		if ($is_simple_ajax) {
 			$cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/kosar/');
 			$add_to_cart_url = add_query_arg('add-to-cart', $product->get_id(), $cart_url);
 		}
-		$button_text = $args['button_text'] ? $args['button_text'] : $product->add_to_cart_text();
+		$button_text = $personalizable ? __('Személyre szabom', 'layero-shop-ui') : ($args['button_text'] ? $args['button_text'] : $product->add_to_cart_text());
 		$excerpt = wp_trim_words(wp_strip_all_tags($product->get_short_description() ?: $product->get_description()), 18);
 		$card_type_label = self::product_card_type_label($product);
 		$badges = self::product_badges($product);
@@ -739,7 +759,7 @@ final class Helpers {
 					data-product_id="<?php echo esc_attr($product->get_id()); ?>"
 					data-product_sku="<?php echo esc_attr($product->get_sku()); ?>"
 					class="sh-card-add lyr-btn lyr-btn--primary lyr-product-card__add <?php echo $is_simple_ajax ? 'ajax_add_to_cart add_to_cart_button' : ''; ?>"
-					aria-label="<?php echo esc_attr($product->add_to_cart_description()); ?>"
+					aria-label="<?php echo esc_attr($personalizable ? $button_text . ': ' . $product->get_name() : $product->add_to_cart_description()); ?>"
 					rel="nofollow"
 				><?php echo self::icon('cart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php echo esc_html($button_text); ?></span></a>
 			</div>

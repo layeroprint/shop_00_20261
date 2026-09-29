@@ -108,7 +108,7 @@ class Product_Carousel extends Base_Widget {
 			'orderby' => 'date',
 			'order' => 'DESC',
 		));
-		$use_demo = ! Helpers::is_woo_active() || empty($products);
+		$use_demo = ! Helpers::is_woo_active();
 		$card_args = array('show_excerpt' => 'yes' === ($settings['show_excerpt'] ?? ''));
 		?>
 		<section class="sh-band sh-band--tight lyr-product-carousel">

@@ -6,17 +6,25 @@ A cél: a design, a widgetek, a hero slider, a kategóriák és a Layero élmén
 
 ## Aktuális shop szinkron
 
+Helyi kiadási jelölt: **0.10.0**. [Javítások, tesztek és cPanel-frissítés](docs/KIADAS-0.10.0.md). A Windows sortöréshiba javítva, az Origin teljes futási csomagja és WordPress-regisztrációja elkészült.
+
 A statikus tükör (css/js/data/oldalak/képek) egyetlen paranccsal frissíthető a
 lokális shopból:
 
 ```text
+node tools/sync-static.js --dry-run
 node tools/sync-static.js
+node tools/sync-static.js --check
 ```
+
+A `--dry-run` nem ír fájlt. A `--check` eltérésnél 1-es kilépési kódot ad. A rendes futás a teljes forrást ellenőrzi, majd csak az eltéréseket írja ki; a felülírt fájlokat a webshop gyökerében levő `.layero-sync-backups/wp-static/` mappába menti. Hibás horgony, hiányzó erőforrás vagy JavaScript-szintaxis esetén az előzetes ellenőrzés leállítja a frissítést. Írási hibánál visszaállítást kísérel meg; kényszerített megszakítás ellen a megőrzött mentés használható.
+
+A `commerce: 'woocommerce'` WordPress-beállítás mellett a statikus tükör vásárlási gombja a termék valódi WooCommerce-oldalára vezet. A statikus kosár nem kap új tételeket ebből az útvonalból. A „Layero statikus oldal” kosár/pénztár választása a WooCommerce shortcode-ját jeleníti meg. A kereső, a kiemelt termékek és a kategóriaszámok WooCommerce-adatot kapnak. A fájltükör nem termékimport.
 
 A plugin jelenleg a statikus shop alábbi tartalmaira épül:
 
 - a teljes lokális `shop.css` / `shop.js` / `shop-data.js` tükre (`assets/css/layero-static-shop.css`, `assets/js/layero-static-shop.js` + WP URL-adapter, `assets/js/layero-static-data.js`)
-- 14 statikus oldal tükre az `assets/static` alatt (főoldal, kategória, termék, rólunk, GYIK, kapcsolat, kvíz, kosár, pénztár, fiók, kedvencek, 404, ÁSZF, adatvédelem)
+- 16 statikus oldal tükre az `assets/static` alatt (főoldal, cégeknek, egyedi rendelés, kategória, termék, rólunk, GYIK, kapcsolat, kvíz, kosár, pénztár, fiók, kedvencek, 404, ÁSZF, adatvédelem)
 - 8 kategória: `lampak`, `kulcstartok`, `dekoraciok`, `szezonalis`, `rajongoi`, `baba-gyerek`, `ceges`, `egyedi`
 - 25 Layero termék demó/fallback adata
 - népszerű termék sorrend és újdonság válogatás
@@ -42,6 +50,15 @@ Az Elementor szerkesztőben a `Layero Shop` kategória alatt:
 - `Layero vélemények`
 - `Layero galéria csík`
 - `Layero egyedi rendelés CTA`
+- `Layero céges hero`
+- `Layero céges megoldások`
+- `Layero céges esettanulmány és számok`
+- `Layero céges ajánlatkérő`
+- `Layero egyedi rendelés hero`
+- `Layero egyedi rendelés referenciák`
+- `Layero egyedi rendelés árak`
+- `Layero egyedi rendelés vélemény`
+- `Layero egyedi rendelés ajánlatkérő`
 - `Layero Shop bizalom ikonok`
 - `Layero hírlevél banner`
 - `Layero lábjegyzetek`
@@ -71,34 +88,11 @@ Elérhető shortcode-ok:
 
 ## WooCommerce integráció
 
-A termékoldalon a plugin személyre szabási mezőket ad:
+A termékkezelő CSV-jében már létező `Meta: _layero_requires_prepayment` (`1`) jelölést a `Payment_Rules` kezeli: utánvét (`cod`) letiltása egyszerű és variációs terméknél, vegyes kosárnál, valamint későbbi rendelésfizetésnél. A szülő jelölése variációknál is érvényes. A szabály a rendelési tételbe is elmentődik. A klasszikus pénztár és Store API szerveroldali védelmet kapott; a blokkos felület és külső fizetési bővítmények működését futó WordPress alatt még ellenőrizni kell. Más, egyedi utánvétes fizetési azonosítók jelenleg nem tartoznak a tiltáshoz.
 
-- Felirat / név
-- Méret: Kicsi, Közepes, Nagy
-- Szín: Natúr, Fekete, Fehér
-- Egyedi megjegyzés
+A személyre szabható termékek Layero-kártyája és natív listagombja a termékoldalra vezet. A szerver ellenőrzi a termékenkénti mezőket, majd a WooCommerce-kosárba és rendeléstételbe menti őket. A séma nélküli korábbi termékek feliratot vagy megjegyzést kérnek; általános méret/szín választó nincs. [Mezőséma és import](docs/TERMEKADAT-SZERZODES.md).
 
-Ezek bekerülnek:
-
-- kosár tételadatba
-- checkout tételadatba
-- rendelési tétel metaadatba
-
-A WooCommerce termékszerkesztő `Termékadatok → Layero megjelenés` fülén termékenként beállítható:
-
-- a terméktípus (vagy automatikus felismerés a WooCommerce kategória alapján),
-- vizuális címkék: `Bestseller`, `B2B kedvenc`, `Új`, `Egyedi`, `Limitált`, `Szezonális`, `Környezettudatos`, `Kézzel készül`, `Exkluzív`,
-- személyre szabhatóság és a `Névre szabható` kártyajelölés,
-- a termékkártyán megjelenő gyártási idő,
-- haladó, szabad szöveges extra címkék `Szöveg|stílus` formátumban.
-
-Az akciós százalék automatikusan a WooCommerce normál és akciós árából készül. A WooCommerce `Kiemelt` kapcsolója automatikusan `Bestseller` címkét ad, ha nincs már ilyen címke. A korábbi `_layero_card_type_label` és `_layero_product_badges` metaadatok változtatás nélkül tovább működnek.
-
-Shortcode:
-
-```text
-[layero_mini_cart]
-```
+A kapcsolati, céges és egyedi űrlap megkeresést ment a WordPress **Layero megkeresések** menüjébe. Az e-mail-értesítés hibája nem törli a mentést. Hírlevélszolgáltató bekötéséig nincs feliratkozás vagy kuponígéret.
 
 ## Online építés menete
 
@@ -106,7 +100,18 @@ Shortcode:
 2. A termékek slugjai lehetőleg egyezzenek a statikus shop `shop-data.js` id mezőivel.
 3. Tölts fel rendes WooCommerce termékképeket.
 4. Elementorral rakd össze az oldalt a Layero widgetekből.
-5. Amíg nincs minden Woo adat kész, a widgetek a plugin `assets/demo` képeiből és `Shop_Content` fallback adataiból építik fel a látványt.
+5. Aktív WooCommerce mellett a termék-widgetek a WooCommerce kínálatát jelenítik meg; üres találatot nem pótolnak demótermékkel. A dizájnhoz használt kategória- és dekorációs képek továbbra is az `assets/demo` mappából jönnek.
+
+## Helyi ellenőrzések
+
+```text
+node --test tests/sync-static.test.js
+php -d xdebug.mode=off tests/commerce.php
+```
+
+A PHP-teszt WordPress-helyettesítő objektumokkal fut, nem küld rendelést, e-mailt vagy fizetést. Nem helyettesíti a WooCommerce-ben végzett teljes rendelési próbát. A Node-tesztek a szülő webshop `output/sync-tests/` mappáját használják ideiglenes fájlokhoz.
+
+A valódi WordPress-integrációs próbák külön helyi adatbázist igényelnek. [Tesztkörnyezet és parancsok](tests/README.md).
 
 ## Remote
 

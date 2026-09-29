@@ -11,6 +11,7 @@ if (! defined('ABSPATH')) {
 }
 
 class Category_Bento extends Base_Widget {
+	protected function is_dynamic_content(): bool { return true; }
 	public function get_name() {
 		return 'layero_category_bento';
 	}
@@ -180,6 +181,9 @@ class Category_Bento extends Base_Widget {
 		$available = array();
 
 		foreach (Shop_Content::categories() as $category) {
+			if (Helpers::is_woo_active()) {
+				$category['count'] = \LayeroShop\Catalog::category_count($category['id']);
+			}
 			$available[$category['id']] = $category;
 		}
 
@@ -201,6 +205,7 @@ class Category_Bento extends Base_Widget {
 		if ('ceges' === $slug) {
 			return home_url('/cegeknek/');
 		}
+		if ('egyedi' === $slug) { return home_url('/egyedi-rendeles/'); }
 
 		if (taxonomy_exists('product_cat')) {
 			$term = get_term_by('slug', $slug, 'product_cat');

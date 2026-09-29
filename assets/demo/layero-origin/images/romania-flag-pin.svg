@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 57 256 183" width="36" height="28">
+  <defs>
+    <linearGradient id="tricolor" gradientUnits="userSpaceOnUse" x1="33.4" y1="0" x2="262.1" y2="0">
+      <stop offset="0" stop-color="#002b7f"/>
+      <stop offset=".333333" stop-color="#002b7f"/>
+      <stop offset=".333333" stop-color="#fcd116"/>
+      <stop offset=".666667" stop-color="#fcd116"/>
+      <stop offset=".666667" stop-color="#ce1126"/>
+      <stop offset="1" stop-color="#ce1126"/>
+    </linearGradient>
+  </defs>
+  <path d="M228.2,164.9 L239.0,171.4 L250.5,165.7 L261.5,171.7 L262.1,180.8 L250.3,188.3 L242.9,185.0 L236.1,227.2 L221.8,223.6 L204.1,210.8 L175.5,219.0 L163.4,227.9 L127.7,226.1 L109.0,220.6 L99.6,223.2 L92.6,208.8 L88.2,202.7 L93.8,196.8 L87.8,192.4 L80.2,200.3 L66.0,190.1 L64.1,175.7 L49.3,167.4 L46.5,156.3 L33.4,142.5 L52.8,135.9 L67.5,112.2 L79.1,88.5 L93.9,81.1 L104.4,73.6 L119.4,77.5 L135.0,77.6 L146.3,86.2 L154.6,80.8 L172.6,77.4 L178.7,69.3 L188.9,69.3 L196.3,72.7 L203.9,83.1 L211.6,97.8 L225.6,118.6 L226.4,134.0 L223.8,148.9 L228.2,164.9 Z" fill="url(#tricolor)" stroke="#172f46" stroke-opacity=".2" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Satu Mare: the same projected position as the shop's Romania map. -->
+  <circle cx="98.2" cy="84.3" r="13" fill="#fff"/>
+  <circle cx="98.2" cy="84.3" r="7" fill="#07111d"/>
+</svg>

@@ -486,38 +486,28 @@ final class Page_Builder {
 	   ────────────────────────────────────────────────────────────── */
 
 	private static function custom_order_data() {
-		$asset = self::asset_url();
 		$sections = array();
 
-		$sections[] = self::html_section(
-			'<section class="sh-page-hd"><div class="shop-wrap">' .
-			'<nav class="sh-crumbs" aria-label="Morzsamenü"><a href="/">Shop</a><span aria-hidden="true">/</span><span>Egyedi rendelés</span></nav>' .
-			'<h1>Van egy ötleted? Legyártjuk neked.</h1>' .
-			'<p>Küldj egy leírást, referenciaképet vagy vázlatot — megtervezzük és kinyomtatjuk. 24–48 órán belül visszajelzünk az árról és a határidőről.</p>' .
-			'</div></section>'
-		);
-
-		$sections[] = self::wrap_in_section(array(self::make_widget('layero_process_steps')));
-
-		$sections[] = self::html_section(
-			'<section class="sh-contact shop-wrap">' .
-			'<div>' .
-			'<h2 class="sh-h2">Mesélj az ötletedről</h2>' .
-			'<p class="sh-contact__lead">Minél részletesebben leírod, annál pontosabb árajánlatot tudunk adni. Ha van fényképed, referenciaképed vagy vázlatod, azt is csatold!</p>' .
-			'</div>' .
-			'<form class="sh-form" id="sh-contact-form">' .
-			'<div class="sh-form__row">' .
-			'<div class="sh-field"><label for="cf-nev">Név</label><input id="cf-nev" type="text" required autocomplete="name"></div>' .
-			'<div class="sh-field"><label for="cf-email">E-mail</label><input id="cf-email" type="email" required autocomplete="email"></div>' .
-			'</div>' .
-			'<div class="sh-field"><label for="cf-uzenet">Leírás</label><textarea id="cf-uzenet" required placeholder="Milyen tárgyat szeretnél? Kinek szánod? Van-e referenciakép vagy méretigényed?"></textarea></div>' .
-			'<button class="sh-btn sh-btn--primary" type="submit">Ajánlatot kérek</button>' .
-			'</form>' .
-			'</section>'
-		);
-
-		$sections[] = self::wrap_in_section(array(self::make_widget('layero_trust_bar')));
-		$sections[] = self::wrap_in_section(array(self::make_widget('layero_testimonials')));
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_custom_order_hero')));
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_process_steps', array(
+			'eyebrow' => 'Így működik',
+			'title' => 'Az ötlettől a kész darabig. <span>Négy átlátható lépés.</span>',
+			'text' => '',
+			'button_text' => '',
+			'layout' => 'landing',
+			'section_id' => 'folyamat',
+			'columns' => '4',
+			'steps' => array(
+				array('number' => '1', 'icon' => 'bulb', 'title' => 'Elküldöd az ötleted', 'text' => 'Leírás, fotó, vázlat vagy referenciakép — ahogy kényelmes. Nem kell késznek lennie.'),
+				array('number' => '2', 'icon' => 'tag', 'title' => 'Ajánlatot kapsz', 'text' => '24–48 órán belül visszajelzünk a pontos árral és a gyártási idővel. Ez ingyenes, és semmire nem kötelez.'),
+				array('number' => '3', 'icon' => 'chat', 'title' => 'Egyeztetjük a részleteket', 'text' => 'E-mailben véglegesítjük a szöveget, méretet, színt. Módosítás az árban — addig igazítjuk, amíg pontosan az nem lesz, amit elképzeltél.'),
+				array('number' => '4', 'icon' => 'truck', 'title' => 'Gyártjuk és kézbesítjük', 'text' => 'Csak a jóváhagyásod után nyomtatunk — a szatmárnémeti műhelyünkben, jellemzően 7–15 munkanap alatt.'),
+			),
+		))));
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_custom_order_references')));
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_custom_order_pricing')));
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_custom_order_testimonial')));
+		$sections[] = self::wrap_in_section(array(self::make_widget('layero_custom_order_quote')));
 
 		return $sections;
 	}
@@ -595,46 +585,25 @@ final class Page_Builder {
 		$sections[] = self::wrap_in_section(
 			array(
 				self::make_widget(
-					'layero_product_grid',
-					array(
-						'eyebrow' => 'Választható kiindulópontok',
-						'title' => 'Céges termékek. <span>Teljesen a márkádra szabva.</span>',
-						'text' => 'A feltüntetett árak kiinduló árak; mennyiségi rendeléshez egyedi ajánlatot adunk.',
-						'button_text' => 'Ajánlatot kérek',
-						'button_url' => array('url' => '#ceges-ajanlat'),
-						'category' => 'ceges',
-						'collection' => 'all',
-						'limit' => 4,
-						'columns' => '2',
-						'show_excerpt' => 'yes',
-					)
-				),
-			)
-		);
-		$sections[] = self::wrap_in_section(
-			array(
-				self::make_widget(
 					'layero_process_steps',
 					array(
-						'eyebrow' => 'Egy átlátható folyamat',
-						'title' => 'Az első ötlettől <span>a kész céges szériáig.</span>',
-						'text' => 'Minden döntési pontot előre egyeztetünk, így nincs meglepetés a gyártás végén.',
-						'button_text' => 'Projektet indítok',
-						'button_url' => array('url' => '#ceges-ajanlat'),
+						'eyebrow' => 'Így dolgozunk',
+						'title' => 'Egyszerű, mint egy megrendelő. <span>Papírmunka nélkül.</span>',
+						'text' => '',
+						'button_text' => '',
+						'layout' => 'landing',
 						'columns' => '4',
 						'steps' => array(
-							array('number' => '01', 'title' => 'Igényfelmérés', 'text' => 'Leírod a célt, mennyiséget, határidőt és elküldöd az arculati anyagokat.'),
-							array('number' => '02', 'title' => 'Terv és ajánlat', 'text' => 'Pontosítunk, megtervezzük a megoldást és tételes ajánlatot küldünk.'),
-							array('number' => '03', 'title' => 'Jóváhagyás', 'text' => 'Digitális látványtervet vagy igény esetén mintadarabot hagysz jóvá.'),
-							array('number' => '04', 'title' => 'Gyártás és átadás', 'text' => 'Legyártjuk, ellenőrizzük és a megbeszélt csomagolásban átadjuk a szériát.'),
+							array('number' => '1', 'icon' => 'briefcase', 'title' => 'Elküldöd az igényt', 'text' => 'Mire van szükségetek, kb. hány darab, mikorra — logót és arculatot e-mailben egyeztetünk.'),
+							array('number' => '2', 'icon' => 'tag', 'title' => 'Ajánlat és terv', 'text' => '24–48 órán belül árajánlatot kapsz mennyiségi kedvezménnyel; a tervet jóváhagyásig igazítjuk.'),
+							array('number' => '3', 'icon' => 'file', 'title' => 'Proforma és gyártás', 'text' => 'Proforma díjbekérő után indul a gyártás a műhelyünkben — céges számlával zárunk.'),
+							array('number' => '4', 'icon' => 'truck', 'title' => 'Kézbesítés', 'text' => 'Gondosan csomagolva, futárral az irodáig — vagy személyes átvétel Szatmárnémetiben.'),
 						),
 					)
 				),
 			)
 		);
 		$sections[] = self::wrap_in_section(array(self::make_widget('layero_corporate_quote')));
-		$sections[] = self::wrap_in_section(array(self::make_widget('layero_corporate_faq')));
-		$sections[] = self::wrap_in_section(array(self::make_widget('layero_trust_bar')));
 
 		return $sections;
 	}

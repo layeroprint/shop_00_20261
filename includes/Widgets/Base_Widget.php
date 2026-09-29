@@ -15,11 +15,11 @@ abstract class Base_Widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return array('layero-shop-ui');
+		return array('layero-shop-ui', 'layero-static-shop');
 	}
 
 	public function get_script_depends() {
-		return array('layero-shop-ui');
+		return array('layero-shop-ui', 'layero-static-shop');
 	}
 
 	public function get_keywords() {

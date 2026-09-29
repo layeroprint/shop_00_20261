@@ -46,6 +46,8 @@ class Static_Page extends Base_Widget {
 					'404' => __('404', 'layero-shop-ui'),
 					'aszf' => __('ÁSZF', 'layero-shop-ui'),
 					'adatvedelem' => __('Adatvédelem', 'layero-shop-ui'),
+					'cegeknek' => __('Cégeknek', 'layero-shop-ui'),
+					'egyedi-rendeles' => __('Egyedi rendelés', 'layero-shop-ui'),
 				),
 			)
 		);
@@ -54,7 +56,7 @@ class Static_Page extends Base_Widget {
 	}
 
 	public function get_style_depends() {
-		return array('layero-static-shop');
+		return array('layero-static-shop', 'layero-origin-integration');
 	}
 
 	public function get_script_depends() {
@@ -64,6 +66,15 @@ class Static_Page extends Base_Widget {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$page = sanitize_key($settings['page'] ?? 'home');
+		if ('kosar' === $page || 'penztar' === $page) {
+			$shortcode = 'kosar' === $page ? 'woocommerce_cart' : 'woocommerce_checkout';
+			if (shortcode_exists($shortcode)) {
+				echo do_shortcode('[' . $shortcode . ']'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			} else {
+				echo '<p>' . esc_html__('A vásárláshoz a WooCommerce bekapcsolása szükséges.', 'layero-shop-ui') . '</p>';
+			}
+			return;
+		}
 		if ('fiok' === $page) {
 			echo do_shortcode('[layero_account]'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
@@ -95,6 +106,8 @@ class Static_Page extends Base_Widget {
 			'404' => '404.html',
 			'aszf' => 'aszf.html',
 			'adatvedelem' => 'adatvedelem.html',
+			'cegeknek' => 'cegeknek.html',
+			'egyedi-rendeles' => 'egyedi-rendeles.html',
 		);
 
 		$file = $files[$page] ?? $files['home'];
@@ -150,13 +163,15 @@ class Static_Page extends Base_Widget {
 			'gyik.html' => home_url('/gyik/'),
 			'kapcsolat.html' => home_url('/kapcsolat/'),
 			'kviz.html' => home_url('/kviz/'),
-			'kosar.html' => home_url('/kosar/'),
-			'penztar.html' => home_url('/penztar/'),
+			'kosar.html' => function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/kosar/'),
+			'penztar.html' => function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : home_url('/penztar/'),
 			'fiok.html' => home_url('/fiok/'),
 			'kedvencek.html' => home_url('/kedvencek/'),
 			'termek.html' => home_url('/termekek/'),
 			'aszf.html' => home_url('/aszf/'),
 			'adatvedelem.html' => home_url('/adatvedelem/'),
+			'cegeknek.html' => home_url('/cegeknek/'),
+			'egyedi-rendeles.html' => home_url('/egyedi-rendeles/'),
 		);
 
 		foreach ($page_map as $file => $url) {

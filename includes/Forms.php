@@ -18,18 +18,51 @@ final class Forms {
 	}
 
 	private function __construct() {
+		add_action('init', array($this, 'register_inquiries'));
 		add_action('wp_ajax_layero_contact_submit', array($this, 'submit_contact'));
 		add_action('wp_ajax_nopriv_layero_contact_submit', array($this, 'submit_contact'));
 	}
 
+	public function register_inquiries() {
+		register_post_type('layero_inquiry', array(
+			'label' => __('Layero megkeresések', 'layero-shop-ui'), 'public' => false, 'show_ui' => true,
+			'show_in_rest' => false, 'rewrite' => false, 'query_var' => false, 'supports' => array('title', 'editor'),
+			'map_meta_cap' => false,
+			'capabilities' => array('edit_post' => 'manage_woocommerce', 'read_post' => 'manage_woocommerce',
+				'delete_post' => 'manage_woocommerce', 'edit_posts' => 'manage_woocommerce', 'edit_others_posts' => 'manage_woocommerce',
+				'publish_posts' => 'manage_woocommerce', 'read_private_posts' => 'manage_woocommerce',
+				'delete_posts' => 'manage_woocommerce', 'delete_private_posts' => 'manage_woocommerce',
+				'edit_private_posts' => 'manage_woocommerce', 'create_posts' => 'do_not_allow'),
+		));
+	}
+
 	public function submit_contact() {
-		if (! check_ajax_referer('layero_contact', 'nonce', false)) {
+		if (! isset($_SERVER['REQUEST_METHOD']) || 'POST' !== $_SERVER['REQUEST_METHOD']) {
+			wp_send_json_error(array('message' => __('Hibás kérés.', 'layero-shop-ui')), 405);
+		}
+		if (! isset($_POST['nonce']) || ! is_string($_POST['nonce']) || strlen($_POST['nonce']) > 100 || ! wp_verify_nonce(wp_unslash($_POST['nonce']), 'layero_contact')) {
 			wp_send_json_error(array('message' => __('Lejárt a munkamenet. Frissítsd az oldalt, majd próbáld újra.', 'layero-shop-ui')), 403);
 		}
+		$limits = array('name' => 100, 'email' => 254, 'topic' => 150, 'message' => 4000, 'company' => 200,
+			'phone' => 50, 'quantity' => 50, 'deadline' => 100, 'direction' => 200, 'occasion' => 200, 'website' => 200, 'consent' => 10);
+		foreach ($limits as $field => $limit) {
+			$raw = $_POST[$field] ?? '';
+			$length = is_string($raw) ? (function_exists('mb_strlen') ? mb_strlen(wp_unslash($raw), 'UTF-8') : preg_match_all('/./us', wp_unslash($raw))) : false;
+			if (false === $length || $length > $limit) {
+				wp_send_json_error(array('message' => __('Az egyik mező túl hosszú vagy hibás.', 'layero-shop-ui')), 422);
+			}
+		}
+		if ('1' !== ($_POST['consent'] ?? '') && 'on' !== ($_POST['consent'] ?? '')) {
+			wp_send_json_error(array('message' => __('Jelöld, hogy elolvastad az adatvédelmi tájékoztatót.', 'layero-shop-ui')), 422);
+		}
+		$ip_key = 'layero_contact_ip_' . hash_hmac('sha256', $_SERVER['REMOTE_ADDR'] ?? '', wp_salt('nonce'));
+		$attempts = (int) get_transient($ip_key);
+		if ($attempts >= 5) { wp_send_json_error(array('message' => __('Túl sok próbálkozás. Kérjük, várj néhány percet.', 'layero-shop-ui')), 429); }
+		set_transient($ip_key, $attempts + 1, 5 * MINUTE_IN_SECONDS);
 
 		$honeypot = sanitize_text_field(wp_unslash($_POST['website'] ?? ''));
 		if ('' !== $honeypot) {
-			wp_send_json_success(array('message' => __('Köszönjük, megkaptuk az üzeneted.', 'layero-shop-ui')));
+			wp_send_json_error(array('message' => __('Az űrlap ellenőrzése sikertelen.', 'layero-shop-ui')), 422);
 		}
 
 		$name = sanitize_text_field(wp_unslash($_POST['name'] ?? ''));
@@ -40,8 +73,10 @@ final class Forms {
 		$phone = sanitize_text_field(wp_unslash($_POST['phone'] ?? ''));
 		$quantity = sanitize_text_field(wp_unslash($_POST['quantity'] ?? ''));
 		$deadline = sanitize_text_field(wp_unslash($_POST['deadline'] ?? ''));
+		$direction = sanitize_text_field(wp_unslash($_POST['direction'] ?? ''));
+		$occasion = sanitize_text_field(wp_unslash($_POST['occasion'] ?? ''));
 
-		if ('' === $name || ! is_email($email) || strlen($message) < 10) {
+		if ('' === $name || ! is_email(trim(wp_unslash($_POST['email'] ?? ''))) || strlen($message) < 10) {
 			wp_send_json_error(array('message' => __('Ellenőrizd a nevet, az e-mail-címet és az üzenetet.', 'layero-shop-ui')), 422);
 		}
 
@@ -69,6 +104,8 @@ final class Forms {
 			__('Telefonszám:', 'layero-shop-ui') => $phone,
 			__('Darabszám:', 'layero-shop-ui') => $quantity,
 			__('Kívánt határidő:', 'layero-shop-ui') => $deadline,
+			__('Termékirány:', 'layero-shop-ui') => $direction,
+			__('Alkalom:', 'layero-shop-ui') => $occasion,
 		);
 		foreach ($optional_fields as $label => $value) {
 			if ('' !== $value) {
@@ -84,11 +121,20 @@ final class Forms {
 			'Reply-To: ' . $name . ' <' . $email . '>',
 		);
 
-		if (! wp_mail($recipient, $subject, $body, $headers)) {
-			wp_send_json_error(array('message' => __('Az üzenetet most nem sikerült elküldeni. Próbáld újra később, vagy írj közvetlenül e-mailben.', 'layero-shop-ui')), 500);
+		// Persist first: a mail transport failure must not lose the customer's request.
+		$inquiry = wp_insert_post(wp_slash(array('post_type' => 'layero_inquiry', 'post_status' => 'private',
+			'post_title' => $topic . ' — ' . $name, 'post_content' => $body, 'post_author' => 0)), true);
+		if (is_wp_error($inquiry) || ! $inquiry) {
+			wp_send_json_error(array('message' => __('Az üzenetet nem sikerült menteni. Próbáld újra, vagy írj közvetlenül e-mailben.', 'layero-shop-ui')), 500);
+		}
+		update_post_meta($inquiry, '_layero_privacy_acknowledged', current_time('mysql', true));
+		$sent = wp_mail($recipient, $subject, $body, $headers);
+		update_post_meta($inquiry, '_layero_mail_status', $sent ? 'accepted' : 'failed');
+		if (! $sent) {
+			wp_update_post(wp_slash(array('ID' => $inquiry, 'post_content' => $body . "\n\n" . __('Az e-mail-értesítés sikertelen; a megkeresés itt megmaradt.', 'layero-shop-ui'))));
 		}
 
 		set_transient($rate_key, 1, MINUTE_IN_SECONDS);
-		wp_send_json_success(array('message' => __('Köszönjük, megkaptuk! Általában 24 órán belül válaszolunk.', 'layero-shop-ui')));
+		wp_send_json_success(array('message' => __('Köszönjük, a megkeresésedet elmentettük. A megadott e-mail-címen jelentkezünk.', 'layero-shop-ui')));
 	}
 }

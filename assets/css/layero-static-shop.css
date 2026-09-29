@@ -502,7 +502,9 @@ button { font-family: inherit; cursor: pointer; }
   border: 1px solid var(--line);
   transition: border-color 0.25s, transform 0.35s cubic-bezier(0.22, 0.9, 0.3, 1), box-shadow 0.35s;
 }
-.sh-prod-card:hover { border-color: transparent; transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+/* A hover ne mozgassa a kattintható keretet: a lekerekített sarkoknál
+   különben a kártya kicsúszik a kurzor alól, és újraindul a képváltás. */
+.sh-prod-card:hover { border-color: transparent; box-shadow: var(--shadow-lg); }
 .sh-prod-card figure { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--surface); }
 .sh-prod-card figure > img {
   position: absolute; inset: 0;
@@ -1438,16 +1440,6 @@ a.sh-ct-card:hover .sh-ct-card__arr { transform: translateX(3px); color: var(--a
   box-shadow: 0 0 0 4px rgba(201, 59, 47, 0.08);
 }
 .sh-field__err { display: block; margin-top: 6px; font-size: 0.74rem; color: #c93b2f; }
-.sh-form__status {
-  margin: 14px 0 0;
-  padding: 12px 14px;
-  border: 1px solid #f1c7c2;
-  border-radius: 10px;
-  background: #fff5f3;
-  color: #9d3027;
-  font-size: 0.82rem;
-  line-height: 1.5;
-}
 
 /* küldés gomb + adatvédelmi lábjegyzet */
 .sh-ctform__send svg { width: 17px; height: 17px; }
@@ -2565,16 +2557,13 @@ body.sh-flock { overflow: hidden; }
 /* ── görgetés-jelző fénysáv (legfelül) — ELTÁVOLÍTVA (felhasználói kérésre;
       a felső futó csík zavaró volt, és nem illik a csík-mentes UI-ba) ──── */
 
-/* Termék- és kategóriakártyák hoverje: TISZTA, STABIL emelés + árnyék.
-   Nincs kurzort követő fény-folt és nincs 3D-dőlés (a felhasználó kérésére
-   eltávolítva — remegett/„ugrált" a border). A .sh-reveal.is-in {transform:none}
-   (0,2,0) elnyomná az alap :hover emelést, ezért hármas osztállyal (0,4,0)
-   emeljük vissza — egyetlen, sima függőleges elmozdulás, semmi remegés. */
+/* A termékkártya hoverje csak árnyékot és képet vált; a keret helyben
+   marad. A transform-átmenet a görgetéskori megjelenéshez szükséges.
+   A kategóriakártyák külön emelést használnak. */
 @media (hover: hover) and (pointer: fine) {
   .sh-prod-card.sh-reveal.is-in {
     transition: transform 0.3s cubic-bezier(0.22, 0.9, 0.3, 1), box-shadow 0.35s, border-color 0.25s, opacity 0.5s ease;
   }
-  .sh-prod-card.sh-reveal.is-in:hover { transform: translateY(-5px); }
   .sh-bento.sh-reveal.is-in {
     transition: transform 0.3s cubic-bezier(0.22, 0.9, 0.3, 1), box-shadow 0.35s, opacity 0.5s ease;
   }
@@ -4121,3 +4110,212 @@ body:has(.sh-header.is-away) .sh-filterbar { top: 61px; }
   }
   .sh-filters.is-open { transform: none; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   LANDING OLDALAK — Egyedi rendelés + Cégeknek
+   Cél: bizalomépítés és konverzió. A hero a sötét sávok (coming soon)
+   világát viszi, a tartalmi sávok a fehér, Apple-tiszta rendszert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── hero: kétoszlopos sötét nyitány, bizalom-chipsorral ──────────── */
+.lp-hero { padding: clamp(40px, 6vw, 84px) 0 clamp(44px, 6vw, 80px); }
+.lp-hero__inner {
+  display: grid; grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(28px, 5vw, 72px); align-items: center;
+}
+@media (max-width: 900px) { .lp-hero__inner { grid-template-columns: 1fr; gap: 30px; } }
+.lp-hero__kicker {
+  display: inline-block; margin-bottom: 14px;
+  font-size: 0.7rem; font-weight: 650; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #7ee7f5;
+  text-shadow: 0 0 22px rgba(0, 229, 255, 0.4);
+}
+.lp-hero__copy h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+  font-weight: 700; letter-spacing: -0.03em; line-height: 1.05;
+  color: #f5f7fa; max-width: 16ch; text-wrap: balance;
+}
+.lp-hero__copy h1 em { font-style: normal; color: #f4b860; }
+.lp-hero__copy > p {
+  margin: 16px 0 24px; max-width: 48ch;
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem); line-height: 1.65;
+  color: #a8bdd0;
+}
+.lp-hero__cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+/* bizalom-chipek a hero alján */
+.lp-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.lp-chips span {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 14px; border-radius: var(--r-pill);
+  border: 1px solid rgba(126, 231, 245, 0.22);
+  background: rgba(8, 13, 22, 0.55);
+  font-size: 0.76rem; font-weight: 550; color: #dcebf5;
+}
+.lp-chips svg { width: 13px; height: 13px; color: #35d3ea; flex-shrink: 0; }
+
+/* hero-showcase: a spotlight-keret újrahasznosítva (crossfade képek) */
+.lp-hero__stage { display: grid; gap: 14px; justify-items: center; min-width: 0; }
+@media (max-width: 900px) { .lp-hero__stage { order: -1; } }
+
+/* ── ajánlat-kártyák (bento-rács) ─────────────────────────────────── */
+.lp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.lp-grid .sh-bento { aspect-ratio: 4 / 5; }
+@media (max-width: 1000px) { .lp-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .lp-grid { grid-template-columns: 1fr; } .lp-grid .sh-bento { aspect-ratio: 3 / 2; } }
+.lp-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.lp-grid--3 .sh-bento { aspect-ratio: 4 / 3; }
+@media (max-width: 1000px) { .lp-grid--3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .lp-grid--3 { grid-template-columns: 1fr; } }
+
+/* ── ár-átláthatóság kártyák ──────────────────────────────────────── */
+.lp-price { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 860px) { .lp-price { grid-template-columns: 1fr; } }
+.lp-price article {
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  background: var(--card); padding: clamp(20px, 2.6vw, 30px);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.lp-price article.is-hero { border-color: rgba(10, 124, 146, 0.35); box-shadow: var(--shadow); }
+.lp-price__tag {
+  align-self: flex-start;
+  font-size: 0.64rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent-deep); background: var(--accent-soft);
+  padding: 5px 11px; border-radius: var(--r-pill);
+}
+.lp-price b {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem); font-weight: 750; letter-spacing: -0.02em;
+}
+.lp-price b small { font-size: 0.6em; font-weight: 550; color: var(--muted); margin-left: 4px; }
+.lp-price p { font-size: 0.86rem; color: var(--muted); line-height: 1.6; }
+.lp-price ul { list-style: none; display: grid; gap: 7px; margin-top: 4px; }
+.lp-price li { display: flex; gap: 9px; align-items: flex-start; font-size: 0.84rem; color: var(--ink-2); }
+.lp-price li svg { width: 15px; height: 15px; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+
+/* ── eset-kiemelés (idézet + eredmény) ────────────────────────────── */
+.lp-case {
+  display: grid; grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(24px, 4vw, 56px); align-items: center;
+  border-radius: var(--r-md); overflow: hidden;
+  background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow);
+  padding: clamp(24px, 4vw, 48px);
+}
+@media (max-width: 860px) { .lp-case { grid-template-columns: 1fr; } }
+.lp-case blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.2vw, 1.6rem); font-weight: 600;
+  letter-spacing: -0.02em; line-height: 1.4; color: var(--ink);
+}
+.lp-case blockquote em { font-style: normal; color: var(--accent-deep); }
+.lp-case footer { margin-top: 16px; display: flex; align-items: center; gap: 12px; }
+.lp-case footer .sh-review__avatar { width: 40px; height: 40px; }
+.lp-case footer strong { display: block; font-size: 0.9rem; }
+.lp-case footer span { font-size: 0.76rem; color: var(--muted); }
+.lp-case figure { border-radius: 14px; overflow: hidden; aspect-ratio: 4 / 3; }
+.lp-case figure img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ── űrlap-szekció: középre zárt kártya + oldalsó bizalom-lista ───── */
+.lp-quote { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px, 4vw, 64px); align-items: start; }
+@media (max-width: 900px) { .lp-quote { grid-template-columns: 1fr; } }
+.lp-quote__side h2 { margin-bottom: 12px; }
+.lp-quote__side > p { color: var(--muted); font-size: 0.94rem; line-height: 1.65; max-width: 44ch; margin-bottom: 20px; }
+.lp-quote__list { list-style: none; display: grid; gap: 12px; }
+.lp-quote__list li { display: flex; gap: 12px; align-items: flex-start; font-size: 0.88rem; color: var(--ink-2); line-height: 1.5; }
+.lp-quote__list li b { color: var(--ink); }
+.lp-quote__list svg {
+  width: 34px; height: 34px; flex-shrink: 0; padding: 8px;
+  border-radius: 10px; background: var(--accent-soft); color: var(--accent-deep);
+}
+.lp-quote .sh-ctform { margin: 0; }
+
+/* pill-választó (téma/darabszám) — a kapcsolat-oldal mintája */
+.lp-quote .sh-ct-topics__row { gap: 8px; }
+
+@media (max-width: 640px) {
+  .lp-chips span { font-size: 0.7rem; padding: 7px 11px; }
+}
+
+/* ── landing folyamat-idővonal: ikonos kártyák, összekötő nyilakkal ── */
+.lp-steps {
+  list-style: none; display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 14px; margin: 0; padding: 0;
+}
+@media (max-width: 1000px) { .lp-steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .lp-steps { grid-template-columns: 1fr; } }
+.lp-steps li {
+  position: relative;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: 22px 20px 24px;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform 0.25s cubic-bezier(0.22, 0.9, 0.3, 1), box-shadow 0.25s, border-color 0.25s;
+}
+.lp-steps li:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: rgba(10, 124, 146, 0.3); }
+.lp-steps__ic {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 13px;
+  background: var(--accent-soft); color: var(--accent-deep);
+}
+.lp-steps__ic svg { width: 21px; height: 21px; }
+.lp-steps b {
+  font-family: var(--font-display);
+  font-size: 1.02rem; font-weight: 700; letter-spacing: -0.015em; color: var(--ink);
+}
+.lp-steps p { font-size: 0.86rem; color: var(--muted); line-height: 1.62; margin: 0; }
+/* óriás szellem-szám a háttérben (a főoldali flow-kártyák motívuma) */
+.lp-steps__ghost {
+  position: absolute; top: 4px; right: 14px;
+  font-family: var(--font-display); font-size: 4.4rem; font-weight: 800; line-height: 1;
+  color: rgba(10, 124, 146, 0.07); pointer-events: none; user-select: none;
+}
+/* összekötő nyíl a kártyák között (csak széles nézetben) */
+@media (min-width: 1001px) {
+  .lp-steps li:not(:last-child)::after {
+    content: "›"; position: absolute; right: -13px; top: 50%;
+    transform: translateY(-50%); z-index: 2;
+    font-size: 1.35rem; font-weight: 600; color: var(--faint);
+  }
+}
+/* lépcsőzetes érkezés — beérkezés után a hover-átmenet visszaáll késleltetés
+   nélkülire, hogy a kártya-emelkedés azonnali maradjon */
+.lp-steps li.sh-reveal:nth-child(2) { transition-delay: 0.08s; }
+.lp-steps li.sh-reveal:nth-child(3) { transition-delay: 0.16s; }
+.lp-steps li.sh-reveal:nth-child(4) { transition-delay: 0.24s; }
+.lp-steps li.sh-reveal.is-in {
+  transition: transform 0.25s cubic-bezier(0.22, 0.9, 0.3, 1), box-shadow 0.25s, border-color 0.25s;
+  transition-delay: 0s;
+}
+
+/* ── fizetési-mód chipsor: vizuális bizalomjel a döntési pontokon ─── */
+.sh-paychips {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+  margin-top: 12px;
+}
+.sh-paychips .pc {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 26px; padding: 0 9px;
+  border: 1px solid var(--line); border-radius: 7px; background: var(--card);
+  font-style: normal; font-size: 0.64rem; font-weight: 650; letter-spacing: 0.01em;
+  color: var(--ink-2); white-space: nowrap;
+}
+.sh-paychips .pc--visa { color: #1a1f71; font-style: italic; font-weight: 800; letter-spacing: 0.04em; }
+.sh-paychips .pc--mc svg { width: 21px; height: 14px; }
+.sh-paychips .pc--ssl { color: var(--eco); border-color: rgba(61, 154, 80, 0.35); }
+.sh-paychips .pc--ssl svg { width: 12px; height: 12px; }
+/* sötét felületen (kosár-fiók lábléc) */
+.sh-drawer__foot .sh-paychips { justify-content: center; margin-top: 10px; }
+.sh-summary .sh-paychips { justify-content: center; margin-top: 14px; }
+.sh-co-summary .sh-paychips { justify-content: center; margin-top: 12px; }
+
+/* ── kvíz-ajánló kártya a kategória-szűrők alján ──────────────────── */
+.sh-fquiz {
+  display: block; margin-top: 18px; padding: 16px;
+  border-radius: 14px; background: var(--accent-soft);
+  border: 1px solid rgba(10, 124, 146, 0.18);
+  transition: border-color 0.2s, transform 0.2s cubic-bezier(0.22, 0.9, 0.3, 1), box-shadow 0.2s;
+}
+.sh-fquiz:hover { border-color: rgba(10, 124, 146, 0.45); transform: translateY(-2px); box-shadow: var(--shadow); }
+.sh-fquiz b { display: block; font-family: var(--font-display); font-size: 0.92rem; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+.sh-fquiz span { display: block; margin: 5px 0 10px; font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+.sh-fquiz i { font-style: normal; font-size: 0.8rem; font-weight: 650; color: var(--accent-deep); }

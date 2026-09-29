@@ -1,0 +1,21 @@
+/* Hide only theme chrome; Layero's own header/footer remain visible. */
+body.layero-shell-ready .elementor-location-header,
+body.layero-shell-ready .elementor-location-footer,
+body.layero-shell-ready #site-header,
+body.layero-shell-ready #site-footer { display: none !important; }
+.lyr-pagination { display:flex; gap:16px; align-items:center; justify-content:center; margin:28px 0; flex-wrap:wrap; }
+.lyr-form-consent { display:block; margin:16px 0; font-size:14px; line-height:1.6; }
+.lyr-form-consent input { width:auto; margin-right:8px; }
+.lyr-online-status:not(:empty) { padding:12px; border-left:3px solid #0a7c92; background:#eef8fa; }
+.lyr-form-note { font-size:13px; color:#53616b; }
+body.woocommerce main#main { max-width:1180px; margin:32px auto; padding:0 20px; }
+body.woocommerce div.product .summary .price { color:#0a6677; }
+body.woocommerce div.product form.cart .button { background:#0a7c92; border-radius:24px; min-height:44px; padding:12px 24px; }
+body.woocommerce div.product .woocommerce-tabs ul.tabs li { border-radius:12px 12px 0 0; }
+.lyr-personalization label { display:block; margin-top:12px; font-weight:600; }
+.lyr-personalization input:not([type=checkbox]), .lyr-personalization select, .lyr-personalization textarea { width:100%; }
+.woocommerce a.button.alt, .woocommerce button.button.alt {
+  background:#0a7c92; color:#fff; border-radius:24px; min-height:44px;
+}
+.woocommerce a.button.alt:hover, .woocommerce button.button.alt:hover { background:#075f70; color:#fff; }
+.woocommerce a.button:focus-visible, .woocommerce button.button:focus-visible { outline:3px solid #0a7c92; outline-offset:3px; }

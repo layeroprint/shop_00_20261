@@ -156,7 +156,7 @@ class Coming_Soon_Ro extends Base_Widget {
 		$logo = LAYERO_SHOP_UI_URL . 'assets/demo/layero-asset-0251.webp';
 		$launch = ! empty($s['launch']) ? $s['launch'] : '2026-08-15 10:00:00';
 		$chips = array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string) ($s['chips'] ?? ''))));
-		$show_notify = 'yes' === ($s['show_notify'] ?? 'yes');
+		$show_notify = false; // No newsletter service is configured.
 		$year = gmdate('Y');
 
 		$title_tags = array('span' => array('class' => array()), 'em' => array(), 'br' => array());

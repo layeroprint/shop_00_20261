@@ -20,6 +20,7 @@ final class Assets {
 	private function __construct() {
 		add_action('init', array($this, 'register'));
 		add_action('wp_enqueue_scripts', array($this, 'enqueue'), 100);
+		add_action('wp_head', array($this, 'consent_defaults'), -100);
 		add_action('elementor/frontend/after_register_styles', array($this, 'register'));
 		add_action('elementor/frontend/after_register_scripts', array($this, 'register'));
 	}
@@ -46,6 +47,11 @@ final class Assets {
 			LAYERO_SHOP_UI_VERSION
 		);
 
+		wp_register_style('layero-origin', LAYERO_SHOP_UI_URL . 'assets/demo/layero-origin/lyo-origin.css', array('layero-static-shop'), LAYERO_SHOP_UI_VERSION);
+		wp_register_style('layero-origin-integration', LAYERO_SHOP_UI_URL . 'assets/demo/layero-origin/integration.css', array('layero-origin'), LAYERO_SHOP_UI_VERSION);
+		wp_register_script('layero-origin-mount', LAYERO_SHOP_UI_URL . 'assets/demo/layero-origin/mount.js', array(), LAYERO_SHOP_UI_VERSION, true);
+		wp_register_script('layero-origin', LAYERO_SHOP_UI_URL . 'assets/demo/layero-origin/lyo-origin.js', array('layero-origin-mount'), LAYERO_SHOP_UI_VERSION, true);
+
 		wp_register_script(
 			'layero-shop-ui',
 			LAYERO_SHOP_UI_URL . 'assets/js/layero-shop-ui.js',
@@ -65,15 +71,17 @@ final class Assets {
 		wp_register_script(
 			'layero-static-shop',
 			LAYERO_SHOP_UI_URL . 'assets/js/layero-static-shop.js',
-			array('layero-static-data'),
+			array('layero-static-data', 'layero-origin'),
 			LAYERO_SHOP_UI_VERSION,
 			true
 		);
 	}
 
 	public function enqueue() {
+		$catalog = Catalog::snapshot();
 		wp_enqueue_style('layero-shop-ui');
 		wp_enqueue_style('layero-static-shop');
+		wp_enqueue_style('layero-origin-integration');
 
 		$is_account_page = function_exists('is_account_page') && is_account_page();
 		$is_favorites_page = function_exists('is_page') && is_page(Customer_Account::FAVORITES_SLUG);
@@ -84,15 +92,18 @@ final class Assets {
 		wp_enqueue_script('layero-shop-ui');
 		wp_enqueue_script('layero-static-data');
 		wp_enqueue_script('layero-static-shop');
+		wp_enqueue_script('layero-online', LAYERO_SHOP_UI_URL . 'assets/js/layero-online.js', array('layero-static-shop', 'layero-shop-ui'), LAYERO_SHOP_UI_VERSION, true);
+		wp_enqueue_style('layero-online', LAYERO_SHOP_UI_URL . 'assets/css/layero-online.css', array('layero-static-shop', 'layero-shop-ui'), LAYERO_SHOP_UI_VERSION);
 
 		wp_add_inline_script(
 			'layero-static-data',
 			'window.LayeroShopStatic = window.LayeroShopStatic || ' . wp_json_encode(
 				array(
+					'commerce' => 'woocommerce',
 					'assetBase' => trailingslashit(LAYERO_SHOP_UI_URL . 'assets/demo'),
 					'homeUrl' => home_url('/'),
 					'customOrderUrl' => home_url('/egyedi-rendeles/'),
-					'productUrls' => $this->product_urls(),
+					'productUrls' => $catalog['urls'],
 					'urls' => array(
 						'index.html' => home_url('/'),
 						'cegeknek.html' => home_url('/cegeknek/'),
@@ -101,18 +112,23 @@ final class Assets {
 						'gyik.html' => home_url('/gyik/'),
 						'kapcsolat.html' => home_url('/kapcsolat/'),
 						'kviz.html' => home_url('/kviz/'),
-						'kosar.html' => home_url('/kosar/'),
-						'penztar.html' => home_url('/penztar/'),
+						'kosar.html' => function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/kosar/'),
+						'penztar.html' => function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : home_url('/penztar/'),
 						'fiok.html' => home_url('/fiok/'),
 						'kedvencek.html' => home_url('/kedvencek/'),
 						'termek.html' => home_url('/termekek/'),
 						'aszf.html' => home_url('/aszf/'),
 						'adatvedelem.html' => home_url('/adatvedelem/'),
+						'egyedi-rendeles.html' => home_url('/egyedi-rendeles/'),
 					),
 				)
 			) . ';',
 			'before'
 		);
+		// Replace the preview data before any shared UI code reads it.
+		wp_add_inline_script('layero-static-data',
+			'window.SHOP_PRODUCTS = ' . wp_json_encode($catalog['products'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';' .
+			'window.SHOP_CATS = ' . wp_json_encode($catalog['categories'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';', 'after');
 
 		wp_localize_script(
 			'layero-shop-ui',
@@ -139,27 +155,10 @@ final class Assets {
 		);
 	}
 
-	private function product_urls() {
-		$urls = array();
-		$product_ids = get_posts(
-			array(
-				'post_type' => 'product',
-				'post_status' => 'publish',
-				'posts_per_page' => -1,
-				'fields' => 'ids',
-				'no_found_rows' => true,
-				'orderby' => 'none',
-			)
-		);
-
-		foreach ($product_ids as $product_id) {
-			$slug = (string) get_post_field('post_name', $product_id);
-			$url = get_permalink($product_id);
-			if ('' !== $slug && $url) {
-				$urls[$slug] = $url;
-			}
-		}
-
-		return $urls;
+	public function consent_defaults() {
+		// Must precede tags added by other plugins. The final tag setup still needs an online consent test.
+		$source = file_get_contents(LAYERO_SHOP_UI_PATH . 'assets/js/layero-consent.js');
+		wp_print_inline_script_tag($source, array('id' => 'layero-consent-defaults'));
 	}
+
 }

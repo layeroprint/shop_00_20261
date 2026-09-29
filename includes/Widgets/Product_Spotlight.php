@@ -170,11 +170,18 @@ class Product_Spotlight extends Base_Widget {
 	private function collect_items($settings) {
 		$items = array();
 
-		if (Helpers::is_woo_active() && ! empty($settings['product_ids'])) {
-			$ids = array_filter(array_map('absint', explode(',', (string) $settings['product_ids'])));
+		if (Helpers::is_woo_active()) {
+			$ids = array_filter(array_map('absint', explode(',', (string) ($settings['product_ids'] ?? ''))));
+			if (empty($ids)) {
+				$slugs = ! empty($settings['demo_product_ids']) ? (array) $settings['demo_product_ids'] : Shop_Content::featured_product_ids();
+				foreach ($slugs as $slug) {
+					$post = get_page_by_path(sanitize_title($slug), OBJECT, 'product');
+					if ($post) { $ids[] = $post->ID; }
+				}
+			}
 			foreach ($ids as $index => $id) {
 				$product = wc_get_product($id);
-				if (! $product) {
+				if (! \LayeroShop\Catalog::visible($product)) {
 					continue;
 				}
 				$image_id = $product->get_image_id();
@@ -183,7 +190,7 @@ class Product_Spotlight extends Base_Widget {
 					'desc' => wp_trim_words(wp_strip_all_tags($product->get_short_description() ?: $product->get_description()), 28),
 					'price_html' => $product->get_price_html(),
 					'url' => get_permalink($product->get_id()),
-					'image_url' => $image_id ? (string) wp_get_attachment_image_url($image_id, 'large') : '',
+					'image_url' => $image_id ? (string) wp_get_attachment_image_url($image_id, 'large') : wc_placeholder_img_src(),
 					'badge' => 0 === $index
 						? ($settings['first_badge'] ?? 'A hónap terméke')
 						: __('Kiemelt darab', 'layero-shop-ui'),
@@ -191,7 +198,7 @@ class Product_Spotlight extends Base_Widget {
 			}
 		}
 
-		if (empty($items)) {
+		if (empty($items) && ! Helpers::is_woo_active()) {
 			$ids = ! empty($settings['demo_product_ids']) ? (array) $settings['demo_product_ids'] : Shop_Content::featured_product_ids();
 			$demos = Shop_Content::products_by_ids($ids);
 			foreach ($demos as $index => $demo) {

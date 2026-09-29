@@ -3338,3 +3338,60 @@
 		width: 100%;
 	}
 }
+
+/* Landing widgets share the editable Elementor markup with the static shop design. */
+.lyr-landing-hero.lyr-corp-hero {
+	--corp-accent: var(--lp-accent, #f4b860);
+}
+
+.lyr-landing-hero .lp-hero__copy h1 em {
+	color: var(--lp-accent, #f4b860);
+}
+
+.lyr-landing-hero.lyr-corp-hero::before {
+	mask-image: none;
+}
+
+.lyr-corp-solutions.lyr-corp-section {
+	background: transparent;
+}
+
+.lyr-landing-quote.lyr-corp-quote {
+	padding: var(--band-s) 0;
+	background: var(--surface);
+}
+
+.lyr-landing-quote.lyr-corp-quote h2 {
+	max-width: none;
+	font-size: clamp(1.7rem, 3.5vw, 2.7rem);
+	letter-spacing: -.022em;
+	line-height: 1.08;
+}
+
+.lyr-landing-form.lyr-corp-form {
+	gap: 16px;
+	padding: clamp(22px, 3.5vw, 36px);
+	border-color: var(--line);
+	border-radius: var(--r-md);
+	box-shadow: var(--shadow);
+}
+
+.lyr-landing-form .sh-form__fields {
+	width: 100%;
+}
+
+.lyr-landing-form .sh-ct-topic > span {
+	display: inline-flex;
+	margin: 0;
+	font-size: .8rem;
+	font-weight: 550;
+}
+
+.lyr-landing-form .sh-ctform__send[disabled] {
+	opacity: .6;
+	cursor: wait;
+}
+
+.lyr-corp-case__stats {
+	margin-top: clamp(28px, 4vw, 44px);
+}

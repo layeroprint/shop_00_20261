@@ -34,8 +34,11 @@ final class Plugin {
 	private function includes() {
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Shop_Content.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Helpers.php';
+		require_once LAYERO_SHOP_UI_PATH . 'includes/Personalization.php';
+		require_once LAYERO_SHOP_UI_PATH . 'includes/Catalog.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Assets.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/WooCommerce.php';
+		require_once LAYERO_SHOP_UI_PATH . 'includes/Payment_Rules.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Customer_Account.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Forms.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Elementor.php';
@@ -47,10 +50,12 @@ final class Plugin {
 	}
 
 	public function boot() {
+		Catalog::init();
 		Customer_Account::instance();
 		Forms::instance();
 		Assets::instance();
 		WooCommerce::instance();
+		Payment_Rules::instance();
 		Elementor::instance();
 		Page_Builder::init();
 	}

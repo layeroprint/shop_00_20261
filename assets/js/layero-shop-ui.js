@@ -660,7 +660,18 @@
 
 		var status = form.querySelector('[data-layero-corporate-status]');
 		var submit = form.querySelector('button[type="submit"]');
-		var originalText = submit ? submit.textContent : '';
+		var originalHtml = submit ? submit.innerHTML : '';
+		var counter = form.querySelector('[data-layero-count]');
+		var countedField = counter ? form.querySelector('textarea[maxlength]') : null;
+
+		function updateCount() {
+			if (!counter || !countedField) return;
+			counter.textContent = countedField.value.length + ' / ' + (countedField.getAttribute('maxlength') || '800');
+		}
+		if (countedField) {
+			countedField.addEventListener('input', updateCount);
+			updateCount();
+		}
 
 		function showStatus(message, type) {
 			if (!status) return;
@@ -673,6 +684,8 @@
 			form.querySelectorAll('input[required], textarea[required], select[required]').forEach(function (field) {
 				var invalid = !field.checkValidity();
 				field.classList.toggle('is-error', invalid);
+				var fieldRoot = field.closest('.sh-field');
+				if (fieldRoot) fieldRoot.classList.toggle('is-error', invalid);
 				if (invalid && !firstInvalid) firstInvalid = field;
 			});
 			if (firstInvalid) firstInvalid.focus();
@@ -680,7 +693,11 @@
 		}
 
 		form.addEventListener('input', function (event) {
-			if (event.target && event.target.checkValidity && event.target.checkValidity()) event.target.classList.remove('is-error');
+			if (event.target && event.target.checkValidity && event.target.checkValidity()) {
+				event.target.classList.remove('is-error');
+				var fieldRoot = event.target.closest('.sh-field');
+				if (fieldRoot) fieldRoot.classList.remove('is-error');
+			}
 		});
 
 		form.addEventListener('submit', function (event) {
@@ -699,7 +716,7 @@
 			var data = new window.FormData(form);
 			data.append('action', 'layero_contact_submit');
 			data.append('nonce', config.contactNonce);
-			data.append('topic', 'Céges ajánlatkérés');
+			data.append('topic', form.getAttribute('data-layero-form-topic') || 'Céges ajánlatkérés');
 
 			if (submit) {
 				submit.disabled = true;
@@ -720,16 +737,53 @@
 				});
 			}).then(function (payload) {
 				form.reset();
-				showStatus(payload.message || 'Köszönjük! Megkaptuk az ajánlatkérést.', 'success');
+				showStatus(form.getAttribute('data-layero-success') || payload.message || 'Köszönjük! Megkaptuk az ajánlatkérést.', 'success');
+				updateCount();
 			}).catch(function (error) {
 				showStatus(error.message || 'Az ajánlatkérést most nem sikerült elküldeni.', 'error');
 			}).finally(function () {
 				if (submit) {
 					submit.disabled = false;
-					submit.textContent = originalText;
+					submit.innerHTML = originalHtml;
 				}
 			});
 		});
+	}
+
+	function initLandingShowcase(root) {
+		if (root.dataset.layeroShowcaseReady === '1') return;
+		root.dataset.layeroShowcaseReady = '1';
+
+		var images = Array.prototype.slice.call(root.querySelectorAll('[data-layero-showcase-image]'));
+		var dots = Array.prototype.slice.call(root.querySelectorAll('.sh-spotlight__dot'));
+		var badge = root.querySelector('[data-layero-showcase-badge]');
+		var active = 0;
+		var timer = null;
+		if (images.length < 2) return;
+
+		function show(index) {
+			active = (index + images.length) % images.length;
+			images.forEach(function (image, i) { image.classList.toggle('is-on', i === active); });
+			dots.forEach(function (dot, i) {
+				dot.classList.toggle('is-on', i === active);
+				dot.setAttribute('aria-selected', i === active ? 'true' : 'false');
+			});
+			if (badge) badge.textContent = images[active].getAttribute('data-badge') || '';
+		}
+
+		function stop() {
+			if (timer) window.clearInterval(timer);
+			timer = null;
+		}
+		function start() {
+			stop();
+			timer = window.setInterval(function () { show(active + 1); }, 4200);
+		}
+
+		dots.forEach(function (dot, index) { dot.addEventListener('click', function () { show(index); start(); }); });
+		root.addEventListener('mouseenter', stop);
+		root.addEventListener('mouseleave', start);
+		start();
 	}
 
 	function initMiniCart(root) {
@@ -754,6 +808,7 @@
 		(context || document).querySelectorAll('[data-lyr-spotlight]').forEach(initSpotlight);
 		(context || document).querySelectorAll('[data-layero-newsletter]').forEach(initNewsletter);
 		(context || document).querySelectorAll('[data-layero-corporate-form]').forEach(initCorporateForm);
+		(context || document).querySelectorAll('[data-layero-landing-showcase]').forEach(initLandingShowcase);
 		(context || document).querySelectorAll('.lyr-mini-cart').forEach(initMiniCart);
 		initWishlist(context || document);
 		bootstrapWishlist().then(function () { refreshFavoritesWidgets(context || document, false); });
