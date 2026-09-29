@@ -336,6 +336,10 @@ class Hero_Slider extends Base_Widget {
 		if (! $mobile && $uses_default) { $mobile = Shop_Content::asset_url('banners/lifestyle-' . $reference[0] . '-mobile.webp'); }
 		?>
 		<article class="sh-slide sh-slide--lifestyle<?php echo esc_attr($is_on); ?>">
+			<picture class="sh-lifestyle__ambient" aria-hidden="true">
+				<source media="(min-width: 1921px)" srcset="<?php echo esc_url($image); ?>">
+				<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" decoding="async" loading="lazy">
+			</picture>
 			<picture class="sh-lifestyle__media">
 				<?php if ($mobile) : ?><source media="(max-width: 820px)" srcset="<?php echo esc_url($mobile); ?>"><?php endif; ?>
 				<img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($uses_default ? $reference[3] : ''); ?>" decoding="async"<?php echo $is_on ? ' fetchpriority="high"' : ' loading="lazy"'; ?>>
