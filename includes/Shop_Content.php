@@ -273,11 +273,12 @@ final class Shop_Content {
 
 	public static function custom_cta() {
 		return array(
-			'title' => 'Nem találod, amit keresel? Legyártjuk neked.',
-			'text' => 'Egyedi tervezés és gyártás — leírás vagy referenciakép alapján, ajánlatkéréstől a kész darabig.',
-			'button_text' => 'Egyedi rendelést indítok',
+			'title' => 'Egyedi ajándék?',
+			'accent_title' => 'Mi megvalósítjuk.',
+			'text' => 'Saját ötleted van? Különleges ajándékot szeretnél? Meséld el, kinek készül — a többit megtervezzük együtt.',
+			'button_text' => 'Egyedi rendelés indítása',
 			'button_url' => array('url' => '/egyedi-rendeles/'),
-			'image' => array('url' => self::asset_url('termekvilag/hero_slider/layero-asset-0018.webp')),
+			'image' => array('url' => self::asset_url('banners/custom-gift-workshop.webp')),
 		);
 	}
 

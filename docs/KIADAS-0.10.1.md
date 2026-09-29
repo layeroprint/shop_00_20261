@@ -1,0 +1,19 @@
+# Layero Shop UI 0.10.1 — arculati kártyák és egyedi ajándék banner
+
+2026-09-29. Helyben ellenőrzött megjelenési kiadás, a felhasználó kérésére GitHub-feltöltésre előkészítve. Cél: `layeroprint/shop_00_20261`, `main` ág. A cPanel-frissítést a tulajdonos végzi; az alábbi ellenőrzések a helyi környezetre vonatkoznak.
+
+- Arculati referencia a felhasználó kérésére: [layero.ro/ro](https://layero.ro/ro/). Az „Így készül a te darabod” kártyái egységes éjkék hátteret kapnak (`#020812`, `#061a2a`), cián szegéllyel (`#00e5ff`), arany–borostyán sorszámmal (`#f0c27a`, `#ff9f2d`) és világos szöveggel.
+- A korábbi türkiz–menta / levendula / barack változatot a felhasználó elutasította. Ez az asszisztens saját színválasztása volt, nem a Layero alappalettája. A gyökérprojekt `docs/ARCULAT.md` fájlja és `AGENTS.md` útmutatója rögzíti a helyes referenciát.
+- A szöveg, a lépések és az elrendezés megmaradt. A módosítás a közös `.sh-flow` kártyastílusra vonatkozik; a külön `.lp-steps` landingelrendezést nem érinti.
+- Szerkesztett forrás: a gyökérprojekt `shop.css` fájlja. A plugin `assets/css/layero-static-shop.css` tükre a szinkronnal frissült.
+- Az egyedi rendelés nagy főoldali CTA-ja kompakt, lekerekített műhelyajánlóra változott: „Egyedi ajándék? Mi megvalósítjuk.” A szöveg és a gomb szerkeszthető HTML, mobilon a kép a szöveg alatt látszik. A 2172×724-es, 93 KB-os WebP háttér a felhasználó referenciafotójából ImageGen segítségével készült illusztráció; nem valódi műhelyfotó.
+- A `Custom_CTA` Elementor-widget a régi főoldali alapértékeket megjelenítéskor felismeri és frissíti. Megtartja az egyedileg szerkesztett leírást, képet és hivatkozást. Más című meglévő CTA-k megőrzik a korábbi elrendezést; az új „Műhelyajánló” külön is kiválasztható a widgetben. Az éles adatbázist nem módosítottuk.
+- A statikus oldalak CSS-verziója `20260929-workshop`, a plugin verziója `0.10.1`, hogy a korábban tárolt stílus ne maradjon használatban. A kártyák és a banner ugyanennek a kiadásnak a részei.
+
+Az átdolgozott változat ellenőrzése: helyi HTTP-előnézet 1440 px asztali és 390×844 mobilnézetben; mindhárom kártyán az ellenőrzött éjkék/cián/arany színek jelennek meg, a világos szöveg olvasható, vízszintes túlcsordulás nincs, a lekért konzolnapló nem tartalmaz figyelmeztetést vagy hibát. A WordPress-tükör szinkronja 357 fájlt ellenőrzött eltérés nélkül; a plugin belépési fájl PHP-szintaxisa rendben. A végleges képek a gyökérprojekt ignorált `output/process-colors/` mappájában vannak, a korábbi pasztell előnézeteket felváltották.
+
+A mostani tárhelyen az aktív plugin a Git által kezelt `layero_plugins` mappában fut: a következő feltöltés után **Update from Remote**, majd az aktív 0.10.1 verzió és a folyamatkártyák ellenőrzése szükséges. Lásd a [pontosított telepítési leírást](KIADAS-0.10.0.md#cpanel-git-version-control-frissítés).
+
+A banner ellenőrzése: az elkülönített helyi WordPressben a régi főoldali widgetbeállításokkal is az új megjelenés töltődött be. A célzott PHP-próba ellenőrizte az új és régi alapértékeket, az egyedileg átírt mezők megtartását és escape-elését, a korábbi nem főoldali elrendezést és az új műhelystílus kiválasztását. Böngészőben 1440 px asztali és 390×844 mobilnézetben ellenőrizve, túlcsordulás és konzolhiba nélkül. A gomb 52 px magas, látható cián billentyűzetfókusszal; Enterrel a tényleges `/egyedi-rendeles/` oldal nyílt meg. Űrlapot nem küldtünk be. A statikus főoldalon a kép és a helyi célhivatkozás is rendben betöltődött. A módosított két PHP-fájl szintaxisa rendben, a tükörellenőrzés 358 fájlt talált eltérés nélkül. Képek a gyökérprojekt `output/custom-banner/` mappájában.
+
+Feltöltés után az élő Elementor-oldalon is ellenőrizni kell a bannert. Ha az Elementor vagy a tárhely korábbi HTML-t tárol, a gyorsítótár frissítése is szükséges lehet; a helyi próba nem igazolja az online cache állapotát.
