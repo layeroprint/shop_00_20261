@@ -1548,11 +1548,6 @@
   }
 
   function renderHome() {
-    initSlider();
-    initLampBa();
-    initSpotlight();
-    initHeroStyleSwitcher();
-
     // SEO: szervezet + kereshető webhely
     injectJsonLd({
       '@context': 'https://schema.org', '@type': 'Organization',
@@ -3326,6 +3321,12 @@
   renderExtras();
   initCardActions();
   syncCompareUI();
+  // Elementor can render the hero on a page without the static home marker.
+  // Initialize its interactions independently, without replacing other widgets.
+  initSlider();
+  initLampBa();
+  initSpotlight();
+  initHeroStyleSwitcher();
   var marker = document.querySelector('[data-layero-page]');
   var page = document.body.getAttribute('data-page') || (marker ? marker.getAttribute('data-layero-page') : '');
   if (page === 'home') renderHome();
