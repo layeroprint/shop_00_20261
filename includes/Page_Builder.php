@@ -369,6 +369,8 @@ final class Page_Builder {
 			foreach ((array) $widget['settings'] as $key => $value) {
 				$current = $settings[$key] ?? null;
 				if ('html' === $key) {
+					// Older generated copies linked the corporate category instead of its landing page.
+					if (is_string($current)) { $current = str_replace('href="/termekek/?cat=ceges"', 'href="/cegeknek/"', $current); }
 					if (! is_string($current) || preg_replace('/\s+/u', ' ', trim($current)) !== preg_replace('/\s+/u', ' ', trim($value))) { return false; }
 				} elseif ('image' === $key) {
 					if (! is_array($current) || ! preg_match('~/termekvilag/hero_slider/layero-asset-0018\.png$~', $current['url'] ?? '')) { return false; }

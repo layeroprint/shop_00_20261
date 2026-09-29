@@ -8,6 +8,8 @@ A fájlok a webshop gyökerében levő `gyik.html`, `shop.css` és `shop.js` szi
 
 A `Page_Builder` az új GYIK-et már a `layero_static_page` widgettel készíti. Adminlátogatáskor kizárólag a régi, változatlan generált `/gyik/` oldalt állítja át. A régi négy widget típusát és tartalmát ellenőrzi; az egyedi változatok megmaradnak. Az eredeti Elementor-adat és `post_content` az oldal `_layero_faq_backup_0_10_8` metaadatába kerül. A `_layero_faq_revision` megakadályozza az ismételt átállást. Elementor CSS- és elemgyorsítótár érvénytelenítése történik, más oldalt nem épít újra.
 
+A régi generátor `/termekek/?cat=ceges` céges hivatkozását is felismeri a későbbi `/cegeknek/` mellett. Az online Elementor HTML-mezőjében pontosan ez az egy eltérés volt; más szöveg vagy egyedi célhivatkozás továbbra is megakadályozza az automatikus cserét.
+
 Telepítés: a cPanel aktív `layero_plugins` checkoutjában **Update from Remote**, majd egy WordPress-adminoldal megnyitása és a `/gyik/` újratöltése. **Deploy HEAD Commit és az összes oldal újraépítése nem szükséges.** Egyedileg módosított GYIK esetén a migráció szándékosan nem fut; először össze kell vetni a tartalmat.
 
 Visszaállításhoz a mentés `elementor_data` értéke kerül vissza az `_elementor_data` mezőbe, WordPress slash-kezeléssel és az Elementor cache újragenerálásával. A revíziójelző megtartandó, hogy az automatikus átállás ne induljon újra. Előbb készüljön adatbázismentés.
