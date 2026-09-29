@@ -9,13 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap">
-  <link rel="stylesheet" href="shop.css?v=20260929-hero-height">
+  <link rel="stylesheet" href="shop.css?v=20260929-faq">
   <link rel="stylesheet" href="assets/layero-origin/lyo-origin.css?v=20260922">
   <link rel="stylesheet" href="assets/layero-origin/integration.css?v=20260922-map">
 </head>
 <body data-page="gyik">
-
-  <!-- ikon-sprite (egyszer definiálva, use-al hivatkozva) -->
+<main class="sh-faq-page" data-faq-page>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
       <symbol id="ic-rendeles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -36,191 +35,53 @@
     </defs>
   </svg>
 
-  <section class="sh-page-hd sh-page-hd--faq">
-    <div class="shop-wrap">
-      <nav class="sh-crumbs" aria-label="Morzsamenü">
-        <a href="index.html">Shop</a><span aria-hidden="true">/</span><span>Gyakori kérdések</span>
-      </nav>
-      <h1>Gyakori kérdések</h1>
-      <p>Összeszedtük a leggyakoribb kérdéseket a rendelésről, a személyre szabásról, a szállításról és a garanciáról. Ha nem találod a választ, <a href="kapcsolat.html">írj nekünk</a> — 24 órán belül válaszolunk.</p>
 
-      <form class="sh-faq-search" role="search" onsubmit="return false">
-        <svg class="sh-faq-search__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
-        <input type="search" id="sh-faq-q" placeholder="Keress a kérdések között…" aria-label="Keresés a kérdések között" autocomplete="off">
-        <button type="button" class="sh-faq-search__clear" id="sh-faq-clear" hidden aria-label="Keresés törlése">✕</button>
-      </form>
-    </div>
-  </section>
-
-  <section class="sh-band sh-band--tight">
-    <div class="shop-wrap sh-faq-layout">
-
-      <!-- bal: ragadós téma-navigáció + segítség-kártya -->
-      <aside class="sh-faq-rail" aria-label="GYIK témák">
-        <nav class="sh-faq-rail__nav" id="sh-faq-rail">
-          <a href="#rendeles" class="is-active"><span class="sh-faq-rail__ic"><svg><use href="#ic-rendeles"/></svg></span>Rendelés &amp; személyre szabás</a>
-          <a href="#szallitas"><span class="sh-faq-rail__ic"><svg><use href="#ic-szallitas"/></svg></span>Szállítás &amp; fizetés</a>
-          <a href="#visszakuldes"><span class="sh-faq-rail__ic"><svg><use href="#ic-garancia"/></svg></span>Visszaküldés &amp; garancia</a>
-          <a href="#termek"><span class="sh-faq-rail__ic"><svg><use href="#ic-termek"/></svg></span>Termék &amp; anyag</a>
-          <a href="#ceges"><span class="sh-faq-rail__ic"><svg><use href="#ic-ceges"/></svg></span>Céges &amp; egyedi</a>
-        </nav>
-        <div class="sh-faq-help">
-          <strong>Nem találod a választ?</strong>
-          <p>Írj nekünk — 24 órán belül személyesen válaszolunk.</p>
-          <a class="sh-btn sh-btn--dark" href="kapcsolat.html">Kapcsolatfelvétel</a>
-        </div>
-      </aside>
-
-      <!-- jobb: témacsoportok kártyás akkordeonnal -->
-      <div class="sh-faq-main">
-
-        <section class="sh-faq-group" id="rendeles">
-          <header class="sh-faq-group__hd">
-            <span class="sh-faq-group__ic"><svg><use href="#ic-rendeles"/></svg></span>
-            <h2>Rendelés és személyre szabás</h2>
-          </header>
-          <div class="sh-faq-acc">
-            <details class="sh-faq-item" open>
-              <summary><span>Hogyan tudok személyre szabott terméket rendelni?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Válaszd ki a terméket, add meg a személyre szabás részleteit (név, felirat, motívum), és tedd a kosárba. A rendelés után e-mailben egyeztetjük a pontos szövegeket és részleteket, és csak a jóváhagyásod után indítjuk a gyártást.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Módosíthatom vagy lemondhatom a rendelésem?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Amíg a gyártás nem indult el, a rendelés díjmentesen módosítható vagy lemondható. Írj a <a href="mailto:layeroprint@gmail.com">layeroprint@gmail.com</a> címre a rendelésszámoddal.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Meddig kell megadnom a személyre szabás adatait?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>A rendelés után kapott visszaigazoló e-mailre válaszolva bármikor elküldheted. Minél előbb megkapjuk, annál hamarabb indul a gyártás — a feltüntetett gyártási idő az adatok véglegesítésétől számít.</p></div>
-            </details>
-          </div>
-        </section>
-
-        <section class="sh-faq-group" id="szallitas">
-          <header class="sh-faq-group__hd">
-            <span class="sh-faq-group__ic"><svg><use href="#ic-szallitas"/></svg></span>
-            <h2>Szállítás és fizetés</h2>
-          </header>
-          <div class="sh-faq-acc">
-            <details class="sh-faq-item">
-              <summary><span>Mennyibe kerül és meddig tart a szállítás?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>A szállítási díj Románia területén 25 lej, <b>200 lej feletti rendelésnél ingyenes</b>. A gyártási idő terméktől függően 3–15 munkanap; ehhez jön a futár 1–3 munkanapja. A pontos várható dátumot a terméknél és a visszaigazoló e-mailben is jelezzük.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Milyen szállítási módok közül választhatok?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Futárszolgálat házhoz, csomagpont (Easybox / posta) átvétel, valamint személyes átvétel a szatmárnémeti műhelyünkben. A választható lehetőségeket a pénztárnál látod.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Hogyan tudok fizetni?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Bankkártyával (VISA, Mastercard), Apple Pay-jel, Google Pay-jel, utánvéttel (fizetés átvételkor, +5 lej), vagy banki átutalással. Céges vásárlóknak proforma díjbekérőt is tudunk küldeni.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Külföldre is szállítotok?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Alapból Románia területére szállítunk. Nemzetközi kiszállításról egyedi egyeztetés alapján tudunk ajánlatot adni — írj nekünk a szállítási címmel, és visszajelzünk a díjról és a határidőről.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Kapok számlát a rendelésről?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Igen, minden rendeléshez elektronikus számlát küldünk a visszaigazoló e-mailben. Céges számlához add meg a cégadatokat és az adószámot a rendeléskor.</p></div>
-            </details>
-          </div>
-        </section>
-
-        <section class="sh-faq-group" id="visszakuldes">
-          <header class="sh-faq-group__hd">
-            <span class="sh-faq-group__ic"><svg><use href="#ic-garancia"/></svg></span>
-            <h2>Visszaküldés, garancia és elállás</h2>
-          </header>
-          <div class="sh-faq-acc">
-            <details class="sh-faq-item">
-              <summary><span>Visszaküldhetem a terméket, ha meggondolom magam?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>A nem egyedi, raktári termékekre a törvényi <b>14 napos elállási jog</b> vonatkozik. Mivel a személyre szabott, egyedileg gyártott darabok kifejezetten a te kérésedre készülnek, ezekre a jogszabály szerint az elállási jog nem terjed ki — de gyártási vagy nyomtatási hiba esetén természetesen cserét vagy visszatérítést adunk.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Mi a teendő, ha sérülten vagy hibásan érkezik a termék?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Küldj egy fotót a sérülésről vagy hibáról a <a href="mailto:layeroprint@gmail.com">layeroprint@gmail.com</a> címre a rendelésszámoddal. Gyártási vagy szállítási hibára cserét vagy teljes visszatérítést adunk, a szállítási költséget mi álljuk.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Van garancia a termékekre?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body">
-                <p>Igen. Minden termékünkre a törvény által előírt <b>2 éves megfelelőségi jótállás (garanție legală de conformitate)</b> vonatkozik, ami a gyártási, anyag- és nyomtatási hibákra terjed ki. A világító daraboknál az elektronikára (LED, kapcsoló) is érvényes.</p>
-                <p>Panasz esetén az <a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a>-hez (Országos Fogyasztóvédelmi Hatóság) vagy az <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">EU online vitarendezési (SOL) platformjához</a> is fordulhatsz.</p>
-              </div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Hogyan zajlik a visszatérítés?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Jóváhagyott visszaküldés vagy reklamáció után a visszatérítést az eredeti fizetési módra indítjuk, jellemzően 14 napon belül. Csere esetén az új darab gyártását azonnal ütemezzük.</p></div>
-            </details>
-          </div>
-        </section>
-
-        <section class="sh-faq-group" id="termek">
-          <header class="sh-faq-group__hd">
-            <span class="sh-faq-group__ic"><svg><use href="#ic-termek"/></svg></span>
-            <h2>Termék, anyag és használat</h2>
-          </header>
-          <div class="sh-faq-acc">
-            <details class="sh-faq-item">
-              <summary><span>Milyen anyagból készülnek a termékek?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Elsősorban PLA biopolimerből nyomtatunk, ami növényi (kukoricakeményítő) alapú, szagtalan, ipari komposztálásban lebomló anyag. A strapabíróbb daraboknál (pl. kulcstartók) PETG-t használunk. A műhelyünk áramát napelemek adják.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Biztonságosak a világító lámpák, gyerekszobába is jók?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Igen. A LED-világítás alacsony hőmérsékletű és USB-ről működik, így nem melegszik fel veszélyesen. A meleg, szűrt fény éjszakai fénynek is ideális a gyerekszobában.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Hogyan tisztítsam és ápoljam a terméket?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Száraz vagy enyhén nedves ruhával törölhető. Kerüld a közvetlen, tartós hőt (pl. radiátor, tűző nap az autóban) és az agresszív tisztítószereket, mivel a PLA hőérzékeny. Így évekig szép marad.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Pontosan akkora lesz, amekkorát a fotón látok?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>A termékeknél megadott méretek tájékoztató jellegűek, és a személyre szabástól függően kis mértékben eltérhetnek. Bizonytalanság esetén nézd meg a <b>mérettáblázatot</b> a termékoldalon, vagy kérj egyedi méretet.</p></div>
-            </details>
-          </div>
-        </section>
-
-        <section class="sh-faq-group" id="ceges">
-          <header class="sh-faq-group__hd">
-            <span class="sh-faq-group__ic"><svg><use href="#ic-ceges"/></svg></span>
-            <h2>Céges és egyedi rendelés</h2>
-          </header>
-          <div class="sh-faq-acc">
-            <details class="sh-faq-item">
-              <summary><span>Van egy ötletem, ami nincs a katalógusban — meg tudjátok csinálni?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Nagy eséllyel igen — a legjobb darabjaink mind egyedi megkeresésből születtek. Írd le az ötletet (képpel, vázlattal, referenciával), és 24–48 órán belül visszajelzünk, hogy mennyiért és mennyi idő alatt tudjuk megvalósítani. <a href="egyedi-rendeles.html">Indíts egyedi rendelést ›</a></p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Vállaltok nagyobb, céges mennyiséget?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>Igen, logózott ajándéktárgyakat, QR/NFC displayeket és rendezvényes csomagokat is gyártunk, mennyiségi kedvezménnyel. Nézd meg a <a href="kategoria.html?cat=ceges">céges megoldásokat</a>, vagy kérj ajánlatot a darabszámmal.</p></div>
-            </details>
-            <details class="sh-faq-item">
-              <summary><span>Mennyi egy egyedi darab ára?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary>
-              <div class="sh-faq-item__body"><p>A méret, a komplexitás és az anyag függvénye: egy egyszerűbb egyedi darab jellemzően 100–300 lej, összetettebb projektek egyedi kalkulációval készülnek. Pontos árat az ötlet ismeretében, 24–48 órán belül adunk.</p></div>
-            </details>
-          </div>
-        </section>
-
-        <p class="sh-faq-empty" id="sh-faq-empty" hidden>Nincs találat erre a keresésre. Próbálj más kulcsszót, vagy <a href="kapcsolat.html">írj nekünk</a> — segítünk.</p>
-
-      </div>
-    </div>
-  </section>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      { "@type": "Question", "name": "Hogyan tudok személyre szabott terméket rendelni?", "acceptedAnswer": { "@type": "Answer", "text": "Válaszd ki a terméket, add meg a személyre szabás részleteit, és tedd a kosárba. A rendelés után e-mailben egyeztetjük a részleteket, és csak a jóváhagyásod után indítjuk a gyártást." } },
-      { "@type": "Question", "name": "Mennyibe kerül és meddig tart a szállítás?", "acceptedAnswer": { "@type": "Answer", "text": "A szállítási díj Románia területén 25 lej, 200 lej feletti rendelésnél ingyenes. A gyártási idő 3–15 munkanap, ehhez jön a futár 1–3 munkanapja." } },
-      { "@type": "Question", "name": "Hogyan tudok fizetni?", "acceptedAnswer": { "@type": "Answer", "text": "Bankkártyával, Apple Pay-jel, Google Pay-jel, utánvéttel vagy banki átutalással. Céges vásárlóknak proforma díjbekérőt is küldünk." } },
-      { "@type": "Question", "name": "Visszaküldhetem a terméket, ha meggondolom magam?", "acceptedAnswer": { "@type": "Answer", "text": "A nem egyedi termékekre a 14 napos elállási jog vonatkozik. A személyre szabott, egyedi darabokra a jogszabály szerint az elállási jog nem terjed ki, de gyártási hiba esetén cserét vagy visszatérítést adunk." } },
-      { "@type": "Question", "name": "Milyen anyagból készülnek a termékek?", "acceptedAnswer": { "@type": "Answer", "text": "Elsősorban PLA biopolimerből, ami növényi alapú, lebomló anyag; a strapabíróbb daraboknál PETG-t használunk. A műhely áramát napelemek adják." } }
-    ]
-  }
-  </script>
-
-  <script src="shop-data.js?v=20260717d"></script>
-  <script src="assets/layero-origin/mount.js?v=20260922" defer></script>
-  <script src="assets/layero-origin/lyo-origin.js?v=20260922" defer></script>
-  <script src="shop.js?v=20260929-hero-height"></script>
-</body>
-</html>
+<section class="sh-faq-hero"><div class="shop-wrap">
+  <nav class="sh-crumbs" aria-label="Morzsamenü"><a href="index.html">Shop</a><span aria-hidden="true">/</span><span aria-current="page">Gyakori kérdések</span></nav>
+  <div class="sh-faq-hero__grid"><div>
+    <p class="sh-faq-kicker">LAYERO SEGÍTSÉG</p>
+    <h1>Jó kérdés.<br><span>Itt a válasz.</span></h1>
+    <p class="sh-faq-hero__lead">Gyakori kérdések az első ötlettől az ajándék megérkezéséig. Találd meg, amit keresel — vagy kérdezz tőlünk.</p>
+    <form class="sh-faq-search" role="search" aria-label="GYIK kereső">
+      <label for="sh-faq-q">Miben segíthetünk?</label>
+      <div class="sh-faq-search__field"><svg class="sh-faq-search__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+      <input type="search" id="sh-faq-q" placeholder="Például: szállítás, név, fizetés…" autocomplete="off" aria-controls="sh-faq-results">
+      <button type="button" class="sh-faq-search__clear" id="sh-faq-clear" hidden aria-label="Keresés törlése">×</button></div>
+    <p class="sh-faq-status" id="sh-faq-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    </form>
+  </div><aside class="sh-faq-shortcuts" aria-label="Gyors válaszok"><span class="sh-faq-kicker">GYORS VÁLASZOK</span><a href="#erkezes" data-faq-jump>Mikor érkezik meg az ajándékom?<span aria-hidden="true">↗</span></a><a href="#szemelyre-szabas" data-faq-jump>Hogyan kérhetek rá nevet?<span aria-hidden="true">↗</span></a><a href="#rendeles-allapot" data-faq-jump>Hol tart a rendelésem?<span aria-hidden="true">↗</span></a><p>A te ötleted, a mi figyelmünk.<br>Ha elakadnál, személyesen is segítünk.</p></aside></div>
+</div></section>
+<section class="sh-faq-content"><div class="shop-wrap sh-faq-layout">
+  <aside class="sh-faq-rail" aria-label="GYIK témák"><p class="sh-faq-rail__label">Válassz témát</p><nav class="sh-faq-rail__nav" id="sh-faq-rail"><a href="#rendeles" class="is-active" aria-current="location"><span class="sh-faq-rail__ic"><svg aria-hidden="true" focusable="false"><use href="#ic-rendeles"/></svg></span><span>Rendelés és személyre szabás</span><small>4</small></a>
+<a href="#szallitas"><span class="sh-faq-rail__ic"><svg aria-hidden="true" focusable="false"><use href="#ic-szallitas"/></svg></span><span>Szállítás és fizetés</span><small>5</small></a>
+<a href="#visszakuldes"><span class="sh-faq-rail__ic"><svg aria-hidden="true" focusable="false"><use href="#ic-garancia"/></svg></span><span>Visszaküldés és garancia</span><small>4</small></a>
+<a href="#termek"><span class="sh-faq-rail__ic"><svg aria-hidden="true" focusable="false"><use href="#ic-termek"/></svg></span><span>Anyagok és használat</span><small>4</small></a>
+<a href="#ceges"><span class="sh-faq-rail__ic"><svg aria-hidden="true" focusable="false"><use href="#ic-ceges"/></svg></span><span>Céges és egyedi projektek</span><small>3</small></a></nav><div class="sh-faq-order"><strong>Már rendeltél?</strong><p>A rendelésed adatait a fiókodban is megnézheted.</p><a href="fiok.html">Megnyitom a fiókomat <span aria-hidden="true">→</span></a></div></aside>
+  <div class="sh-faq-main" id="sh-faq-results"><section class="sh-faq-group" id="rendeles" aria-labelledby="rendeles-title"><header class="sh-faq-group__hd"><span class="sh-faq-group__ic"><svg aria-hidden="true" focusable="false"><use href="#ic-rendeles"/></svg></span><div><h2 id="rendeles-title">Rendelés és személyre szabás</h2><p>Az ötletedtől a kész darabig.</p></div></header><div class="sh-faq-acc"><details class="sh-faq-item" id="szemelyre-szabas"><summary><span>Hogyan rendelhetek személyre szabott ajándékot?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Válaszd ki a terméket, és add meg a termékoldalon kért adatokat: például a nevet, feliratot, színt vagy méretet. A kosárban ellenőrizd a választásodat. Ha a termékhez külön egyeztetés szükséges, a gyártás előtt pontosítjuk veled a részleteket.</p></div></details>
+<details class="sh-faq-item" id="sajat-otlet"><summary><span>Saját ötletből vagy fotóból is készülhet ajándék?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Igen, egyedi megkeresést is küldhetsz. Írd le, kinek készül, mit képzeltél el, és mikorra szeretnéd. Referenciaképet vagy vázlatot is mellékelhetsz. A megvalósíthatóságot, az árat és a határidőt egyeztetjük. <a href="egyedi-rendeles.html">Elküldöm az ötletemet →</a></p></div></details>
+<details class="sh-faq-item" id="rendeles-modositas"><summary><span>Javíthatom a nevet vagy módosíthatom a rendelést?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Ha elírást vettél észre, jelezd minél hamarabb, a rendelésszámoddal együtt. A lehetőségek attól függnek, hogy elkezdődött-e már a gyártás. Egy elkészült, személyre szabott darab módosítása új gyártást igényelhet. <a href="kapcsolat.html">Jelzem a módosítást →</a></p></div></details>
+<details class="sh-faq-item" id="rendeles-allapot"><summary><span>Hol látom a rendelésem állapotát?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Ha fiókkal rendeltél, a <a href="fiok.html">Fiókom</a> oldalon találod a rendeléseidet. Nézd meg a rendeléshez kapott e-maileket is. Ha további információt szeretnél, írj nekünk a rendelésszámoddal és a rendeléskor használt e-mail-címeddel.</p></div></details></div></section>
+<section class="sh-faq-group" id="szallitas" aria-labelledby="szallitas-title"><header class="sh-faq-group__hd"><span class="sh-faq-group__ic"><svg aria-hidden="true" focusable="false"><use href="#ic-szallitas"/></svg></span><div><h2 id="szallitas-title">Szállítás és fizetés</h2><p>Határidők, átvétel és fizetési lehetőségek.</p></div></header><div class="sh-faq-acc"><details class="sh-faq-item" id="erkezes"><summary><span>Mikor érkezik meg az ajándékom?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>A gyártási időt és a szállítást külön érdemes számolni. A termékoldalon találod az adott darab várható elkészülési idejét; személyre szabásnál az adatok véglegesítése is számít. A kézbesítés ehhez adódik hozzá. Konkrét alkalomra rendelnél? Rendelés előtt egyeztess velünk a dátumról.</p></div></details>
+<details class="sh-faq-item" id="szallitasi-dij"><summary><span>Mennyibe kerül a szállítás?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Az elérhető szállítási módokat és a rendelésedhez tartozó pontos díjat a pénztár mutatja, a kézbesítési adatok megadása után. Itt látod azt is, ha a kosaradhoz ingyenes szállítás érhető el. Fizetés előtt mindig ellenőrizheted a teljes összeget.</p></div></details>
+<details class="sh-faq-item" id="fizetes"><summary><span>Milyen módon tudok fizetni?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>A rendelésedhez elérhető fizetési módokat a pénztárnál találod. A választható lehetőségek a terméktől és a rendeléstől is függhetnek. Egyedi vagy személyre szabott darabnál előrefizetés lehet szükséges; ezt a rendelés során jelezzük.</p></div></details>
+<details class="sh-faq-item" id="atvetel"><summary><span>Kérhetek személyes átvételt vagy külföldi szállítást?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>A pénztárban felkínált lehetőségek közül választhatsz. Ha szatmárnémeti személyes átvételt vagy más országba történő kézbesítést szeretnél, és ezt nem látod, rendelés előtt <a href="kapcsolat.html">egyeztess velünk</a>. A lehetőséget és az esetleges díjat előre tisztázzuk.</p></div></details>
+<details class="sh-faq-item" id="szamla"><summary><span>Hogyan kérhetek céges számlát?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>A rendelésnél a megfelelő számlázási adatokat add meg. Céges vásárlásnál a cégnévre, számlázási címre és adószámra is szükség lehet. Ha valamelyik adatot nem tudod megadni, a rendelés véglegesítése előtt keress minket.</p></div></details></div></section>
+<section class="sh-faq-group" id="visszakuldes" aria-labelledby="visszakuldes-title"><header class="sh-faq-group__hd"><span class="sh-faq-group__ic"><svg aria-hidden="true" focusable="false"><use href="#ic-garancia"/></svg></span><div><h2 id="visszakuldes-title">Visszaküldés és garancia</h2><p>Ha valami nem úgy alakult, segítünk.</p></div></header><div class="sh-faq-acc"><details class="sh-faq-item" id="serult-termek"><summary><span>Sérülten vagy hibásan érkezett. Mit tegyek?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Írj nekünk a rendelésszámoddal, a hiba rövid leírásával és néhány jól látható fotóval. Szállítási sérülésnél a csomagolást is őrizd meg és fotózd le. Egyeztetjük a következő lépést és a jogszabályok szerinti megoldást. <a href="kapcsolat.html">Segítséget kérek →</a></p></div></details>
+<details class="sh-faq-item" id="elallas"><summary><span>Visszaküldhetem, ha meggondoltam magam?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Online fogyasztói vásárlásnál főszabály szerint az átvételtől számított 14 napon belül jelezheted az elállást. A kifejezetten az utasításaid alapján készített vagy egyértelműen személyre szabott termékekre kivétel vonatkozik. Ez a hibás teljesítéssel kapcsolatos jogaidat nem érinti. A részleteket az <a href="aszf.html">ÁSZF-ben</a> találod.</p></div></details>
+<details class="sh-faq-item" id="garancia"><summary><span>A személyre szabott termékre is van garancia?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Igen. A személyre szabás nem szünteti meg a hibás teljesítéssel kapcsolatos fogyasztói jogaidat. Új termékeknél a jogszabály szerinti, legalább kétéves megfelelőségi védelem érvényes. Hiba esetén vedd fel velünk a kapcsolatot; a megoldás az adott esettől és a vonatkozó szabályoktól függ.</p></div></details>
+<details class="sh-faq-item" id="visszaterites"><summary><span>Hogyan intézhetek visszaküldést vagy visszatérítést?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Először jelezd nekünk az igényedet a rendelésszámoddal. Megadjuk a visszaküldéshez szükséges információkat. A visszatérítés módjára és határidejére az adott ügyre vonatkozó jogszabályok és az <a href="aszf.html">ÁSZF</a> irányadók. Fogyasztóvédelmi tájékoztatás az <a href="https://anpc.ro/" target="_blank" rel="noopener">ANPC oldalán</a> is elérhető.</p></div></details></div></section>
+<section class="sh-faq-group" id="termek" aria-labelledby="termek-title"><header class="sh-faq-group__hd"><span class="sh-faq-group__ic"><svg aria-hidden="true" focusable="false"><use href="#ic-termek"/></svg></span><div><h2 id="termek-title">Anyagok és használat</h2><p>Hogy sokáig öröm legyen az ajándék.</p></div></header><div class="sh-faq-acc"><details class="sh-faq-item" id="anyagok"><summary><span>Miből készülnek a termékek?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>A darabok 3D nyomtatással készülnek; sok termék alapanyaga PLA. Az adott termék anyagát, méretét és tulajdonságait mindig a termékoldalon ellenőrizd. A 3D nyomtatás finom rétegvonalai a gyártási eljárás jellegzetességei.</p></div></details>
+<details class="sh-faq-item" id="meret-szin"><summary><span>Mennyire adja vissza a fotó a méretet és a színt?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>A méretet a termékoldalon megadott adatok alapján válaszd, mert a fotó önmagában nem méretarányos. A szín a kijelződ beállításai és a fényviszonyok miatt eltérhet. Ha fontos egy pontos árnyalat vagy egyedi méret, egyeztess velünk előre.</p></div></details>
+<details class="sh-faq-item" id="apolas"><summary><span>Hogyan tisztítsam és tároljam?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Kíméletesen, puha, száraz vagy enyhén nedves ruhával tisztítsd. Kerüld a súrolást, az erős oldószereket és a tartós hőt, például a radiátort vagy a felforrósodó autót. Világító terméket tisztítás előtt válassz le az áramforrásról; az elektromos részeket ne érje víz.</p></div></details>
+<details class="sh-faq-item" id="lampak"><summary><span>Mire figyeljek a lámpák és dekorációk használatánál?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Kövesd a termékhez megadott használati és tápellátási útmutatót; ne használj a jelöléstől eltérő adaptert. A dekoráció nem automatikusan gyermekjáték. A kábeleket és apró alkatrészeket tartsd kisgyermekektől távol, sérült elektromos terméket pedig ne használj.</p></div></details></div></section>
+<section class="sh-faq-group" id="ceges" aria-labelledby="ceges-title"><header class="sh-faq-group__hd"><span class="sh-faq-group__ic"><svg aria-hidden="true" focusable="false"><use href="#ic-ceges"/></svg></span><div><h2 id="ceges-title">Céges és egyedi projektek</h2><p>Egy darabtól a közös elképzelésig.</p></div></header><div class="sh-faq-acc"><details class="sh-faq-item" id="ceges-ajandek"><summary><span>Készítetek logózott, céges ajándékokat?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Céges megkeresést is küldhetsz: írd meg, milyen terméket szeretnél, hány darabban, milyen logóval és milyen határidőre. Ezek alapján egyeztetjük a megvalósítást és az ajánlatot. <a href="cegeknek.html">Céges megoldások →</a></p></div></details>
+<details class="sh-faq-item" id="egyedi-ar"><summary><span>Mennyibe kerül egy teljesen egyedi darab?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Az árat a méret, az anyag, a darabszám, a tervezés és a gyártás összetettsége határozza meg. Küldd el az elképzelésedet és a kívánt határidőt; pontos ajánlatot ezek ismeretében tudunk adni.</p></div></details>
+<details class="sh-faq-item" id="ajanlatkeres"><summary><span>Mit küldjek el az ajánlatkéréshez?</span><i class="sh-faq-item__tog" aria-hidden="true"></i></summary><div class="sh-faq-item__body"><p>Rövid leírást, hozzávetőleges méretet, darabszámot és a kívánt határidőt. Ha van, mellékelj logót, fotót vagy vázlatot is. Nem baj, ha még nincs kész terved: írd le, milyen alkalomra és kinek készülne. <a href="egyedi-rendeles.html">Ajánlatot kérek →</a></p></div></details></div></section><div class="sh-faq-empty" id="sh-faq-empty" hidden><strong>Erre még nincs kész válaszunk.</strong><p>Próbálj egy rövidebb kifejezést, vagy írd meg nekünk a kérdésed.</p><button type="button" class="sh-btn sh-btn--dark" data-faq-reset>Összes kérdés mutatása</button><a href="kapcsolat.html">Inkább kérdezek →</a></div></div>
+</div></section>
+<section class="shop-wrap sh-faq-contact" aria-labelledby="sh-faq-contact-title"><div class="sh-faq-contact__inner"><div><p class="sh-faq-kicker">BESZÉLJÜNK RÓLA</p><h2 id="sh-faq-contact-title">A te kérdésedre<br>is van figyelmünk.</h2><p>Terméket választasz, rendelésről érdeklődsz, vagy egy új ötlet motoszkál benned? Írj nekünk. Ha már rendeltél, a rendelésszámodat is küldd el.</p></div><div class="sh-faq-contact__actions"><a class="sh-btn sh-btn--white" href="kapcsolat.html">Felteszem a kérdésem <span aria-hidden="true">↗</span></a><a href="mailto:layeroprint@gmail.com">layeroprint@gmail.com</a><a href="tel:+40756642387">+40 756 642 387</a></div></div></section>
+</main>
+<script src="shop-data.js?v=20260717d"></script>
+<script src="assets/layero-origin/mount.js?v=20260922" defer></script>
+<script src="assets/layero-origin/lyo-origin.js?v=20260922" defer></script>
+<script src="shop.js?v=20260929-faq"></script>
+</body></html>

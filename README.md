@@ -6,6 +6,8 @@ A cél: a design, a widgetek, a hero slider, a kategóriák és a Layero élmén
 
 ## Aktuális shop szinkron
 
+Legutóbbi frissítés: **0.10.8**, [új GYIK és célzott Elementor-átállás](docs/KIADAS-0.10.8.md).
+
 Helyi kiadási jelölt: **0.10.0**. [Javítások, tesztek és cPanel-frissítés](docs/KIADAS-0.10.0.md). A Windows sortöréshiba javítva, az Origin teljes futási csomagja és WordPress-regisztrációja elkészült.
 
 A statikus tükör (css/js/data/oldalak/képek) egyetlen paranccsal frissíthető a

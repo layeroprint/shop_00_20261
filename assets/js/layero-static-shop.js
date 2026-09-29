@@ -3201,119 +3201,81 @@
 
   }
 
-  /* ── GYIK: kártyás akkordeon (sima nyitás) + kereső + görgetés-jelző ── */
+  /* GYIK: native, keyboard-accessible details and accent-insensitive search. */
   function initGyik() {
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var items = $all('.sh-faq-item');
-
-    // 1) sima magasság-animáció a natív <details>-en (JS nélkül is nyílik)
-    items.forEach(function (d) {
-      var sum = $('summary', d);
-      var body = $('.sh-faq-item__body', d);
-      if (!sum || !body) return;
-      sum.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (d.dataset.anim === '1') return;
-        if (reduceMotion) { d.open = !d.open; return; }
-
-        function settle(done) {
-          var fired = false;
-          function fn(ev) {
-            if (ev && ev.propertyName !== 'height') return;
-            if (fired) return; fired = true;
-            body.removeEventListener('transitionend', fn);
-            done();
-          }
-          body.addEventListener('transitionend', fn);
-          setTimeout(fn, 380); // biztonsági háló, ha a transitionend elmaradna
-        }
-
-        if (d.open) {
-          d.dataset.anim = '1';
-          body.style.height = body.scrollHeight + 'px';
-          void body.offsetHeight;
-          body.style.height = '0px';
-          settle(function () { d.open = false; body.style.height = ''; delete d.dataset.anim; });
-        } else {
-          d.open = true;
-          d.dataset.anim = '1';
-          var target = body.scrollHeight;
-          body.style.height = '0px';
-          void body.offsetHeight;
-          body.style.height = target + 'px';
-          settle(function () { body.style.height = ''; delete d.dataset.anim; });
-        }
+    var root = $('[data-faq-page]');
+    if (!root || root.dataset.faqReady) return;
+    root.dataset.faqReady = '1';
+    var input = $('#sh-faq-q', root), clear = $('#sh-faq-clear', root);
+    var status = $('#sh-faq-status', root), empty = $('#sh-faq-empty', root);
+    var items = $all('.sh-faq-item', root), groups = $all('.sh-faq-group', root);
+    var links = $all('#sh-faq-rail a', root), savedOpen = null;
+    function norm(value) { return (value || '').toLocaleLowerCase('hu').normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+    var searchable = items.map(function (item) { return norm(item.textContent); });
+    function active(id) {
+      links.forEach(function (link) {
+        var on = link.getAttribute('href') === '#' + id;
+        link.classList.toggle('is-active', on);
+        if (on) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }
+    function filter() {
+      var query = norm(input.value.trim()), words = query.split(/\s+/).filter(Boolean);
+      root.classList.toggle('is-searching', !!query);
+      clear.hidden = !input.value;
+      if (query && !savedOpen) savedOpen = items.map(function (item) { return item.open; });
+      var count = 0;
+      items.forEach(function (item, i) {
+        var match = words.every(function (word) { return searchable[i].indexOf(word) !== -1; });
+        item.hidden = !match;
+        if (match) count++;
+        if (query) item.open = match;
+        else if (savedOpen) item.open = savedOpen[i];
+      });
+      groups.forEach(function (group) { group.hidden = !$all('.sh-faq-item', group).some(function (item) { return !item.hidden; }); });
+      empty.hidden = count !== 0;
+      status.textContent = query ? count + ' válasz a keresésedre' : '';
+      if (!query) savedOpen = null;
+      var first = groups.find(function (group) { return !group.hidden; });
+      active(first ? first.id : '');
+    }
+    function reset() { input.value = ''; filter(); }
+    input.form.addEventListener('submit', function (event) { event.preventDefault(); filter(); });
+    input.addEventListener('input', filter);
+    input.addEventListener('keydown', function (event) { if (event.key === 'Escape') { event.preventDefault(); reset(); } });
+    clear.addEventListener('click', function () { reset(); input.focus(); });
+    $all('[data-faq-reset]', root).forEach(function (button) { button.addEventListener('click', function () { reset(); input.focus(); }); });
+    function revealHash() {
+      var id;
+      try { id = decodeURIComponent(window.location.hash.slice(1)); } catch (error) { return; }
+      var target = document.getElementById(id);
+      if (!target || !root.contains(target) || !target.matches('.sh-faq-item,.sh-faq-group')) return;
+      if (input.value) reset();
+      if (target.matches('.sh-faq-item')) target.open = true;
+      var group = target.closest('.sh-faq-group');
+      if (group) active(group.id);
+      target.scrollIntoView({ block: 'start', behavior: 'instant' });
+    }
+    $all('#sh-faq-rail a,[data-faq-jump]', root).forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (input.value) reset();
+        var target = document.getElementById(link.getAttribute('href').slice(1));
+        if (!target) return;
+        if (target.matches('.sh-faq-item')) target.open = true;
+        var group = target.closest('.sh-faq-group');
+        if (group) active(group.id);
       });
     });
-
-    // 2) élő, ékezet-független keresés
-    var input = $('#sh-faq-q');
-    var clearBtn = $('#sh-faq-clear');
-    var emptyEl = $('#sh-faq-empty');
-    var groups = $all('.sh-faq-group');
-    function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
-    function setOpen(it, open) {
-      it.open = open;
-      var b = $('.sh-faq-item__body', it);
-      if (b) b.style.height = '';
-      delete it.dataset.anim;
+    if ('IntersectionObserver' in window) {
+      var spy = new IntersectionObserver(function (entries) {
+        if (input.value.trim()) return;
+        entries.forEach(function (entry) { if (entry.isIntersecting) active(entry.target.id); });
+      }, { rootMargin: '-132px 0px -60% 0px', threshold: 0 });
+      groups.forEach(function (group) { spy.observe(group); });
     }
-    function resetDefault() {
-      items.forEach(function (it, i) { setOpen(it, i === 0); });
-    }
-    function runFilter() {
-      var q = norm(input.value.trim());
-      if (clearBtn) clearBtn.hidden = !input.value;
-      if (!q) {
-        items.forEach(function (it) { it.hidden = false; });
-        groups.forEach(function (g) { g.hidden = false; });
-        if (emptyEl) emptyEl.hidden = true;
-        resetDefault();
-        return;
-      }
-      var anyGlobal = false;
-      groups.forEach(function (g) {
-        var anyInGroup = false;
-        $all('.sh-faq-item', g).forEach(function (it) {
-          var match = norm(it.textContent).indexOf(q) !== -1;
-          it.hidden = !match;
-          if (match) { anyInGroup = true; setOpen(it, true); }
-        });
-        g.hidden = !anyInGroup;
-        if (anyInGroup) anyGlobal = true;
-      });
-      if (emptyEl) emptyEl.hidden = anyGlobal;
-    }
-    if (input) {
-      input.addEventListener('input', runFilter);
-      input.addEventListener('keydown', function (e) { if (e.key === 'Escape') { input.value = ''; runFilter(); } });
-    }
-    if (clearBtn) clearBtn.addEventListener('click', function () { input.value = ''; runFilter(); input.focus(); });
-
-    // 3) görgetés-jelző: az aktuális csoport kiemelése a bal sávban
-    var railLinks = $all('#sh-faq-rail a');
-    if (railLinks.length) {
-      var byId = {};
-      railLinks.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
-      railLinks.forEach(function (a) {
-        a.addEventListener('click', function () {
-          railLinks.forEach(function (x) { x.classList.remove('is-active'); });
-          a.classList.add('is-active');
-        });
-      });
-      if ('IntersectionObserver' in window) {
-        var spy = new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) {
-            if (!en.isIntersecting) return;
-            var a = byId[en.target.id];
-            if (!a) return;
-            railLinks.forEach(function (x) { x.classList.remove('is-active'); });
-            a.classList.add('is-active');
-          });
-        }, { rootMargin: '-15% 0px -75% 0px', threshold: 0 });
-        groups.forEach(function (g) { spy.observe(g); });
-      }
-    }
+    window.addEventListener('hashchange', revealHash);
+    if (window.location.hash) requestAnimationFrame(revealHash);
   }
 
   /* ── indítás ─────────────────────────────────────────────────── */

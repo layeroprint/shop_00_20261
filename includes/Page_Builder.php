@@ -12,6 +12,7 @@ final class Page_Builder {
 
 	public static function init() {
 		add_action('init', array(__CLASS__, 'maybe_ensure_required_pages'), 20);
+		add_action('admin_init', array(__CLASS__, 'maybe_upgrade_faq'));
 		add_filter('wp_robots', array(__CLASS__, 'legal_draft_robots'));
 		add_action('admin_action_layero_build_pages', array(__CLASS__, 'handle_build'));
 		add_action('admin_notices', array(__CLASS__, 'admin_notice'));
@@ -326,6 +327,60 @@ final class Page_Builder {
 	   ────────────────────────────────────────────────────────────── */
 
 	private static function faq_data() {
+		return array(self::wrap_in_section(array(self::make_widget('layero_static_page', array('page' => 'gyik')))));
+	}
+
+	/** Upgrade only the old, unedited generated FAQ; keep a recoverable backup. */
+	public static function maybe_upgrade_faq() {
+		if (! current_user_can('manage_options')) { return; }
+		$page = self::find_page_by_slug('gyik');
+		if (! $page || get_post_meta($page->ID, '_layero_faq_revision', true)) { return; }
+		$raw = get_post_meta($page->ID, '_elementor_data', true);
+		$data = json_decode($raw, true);
+		if (! is_array($data) || ! self::is_legacy_faq($data)) { return; }
+		$backup = array('elementor_data' => $raw, 'post_content' => $page->post_content, 'saved_at' => gmdate('c'));
+		if (! add_post_meta($page->ID, '_layero_faq_backup_0_10_8', wp_slash($backup), true)) { return; }
+		self::set_elementor_data($page->ID, self::faq_data());
+		delete_post_meta($page->ID, '_elementor_element_cache');
+		delete_post_meta($page->ID, '_elementor_css');
+		if (class_exists('\\Elementor\\Core\\Files\\CSS\\Post')) {
+			(new \Elementor\Core\Files\CSS\Post($page->ID))->delete();
+		}
+		clean_post_cache($page->ID);
+		update_post_meta($page->ID, '_layero_faq_revision', '0.10.8');
+	}
+
+	private static function faq_widgets($elements) {
+		$widgets = array();
+		foreach ($elements as $element) {
+			if ('widget' === ($element['elType'] ?? '')) { $widgets[] = $element; }
+			if (! empty($element['elements'])) { $widgets = array_merge($widgets, self::faq_widgets($element['elements'])); }
+		}
+		return $widgets;
+	}
+
+	private static function is_legacy_faq($data) {
+		$actual = self::faq_widgets($data);
+		$expected = self::faq_widgets(self::legacy_faq_data());
+		if (count($actual) !== count($expected)) { return false; }
+		foreach ($expected as $i => $widget) {
+			if (($actual[$i]['widgetType'] ?? '') !== $widget['widgetType']) { return false; }
+			$settings = (array) ($actual[$i]['settings'] ?? array());
+			foreach ((array) $widget['settings'] as $key => $value) {
+				$current = $settings[$key] ?? null;
+				if ('html' === $key) {
+					if (! is_string($current) || preg_replace('/\s+/u', ' ', trim($current)) !== preg_replace('/\s+/u', ' ', trim($value))) { return false; }
+				} elseif ('image' === $key) {
+					if (! is_array($current) || ! preg_match('~/termekvilag/hero_slider/layero-asset-0018\.png$~', $current['url'] ?? '')) { return false; }
+				} elseif ('button_url' === $key) {
+					if (! is_array($current) || ($current['url'] ?? '') !== $value['url']) { return false; }
+				} elseif ($current !== $value) { return false; }
+			}
+		}
+		return true;
+	}
+
+	private static function legacy_faq_data() {
 		$sections = array();
 
 		$sections[] = self::html_section(
