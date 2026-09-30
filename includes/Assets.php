@@ -39,7 +39,7 @@ final class Assets {
 			'layero-static-shop',
 			LAYERO_SHOP_UI_URL . 'assets/css/layero-static-shop.css',
 			array(),
-			LAYERO_SHOP_UI_VERSION
+			LAYERO_SHOP_UI_VERSION . '.' . filemtime(LAYERO_SHOP_UI_PATH . 'assets/css/layero-static-shop.css')
 		);
 
 		wp_register_style(

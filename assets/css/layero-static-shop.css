@@ -5395,13 +5395,18 @@ body[data-page="cegeknek"] .sh-footer { margin-top: 0; }
 .b2b-closing p { font: 500 clamp(18px,2.1vw,28px)/1.4 var(--font-display); letter-spacing: -.035em; }
 .b2b-closing p > span { color: #0a7c92; }
 .b2b-closing .b2b-textlink { flex-shrink: 0; }
-.b2b-lightbox { margin: auto; width: min(820px,calc(100% - 32px)); max-height: calc(100dvh - 32px); border: 1px solid #ffffff30; border-radius: 12px; padding: 16px; background: var(--brand-navy); color: white; }
+.b2b-lightbox { box-sizing: border-box; margin: auto; width: min(684px,calc(100% - 32px),calc(100dvh - 144px)); min-width: min(320px,calc(100% - 32px)); max-width: calc(100% - 32px); max-height: calc(100dvh - 32px); border: 1px solid #ffffff30; border-radius: 12px; padding: 16px; background: var(--brand-navy); color: white; }
+.b2b-lightbox[open] { display: grid; grid-template-rows: auto minmax(0,1fr) auto; gap: 12px; }
 .b2b-lightbox::backdrop { background: #020812e6; backdrop-filter: blur(7px); }
 .b2b-lightbox__bar, .b2b-lightbox__controls { display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 13px; }
-.b2b-lightbox__bar { padding-bottom: 10px; }
-.b2b-lightbox button { width: 44px; height: 44px; flex-shrink: 0; background: #ffffff10; color: #fff; border: 1px solid #ffffff40; border-radius: 50%; font-size: 20px; }
-.b2b-lightbox > img { width: 100%; height: auto; max-height: min(68dvh,650px); object-fit: contain; border-radius: 6px; }
-.b2b-lightbox__controls { justify-content: center; margin-top: 12px; }
+.b2b-lightbox__bar { min-width: 0; }
+.b2b-lightbox__bar > span { overflow-wrap: anywhere; }
+/* Keep theme button padding and focus colours out of the gallery controls. */
+.b2b-lightbox button[type="button"] { box-sizing: border-box; display: grid; place-items: center; width: 44px; height: 44px; min-width: 44px; flex: 0 0 44px; margin: 0; padding: 0; background: #ffffff10; color: #fff; border: 1px solid #ffffff40; border-radius: 50%; font: 400 20px/1 var(--font); text-align: center; text-decoration: none; cursor: pointer; }
+.b2b-lightbox button[type="button"]:is(:hover,:focus) { background: #ffffff20; color: #fff; border-color: var(--brand-cyan); }
+.b2b-lightbox > img { display: block; justify-self: center; width: 100%; height: auto; min-height: 0; max-height: min(650px,calc(100dvh - 178px)); object-fit: contain; border-radius: 6px; }
+.b2b-lightbox__controls { justify-content: center; }
+.b2b-lightbox__controls > span { min-width: 3.5ch; text-align: center; font-variant-numeric: tabular-nums; }
 html.b2b-gallery-open { overflow: hidden; }
 @media (min-width: 1600px) { .b2b-hero__grid { padding-block: 48px 60px; } }
 @media (max-width: 1100px) {
