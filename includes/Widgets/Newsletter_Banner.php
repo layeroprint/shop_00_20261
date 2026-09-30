@@ -37,21 +37,21 @@ class Newsletter_Banner extends Base_Widget {
 			'label' => __('Háttérszín', 'layero-shop-ui'),
 			'type' => Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .sh-nlbanner' => 'background-color: {{VALUE}};',
+				'{{WRAPPER}} .lyr-mailclub__panel' => 'background-color: {{VALUE}};',
 			),
 		));
 		$this->add_control('text_color', array(
 			'label' => __('Szöveg szín', 'layero-shop-ui'),
 			'type' => Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .sh-nlbanner' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .lyr-mailclub__panel' => 'color: {{VALUE}};',
 			),
 		));
 		$this->add_control('btn_bg_color', array(
 			'label' => __('Gomb háttér', 'layero-shop-ui'),
 			'type' => Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .sh-nlbanner .sh-btn' => 'background-color: {{VALUE}};',
+				'{{WRAPPER}} .lyr-mailclub .lyr-subscription__row button' => 'background-color: {{VALUE}};',
 			),
 		));
 		$this->end_controls_section();
