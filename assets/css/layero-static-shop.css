@@ -599,15 +599,14 @@ button { font-family: inherit; cursor: pointer; }
 
 .sh-personal-mark {
   position: absolute; left: 10px; bottom: 10px; z-index: 2;
-  display: inline-flex; align-items: center; gap: 5px;
-  max-width: calc(100% - 20px); padding: 7px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.24); border-radius: 999px;
-  background: rgba(2, 8, 18, 0.86); color: #fff;
-  box-shadow: 0 4px 14px rgba(2, 8, 18, 0.22);
-  font-size: 0.7rem; font-weight: 720; line-height: 1.15;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; padding: 0; box-sizing: border-box;
+  border: 1px solid #bce0e7; border-radius: 50%;
+  background: #e5f5f8; color: #086375;
+  box-shadow: 0 2px 6px rgba(2, 8, 18, 0.12);
   pointer-events: none;
 }
-.sh-personal-mark > span { color: var(--brand-gold); }
+.sh-personal-mark svg { width: 15px; height: 15px; }
 @media (hover: hover) and (pointer: fine) {
   .sh-prod-card:hover .sh-personal-mark { opacity: 0; }
 }
@@ -636,6 +635,7 @@ button { font-family: inherit; cursor: pointer; }
   background: var(--accent-soft); color: var(--accent-deep);
   font-size: 0.85rem; font-weight: 600; letter-spacing: -0.005em;
   display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  text-decoration: none; text-align: center;
   transition: background 0.18s, color 0.18s, transform 0.12s;
 }
 .sh-card-add svg { width: 15px; height: 15px; }
@@ -1458,14 +1458,16 @@ button { font-family: inherit; cursor: pointer; }
 .sh-crosssell__item img { width: 100%; height: 100%; object-fit: cover; }
 .sh-crosssell__item div { flex: 1; min-width: 0; font-size: 0.74rem; color: var(--muted); font-feature-settings: "tnum"; }
 .sh-crosssell__item b { display: block; font-size: 0.76rem; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sh-crosssell__item button {
+.sh-crosssell__item button, .sh-crosssell__personalize {
   width: 32px; height: 32px; border-radius: var(--r-sm); flex-shrink: 0;
   border: 1px solid var(--line); background: var(--bg);
   font-size: 1rem; color: var(--ink);
   display: flex; align-items: center; justify-content: center;
   transition: all 0.18s;
 }
-.sh-crosssell__item button:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.sh-crosssell__item button:hover, .sh-crosssell__personalize:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.sh-crosssell__personalize { min-width: 44px; min-height: 44px; text-decoration: none; }
+.sh-crosssell__personalize svg, .sh-upsell__add svg { width: 15px; height: 15px; }
 .sh-cart-empty { text-align: center; padding: 80px 24px; }
 .sh-cart-empty svg { width: 48px; height: 48px; color: var(--faint); margin: 0 auto 18px; }
 .sh-cart-empty h2 { font-size: 1.3rem; font-weight: 650; letter-spacing: -0.02em; }
@@ -1829,6 +1831,7 @@ a.sh-ct-card:hover .sh-ct-card__arr { transform: translateX(3px); color: var(--a
 .sh-qv__price small { font-size: 0.76rem; font-weight: 450; color: var(--muted); margin-left: 6px; }
 .sh-qv__desc { font-size: 0.88rem; color: var(--ink-2); margin-bottom: 18px; }
 .sh-qv__foot { margin-top: 16px; display: flex; gap: 14px; align-items: center; }
+.sh-qv__foot .sh-btn { flex: 1; }
 .sh-qv__close {
   position: absolute; top: 12px; right: 12px; z-index: 4;
   width: 34px; height: 34px; border-radius: 50%;
@@ -1897,6 +1900,7 @@ a.sh-ct-card:hover .sh-ct-card__arr { transform: translateX(3px); color: var(--a
 .sh-upsell__item .sh-rate { font-size: 0.66rem; }
 .sh-upsell__item span.pr { font-size: 0.76rem; color: var(--muted); font-feature-settings: "tnum"; }
 .sh-upsell__add { width: 32px; height: 32px; flex-shrink: 0; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--card); color: var(--ink); font-size: 1rem; }
+a.sh-upsell__add { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; text-decoration: none; }
 .sh-upsell__add:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
 /* ajándékcsomagolás toggle */
@@ -4829,6 +4833,68 @@ body[data-page="termek"] .sh-paychips .pc { font-size: .58rem; color: #627786; b
 .sh-product-nav > div { display: flex; gap: 34px; overflow-x: auto; }
 .sh-product-nav a { flex-shrink: 0; padding-block: 21px; font-size: .76rem; color: #546d7c; border-bottom: 2px solid transparent; }
 .sh-product-nav a:hover, .sh-product-nav a:focus-visible { color: var(--accent-deep); border-bottom-color: var(--accent); }
+.sh-product-nav { scroll-margin-top: 110px; }
+.sh-product-nav > div { position: relative; }
+.sh-product-nav > div { scrollbar-width: none; }
+.sh-product-nav > div::-webkit-scrollbar { display: none; }
+.sh-product-nav a { display: inline-flex; align-items: center; gap: 8px; }
+.sh-product-nav a[aria-selected="true"] { color: var(--accent-deep); border-bottom-color: var(--accent); font-weight: 600; }
+.sh-tab-count { display: inline-grid; place-items: center; min-width: 23px; height: 23px; padding-inline: 5px; border-radius: 50px; background: #f0f4f6; color: #546d7c; font-size: .65rem; }
+.sh-product-nav a[aria-selected="true"] .sh-tab-count { background: var(--accent-soft); color: var(--accent-deep); }
+[data-product-tabs] [role="tabpanel"][hidden] { display: none !important; }
+[data-product-tabs] [role="tabpanel"]:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+[data-product-tabs] [role="tabpanel"] { min-width: 0; }
+.sh-product-reviews .sh-product-sectionhead h2 { font-size: clamp(1.65rem, 2.6vw, 2.2rem); }
+.sh-product-reviews .sh-product-sectionhead > p { margin-top: 10px; color: #647584; font-size: .85rem; line-height: 1.7; }
+.sh-review-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px; align-items: start; }
+.sh-review-summary { padding: 30px; border: 1px solid #123244; border-radius: 20px; background: var(--brand-navy-surface); color: #fff; }
+.sh-review-summary__label { display: block; color: #c6d1dd; font-size: .71rem; }
+.sh-review-score { display: flex; align-items: baseline; gap: 9px; margin-top: 15px; }
+.sh-review-score strong { font-size: 3.3rem; font-weight: 600; line-height: 1.2; letter-spacing: -.06em; }
+.sh-review-score > span { color: #c6d1dd; font-size: .85rem; }
+.sh-review-summary__stars { color: #f0c27a; font-size: 1.25rem; letter-spacing: 3px; margin-top: 13px; }
+.sh-review-summary__stars.is-empty { color: #a0b5c4; font-size: 1.7rem; margin-block: 24px 17px; }
+.sh-review-summary h3 { color: #fff; font-size: 1.06rem; font-weight: 600; line-height: 1.5; }
+.sh-review-summary p { color: #c6d1dd; font-size: .76rem; line-height: 1.7; margin-top: 8px; }
+.sh-review-summary__help { margin-top: 25px; padding-top: 22px; border-top: 1px solid #29404f; }
+.sh-review-summary__help b { font-size: .78rem; font-weight: 600; }
+.sh-review-summary__help p { margin-top: 5px; }
+.sh-review-summary__help a { display: inline-flex; align-items: center; gap: 18px; margin-top: 15px; color: #00e5ff; font-size: .78rem; font-weight: 600; }
+.sh-review-content { min-width: 0; }
+.sh-review-empty { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 330px; padding: 36px 40px; border: 1px solid var(--line); border-radius: 20px; background: #f7f9fa; }
+.sh-review-empty__icon { display: grid; place-items: center; width: 50px; height: 50px; margin-bottom: 22px; border: 1px solid #dce7eb; border-radius: 15px; background: #fff; color: var(--accent-deep); }
+.sh-review-empty__icon svg { width: 25px; height: 25px; }
+.sh-review-empty .sh-kicker { font-size: .64rem; }
+.sh-review-empty h3 { margin-top: 12px; font-size: clamp(1.2rem, 2vw, 1.55rem); font-weight: 600; letter-spacing: -.035em; line-height: 1.4; }
+.sh-review-empty p { max-width: 540px; margin-top: 12px; color: #647584; font-size: .83rem; line-height: 1.85; }
+.sh-review-empty .sh-btn { margin-top: 22px; min-height: 44px; padding: 11px 20px; font-size: .75rem; gap: 14px; }
+.sh-product-reviews .sh-rev { padding: 25px 28px; border-radius: 18px; }
+.sh-product-reviews .sh-rev__ava { width: 42px; height: 42px; background: #edf4f6; color: #365769; }
+.sh-product-reviews .sh-rev__who > span { display: block; margin-top: 3px; font-size: .68rem; color: #647584; }
+.sh-product-reviews .sh-rev__stars { color: #946318; margin-block: 16px 10px; }
+.sh-product-reviews .sh-rev p { line-height: 1.85; overflow-wrap: anywhere; }
+@media (max-width: 860px) {
+  .sh-review-layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .sh-review-summary { padding: 24px; }
+  .sh-review-summary__help { margin-top: 20px; padding-top: 18px; }
+}
+@media (max-width: 540px) {
+  .sh-product-reviews.is-empty .sh-review-summary { display: none; }
+  .sh-product-reviews .sh-review-summary__help { display: none; }
+  .sh-review-summary:has(.sh-review-score) { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; padding: 22px; }
+  .sh-review-summary:has(.sh-review-score) .sh-review-summary__label { grid-column: 1 / -1; }
+  .sh-review-summary:has(.sh-review-score) .sh-review-score { grid-column: 1; grid-row: 2 / 4; margin-top: 12px; }
+  .sh-review-summary:has(.sh-review-score) .sh-review-score strong { font-size: 2.65rem; }
+  .sh-review-summary:has(.sh-review-score) .sh-review-summary__stars { grid-column: 2; grid-row: 2; align-self: end; font-size: 1.1rem; }
+  .sh-review-summary:has(.sh-review-score) > p { grid-column: 2; grid-row: 3; margin-top: 5px; font-size: .7rem; }
+  .sh-review-empty { min-height: 0; padding: 26px 22px; }
+  .sh-product-reviews .sh-rev { padding: 22px; }
+  .sh-product-reviews .sh-product-sectionhead > p { font-size: .8rem; }
+  .sh-product-nav a { min-height: 54px; }
+}
+@media print {
+  [data-product-tabs] [role="tabpanel"][hidden] { display: block !important; }
+}
 body[data-page="termek"] #sh-product-mount section[id] { scroll-margin-top: 95px; }
 body[data-page="termek"] .sh-product-details { padding-block: 70px; }
 body[data-page="termek"] .sh-longdesc { grid-template-columns: 1fr 1fr; gap: 80px; }

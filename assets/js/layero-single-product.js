@@ -3,6 +3,18 @@
   function init() {
     var root = document.querySelector('[data-layero-single-product]');
     if (!root) return;
+    var reviewForm = root.querySelector('#review_form_wrapper');
+    if (reviewForm) {
+      var compose = document.createElement('details');
+      compose.className = 'sh-review-compose';
+      var summary = document.createElement('summary');
+      summary.textContent = 'Véleményt írok';
+      reviewForm.before(compose);
+      compose.append(summary, reviewForm);
+      if (/^#(?:review_form|reply-title|respond|commentform)/.test(location.hash)) compose.open = true;
+      if (reviewForm.querySelector('.woocommerce-error, [aria-invalid="true"]')) compose.open = true;
+      reviewForm.addEventListener('invalid', function () { compose.open = true; }, true);
+    }
     var main = root.querySelector('#lyr-product-main-image');
     var dialog = root.querySelector('#lyr-gallery-dialog');
     var zoom = root.querySelector('[data-layero-gallery-open]');

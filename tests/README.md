@@ -16,6 +16,8 @@ A 0.10.19 kosárpanel-próbája: `tests/cart-drawer-wordpress.php`, ugyanazzal a
 
 ## Valódi WordPress-próba
 
+A termékoldal fül- és véleménydizájnjához készült `tests/product-reviews-wordpress.php` a lenti WP-CLI `eval-file` menettel futtatható. Ideiglenes termék és kommentek segítségével ellenőrzi az üres állapotot, jóváhagyást, átlagot, lapozást, vásárlóellenőrzést és lezárt vélemények előzményeit; a próbaterméket és kommenteket a végén törli.
+
 A 2026-09-29-i helyi környezet a webshop gyökerének ignorált `output/wp-test/` mappájában van. Nem része a kiadásnak. WordPress/Elementor/WooCommerce/Hello Elementor hivatalos letöltésekből; a plugin helyi mappája csatlakozik a teszt WordPresshez.
 
 - Webhely: `http://127.0.0.1:8139`, külön MariaDB: `127.0.0.1:3319`.

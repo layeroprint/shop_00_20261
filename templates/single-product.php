@@ -64,7 +64,7 @@ get_header();
 			<div class="lyrb-product-details" data-lyrb-details="<?php echo esc_attr(wp_json_encode(\LayeroShop\Badge_System::for_product($product))); ?>"></div>
 			<?php if ($short_description) : ?><div class="sh-pinfo__desc"><?php echo wp_kses_post(wpautop($short_description)); ?></div><?php endif; ?>
 			<?php if ($product->get_rating_count() && function_exists('wc_get_rating_html')) : ?>
-				<div class="sh-rate"><?php echo wc_get_rating_html($product->get_average_rating(), $product->get_rating_count()); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>(<?php echo esc_html(number_format_i18n($product->get_rating_count())); ?>)</span></div>
+				<a class="sh-rate" href="#sh-velemenyek" aria-label="Vásárlói vélemények megtekintése"><?php echo wc_get_rating_html($product->get_average_rating(), $product->get_rating_count()); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>(<?php echo esc_html(number_format_i18n($product->get_rating_count())); ?>)</span></a>
 			<?php elseif (comments_open($product->get_id())) : ?>
 				<a class="sh-pinfo__review" href="#sh-velemenyek"><span aria-hidden="true">☆</span> Még nincs értékelés</a>
 			<?php endif; ?>
@@ -82,10 +82,10 @@ get_header();
 			<div class="sh-product-volume"><span>Több darabban gondolkodsz?</span><a href="<?php echo esc_url(home_url('/cegeknek/')); ?>">Kérj egyedi ajánlatot <span aria-hidden="true">→</span></a></div>
 		</div>
 	</div>
-	<nav class="sh-product-nav" aria-label="Termékinformációk"><div class="shop-wrap">
+	<div data-product-tabs><nav class="sh-product-nav" aria-label="Termékinformációk"><div class="shop-wrap">
 		<?php if ($description || $has_specifications) : ?><a href="#sh-product-details">A termékről</a><?php endif; ?>
 		<a href="#sh-product-shipping">Szállítás és tudnivalók</a>
-		<?php if (comments_open($product->get_id())) : ?><a href="#sh-velemenyek">Vélemények</a><?php endif; ?>
+		<a href="#sh-velemenyek">Vélemények <span class="sh-tab-count"><?php echo esc_html(number_format_i18n($product->get_review_count())); ?></span></a>
 		<?php if ($related_ids) : ?><a href="#sh-product-related">Hasonló darabok</a><?php endif; ?>
 	</div></nav>
 	<?php if ($description || $has_specifications) : ?>
@@ -99,11 +99,11 @@ get_header();
 		<details><summary>Visszaküldés és garancia</summary><div><p>A termékre vonatkozó feltételeket a visszaküldési és garanciális tájékoztatóban találod.</p><p><a href="<?php echo esc_url(home_url('/gyik/#visszakuldes')); ?>">Részletek megtekintése</a></p></div></details>
 		<?php if ($personalizable) : ?><details><summary>Így zajlik a személyre szabás</summary><div><p>Írd be a termékhez kért adatokat a fenti mezőkbe. A pontos elhelyezést a tervezéskor egyeztetjük.</p></div></details><?php endif; ?>
 	</div></div></section>
-	<?php if (comments_open($product->get_id())) : ?><section class="sh-section shop-wrap lyr-single-reviews" id="sh-velemenyek"><h2 class="sh-h2">Vásárlói vélemények.</h2><?php comments_template(); ?></section><?php endif; ?>
+	<?php include LAYERO_SHOP_UI_PATH . 'templates/product-review-panel.php'; ?>
 	<?php if ($related_ids) : ?><section class="sh-section shop-wrap" id="sh-product-related"><div class="sh-section-hd"><span class="sh-label sh-kicker">Ajánló</span><h2 class="sh-h2">Hasonló termékek.</h2><a class="sh-link" href="<?php echo esc_url($category_url); ?>">Összes ›</a></div><div class="sh-prod-grid">
 		<?php foreach ($related_ids as $related_id) { $related = wc_get_product($related_id); if ($related && $related->is_visible()) { echo \LayeroShop\Helpers::product_card($related); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} } ?>
-	</div></section><?php endif; ?>
+	</div></section><?php endif; ?></div>
 	<?php if ($image_ids) : ?><dialog class="lyr-gallery-dialog" id="lyr-gallery-dialog" aria-label="Termékkép nagyítása"><button type="button" data-layero-gallery-close aria-label="Bezárás">×</button><img src="<?php echo esc_url(wp_get_attachment_image_url($image_ids[0], 'full')); ?>" alt="<?php echo esc_attr($product->get_name()); ?>"></dialog><?php endif; ?>
 </main>
 <?php wp_reset_postdata(); get_footer(); ?>

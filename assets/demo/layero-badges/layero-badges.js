@@ -129,7 +129,7 @@
     const locale = safeLocale(options.locale);
     const more = hidden.length ? `<details class="lyrb-more"><summary><span>+${hidden.length} ${locale==='ro'?'detalii':'további'}</span>${iconHTML('plus')}</summary><div class="lyrb-more__list">${groupHTML(hidden,options)}</div></details>` : '';
     const overlay = top.length ? `<div class="lyrb-overlay" data-lyrb-generated role="group" aria-label="${locale==='ro'?'Etichete produs':'Termékjelzések'}">${groupHTML(visible,options)}${more}</div>` : '';
-    const bottom = personal ? `<span class="sh-personal-mark lyr-product-card__personal lyrb-personal-mark" data-lyrb-generated data-lyrb-id="personal"><span aria-hidden="true">✦</span> ${escape(personal.label)}</span>` : '';
+    const bottom = personal ? `<span class="sh-personal-mark lyr-product-card__personal lyrb-personal-mark" data-lyrb-generated data-lyrb-id="personal" role="img" aria-label="${escape(personal.label)}" title="${escape(personal.label)}">${iconHTML('pen')}</span>` : '';
     return overlay + bottom;
   }
   /** Mount into an existing product card; existing shopping links and handlers are retained. */

@@ -35,6 +35,38 @@ final class Single_Product {
 		return function_exists('is_product') && is_product() ? __('Kosárba teszem', 'layero-shop-ui') : $label;
 	}
 
+	/** Scope the comments view and labels to this product, preserving Woo validation. */
+	public static function reviews() {
+		$template = function () { return LAYERO_SHOP_UI_PATH . 'templates/product-reviews.php'; };
+		$labels = function ($args) {
+			$args['title_reply'] = 'Oszd meg a tapasztalatodat';
+			$args['label_submit'] = 'Vélemény beküldése';
+			return $args;
+		};
+		$translate = function ($translated, $text, $domain) {
+			if (! in_array($domain, array('woocommerce', 'default'), true)) { return $translated; }
+			$labels = array(
+				'Your rating' => 'Értékelésed', 'Your review' => 'Véleményed', 'Name' => 'Neved', 'Email' => 'E-mail-címed',
+				'Rate&hellip;' => 'Válassz értékelést&hellip;', 'Perfect' => 'Kiváló', 'Good' => 'Jó', 'Average' => 'Átlagos', 'Not that bad' => 'Elfogadható', 'Very poor' => 'Gyenge',
+				'Your email address will not be published.' => 'Az e-mail-címed nem jelenik meg nyilvánosan.',
+				'Required fields are marked %s' => 'A kötelező mezőket %s jelöli.',
+				'Save my name, email, and website in this browser for the next time I comment.' => 'Nevem és e-mail-címem megjegyzése ebben a böngészőben a következő véleményhez.',
+				'Only logged in customers who have purchased this product may leave a review.' => 'Véleményt a terméket megvásárló, bejelentkezett vásárlók írhatnak.',
+				'You must be %1$slogged in%2$s to post a review.' => 'Vélemény írásához %1$sjelentkezz be%2$s.',
+			);
+			return isset($labels[$text]) ? $labels[$text] : $translated;
+		};
+		add_filter('comments_template', $template, 999);
+		add_filter('woocommerce_product_review_comment_form_args', $labels);
+		add_filter('gettext', $translate, 10, 3);
+		try { comments_template(); }
+		finally {
+			remove_filter('comments_template', $template, 999);
+			remove_filter('woocommerce_product_review_comment_form_args', $labels);
+			remove_filter('gettext', $translate, 10);
+		}
+	}
+
 	/** Prefer the same product family; a shared gift occasion must not outrank it. */
 	public static function related_ids($product, $limit = 4) {
 		$categories = Catalog::category_slugs($product);
