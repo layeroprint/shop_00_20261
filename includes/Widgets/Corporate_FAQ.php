@@ -4,6 +4,7 @@ namespace LayeroShop\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Repeater;
+use LayeroShop\Shop_Content;
 
 if (! defined('ABSPATH')) {
 	exit;
