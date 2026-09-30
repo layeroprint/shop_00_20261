@@ -77,4 +77,12 @@ $check(null === \LayeroShop\Catalog::gift_profile($profile_product), 'broken gif
 $profile['enabled'] = false;
 $profile_product->update_meta_data('_layero_gift_profile', $profile);
 $check(null === \LayeroShop\Catalog::gift_profile($profile_product), 'disabled classification stays disabled');
+$material = new WC_Product_Attribute(); $material->set_name('Anyag'); $material->set_options(array('PLA & fa')); $material->set_visible(true);
+$private = new WC_Product_Attribute(); $private->set_name('Belső kód'); $private->set_options(array('private-only')); $private->set_visible(false);
+$lead_time = new WC_Product_Attribute(); $lead_time->set_name('Gyártási idő'); $lead_time->set_options(array('99 nap')); $lead_time->set_visible(true);
+$profile_product->set_attributes(array($material, $private, $lead_time));
+$check(\LayeroShop\Catalog::specifications($profile_product) === array(array('Anyag', 'PLA & fa')), 'comparison shares public attributes and hides private/lead-time values');
+$profile_product->set_weight('0.5');
+$specs = \LayeroShop\Catalog::specifications($profile_product);
+$check(count($specs) === 2 && strpos($specs[0][1], '0.5') !== false, 'comparison includes actual weight with units');
 echo $checks . " real cart UI and gift-profile checks passed. No order, payment or email sent.\n";

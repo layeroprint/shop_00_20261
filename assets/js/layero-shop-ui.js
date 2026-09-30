@@ -5,6 +5,22 @@
 	var WISH_OWNER_KEY = 'layero_wishlist_owner';
 	var wishlistBootPromise = null;
 	var wishQueue = Promise.resolve();
+	var pendingFavorites = new Set();
+	var favoriteNoticeTimer = null;
+
+	function favoriteNotice(message) {
+		var notice = document.querySelector('.lyr-favorite-status');
+		if (!notice) {
+			notice = document.createElement('div');
+			notice.className = 'sh-toast lyr-favorite-status';
+			notice.setAttribute('role', 'status');
+			document.body.appendChild(notice);
+		}
+		notice.textContent = message;
+		notice.classList.add('is-on');
+		clearTimeout(favoriteNoticeTimer);
+		favoriteNoticeTimer = setTimeout(function () { notice.classList.remove('is-on'); }, 6000);
+	}
 
 	function accountConfig() {
 		return window.LayeroShopUI || {};
@@ -231,6 +247,8 @@
 		(context || document).querySelectorAll('[data-layero-wish-toggle]').forEach(function (button) {
 			var id = String(button.getAttribute('data-layero-product-id') || '');
 			var active = id && items.indexOf(id) !== -1;
+			button.disabled = pendingFavorites.has(id);
+			button.setAttribute('aria-busy', pendingFavorites.has(id) ? 'true' : 'false');
 			button.classList.toggle('is-on', active);
 			button.classList.toggle('is-active', active);
 			button.setAttribute('aria-pressed', active ? 'true' : 'false');
@@ -264,19 +282,20 @@
 				event.preventDefault();
 				event.stopPropagation();
 				var id = String(button.getAttribute('data-layero-product-id') || '');
-				if (!id) return;
+				if (!id || pendingFavorites.has(id)) return;
 				var items = wishGet();
 				var index = items.indexOf(id);
 				if (index === -1) items.push(id);
 				else items.splice(index, 1);
-				wishSet(items);
-				refreshWishButtons(document);
-				refreshFavoritesGrid(document);
-
 				if (!accountConfig().isLoggedIn) {
+					wishSet(items);
+					refreshWishButtons(document);
+					refreshFavoritesGrid(document);
 					refreshFavoritesWidgets(document, true);
 					return;
 				}
+				pendingFavorites.add(id);
+				refreshWishButtons(document);
 
 				wishQueue = wishQueue
 					.then(function () { return bootstrapWishlist(); })
@@ -285,12 +304,18 @@
 					})
 					.then(function (result) {
 						if (Array.isArray(result.ids)) wishSet(result.ids);
+						favoriteNotice(result.active ? 'A terméket elmentettük a kedvenceidhez.' : 'A terméket eltávolítottuk a kedvenceidből.');
 						refreshWishButtons(document);
 						refreshFavoritesGrid(document);
 						refreshFavoritesWidgets(document, true);
 					})
 					.catch(function () {
+						favoriteNotice('A mentést nem sikerült megerősíteni. Frissítsd az oldalt, és ellenőrizd a kedvenceidet.');
 						refreshFavoritesWidgets(document, true);
+					})
+					.finally(function () {
+						pendingFavorites.delete(id);
+						refreshWishButtons(document);
 					});
 			});
 		});

@@ -171,13 +171,17 @@
       '<i class="pc pc--ssl">' + ICO.shield + 'SSL</i>' +
     '</div>';
   }
-  // Ratings are calculated only from actual product reviews.
+  // WooCommerce supplies real rating aggregates; the preview uses its actual reviews.
   function productReviews(p) {
     return (Array.isArray(p.reviews) ? p.reviews : []).filter(function (review) {
       return review && Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5;
     });
   }
   function ratingOf(p) {
+    if (IS_WOO && p.rating_summary) {
+      var average = Number(p.rating_summary.average), count = Number(p.rating_summary.count);
+      if (Number.isFinite(average) && average >= 1 && average <= 5 && Number.isInteger(count) && count > 0) return { r: average.toFixed(1), n: count };
+    }
     var reviews = productReviews(p);
     return { r: reviews.length ? (reviews.reduce(function (sum, review) {
       return sum + review.rating;
@@ -636,7 +640,7 @@
         '<button class="sh-cmp__rm" type="button" data-cmp-rm="' + p.id + '" aria-label="Eltávolítás">✕</button></th>';
     }).join('') + '</tr>';
     var rows = '';
-    rows += '<tr><td>Ár</td>' + prods.map(function (p) { return '<td class="sh-cmp__price">' + fmtAr(p.ar) + '</td>'; }).join('') + '</tr>';
+    rows += '<tr><td>Ár</td>' + prods.map(function (p) { return '<td class="sh-cmp__price">' + (IS_WOO ? p.price_html : priceHtml(p)) + '</td>'; }).join('') + '</tr>';
     rows += '<tr><td>Értékelés</td>' + prods.map(function (p) {
       var rt = ratingOf(p);
       if (!rt.n) return '<td>Még nincs értékelés</td>';

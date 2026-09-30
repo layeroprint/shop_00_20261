@@ -132,7 +132,8 @@ final class Catalog {
 				'ar' => $price, 'regi_ar' => $regular, 'price_html' => wp_kses_post($product->get_price_html()),
 				'kepek' => $images ?: array(wc_placeholder_img_src()),
 				'leiras' => wp_strip_all_tags($product->get_short_description() ?: $product->get_description()),
-				'hosszu' => array(wp_strip_all_tags($product->get_description())), 'specs' => array(),
+				'hosszu' => array(wp_strip_all_tags($product->get_description())), 'specs' => self::specifications($product),
+				'rating_summary' => array('average' => (float) $product->get_average_rating(), 'count' => (int) $product->get_rating_count()),
 				'badge' => $product->is_featured() ? 'Kiemelt' : '',
 				'badges' => Badge_System::for_product($product),
 				'szemelyre_szabott' => Helpers::product_is_personalizable($product),
@@ -148,6 +149,25 @@ final class Catalog {
 				'count' => self::category_count($category['id']));
 		}
 		return array('products' => $items, 'categories' => $cats, 'urls' => $urls);
+	}
+
+	/** Share the same public attributes and visibility filters as the native product page. */
+	public static function specifications($product) {
+		$attributes = array();
+		if ($product->has_weight()) { $attributes['weight'] = array('label' => __('Weight', 'woocommerce'), 'value' => wc_format_weight($product->get_weight())); }
+		if ($product->has_dimensions()) { $attributes['dimensions'] = array('label' => __('Dimensions', 'woocommerce'), 'value' => wc_format_dimensions($product->get_dimensions(false))); }
+		foreach ($product->get_attributes() as $attribute) {
+			if (! $attribute->get_visible()) { continue; }
+			$attributes[$attribute->get_name()] = array('label' => wc_attribute_label($attribute->get_name(), $product), 'value' => $product->get_attribute($attribute->get_name()));
+		}
+		$attributes = apply_filters('woocommerce_display_product_attributes', $attributes, $product);
+		$rows = array();
+		foreach ($attributes as $attribute) {
+			$label = html_entity_decode(wp_strip_all_tags($attribute['label'] ?? ''), ENT_QUOTES, 'UTF-8');
+			$value = html_entity_decode(wp_strip_all_tags($attribute['value'] ?? ''), ENT_QUOTES, 'UTF-8');
+			if ('' !== trim($label) && '' !== trim($value)) { $rows[] = array($label, $value); }
+		}
+		return $rows;
 	}
 
 	/** Use only the explicit Product Management classification; never infer a match. */
