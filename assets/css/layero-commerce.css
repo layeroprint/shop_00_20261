@@ -29,7 +29,8 @@
 .lyr-cart-drawer .sh-drawer-item > .lyr-drawer-item-total { grid-column: 3; text-align: right !important; }
 .lyr-cart-drawer .sh-drawer-item__price { font-size: 14px; }
 .lyr-cart-drawer .sh-drawer-item__price .amount { white-space: nowrap; }
-.lyr-cart-drawer .sh-drawer-item__rm { margin: 8px 0 0 auto; padding: 4px 0; min-height: 30px; border-radius: 0; line-height: 1.5; }
+.lyr-cart-drawer .sh-drawer-item__rm { margin: 8px 0 0 auto; padding: 4px 0; min-height: 30px; border: 0; border-radius: 0; background: transparent; line-height: 1.5; }
+.lyr-cart-drawer .sh-drawer-item__rm:is(:hover, :focus) { background: transparent; color: #b3263a; }
 .lyr-drawer-quantity { display: inline-flex; align-items: center; margin-top: 8px; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
 .lyr-drawer-quantity button { width: 36px; height: 38px; padding: 0; border: 0; border-radius: 0; background: #fff; color: var(--muted); font-size: 18px; cursor: pointer; }
 .lyr-drawer-quantity output { min-width: 36px; text-align: center; font-size: 14px; font-weight: 650; }
