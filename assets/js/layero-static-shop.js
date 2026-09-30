@@ -113,7 +113,7 @@
     return [type, productId, random].join(':');
   }
   function trackProductEvent(type, product, options) {
-    if (IS_WOO && localStorage.getItem('sh_cookie_ok') !== 'all') return;
+    if (!window.LayeroConsent || !window.LayeroConsent.allows('analytics')) return;
     if (!product || !product.id || !window.fetch || !ANALYTICS_ENDPOINT) return;
     options = options || {};
     var payload = {
@@ -424,35 +424,6 @@
     }
     document.body.appendChild(layer);
     setTimeout(function () { layer.remove(); }, 6500);
-  }
-
-  /* ── cookie sáv (első látogatáskor + láblécből újranyitható) ───── */
-  function showCookie(delay) {
-    var old = $('.sh-cookie');
-    if (old) old.remove();
-    var ck = document.createElement('div');
-    ck.className = 'sh-cookie';
-    ck.setAttribute('role', 'dialog');
-    ck.setAttribute('aria-label', 'Sütik kezelése');
-    var saved = localStorage.getItem('sh_cookie_ok');
-    ck.innerHTML =
-      '<p>Sütiket használunk, hogy a kosarad megmaradjon és jobbá tegyük az élményt. Részletek az <a href="adatvedelem.html">adatvédelmi tájékoztatóban</a>.' +
-        (saved ? ' <span class="sh-cookie__cur">Jelenlegi beállítás: <b>' + (saved === 'all' ? 'minden süti' : 'csak a szükségesek') + '</b>.</span>' : '') +
-      '</p>' +
-      '<div class="sh-cookie__actions">' +
-        '<button class="sh-btn sh-btn--ghost" type="button" data-ck="min">Csak a szükségesek</button>' +
-        '<button class="sh-btn sh-btn--white" type="button" data-ck="all">Elfogadom</button>' +
-      '</div>';
-    document.body.appendChild(ck);
-    setTimeout(function () { ck.classList.add('is-on'); }, delay || 60);
-    ck.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-ck]');
-      if (!b) return;
-      localStorage.setItem('sh_cookie_ok', b.getAttribute('data-ck'));
-      if (window.LayeroConsent) window.LayeroConsent.update(b.getAttribute('data-ck'));
-      ck.classList.remove('is-on');
-      setTimeout(function () { ck.remove(); }, 500);
-    });
   }
 
   var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
@@ -924,15 +895,11 @@
           '<a href="adatvedelem.html">Adatvédelem</a>' +
           '<a href="gyik.html#visszakuldes">Elállás &amp; garancia</a>' +
           '<a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a>' +
-          '<a href="#" data-cookie-open>Cookie-beállítások</a>' +
+          '<button type="button" data-cookie-open>Sütibeállítások</button>' +
         '</nav>' +
         '<span>Let’s print your world together, layer by layer</span>' +
       '</div>';
     document.body.appendChild(footer);
-    footer.addEventListener('click', function (e) {
-      var c = e.target.closest('[data-cookie-open]');
-      if (c) { e.preventDefault(); showCookie(0); }
-    });
 
     buildDrawer();
     initSearch();
@@ -1639,13 +1606,14 @@
       pop.innerHTML = nepszeru.map(function (id) { return prodCard(prodById(id)); }).join('');
 
       try {
-        var homeRecent = JSON.parse(localStorage.getItem('sh_recent') || '[]')
+        var homeRecent = (window.LayeroConsent && window.LayeroConsent.allows('preferences') ? JSON.parse(localStorage.getItem('sh_recent') || '[]') : [])
           .filter(function (id) { return prodById(id); })
           .slice(0, 4);
         if (homeRecent.length && !$('#sh-home-recent')) {
           var recentBand = document.createElement('section');
           recentBand.className = 'sh-band sh-band--tight';
           recentBand.id = 'sh-home-recent';
+          recentBand.setAttribute('data-consent-recent', '');
           recentBand.innerHTML =
             '<div class="shop-wrap">' +
               '<div class="sh-section-hd"><span class="sh-label sh-kicker">Folytasd innen</span>' +
@@ -2465,17 +2433,18 @@
 
     // nemrég nézett termékek (localStorage)
     try {
-      var recent = JSON.parse(localStorage.getItem('sh_recent') || '[]').filter(function (id) { return id !== p.id && prodById(id); });
+      var recent = (window.LayeroConsent && window.LayeroConsent.allows('preferences') ? JSON.parse(localStorage.getItem('sh_recent') || '[]') : []).filter(function (id) { return id !== p.id && prodById(id); });
       if (recent.length) {
         var strip = document.createElement('section');
         strip.className = 'sh-section shop-wrap';
+        strip.setAttribute('data-consent-recent', '');
         strip.innerHTML =
           '<div class="sh-section-hd"><h2 class="sh-h2">Nemrég nézted.</h2></div>' +
           '<div class="sh-prod-grid">' + recent.slice(0, 4).map(function (id) { return prodCard(prodById(id)); }).join('') + '</div>';
         mount.appendChild(strip);
       }
       recent.unshift(p.id);
-      localStorage.setItem('sh_recent', JSON.stringify(recent.slice(0, 8)));
+      if (window.LayeroConsent && window.LayeroConsent.allows('preferences')) localStorage.setItem('sh_recent', JSON.stringify(recent.slice(0, 8)));
     } catch (e) { /* privát mód */ }
 
     // vélemények + Q&A eseménykötés
@@ -3244,8 +3213,6 @@
     fabHelp.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H5.5L3 21l1-3.4A8 8 0 1 1 21 12Z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01"/></svg><i>Segítség</i>';
     fab.appendChild(fabHelp);
 
-    // cookie sáv (első látogatáskor magától, később a láblécből újranyitható)
-    if (!localStorage.getItem('sh_cookie_ok')) showCookie(900);
 
     // (a „valaki az imént rendelte" értesítések eltávolítva — kitalált
     // nevekkel és „ellenőrzött rendelés" felirattal megtévesztőek voltak,

@@ -27,6 +27,7 @@ function fixture(t) {
   write('shop.css', 'body { color: black; }');
   for (const page of PAGES) write(page, '<body><img src="assets/picture.svg"></body>');
   write('assets/picture.svg', '<svg/>');
+  write('assets/layero-consent.js', 'window.LayeroConsent = { allows: () => false };');
   write('assets/testimonials.css', '.lr-card { display: flex; }');
   write('assets/testimonials.js', 'void 0;');
   for (const file of ['catalog.json', 'layero-badges.js', 'layero-badges.css', 'layero-adapter.js']) write('assets/layero-badges/' + file, file.endsWith('.js') ? 'void 0;' : '{}');
@@ -71,6 +72,7 @@ test('sync includes Origin dependencies, preserves previous content, is idempote
   assert.ok(plan.some(e => e.relative.endsWith('layero-origin/mount.js')));
   assert.ok(plan.some(e => e.relative.endsWith('layero-badges/layero-badges.js')));
   assert.ok(plan.some(e => e.relative.endsWith('layero-badges/catalog.json')));
+  assert.equal(plan.find(e => e.relative === 'assets/js/layero-consent.js').content.toString(), 'window.LayeroConsent = { allows: () => false };');
   assert.equal(plan.find(e => e.relative === 'assets/css/layero-testimonials.css').content.toString(), '.lr-card { display: flex; }');
   assert.equal(plan.find(e => e.relative === 'assets/js/layero-testimonials.js').content.toString(), 'void 0;');
   applySync(plan, f.backups);

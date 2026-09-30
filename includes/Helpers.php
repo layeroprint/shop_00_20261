@@ -700,6 +700,7 @@ final class Helpers {
 				'show_excerpt' => false,
 				'button_text' => '',
 				'image_size' => 'woocommerce_thumbnail',
+				'home_style' => false,
 			)
 		);
 
@@ -707,6 +708,8 @@ final class Helpers {
 		$cat_names = function_exists('wc_get_product_category_list') ? wc_get_product_category_list($product->get_id(), ', ') : '';
 		$classes = implode(' ', array_map('sanitize_html_class', wc_get_product_class('lyr-product-card', $product)));
 		$classes = trim($classes . ' sh-prod-card sh-reveal');
+		$home_style = ! empty($args['home_style']);
+		if ($home_style) { $classes .= ' lyr-product-card--home'; }
 		$personalizable = self::product_is_personalizable($product);
 		$is_simple_ajax = ! $personalizable && $product->supports('ajax_add_to_cart') && $product->is_purchasable() && $product->is_in_stock();
 		$add_to_cart_url = $personalizable ? $link : $product->add_to_cart_url();
@@ -721,6 +724,7 @@ final class Helpers {
 		$chips_html = self::product_card_chips_html($product);
 		$rating = (float) $product->get_average_rating();
 		$rating_count = method_exists($product, 'get_rating_count') ? (int) $product->get_rating_count() : 0;
+		$gallery_ids = $home_style && method_exists($product, 'get_gallery_image_ids') ? $product->get_gallery_image_ids() : array();
 
 		ob_start();
 		?>
@@ -728,23 +732,28 @@ final class Helpers {
 			<figure class="lyr-product-card__media">
 				<?php echo self::product_badges_html($badges); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php echo self::product_image($product, $args['image_size']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				<?php if ($personalizable) : ?><span class="lyr-product-card__personal"><span aria-hidden="true">✦</span> <?php esc_html_e('Személyre szabható', 'layero-shop-ui'); ?></span><?php endif; ?>
+				<?php if ($gallery_ids) : ?><?php echo wp_get_attachment_image($gallery_ids[0], $args['image_size'], false, array('class' => 'sh-pc-img2', 'loading' => 'lazy', 'alt' => '')); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php endif; ?>
+				<?php if ($personalizable) : ?><span class="sh-personal-mark lyr-product-card__personal"><span aria-hidden="true">✦</span> <?php esc_html_e('Személyre szabható', 'layero-shop-ui'); ?></span><?php endif; ?>
+				<?php if ($home_style) : ?><div class="sh-card-tools">
+					<button class="sh-heart lyr-product-card__wish" type="button" data-layero-wish-toggle data-layero-product-id="<?php echo esc_attr($product->get_id()); ?>" aria-label="<?php esc_attr_e('Kedvencekhez adás', 'layero-shop-ui'); ?>"><?php echo self::icon('heart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
+				</div><?php endif; ?>
 			</figure>
-			<button class="sh-heart lyr-product-card__wish" type="button" data-layero-wish-toggle data-layero-product-id="<?php echo esc_attr($product->get_id()); ?>" aria-label="<?php esc_attr_e('Kedvencekhez adás', 'layero-shop-ui'); ?>">
+			<?php if (! $home_style) : ?><button class="sh-heart lyr-product-card__wish" type="button" data-layero-wish-toggle data-layero-product-id="<?php echo esc_attr($product->get_id()); ?>" aria-label="<?php esc_attr_e('Kedvencekhez adás', 'layero-shop-ui'); ?>">
 				<?php echo self::icon('heart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-			</button>
+			</button><?php endif; ?>
 			<div class="sh-prod-card__body lyr-product-card__body">
 				<a class="sh-card-link" href="<?php echo esc_url($link); ?>" aria-label="<?php echo esc_attr($product->get_name()); ?>"></a>
+				<?php if ($home_style) : ?><span class="sh-prod-card__name"><?php echo esc_html($product->get_name()); ?></span><?php endif; ?>
 				<?php if ($card_type_label) : ?>
 					<span class="sh-prod-card__cat lyr-product-card__cat"><?php echo esc_html($card_type_label); ?></span>
 				<?php elseif ($cat_names) : ?>
-					<span class="sh-prod-card__cat lyr-product-card__cat"><?php echo wp_kses_post($cat_names); ?></span>
+					<span class="sh-prod-card__cat lyr-product-card__cat"><?php echo $home_style ? esc_html(wp_strip_all_tags($cat_names)) : wp_kses_post($cat_names); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 				<?php endif; ?>
-				<span class="sh-prod-card__name"><?php echo esc_html($product->get_name()); ?></span>
+				<?php if (! $home_style) : ?><span class="sh-prod-card__name"><?php echo esc_html($product->get_name()); ?></span><?php endif; ?>
 				<?php if (false && $args['show_excerpt'] && $excerpt) : ?>
 					<p><?php echo esc_html($excerpt); ?></p>
 				<?php endif; ?>
-				<?php echo $chips_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php if (! $home_style) { echo $chips_html; } // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php if ($rating > 0 && function_exists('wc_get_rating_html')) : ?>
 					<div class="sh-rate lyr-product-card__rating">
 						<?php echo wc_get_rating_html($rating, $rating_count); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -758,7 +767,7 @@ final class Helpers {
 					data-quantity="1"
 					data-product_id="<?php echo esc_attr($product->get_id()); ?>"
 					data-product_sku="<?php echo esc_attr($product->get_sku()); ?>"
-					class="sh-card-add lyr-btn lyr-btn--primary lyr-product-card__add <?php echo $is_simple_ajax ? 'ajax_add_to_cart add_to_cart_button' : ''; ?>"
+					class="sh-card-add lyr-product-card__add <?php echo $home_style ? '' : 'lyr-btn lyr-btn--primary'; ?> <?php echo $is_simple_ajax ? 'ajax_add_to_cart add_to_cart_button' : ''; ?>"
 					aria-label="<?php echo esc_attr($personalizable ? $button_text . ': ' . $product->get_name() : $product->add_to_cart_description()); ?>"
 					rel="nofollow"
 				><?php echo self::icon('cart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php echo esc_html($button_text); ?></span></a>

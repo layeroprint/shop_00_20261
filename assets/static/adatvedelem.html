@@ -2,13 +2,14 @@
 <html lang="hu">
 <head>
   <meta charset="utf-8">
+  <script src="assets/layero-consent.js?v=20260930-consent"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>Adatvédelmi tájékoztató — Layero Shop</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap">
-  <link rel="stylesheet" href="shop.css?v=20260930-product">
+  <link rel="stylesheet" href="shop.css?v=20260930-consent">
   <link rel="stylesheet" href="assets/layero-badges/layero-badges.css?v=20260930-badges">
   <link rel="stylesheet" href="assets/layero-origin/lyo-origin.css?v=20260922">
   <link rel="stylesheet" href="assets/layero-origin/integration.css?v=20260922-map">
@@ -26,7 +27,7 @@
 
     <div class="sh-legal-wrap shop-wrap">
       <article class="sh-legal">
-        <p class="sh-legal__meta"><strong>Utolsó frissítés:</strong> 2026. július 12. · Ez az oldal még nem végleges jogi dokumentum.</p>
+        <p class="sh-legal__meta"><strong>Utolsó frissítés:</strong> 2026. szeptember 30. · Ez az oldal még nem végleges jogi dokumentum.</p>
 
         <section>
           <h2>1. Adatkezelő</h2>
@@ -36,7 +37,7 @@
 
         <section>
           <h2>2. Milyen adatokat kezel a demo?</h2>
-          <p>A demo kosár, kedvencek, nemrég megtekintett termékek, kupon, ajándékcsomagolás, profil és próbarendelés adatai a felhasználó saját böngészőjének localStorage tárhelyén maradnak. A jelen statikus demó ezeket nem küldi el Layero szerverére.</p>
+          <p>A demo kosár, kedvencek, összehasonlítás, kupon, ajándékcsomagolás és demóprofil adatai a saját böngésződ tárhelyén maradnak. A statikus pénztár nem ad le rendelést. A nemrég megtekintett termékeket csak a kényelmi funkciók engedélyezésekor jegyezzük meg.</p>
           <p>A kapcsolat- és hírlevélűrlapok bemutató célúak; éles adatküldésük jelenleg nincs bekapcsolva.</p>
         </section>
 
@@ -45,9 +46,18 @@
           <p>Éles induláskor külön meg kell határozni a rendelések teljesítéséhez, ügyfélszolgálathoz, számlázáshoz, jogi kötelezettségekhez és — külön hozzájárulás esetén — marketinghez szükséges adatkezelések célját, jogalapját és megőrzési idejét.</p>
         </section>
 
-        <section>
+        <section id="sutik">
           <h2>4. Sütik és böngészőtárhely</h2>
-          <p>A felület a működéséhez böngészőtárhelyet használ. A cookie-beállításokban a szükséges, analitikai és marketing kategóriák külön kezelhetők; a demo jelenleg nem kapcsol be valós külső analitikai vagy marketing mérést.</p>
+          <p>A sütibeállítások a böngészőben tárolt adatokra és a választható mérésre is vonatkoznak. A választható kategóriák alapból ki vannak kapcsolva. Az elutasítás után is használhatod a webshopot.</p>
+          <ul>
+            <li><strong>Szükséges:</strong> a kért funkciók adatai, például kosár (<code>layero_shop_cart_v1</code>), kedvencek (<code>sh_wishlist</code>), összehasonlítás, kupon és ajándékcsomagolás. Ezek a böngészőtárhelyen maradnak a törlésükig. A sütidöntést (<code>layero_consent_v2</code>) a döntés időpontjával és verziójával együtt 180 napig őrizzük meg ezen az eszközön; ezután új választást kérünk.</li>
+            <li><strong>Kényelmi funkciók:</strong> engedélyeddel az utoljára megtekintett legfeljebb 8 termék listája (<code>sh_recent</code>) a böngészőben marad. A kategória kikapcsolásakor ezt a listát töröljük.</li>
+            <li><strong>Statisztika:</strong> kizárólag engedélyeddel és beállított végpont esetén küldünk termékmegtekintési, kosárba helyezési és pénztárindítási eseményeket. Az esemény termékazonosítót, időpontot, nyelvet, csatornát, mennyiséget, értéket és esetleges ajánlási forrást tartalmaz. A korábbi műveleteket utólag nem küldjük el. A helyi előnézet a helyi termékkezelő statisztikai végpontjához kapcsolódhat; nyilvános hoszton nincs alapértelmezett végpont. A szolgáltatás üzemeltetőjét, a szerveroldali naplózás és az események megőrzési idejét az élesítés előtt véglegesíteni kell.</li>
+            <li><strong>Marketing:</strong> a statikus előnézetben nincs bekapcsolt marketingkövetés. Ehhez most nem kérünk engedélyt.</li>
+          </ul>
+          <p>A beállításokat bármikor megnyithatod az oldal bal alsó sarkában lévő sütigombbal vagy a láblécből. A visszavonás leállítja az új opcionális eseményeket; a korábban elküldött adatokat nem törli a fogadó rendszerből. A kosarad és a kedvenceid megmaradnak. Ha a böngésződ tiltja a tárhelyet, a döntés csak az aktuális oldalon érvényes, erről mentéskor jelzést kapsz.</p>
+          <p>A betűtípusokat jelenleg a Google Fonts szolgálja ki, ezért az oldal betöltésekor hálózati kérés indul a Google felé, amelyhez technikailag az IP-cím is kapcsolódik. Ez a betűkészlet-betöltés nincs a statisztikai kapcsolóhoz kötve. Az éles WordPress-oldal további bővítményeinek sütijeit és szolgáltatóit külön fel kell mérni.</p>
+          <button type="button" class="sh-btn sh-btn--outline" data-cookie-open>Sütibeállítások módosítása</button>
         </section>
 
         <section>
@@ -68,6 +78,6 @@
   <script src="assets/layero-origin/lyo-origin.js?v=20260922" defer></script>
   <script src="assets/layero-badges/layero-badges.js?v=20260930-badges"></script>
   <script src="assets/layero-badges/layero-adapter.js?v=20260930-badges"></script>
-  <script src="shop.js?v=20260930-product"></script>
+  <script src="shop.js?v=20260930-consent"></script>
 </body>
 </html>

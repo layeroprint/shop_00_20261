@@ -194,6 +194,9 @@ function prepareSync(shopRoot = SHOP_ROOT, pluginRoot = PLUGIN_ROOT) {
   add('assets/css/layero-static-shop.css', shopCss);
   add('assets/js/layero-static-data.js', shopData);
   add('assets/js/layero-static-shop.js', adaptedJs);
+  const consentJs = read(path.join(shopRoot, 'assets/layero-consent.js'));
+  new vm.Script(consentJs, { filename: 'layero-consent.js' });
+  add('assets/js/layero-consent.js', consentJs);
   const testimonialsJs = read(path.join(shopRoot, 'assets/testimonials.js'));
   new vm.Script(testimonialsJs, { filename: 'layero-testimonials.js' });
   add('assets/css/layero-testimonials.css', read(path.join(shopRoot, 'assets/testimonials.css')));
