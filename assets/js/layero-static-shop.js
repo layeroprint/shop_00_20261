@@ -154,8 +154,35 @@
   /* minden ár-kiírás EZEN megy át — pénznem/formátum váltás egy helyen */
   function fmtPrice(n) { return n + ' RON'; }
   function fmtAr(ar) { return ar > 0 ? fmtPrice(ar) : 'Ajánlat alapján'; }
-  function productSearchText(p) {
-    return [p.nev, p.leiras].concat((p.opciok || []).map(function (o) { return (o.ertekek || []).join(' '); })).join(' ').toLowerCase();
+  // Search product identity, never the repeated marketing copy in descriptions.
+  function searchWords(text) {
+    return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
+  }
+  function productSearchScore(p, words) {
+    if (!words.length) return 0;
+    var name = searchWords(p.nev);
+    var details = p.search_details;
+    if (typeof details !== 'string') {
+      details = [p.sku || ''].concat((p.categories || [p.cat]).map(function (id) {
+        var cat = catById(id); return cat ? cat.nev : '';
+      }), (p.opciok || []).map(function (o) { return (o.ertekek || []).join(' '); })).join(' ');
+    }
+    var other = searchWords(details), score = 0;
+    for (var i = 0; i < words.length; i++) {
+      var word = words[i];
+      if (name.indexOf(word) !== -1) score += 3;
+      else if (name.some(function (value) { return value.indexOf(word) === 0; })) score += 2;
+      else if (other.some(function (value) { return value.indexOf(word) === 0; })) score += 1;
+      else return 0;
+    }
+    return score + (name.join(' ') === words.join(' ') ? 10 : 0);
+  }
+  function searchProducts(products, query) {
+    var words = searchWords(query);
+    return products.map(function (p, index) { return { product: p, score: productSearchScore(p, words), index: index }; })
+      .filter(function (hit) { return hit.score > 0; })
+      .sort(function (a, b) { return b.score - a.score || a.index - b.index; })
+      .map(function (hit) { return hit.product; });
   }
 
   /* fizetési-mód chipsor a döntési pontokra (vételdoboz, kosár, pénztár) —
@@ -758,11 +785,8 @@
       if (!input || !box) return;
       function render() {
         var raw = input.value.trim();
-        var q = raw.toLowerCase();
-        if (q.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
-        var hits = SHOP_PRODUCTS.filter(function (p) {
-          return productSearchText(p).indexOf(q) !== -1;
-        }).slice(0, 6);
+        if (raw.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
+        var hits = searchProducts(SHOP_PRODUCTS, raw).slice(0, 6);
         if (!hits.length) {
           box.innerHTML = '<div class="sh-search__empty">Nincs találat erre: „' + esc(raw) + '”.<br><a href="egyedi-rendeles.html">Indíts egyedi rendelést ›</a></div>';
         } else {
@@ -1926,8 +1950,7 @@
     function baseList() {
       var list = SHOP_PRODUCTS.filter(function (p) { return active === 'all' || p.cat === active; });
       if (query) {
-        var ql = query.toLowerCase();
-        list = list.filter(function (p) { return productSearchText(p).indexOf(ql) !== -1; });
+        list = searchProducts(list, query);
       }
       return list;
     }

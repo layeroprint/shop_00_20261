@@ -3269,10 +3269,15 @@ input, select, textarea, progress { accent-color: var(--accent); }
     display: flex;
     align-items: center;
   }
-  .sh-search--mobile {
+  .sh-search--mobile,
+  .sh-search--mobile:focus-within {
+    width: auto;
     min-height: 44px;
     margin: 14px 20px 10px;
   }
+  .sh-search--mobile .sh-search__results { left: 0; right: 0; width: auto; }
+  .sh-search--mobile .sh-search__hit { padding: 8px 9px; border-top: 0; }
+  .sh-search--mobile .sh-search__all { display: block; padding: 10px; }
 }
 
 @media (max-width: 520px) {

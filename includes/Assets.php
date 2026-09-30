@@ -77,7 +77,7 @@ final class Assets {
 			'layero-static-shop',
 			LAYERO_SHOP_UI_URL . 'assets/js/layero-static-shop.js',
 			array('layero-static-data', 'layero-origin', 'layero-badge-adapter', 'layero-variants'),
-			LAYERO_SHOP_UI_VERSION,
+			LAYERO_SHOP_UI_VERSION . '-search-20260930',
 			true
 		);
 	}

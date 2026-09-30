@@ -159,7 +159,8 @@ class Product_Grid extends Base_Widget {
 		}
 		if ($is_listing && Helpers::is_woo_active()) {
 			$query_settings['matching_ids'] = $facets['ids'];
-			$query_settings['search'] = ''; // Already matched against the visible catalogue, including descriptions.
+			$query_settings['search'] = ''; // Already matched against product names, categories and options.
+			if ('' !== $search && 'recommended' === $sort) { $query_settings['orderby'] = 'include'; }
 		}
 		$result = Helpers::query_products($query_settings);
 		$products = is_object($result) ? $result->products : $result;
@@ -271,15 +272,13 @@ class Product_Grid extends Base_Widget {
 		$products = Shop_Content::demo_products($limit, $category, $collection);
 
 		if ('' !== $search) {
-			$needle = function_exists('mb_strtolower') ? mb_strtolower($search) : strtolower($search);
+			$words = Catalog::search_words($search);
 			$products = array_values(
 				array_filter(
 					$products,
-					function ($product) use ($needle) {
-						$haystack = $product['name'] . ' ' . $product['description'] . ' ' . $product['category'];
-						$haystack = function_exists('mb_strtolower') ? mb_strtolower($haystack) : strtolower($haystack);
-
-						return false !== strpos($haystack, $needle);
+					function ($product) use ($words) {
+						$category = Shop_Content::category_by_slug($product['category']);
+						return Catalog::search_score($product['name'], $category['name'] ?? '', $words) > 0;
 					}
 				)
 			);

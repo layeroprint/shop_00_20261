@@ -65,6 +65,37 @@ final class Catalog {
 		return array('sale' => 'Akciós', 'new' => 'Újdonság', 'bestseller' => 'Bestseller', 'personalizable' => 'Személyre szabható', 'top_rated' => '4,8 ★ és fölötte');
 	}
 
+	/** Keep PHP listing and JavaScript suggestions on the same word-prefix search. */
+	public static function search_words($text) {
+		$text = remove_accents((string) $text);
+		$text = function_exists('mb_strtolower') ? mb_strtolower($text, 'UTF-8') : strtolower($text);
+		return preg_split('/[^\p{L}\p{N}]+/u', $text, -1, PREG_SPLIT_NO_EMPTY) ?: array();
+	}
+
+	public static function search_score($name, $details, $words) {
+		if (! $words) { return 0; }
+		$name = self::search_words($name); $other = self::search_words($details); $score = 0;
+		foreach ($words as $word) {
+			if (in_array($word, $name, true)) { $score += 3; continue; }
+			foreach ($name as $value) { if (0 === strpos($value, $word)) { $score += 2; continue 2; } }
+			foreach ($other as $value) { if (0 === strpos($value, $word)) { $score++; continue 2; } }
+			return 0;
+		}
+		return $score + ($name === $words ? 10 : 0);
+	}
+
+	public static function search_details($product) {
+		$values = array($product->get_sku());
+		foreach (self::category_slugs($product) as $slug) {
+			$term = get_term_by('slug', $slug, 'product_cat');
+			if ($term && ! is_wp_error($term)) { $values[] = $term->name; }
+		}
+		foreach ($product->get_attributes() as $attribute) {
+			if ($attribute->get_visible() || $attribute->get_variation()) { $values[] = $product->get_attribute($attribute->get_name()); }
+		}
+		return html_entity_decode(wp_strip_all_tags(implode(' ', $values)), ENT_QUOTES, 'UTF-8');
+	}
+
 	public static function filter_state($request) {
 		$filters = array();
 		foreach (array('min_price', 'max_price') as $key) {
@@ -85,10 +116,11 @@ final class Catalog {
 	public static function listing_facets($category, $search, $filters) {
 		$counts = array_fill_keys(array_keys(self::filter_labels()), 0);
 		$ids = array(); $prices = array();
-		$needle = strtolower(remove_accents($search));
+		$words = self::search_words($search); $scores = array();
 		foreach (self::products() as $product) {
 			if ($category && ! in_array($category, self::category_slugs($product), true)) { continue; }
-			if ('' !== $needle && false === strpos(strtolower(remove_accents(wp_strip_all_tags($product->get_name() . ' ' . $product->get_short_description() . ' ' . $product->get_description()))), $needle)) { continue; }
+			$score = $words ? self::search_score($product->get_name(), self::search_details($product), $words) : 0;
+			if ('' !== trim($search) && ! $score) { continue; }
 			$has_price = '' !== $product->get_price();
 			$low = $has_price ? (float) wc_get_price_to_display($product) : 0;
 			$high = $product->is_type('variable') ? (float) wc_get_price_to_display($product, array('price' => $product->get_variation_price('max'))) : $low;
@@ -106,7 +138,9 @@ final class Catalog {
 			if (isset($filters['max_price']) && $low > $filters['max_price']) { continue; }
 			foreach ($values as $key => $value) { if (! empty($filters[$key]) && ! $value) { continue 2; } }
 			$ids[] = $product->get_id();
+			$scores[$product->get_id()] = $score;
 		}
+		if ($words) { arsort($scores, SORT_NUMERIC); $ids = array_keys($scores); }
 		return array('ids' => $ids, 'counts' => $counts, 'min' => $prices ? floor(min($prices)) : 0, 'max' => $prices ? ceil(max($prices)) : 0);
 	}
 
@@ -129,6 +163,7 @@ final class Catalog {
 			$items[] = array(
 				'id' => $slug, 'wc_id' => $product->get_id(), 'url' => $urls[$slug],
 				'nev' => $product->get_name(), 'cat' => $known[0] ?? ($categories[0] ?? ''), 'categories' => $categories,
+				'search_details' => self::search_details($product),
 				'ar' => $price, 'regi_ar' => $regular, 'price_html' => wp_kses_post($product->get_price_html()),
 				'kepek' => $images ?: array(wc_placeholder_img_src()),
 				'leiras' => wp_strip_all_tags($product->get_short_description() ?: $product->get_description()),
