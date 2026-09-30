@@ -1,6 +1,8 @@
 # 0.10.20 – Online audit javításai
 
-Állapot: 2026-09-30, helyben ellenőrzött kiadás; online telepítés és az utána következő ellenőrzés külön rögzítendő.
+Állapot: 2026-09-30, helyben ellenőrzött és online telepített kiadás. Az aktív cPanel-mappa Update from Remote művelete a `c882a38e21d50f6529408d1fac2dadedb63303e7` commitot igazolta; a weboldalon a 0.10.20 erőforrások futnak.
+
+Online utóellenőrzés: vendégként is elérhető ÁSZF/adatvédelem, aktív elállási űrlap, indulási feliratkozó; bejelentkezett főoldalon hírlevélűrlap. Mobilon nincs vízszintes túlcsordulás. A Stitch lámpa mellett csak lámpák szerepeltek. A lekért konzolhibák listája üres, a korábbi font/CORS-hiba vendégként sem jelentkezett. A feliratkozói adminlista elérhető. Az éles postafiókba kézbesítés próbája még hátravan; tesztlevelet külön engedély nélkül nem küldtünk.
 
 ## Változások
 
@@ -18,7 +20,7 @@ Ezek nem a plugin frissítésével kerülnek az adatbázisba:
 
 - Babaelefánt és Stitch névtábla: a termékkezelőben és WooCommerce-importtal kötelező névmező; a baba születési adatai opcionálisak. A két soros import csak SKU-t és a négy kapcsolódó metaadatot érintette. Ár/termékleírás nem változott az importban. A termékkezelőben a meglévő személyre szabási üzleti szabályok érvényesülnek.
 - Romániai szállítás: 25 RON; 200 RON kedvezmény utáni termékértéktől ingyenes, fizetős mód elrejtve. Online kosárban 100 + 25 = 125, illetve 200 + 0 = 200 RON ellenőrizve. A saját QA névvel hozzáadott tétel eltávolítva.
-- Elementor Google Fonts Load: Optional mentés, majd eredeti Swap visszaállítás. Ez a hivatalos beállításváltozás törli az elavult fontgyorsítótárat. Friss főoldalon nincs korábbi CORS-betűhiba; a vendégnézet utóellenőrzése a telepítéssel együtt végzendő.
+- Elementor Google Fonts Load: Optional mentés, majd eredeti Swap visszaállítás. Ez a beállításváltozás frissíti a fontgyorsítótárat. Friss főoldalon és vendégnézetben nincs korábbi CORS-betűhiba.
 - Fizetési módok: a felhasználó külön kezeli, nem módosultak.
 
 ## Ellenőrzés
