@@ -26,7 +26,7 @@
 .lyr-cart-drawer .woocommerce-mini-cart__total { display: flex; justify-content: space-between; gap: 12px; margin: 20px 0 12px; border: 0; padding: 0; font-size: 15px; }
 .lyr-cart-drawer .woocommerce-mini-cart__buttons { display: flex; flex-direction: column-reverse; gap: 9px; margin: 14px 0; }
 .lyr-cart-drawer .woocommerce-mini-cart__buttons a.button { display: flex; justify-content: center; align-items: center; min-height: 46px; width: 100%; margin: 0; border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--ink); background: #fff; font: 600 14px var(--font); }
-.lyr-cart-drawer .woocommerce-mini-cart__buttons a.checkout { background: var(--ink); color: #fff; border-color: var(--ink); }
+.lyr-cart-drawer .woocommerce-mini-cart__buttons a.checkout { background: linear-gradient(180deg, #0d8ba3, var(--accent) 80%); color: #fff; border-color: transparent; border-radius: var(--r-pill); box-shadow: 0 8px 22px #0a7c9247; }
 .lyr-cart-drawer .woocommerce-mini-cart__empty-message { margin: 44px 0 22px; text-align: center; }
 .lyr-cart-drawer .lyr-woo-cart-content > .sh-btn { width: 100%; }
 .lyr-cart-note { font-size: 12px; line-height: 1.65; color: var(--muted); }
@@ -98,9 +98,10 @@
 .lyr-cart-page .cart_totals table.shop_table .order-total > * { border-top: 1px solid var(--line); padding-top: 18px; color: var(--ink); font-size: 16px; }
 .lyr-cart-page .wc-proceed-to-checkout { padding: 0; margin-top: 16px; }
 .lyr-cart-page .wc-proceed-to-checkout a.checkout-button,
-.lyr-checkout-page .woocommerce #place_order { width: 100%; margin: 0; min-height: 48px; padding: 14px 18px; background: var(--ink); color: #fff; border-color: var(--ink); border-radius: var(--r-sm); font-size: 14px; }
+.lyr-checkout-page .woocommerce #place_order { width: 100%; margin: 0; min-height: 48px; padding: 14px 18px; background: linear-gradient(180deg, #0d8ba3, var(--accent) 80%); color: #fff; border-color: transparent; border-radius: var(--r-pill); box-shadow: 0 8px 22px #0a7c9247; font-size: 14px; }
 .lyr-cart-page .wc-proceed-to-checkout a.checkout-button:hover,
-.lyr-checkout-page .woocommerce #place_order:hover { background: #087c90; border-color: #087c90; color: #fff; }
+.lyr-checkout-page .woocommerce #place_order:hover,
+.lyr-cart-drawer .woocommerce-mini-cart__buttons a.checkout:hover { background: linear-gradient(180deg, #0b7d94, var(--accent-deep) 80%); border-color: transparent; color: #fff; }
 .lyr-continue-shopping { display: inline-flex; padding: 6px 0; font-size: 13px; font-weight: 600; color: var(--ink); }
 .lyr-cart-page .cart-empty { margin-top: 24px; }
 .lyr-cart-page .return-to-shop { margin-top: 20px; }
