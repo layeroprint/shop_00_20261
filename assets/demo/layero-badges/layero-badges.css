@@ -46,9 +46,11 @@
   z-index:0;transition:transform .4s;
 }
 .lyrb-premium-card:hover .lyr-product-card__media > img,.lyrb-premium-card:hover .lyrb-premium-card__media > img {transform:scale(1.025);}
-.lyrb-enhanced .lyrb-overlay {
+.lyrb-overlay {
   position:absolute;inset:14px 64px auto 14px;z-index:4;
-  display:flex;flex-direction:column;align-items:flex-start;gap:6px;pointer-events:none;
+  display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+  max-height:calc(100% - 28px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;
+  pointer-events:auto;
 }
 .lyrb-overlay .lyrb-badge {max-width:100%;}
 .lyrb-premium-card .lyr-product-card__wish,.lyrb-premium-card .lyrb-premium-card__wish {
@@ -108,6 +110,13 @@
 .lyrb-more > summary .lyrb-icon {width:12px;height:12px;flex-basis:12px;transition:transform .2s;}
 .lyrb-more[open] > summary .lyrb-icon {transform:rotate(45deg);}
 .lyrb-more__list {display:flex;flex-wrap:wrap;gap:6px;padding:5px 0 13px;}
+.lyrb-overlay .lyrb-more {width:100%;margin:0;}
+.lyrb-overlay .lyrb-more > summary {
+  padding:5px 8px;min-height:32px;border:1px solid #d5dee7;border-radius:8px;
+  background:#fff;color:#243a50;box-sizing:border-box;
+}
+.lyrb-overlay .lyrb-more__list {padding:6px 0 2px;}
+.lyrb-overlay > .lyrb-badge {flex-shrink:0;}
 /* Hide only duplicates on successfully enhanced cards. Original DOM remains available. */
 .lyrb-enhanced .lyr-product-card__chips,.lyrb-enhanced .sh-badges,.lyrb-enhanced .sh-chip-row {display:none;}
 .lyrb-premium-card :is(a,button,summary):focus-visible {outline:3px solid #0a7c92;outline-offset:3px;}
@@ -116,7 +125,7 @@
 .lyrb-premium-card .screen-reader-text,.lyrb-sr-only {position:absolute!important;width:1px!important;height:1px!important;clip-path:inset(50%)!important;overflow:hidden!important;white-space:nowrap!important;}
 @media(max-width:560px) {
  .lyrb-premium-card {border-radius:17px;}
- .lyrb-enhanced .lyrb-overlay {inset:11px 58px auto 11px;gap:5px;}
+ .lyrb-overlay {inset:10px 58px auto 10px;max-height:calc(100% - 20px);gap:5px;}
  .lyrb-premium-card .lyr-product-card__body,.lyrb-premium-card .lyrb-premium-card__body {padding:15px 13px;}
  .lyrb-premium-card .lyrb-premium-card__title,.lyrb-premium-card .sh-prod-card__name {font-size:14px;min-height:40.6px;}
  .lyrb-badge {font-size:11px;padding:4px 8px;min-height:25px;gap:5px;}
@@ -133,10 +142,10 @@
 
 /* Layero host integration: preserve the existing product card and image layout. */
 .lyrb-enhanced .sh-personal-mark,.lyrb-enhanced .lyr-product-card__personal {display:none;}
-.lyrb-enhanced .lyrb-overlay {inset:10px 64px auto 10px;}
-.lyrb-enhanced .lyrb-features {margin-top:8px;}
+.lyrb-enhanced .lyrb-overlay {inset:10px 64px auto 10px;max-height:calc(100% - 20px);}
 .lyrb-enhanced .lyrb-more {z-index:6;}
 .lyrb-enhanced :is(a,button,summary):focus-visible,.lyrb-more > summary:focus-visible {outline:3px solid #0a7c92;outline-offset:3px;}
 .lyrb-product-details {display:flex;flex-wrap:wrap;gap:6px;margin:12px 0;}
 .lyrb-enhanced .sh-card-tools {z-index:5;}
 .lyrb-enhanced .sh-card-tools .sh-heart {width:44px;height:44px;opacity:1;transform:none;}
+.sh-qv__media > .sh-chip-row {position:absolute;top:14px;left:14px;right:64px;}

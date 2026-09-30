@@ -6,7 +6,7 @@ A cél: a design, a widgetek, a hero slider, a kategóriák és a Layero élmén
 
 ## Aktuális shop szinkron
 
-Aktuális verzió: **0.10.20**, [valódi feliratkozás, online elállás, jogi oldalak és auditjavítások](docs/KIADAS-0.10.20.md). Tartalmazza a [0.10.19 WooCommerce kosárpaneljét](docs/KIADAS-0.10.19.md) kuponokkal és 15 RON-os ajándékcsomagolással. A jogi dokumentumok cégadatait a felhasználó később adja meg; az éles telepítés és ellenőrzés állapotát a kiadási leírás rögzíti.
+Aktuális verzió: **0.10.22**, [termékjelvények a képen belül](docs/KIADAS-0.10.22.md). Tartalmazza a [0.10.21 hírlevéldizájnját](docs/KIADAS-0.10.21.md), a [0.10.20 feliratkozási és auditjavításait](docs/KIADAS-0.10.20.md), valamint a [0.10.19 WooCommerce kosárpaneljét](docs/KIADAS-0.10.19.md) kuponokkal és 15 RON-os ajándékcsomagolással. A jogi dokumentumok cégadatait a felhasználó később adja meg; az éles telepítés és ellenőrzés állapotát a kiadási leírások rögzítik.
 
 Helyi kiadási jelölt: **0.10.0**. [Javítások, tesztek és cPanel-frissítés](docs/KIADAS-0.10.0.md). A Windows sortöréshiba javítva, az Origin teljes futási csomagja és WordPress-regisztrációja elkészült.
 

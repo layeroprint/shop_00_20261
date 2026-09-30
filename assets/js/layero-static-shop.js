@@ -1164,8 +1164,13 @@
       qvEl.setAttribute('aria-modal', 'true');
       qvEl.setAttribute('aria-label', 'Termék gyorsnézet');
       qvEl.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          var detail = event.target.closest('.lyrb-more[open]');
+          if (detail) { event.stopPropagation(); detail.open = false; $('summary', detail).focus(); }
+          return;
+        }
         if (event.key !== 'Tab') return;
-        var focusable = $all('button:not(:disabled), a[href]', qvEl).filter(function (el) { return el.getClientRects().length; });
+        var focusable = $all('button:not(:disabled), a[href], summary', qvEl).filter(function (el) { return el.getClientRects().length; });
         var first = focusable[0], last = focusable[focusable.length - 1];
         if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
         else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
@@ -1180,12 +1185,12 @@
         '<button class="sh-qv__close" type="button" data-qv-close aria-label="Bezárás">✕</button>' +
         '<div class="sh-qv__grid">' +
           '<div class="sh-qv__media"><img src="' + p.kepek[0] + '" alt="' + esc(p.nev) + '" loading="lazy" decoding="async">' +
+            infoChips(p, true) +
             '<button class="sh-heart' + saved + '" type="button" data-wish="' + p.id + '" aria-label="Kedvencekhez">' + HEART_SVG + '</button>' +
           '</div>' +
           '<div class="sh-qv__info">' +
             '<span class="sh-qv__cat">' + (cat ? esc(cat.nev) : '') + '</span>' +
             '<h2>' + esc(p.nev) + '</h2>' +
-            infoChips(p, true) +
             rateHtml(p, false) +
             '<div class="sh-qv__price">' + (IS_WOO ? p.price_html : (p.regi_ar && p.regi_ar > p.ar ? '<span style="color:#e04726">' + fmtPrice(p.ar) + '</span> <span style="text-decoration:line-through;color:var(--faint);font-weight:450;font-size:.85rem">' + fmtPrice(p.regi_ar) + '</span>' : fmtAr(p.ar) + (p.ar > 0 ? '<small>-tól</small>' : ''))) + '</div>' +
             '<p class="sh-qv__desc">' + esc(p.leiras) + '</p>' +
@@ -1252,8 +1257,7 @@
   function badgeOptions() { return { locale: document.documentElement.lang.indexOf('ro') === 0 ? 'ro' : 'hu', variant: 'signature' }; }
   function productBadgeDetails(p) {
     if (!window.LayeroBadges) return '';
-    var options = badgeOptions();
-    return '<div class="lyrb-product-details">' + LayeroBadges.groupHTML(LayeroBadges.resolve(productBadges(p), options).all, options) + '</div>';
+    return LayeroBadges.mediaHTML(productBadges(p), badgeOptions());
   }
 
   /* ── terméktulajdonságok, készlet- és időjelzés nélkül ─────── */
@@ -2228,11 +2232,10 @@
         '<div class="sh-pgallery">' +
           '<div class="sh-pstage">' +
             '<button type="button" class="sh-pgallery__main" aria-label="Termékkép nagyítása" aria-haspopup="dialog"><img id="sh-pmain" src="' + productAttr(p.kepek[0]) + '" alt="' + productAttr(p.nev) + '" fetchpriority="high" decoding="async"></button>' +
-            '<div class="sh-pstage__badges">' +
-              (window.LayeroBadges ? '<span>Layero kollekció</span>' :
-                (discountPct(p) ? '<span class="sh-pstage__sale">−' + discountPct(p) + '%</span>' : '') +
-                (szemelyre ? '<span>Személyre szabható</span>' : '<span>Layero kollekció</span>')) +
-            '</div>' +
+            (window.LayeroBadges ? productBadgeDetails(p) : '<div class="sh-pstage__badges">' +
+              (discountPct(p) ? '<span class="sh-pstage__sale">−' + discountPct(p) + '%</span>' : '') +
+              (szemelyre ? '<span>Személyre szabható</span>' : '<span>Layero kollekció</span>') +
+            '</div>') +
             '<button class="sh-heart sh-pstage__wish' + (wishHas(p.id) ? ' is-on' : '') + '" type="button" data-wish="' + productAttr(p.id) + '" aria-label="Kedvencekhez" aria-pressed="' + wishHas(p.id) + '">' + HEART_SVG + '</button>' +
           '</div>' +
           '<div class="sh-pgallery__caption"><span>Kép <b id="sh-gallery-index">01</b> / ' + String(p.kepek.length).padStart(2, '0') + '</span><span>Kattints a nagyításhoz</span></div>' +
@@ -2246,7 +2249,6 @@
         '<div class="sh-pinfo">' +
           '<span class="sh-pinfo__cat">Layero kollekció / ' + (cat ? esc(cat.nev) : 'Egyedi tárgyak') + '</span>' +
           '<h1>' + esc(p.nev) + '</h1>' +
-          productBadgeDetails(p) +
           '<p class="sh-pinfo__desc">' + esc(p.leiras) + '</p>' +
           (rateHtml(p, true) || (kerheto ? '<a class="sh-pinfo__review" href="#sh-velemenyek"><span aria-hidden="true">☆</span> Még nincs értékelés</a>' : '')) +
           '<div class="sh-pprice"><div><div class="sh-pinfo__price">' + (V.isVariable(p) ? priceHtml(p) : fmtAr(p.ar)) +

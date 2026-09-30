@@ -119,6 +119,15 @@
     return `<span class="lyrb-badge" data-lyrb-id="${escape(item.id)}" data-tone="${item.tone}" data-variant="${variant}" data-weight="${weight}">${iconHTML(item.icon)}<span class="lyrb-badge__label">${escape(item.label)}</span></span>`;
   }
   function groupHTML(items, options = {}) { return items.map(item => badgeHTML(item, options)).join(''); }
+  /** Every product label belongs inside its image, regardless of its data zone. */
+  function mediaHTML(input, options = {}) {
+    const result = resolve(input,options);
+    if (!result.all.length) return '';
+    const visible = result.all.slice(0,2), hidden = result.all.slice(2);
+    const locale = safeLocale(options.locale);
+    const more = hidden.length ? `<details class="lyrb-more"><summary><span>+${hidden.length} ${locale==='ro'?'detalii':'további'}</span>${iconHTML('plus')}</summary><div class="lyrb-more__list">${groupHTML(hidden,options)}</div></details>` : '';
+    return `<div class="lyrb-overlay" data-lyrb-generated role="group" aria-label="${locale==='ro'?'Etichete produs':'Termékjelzések'}">${groupHTML(visible,options)}${more}</div>`;
+  }
   /** Mount into an existing product card; existing shopping links and handlers are retained. */
   function mountCard(card, input, options = {}) {
     if (!card || typeof card.querySelector !== 'function') throw new TypeError('A kártya DOM-elem legyen.');
@@ -129,28 +138,7 @@
     card.querySelectorAll('[data-lyrb-generated]').forEach(el => el.remove());
     card.classList.add('lyrb-card','lyrb-enhanced');
     card.dataset.lyrbVariant = variants.includes(options.variant) ? options.variant : 'signature';
-    const make = (className,markup) => {
-      const node = document.createElement('div'); node.className=className;
-      node.dataset.lyrbGenerated=''; node.innerHTML=markup; return node;
-    };
-    if (result.overlay.length) {
-      const overlays = make('lyrb-overlay',groupHTML(result.overlay,options));
-      overlays.setAttribute('role','group');
-      overlays.setAttribute('aria-label',safeLocale(options.locale)==='ro'?'Etichete produs':'Termékjelzések');
-      media.append(overlays);
-    }
-    const anchor = body.querySelector('.sh-prod-card__name, .lyrb-card__title');
-    const features = make('lyrb-features',groupHTML(result.feature,{...options,strong:false}));
-    if (features.childElementCount) { if(anchor)anchor.after(features);else body.prepend(features); }
-    const service = make('lyrb-services',groupHTML(result.service,{...options,strong:false}));
-    const price = body.querySelector('.lyr-product-card__price, .sh-prod-card__price, .lyrb-card__price');
-    if (service.childElementCount) { if(price)price.before(service);else body.append(service); }
-    if (result.hidden.length) {
-      const detail = document.createElement('details');
-      detail.className='lyrb-more'; detail.dataset.lyrbGenerated='';
-      detail.innerHTML = `<summary><span>+${result.hidden.length} ${safeLocale(options.locale)==='ro'?'detalii':'további'}</span>${iconHTML('plus')}</summary><div class="lyrb-more__list">${groupHTML(result.hidden,{...options,strong:false})}</div>`;
-      if(price)price.before(detail);else body.append(detail);
-    }
+    media.insertAdjacentHTML('beforeend',mediaHTML(input,options));
     // Styling only: the host backend remains responsible for purchasability and CTA state.
     card.dataset.lyrbState = result.state || 'normal';
     return {ok:true,...result};
@@ -164,5 +152,5 @@
       return !hidden.includes(id) && !/munkanap|zile lucrătoare|készlet|raktáron|elfogyott|\bstoc\b/i.test(label);
     });
   }
-  return Object.freeze({version:'1.0.0',catalog,groups:DATA.groups,icons:ICONS,tones,variants,escape,iconHTML,normalize,resolve,badgeHTML,groupHTML,mountCard,forStorefront});
+  return Object.freeze({version:'1.0.0',catalog,groups:DATA.groups,icons:ICONS,tones,variants,escape,iconHTML,normalize,resolve,badgeHTML,groupHTML,mediaHTML,mountCard,forStorefront});
 });
