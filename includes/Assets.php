@@ -101,6 +101,7 @@ final class Assets {
 		wp_add_inline_script('layero-static-shop', '(function(){var marker=document.querySelector("[data-layero-page]");if(marker&&!document.body.hasAttribute("data-page")){document.body.setAttribute("data-page",marker.getAttribute("data-layero-page"));}})();', 'before');
 		wp_enqueue_script('layero-online', LAYERO_SHOP_UI_URL . 'assets/js/layero-online.js', array('layero-static-shop', 'layero-shop-ui'), LAYERO_SHOP_UI_VERSION, true);
 		wp_enqueue_style('layero-online', LAYERO_SHOP_UI_URL . 'assets/css/layero-online.css', array('layero-static-shop', 'layero-shop-ui'), LAYERO_SHOP_UI_VERSION);
+		wp_enqueue_style('layero-controls', LAYERO_SHOP_UI_URL . 'assets/css/layero-controls.css', array('layero-online', 'layero-origin-integration'), LAYERO_SHOP_UI_VERSION . '.' . filemtime(LAYERO_SHOP_UI_PATH . 'assets/css/layero-controls.css'));
 		wp_enqueue_style('layero-testimonials');
 		wp_enqueue_script('layero-testimonials');
 		wp_enqueue_style('layero-badges', LAYERO_SHOP_UI_URL . 'assets/demo/layero-badges/layero-badges.css', array('layero-online'), '20260930-personalize-pencil');

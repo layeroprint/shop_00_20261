@@ -1,0 +1,93 @@
+/* WordPress theme compatibility: Hello Elementor assigns pink backgrounds to
+ * [type=button]:hover and :focus. Declare both states for Layero controls,
+ * including controls mounted directly under body. Keep component/state colors
+ * explicit; do not reset every button or remove keyboard focus indicators. */
+
+/* Light icon controls and dialog dismiss buttons. */
+:is(.sh-modal__close, .sh-qv__close, .sh-drawer__close, .sh-filters__close,
+    .sh-heart, .sh-compare-btn, .sh-cmp__rm, .sh-totop,
+    .lyr-product-card__wish, .lyr-gallery-zoom):is(:hover, :focus) {
+  background: var(--accent-soft, #e4f6fa);
+  color: var(--accent-deep, #086375);
+  border-color: var(--accent, #0a7c92);
+}
+.sh-heart.is-on:is(:hover, :focus),
+.lyr-product-card__wish.is-active:is(:hover, :focus) {
+  background: #fff;
+  color: #e0334f;
+  border-color: #e0334f;
+}
+.sh-compare-btn.is-on:is(:hover, :focus) { background: var(--accent-soft); color: var(--accent); }
+.lyr-gallery-dialog button[type="button"] {
+  display: grid; place-items: center;
+  width: 44px; height: 44px; padding: 0;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: #fff; color: var(--ink); line-height: 1;
+}
+.lyr-gallery-dialog button[type="button"]:is(:hover, :focus) {
+  background: var(--accent-soft); color: var(--accent-deep); border-color: var(--accent);
+}
+.lyr-gallery-dialog button[type="button"]:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+/* Text actions, navigation, and dismiss/remove links. */
+:is(.sh-menu-btn, .sh-cart-btn, .sh-sizeguide, .sh-notify, .sh-quiz__back,
+    .sh-variation-reset, .sh-cart-item__remove, .sh-drawer-item__rm,
+    .sh-chip--clear):is(:hover, :focus),
+.lyr-cart-drawer button.sh-drawer-item__rm:is(:hover, :focus) {
+  background: transparent; color: var(--accent-deep);
+}
+.lyr-cart-page .woocommerce .product-remove a.remove:is(:hover, :focus) {
+  background: transparent; color: var(--accent-deep) !important;
+}
+.sh-footer__bottom nav button:is(:hover, :focus) { background: transparent; color: #fff; }
+.sh-rev__helpful:is(:hover, :focus) { background: var(--accent-soft); color: var(--accent-deep); border-color: var(--accent); }
+
+/* Shared button variants: focus must retain the same readable palette as hover. */
+.sh-btn--primary:is(:hover, :focus) { background: linear-gradient(180deg, #0b7d94, var(--accent-deep) 80%); color: #fff; }
+:is(.sh-btn--dark, .lyr-btn--dark):is(:hover, :focus) { background: var(--brand-navy, #020812); color: #fff; }
+:is(.sh-btn--white, .lyr-btn--white):is(:hover, :focus) { background: #fff; color: var(--accent-deep); }
+.sh-btn--ghost:is(:hover, :focus) { background: rgba(29, 29, 31, .04); color: var(--ink); border-color: var(--ink); }
+.lyr-btn--primary:is(:hover, :focus) { background: var(--accent-deep); color: #fff; }
+:is(.sh-card-add, .sh-upsell__add, .sh-coupon button):is(:hover, :focus) { background: var(--accent); color: #fff; border-color: var(--accent); }
+:is(.sh-carousel-btn, .lyr-carousel-nav button, .sh-quickview button):is(:hover, :focus) { background: var(--ink); color: #fff; border-color: var(--ink); }
+.sh-qty button:is(:hover, :focus) { background: var(--surface); color: var(--ink); }
+.sh-quiz__next:is(:hover, :focus) { background: #12364b; color: #fff; border-color: #12364b; }
+.sh-quiz__summary button:is(:hover, :focus) { background: #f7f9fa; color: var(--brand-navy-raised); border-color: var(--accent-deep); }
+.sh-account__nav button:is(:hover, :focus) { background: var(--surface); color: var(--ink); }
+:is(.cq-button--cyan, .b2b-button--cyan):is(:hover, :focus) { background: #7df1ff; color: var(--brand-navy); }
+:is(.cq-button--dark, .b2b-button--dark):is(:hover, :focus) { background: #124052; color: #fff; }
+.b2b-button--outline:is(:hover, :focus) { background: #122735; color: #fff; }
+
+/* Filters, image choices, and product options. */
+:is(.sh-filter-toggle, .sh-pill, .sh-chip):is(:hover, :focus) { background: var(--surface); color: var(--ink); }
+.sh-chip--clear:is(:hover, :focus) { background: transparent; color: var(--accent-deep); }
+.sh-pgallery__thumbs button:is(:hover, :focus),
+.b2b-thumbs button:is(:hover, :focus),
+.sh-opt__row button:is(:hover, :focus) { background: var(--surface); color: var(--ink); border-color: var(--accent); }
+.sh-opt__row button.is-on:is(:hover, :focus) { background: var(--ink); color: #fff; }
+
+/* Dark slideshow / photo-viewer controls keep translucent backgrounds. */
+:is(.sh-slider__nav, .lyr-hero__nav, .sh-lbx__close, .sh-lbx__nav,
+    .sh-herolab__close, .sh-herolab__opt):is(:hover, :focus) {
+  background: rgba(255, 255, 255, .2); color: #fff;
+}
+.sh-slider__dots button:is(:hover, :focus) { background: var(--hero-dot-on); }
+.sh-spot__dot:is(:hover, :focus) { background: var(--hero-stage); }
+.sh-spotlight__dot:is(:hover, :focus) { background: #7ee7f5; }
+.lyr-hero__dots button:is(:hover, :focus) { background: transparent; }
+
+/* Origin workshop dialog and its floating launcher. */
+.lyo-close:is(:hover, :focus) { background: #ffffff0a; color: #fff; border-color: #e4bf7d7d; }
+.lyo-mode__button:is(:hover, :focus) { background: #ffffff0a; color: #fff; }
+.lyo-mode__button[aria-pressed="true"]:is(:hover, :focus) { background: #23303b; color: #f3e3ca; }
+.lyo-reset:is(:hover, :focus) { background: #fff1; color: var(--lyo-gold); }
+.lyo-back:is(:hover, :focus) { background: transparent; color: var(--lyo-gold); }
+.lyo-cta:is(:hover, :focus) { background: #fff; color: #17202b; }
+.sh-fab .lyo-launcher:is(:hover, :focus) { background: #fff; color: var(--accent-deep); }
+
+/* Cookie controls have their own dark palette. */
+.ly-consent-btn:is(:hover, :focus) { background: #193746; color: #fff; border-color: var(--brand-cyan); }
+.ly-consent-btn--save:is(:hover, :focus) { background: #80f2ff; color: var(--brand-navy); }
+.ly-consent-settings:is(:hover, :focus) { background: transparent; color: var(--brand-cyan); }
+.ly-consent-close:is(:hover, :focus) { background: #ffffff0a; color: #fff; border-color: var(--brand-cyan); }
+.ly-consent-launcher:is(:hover, :focus) { background: var(--brand-navy-surface); color: var(--brand-gold); border-color: var(--brand-cyan); }
