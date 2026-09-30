@@ -3460,9 +3460,9 @@
     // az exit-popup és a hírlevél-sáv már így is hirdeti; a lebegő réteg
     // maradjon funkcionális: fel, egyedi ötlet, segítség)
 
-    // The supplied origin controller owns the dialog and its interactions.
+    // The origin controller owns this link; Elementor must not navigate its fallback URL.
     var originTrigger = document.createElement('template');
-    originTrigger.innerHTML = "<a class=\"lyo-launcher\" href=\"rolunk.html\" data-layero-origin-open aria-haspopup=\"dialog\" aria-controls=\"layero-origin\" aria-label=\"Szatmárnémeti (Satu Mare), Románia — a Layero műhelye\" title=\"Satu Mare · Szatmárnémeti — itt készül\"><img class=\"lyo-launcher__map\" src=\"assets/layero-origin/images/romania-flag-pin.svg\" width=\"36\" height=\"28\" alt=\"\" aria-hidden=\"true\"></a>";
+    originTrigger.innerHTML = "<a class=\"lyo-launcher\" href=\"rolunk.html\" data-layero-origin-open data-e-disable-page-transition aria-haspopup=\"dialog\" aria-controls=\"layero-origin\" aria-label=\"Szatmárnémeti (Satu Mare), Románia — a Layero műhelye\" title=\"Satu Mare · Szatmárnémeti — itt készül\"><img class=\"lyo-launcher__map\" src=\"assets/layero-origin/images/romania-flag-pin.svg\" width=\"36\" height=\"28\" alt=\"\" aria-hidden=\"true\"></a>";
     fab.appendChild(originTrigger.content.cloneNode(true));
 
     // egyedi ötlet + segítség — hoverre kinyíló pill

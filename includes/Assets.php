@@ -77,7 +77,7 @@ final class Assets {
 			'layero-static-shop',
 			LAYERO_SHOP_UI_URL . 'assets/js/layero-static-shop.js',
 			array('layero-static-data', 'layero-origin', 'layero-badge-adapter', 'layero-variants'),
-			LAYERO_SHOP_UI_VERSION . '-product-tabs-20260930',
+			LAYERO_SHOP_UI_VERSION . '-origin-modal-20260930',
 			true
 		);
 	}
