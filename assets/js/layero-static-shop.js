@@ -945,6 +945,7 @@
         '<span>© ' + new Date().getFullYear() + ' Layero 3D Design' + (IS_WOO ? '' : ' · Helyi előnézet') + '</span>' +
         '<nav aria-label="Jogi információk és adatvédelem">' +
           '<a href="aszf.html">ÁSZF</a>' +
+          '<a href="aszf.html#elallas-online">Elállás a szerződéstől</a>' +
           '<a href="adatvedelem.html">Adatvédelem</a>' +
           '<a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a>' +
           '<button type="button" data-cookie-open>Sütibeállítások</button>' +

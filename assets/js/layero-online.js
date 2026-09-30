@@ -32,8 +32,9 @@
   }
   function boot() {
     document.querySelectorAll(selector).forEach(prepare);
-    // Until a newsletter provider is connected, do not collect addresses or promise coupons.
+    // Preserve the server-backed forms. Replace only old demo banners.
     document.querySelectorAll('.lyr-newsletter, .sh-nlbanner').forEach(function (block) {
+      if (block.querySelector('[data-layero-subscription]')) return;
       if (block.dataset.layeroNewsletterDisabled) return;
       block.dataset.layeroNewsletterDisabled = '1';
       block.replaceChildren(text('h2', 'Kérdésed vagy egyedi ötleted van?'), text('p', 'Írd meg nekünk, és egyeztetjük a részleteket.'));

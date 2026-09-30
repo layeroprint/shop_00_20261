@@ -35,6 +35,27 @@ final class Single_Product {
 		return function_exists('is_product') && is_product() ? __('Kosárba teszem', 'layero-shop-ui') : $label;
 	}
 
+	/** Prefer the same product family; a shared gift occasion must not outrank it. */
+	public static function related_ids($product, $limit = 4) {
+		$categories = Catalog::category_slugs($product);
+		$family = Helpers::product_card_type_key($product);
+		foreach (array('lampak', 'kulcstartok') as $specific) {
+			if (in_array($specific, $categories, true)) { $family = $specific; break; }
+		}
+		$matches = array();
+		foreach (Catalog::products() as $candidate) {
+			if ($candidate->get_id() === $product->get_id() || ! $candidate->is_purchasable()) { continue; }
+			$other = Catalog::category_slugs($candidate);
+			$same_family = $family && ($family === Helpers::product_card_type_key($candidate) || in_array($family, $other, true));
+			if (in_array($family, array('lampak', 'kulcstartok'), true) && ! $same_family) { continue; }
+			$shared = count(array_intersect($categories, $other));
+			if (! $same_family && ! $shared) { continue; }
+			$matches[$candidate->get_id()] = ($same_family ? 100 : 0) + $shared;
+		}
+		arsort($matches, SORT_NUMERIC);
+		return array_slice(array_keys($matches), 0, max(0, (int) $limit));
+	}
+
 	public static function template($template) {
 		if (! function_exists('is_product') || ! is_product() || ! function_exists('wc_get_product')) {
 			return $template;

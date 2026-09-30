@@ -21,7 +21,7 @@ $personalizable = \LayeroShop\Helpers::product_is_personalizable($product);
 $description = $product->get_description();
 $short_description = $product->get_short_description();
 $has_specifications = $product->has_attributes() || $product->has_weight() || $product->has_dimensions();
-$related_ids = function_exists('wc_get_related_products') ? wc_get_related_products($product->get_id(), 4) : array();
+$related_ids = \LayeroShop\Single_Product::related_ids($product);
 
 get_header();
 ?>

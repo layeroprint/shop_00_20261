@@ -673,6 +673,7 @@
 	}
 
 	function initNewsletter(form) {
+		if (form.matches('[data-layero-subscription]')) return;
 		if (form.dataset.layeroNewsletterReady === '1') return;
 		form.dataset.layeroNewsletterReady = '1';
 
@@ -680,9 +681,8 @@
 			event.preventDefault();
 			var root = form.closest('.lyr-newsletter');
 			var note = root ? root.querySelector('[data-layero-newsletter-note]') : null;
-			form.classList.add('is-done');
 			if (note) {
-				note.textContent = (window.LayeroShopUI && LayeroShopUI.i18n && LayeroShopUI.i18n.subscribed) ? LayeroShopUI.i18n.subscribed : 'Köszönjük, feliratkoztál.';
+				note.textContent = 'Ez a régi űrlap nem küld adatot. Használd az oldal aktuális feliratkozási űrlapját.';
 			}
 		});
 	}

@@ -1,5 +1,7 @@
 # Helyi ellenőrzések
 
+A 0.10.20 célzott integrációs próbái: `subscriptions-wordpress.php`, `withdrawal-wordpress.php`, `related-products-wordpress.php`, `lamp-personalization-wordpress.php`. Az alábbi helyi WP-CLI `eval-file` menettel futnak. A lámpapróba a gyökér `output/shop-fixes-20260930/lampak-nevmezok-2.csv` fájlját igényli, amely a termékkezelőből készült célzott import; nem szabad az éles WordPress-adatbázissal futtatni.
+
 Gyors próbák a plugin mappájából:
 
 ```text

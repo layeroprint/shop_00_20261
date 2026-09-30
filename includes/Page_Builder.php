@@ -19,6 +19,8 @@ final class Page_Builder {
 		add_action('admin_init', array(__CLASS__, 'maybe_remove_obsolete_blocks'));
 		add_action('admin_init', array(__CLASS__, 'maybe_remove_home_gallery'));
 		add_filter('wp_robots', array(__CLASS__, 'legal_draft_robots'));
+		add_filter('elementor/maintenance_mode/is_login_page', array(__CLASS__, 'allow_legal_pages'));
+		add_filter('woocommerce_coming_soon_exclude', array(__CLASS__, 'allow_legal_pages'));
 		add_action('admin_action_layero_build_pages', array(__CLASS__, 'handle_build'));
 		add_action('admin_notices', array(__CLASS__, 'admin_notice'));
 		add_action('admin_menu', array(__CLASS__, 'admin_menu'));
@@ -120,6 +122,11 @@ final class Page_Builder {
 		}
 
 		return $results;
+	}
+
+	/** Privacy and terms must remain accessible from the launch subscription form. */
+	public static function allow_legal_pages($allowed) {
+		return $allowed || is_page(array('aszf', 'adatvedelem'));
 	}
 
 	public static function maybe_ensure_required_pages() {

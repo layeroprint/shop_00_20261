@@ -163,7 +163,6 @@ final class Assets {
 					'favoriteAdd' => __('Kedvencekhez adás', 'layero-shop-ui'),
 					'favoriteRemove' => __('Eltávolítás a kedvencekből', 'layero-shop-ui'),
 					'added' => __('Kosárba téve', 'layero-shop-ui'),
-					'subscribed' => __('Köszönjük, a kuponkódot e-mailben küldjük.', 'layero-shop-ui'),
 				),
 			)
 		);

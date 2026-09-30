@@ -45,6 +45,7 @@ final class Plugin {
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Payment_Rules.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Customer_Account.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Forms.php';
+		require_once LAYERO_SHOP_UI_PATH . 'includes/Subscriptions.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Elementor.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Page_Builder.php';
 	}
@@ -58,6 +59,7 @@ final class Plugin {
 		Catalog_Import::init();
 		Customer_Account::instance();
 		Forms::instance();
+		Subscriptions::init();
 		Assets::instance();
 		WooCommerce::instance();
 		Commerce_UI::init();

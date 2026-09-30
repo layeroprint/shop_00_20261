@@ -26,7 +26,7 @@ class Newsletter_Banner extends Base_Widget {
 	protected function register_controls() {
 		$this->start_controls_section('content_section', array('label' => __('Tartalom', 'layero-shop-ui')));
 		$this->add_control('integration_notice', array('type' => Controls_Manager::RAW_HTML,
-			'raw' => __('Hírlevélszolgáltató bekötéséig kapcsolatfelvételi gomb jelenik meg. Feliratkozást és kuponküldést jelenleg nem végzünk.', 'layero-shop-ui')));
+			'raw' => __('E-mailes megerősítéssel működő feliratkozás. A címek a Layero feliratkozók adminlistában láthatók; csak a megerősített címek használhatók.', 'layero-shop-ui')));
 		$this->end_controls_section();
 
 		$this->start_controls_section('style_section', array(
@@ -58,6 +58,6 @@ class Newsletter_Banner extends Base_Widget {
 	}
 
 	protected function render() {
-		echo '<section class="sh-band"><div class="shop-wrap"><div class="sh-nlbanner"><h2>' . esc_html__('Kérdésed vagy egyedi ötleted van?', 'layero-shop-ui') . '</h2><p>' . esc_html__('Írd meg nekünk, és egyeztetjük a részleteket.', 'layero-shop-ui') . '</p><a class="sh-btn sh-btn--dark" href="' . esc_url(home_url('/kapcsolat/')) . '">' . esc_html__('Kapcsolatfelvétel', 'layero-shop-ui') . '</a></div></div></section>';
+		\LayeroShop\Subscriptions::render_banner();
 	}
 }

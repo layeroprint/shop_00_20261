@@ -156,7 +156,7 @@ class Coming_Soon_Ro extends Base_Widget {
 		$logo = LAYERO_SHOP_UI_URL . 'assets/demo/layero-asset-0251.webp';
 		$launch = ! empty($s['launch']) ? $s['launch'] : '2026-08-15 10:00:00';
 		$chips = array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string) ($s['chips'] ?? ''))));
-		$show_notify = false; // No newsletter service is configured.
+		$show_notify = 'yes' === ($s['show_notify'] ?? 'yes');
 		$year = gmdate('Y');
 
 		$title_tags = array('span' => array('class' => array()), 'em' => array(), 'br' => array());
@@ -274,19 +274,7 @@ class Coming_Soon_Ro extends Base_Widget {
 				</div>
 
 				<?php if ($show_notify) : ?>
-					<form class="lyr-cs-ro__notify" data-lyr-cs-ro-form novalidate>
-						<div class="lyr-cs-ro__row">
-							<input type="email" placeholder="<?php echo esc_attr($s['notify_placeholder'] ?? ''); ?>" aria-label="Adresă de e-mail" autocomplete="email">
-							<button type="submit"><?php echo esc_html($s['notify_button'] ?? 'Anunță-mă'); ?></button>
-						</div>
-						<?php if (! empty($s['notify_hint'])) : ?>
-							<p class="lyr-cs-ro__hint"><?php echo esc_html($s['notify_hint']); ?></p>
-						<?php endif; ?>
-						<div class="lyr-cs-ro__ok" role="status">
-							<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>
-							<span><?php echo esc_html($s['notify_success'] ?? 'Mulțumim!'); ?></span>
-						</div>
-					</form>
+					<?php \LayeroShop\Subscriptions::render_form('launch', 'ro'); ?>
 				<?php endif; ?>
 
 				<?php if (! empty($chips)) : ?>
@@ -316,6 +304,8 @@ class Coming_Soon_Ro extends Base_Widget {
 					<?php if (! empty($s['contact_location'])) : ?>
 						<span class="lyr-cs-ro__loc"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><?php echo esc_html($s['contact_location']); ?></span>
 					<?php endif; ?>
+					<a href="<?php echo esc_url(home_url('/adatvedelem/')); ?>">Protecția datelor</a>
+					<a href="<?php echo esc_url(home_url('/aszf/')); ?>">Termeni și condiții</a>
 					<p class="lyr-cs-ro__copy">© <?php echo esc_html($year); ?> <?php echo esc_html($s['copyright'] ?? 'Layero 3D Design'); ?></p>
 				</div>
 			</footer>
@@ -351,21 +341,6 @@ class Coming_Soon_Ro extends Base_Widget {
 					tick();
 					var t = setInterval(tick, 1000);
 
-					var form = root.querySelector('[data-lyr-cs-ro-form]');
-					if (form) {
-						var email = form.querySelector('input[type="email"]');
-						form.addEventListener('submit', function (e) {
-							e.preventDefault();
-							var v = (email && email.value ? email.value : '').trim();
-							if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
-								if (email) { email.focus(); }
-								var row = form.querySelector('.lyr-cs-ro__row');
-								if (row) { row.style.borderColor = 'rgba(255,120,90,.7)'; }
-								return;
-							}
-							form.classList.add('is-done');
-						});
-					}
 				})(roots[i]);
 			}
 		})();

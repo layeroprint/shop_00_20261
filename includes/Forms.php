@@ -21,6 +21,13 @@ final class Forms {
 		add_action('init', array($this, 'register_inquiries'));
 		add_action('wp_ajax_layero_contact_submit', array($this, 'submit_contact'));
 		add_action('wp_ajax_nopriv_layero_contact_submit', array($this, 'submit_contact'));
+		add_action('wp_ajax_layero_withdrawal_submit', array($this, 'submit_withdrawal'));
+		add_action('wp_ajax_nopriv_layero_withdrawal_submit', array($this, 'submit_withdrawal'));
+		add_action('wp_ajax_layero_contact_nonce', array($this, 'nonce'));
+		add_action('wp_ajax_nopriv_layero_contact_nonce', array($this, 'nonce'));
+		add_action('wp_enqueue_scripts', function () {
+			if (is_page('aszf')) { wp_enqueue_script('layero-withdrawal', LAYERO_SHOP_UI_URL . 'assets/js/layero-withdrawal.js', array('layero-shop-ui'), LAYERO_SHOP_UI_VERSION, true); }
+		});
 	}
 
 	public function register_inquiries() {
@@ -37,6 +44,18 @@ final class Forms {
 	}
 
 	public function submit_contact() {
+		$this->process(false);
+	}
+
+	public function nonce() {
+		nocache_headers(); wp_send_json_success(array('nonce' => wp_create_nonce('layero_contact')));
+	}
+
+	public function submit_withdrawal() {
+		$this->process(true);
+	}
+
+	private function process($withdrawal) {
 		if (! isset($_SERVER['REQUEST_METHOD']) || 'POST' !== $_SERVER['REQUEST_METHOD']) {
 			wp_send_json_error(array('message' => __('Hibás kérés.', 'layero-shop-ui')), 405);
 		}
@@ -44,7 +63,7 @@ final class Forms {
 			wp_send_json_error(array('message' => __('Lejárt a munkamenet. Frissítsd az oldalt, majd próbáld újra.', 'layero-shop-ui')), 403);
 		}
 		$limits = array('name' => 100, 'email' => 254, 'topic' => 150, 'message' => 4000, 'company' => 200,
-			'phone' => 50, 'quantity' => 50, 'deadline' => 100, 'direction' => 200, 'occasion' => 200, 'website' => 200, 'consent' => 10);
+			'phone' => 50, 'quantity' => 50, 'deadline' => 100, 'direction' => 200, 'occasion' => 200, 'website' => 200, 'consent' => 10, 'order_reference' => 250);
 		foreach ($limits as $field => $limit) {
 			$raw = $_POST[$field] ?? '';
 			$length = is_string($raw) ? (function_exists('mb_strlen') ? mb_strlen(wp_unslash($raw), 'UTF-8') : preg_match_all('/./us', wp_unslash($raw))) : false;
@@ -52,7 +71,7 @@ final class Forms {
 				wp_send_json_error(array('message' => __('Az egyik mező túl hosszú vagy hibás.', 'layero-shop-ui')), 422);
 			}
 		}
-		if ('1' !== ($_POST['consent'] ?? '') && 'on' !== ($_POST['consent'] ?? '')) {
+		if (! $withdrawal && '1' !== ($_POST['consent'] ?? '') && 'on' !== ($_POST['consent'] ?? '')) {
 			wp_send_json_error(array('message' => __('Jelöld, hogy elolvastad az adatvédelmi tájékoztatót.', 'layero-shop-ui')), 422);
 		}
 		$ip_key = 'layero_contact_ip_' . hash_hmac('sha256', $_SERVER['REMOTE_ADDR'] ?? '', wp_salt('nonce'));
@@ -75,6 +94,12 @@ final class Forms {
 		$deadline = sanitize_text_field(wp_unslash($_POST['deadline'] ?? ''));
 		$direction = sanitize_text_field(wp_unslash($_POST['direction'] ?? ''));
 		$occasion = sanitize_text_field(wp_unslash($_POST['occasion'] ?? ''));
+		if ($withdrawal) {
+			$reference = sanitize_text_field(wp_unslash($_POST['order_reference'] ?? ''));
+			if ('' === $reference) { wp_send_json_error(array('message' => 'Add meg a rendelés számát vagy az azonosításához szükséges adatokat.'), 422); }
+			$topic = 'Elállási nyilatkozat';
+			$message = "Ezúton közlöm, hogy elállok az alábbi rendelésben megjelölt termékekre kötött szerződéstől.\nRendelés: " . $reference . "\nTermékek / kiegészítés: " . ($message ?: 'A rendelés egésze.');
+		}
 
 		if ('' === $name || ! is_email(trim(wp_unslash($_POST['email'] ?? ''))) || strlen($message) < 10) {
 			wp_send_json_error(array('message' => __('Ellenőrizd a nevet, az e-mail-címet és az üzenetet.', 'layero-shop-ui')), 422);
@@ -116,6 +141,8 @@ final class Forms {
 		$body_lines[] = __('Üzenet:', 'layero-shop-ui');
 		$body_lines[] = $message;
 		$body = implode("\n", $body_lines);
+		$received = current_time('mysql') . ' (' . wp_timezone_string() . ')';
+		if ($withdrawal) { $body .= "\n\nBeérkezés: " . $received; }
 		$headers = array(
 			'Content-Type: text/plain; charset=UTF-8',
 			'Reply-To: ' . $name . ' <' . $email . '>',
@@ -127,7 +154,8 @@ final class Forms {
 		if (is_wp_error($inquiry) || ! $inquiry) {
 			wp_send_json_error(array('message' => __('Az üzenetet nem sikerült menteni. Próbáld újra, vagy írj közvetlenül e-mailben.', 'layero-shop-ui')), 500);
 		}
-		update_post_meta($inquiry, '_layero_privacy_acknowledged', current_time('mysql', true));
+		update_post_meta($inquiry, $withdrawal ? '_layero_withdrawal_received_at' : '_layero_privacy_acknowledged', current_time('mysql', true));
+		update_post_meta($inquiry, '_layero_email', strtolower($email));
 		$sent = wp_mail($recipient, $subject, $body, $headers);
 		update_post_meta($inquiry, '_layero_mail_status', $sent ? 'accepted' : 'failed');
 		if (! $sent) {
@@ -135,6 +163,12 @@ final class Forms {
 		}
 
 		set_transient($rate_key, 1, MINUTE_IN_SECONDS);
+		if ($withdrawal) {
+			$receipt = "Layero — Elállási nyilatkozat átvétele\nAzonosító: " . $inquiry . "\n\n" . $body . "\n\nA nyilatkozatot rögzítettük. Ez az átvételt igazolja; a visszaküldés és a visszatérítés részleteit külön egyeztetjük.\nKapcsolat: layeroprint@gmail.com";
+			$receipt_sent = wp_mail($email, 'Layero — Elállási nyilatkozat átvétele #' . $inquiry, $receipt, array('Content-Type: text/plain; charset=UTF-8'));
+			update_post_meta($inquiry, '_layero_receipt_mail_status', $receipt_sent ? 'accepted' : 'failed');
+			wp_send_json_success(array('message' => $receipt_sent ? 'Az elállási nyilatkozatot rögzítettük, a visszaigazolást elküldtük a megadott e-mail-címre. Itt is letöltheted.' : 'Az elállási nyilatkozatot rögzítettük, de a visszaigazoló levél küldése nem sikerült. Töltsd le az igazolást; nem kell újra elküldened a nyilatkozatot.', 'receipt' => $receipt, 'reference' => $inquiry));
+		}
 		wp_send_json_success(array('message' => __('Köszönjük, a megkeresésedet elmentettük. A megadott e-mail-címen jelentkezünk.', 'layero-shop-ui')));
 	}
 }
