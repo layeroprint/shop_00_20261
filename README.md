@@ -6,7 +6,7 @@ A cél: a design, a widgetek, a hero slider, a kategóriák és a Layero élmén
 
 ## Aktuális shop szinkron
 
-Legutóbbi frissítés: **0.10.15**, [helyi változások GitHub-kiadása](docs/KIADAS-0.10.15.md): új céges és egyedi rendelési oldal, átdolgozott ajándékkereső, CSV-jelvényimport és pontosított személyre szabhatóság.
+Aktuális verzió: **0.10.18**, [WooCommerce kosár/pénztár és közös felület](docs/KIADAS-0.10.18.md). Tartalmazza a 0.10.17 készlet-/határidőjelzés-szabályát és a [0.10.16 főoldali galériatisztítását](docs/KIADAS-0.10.16.md).
 
 Helyi kiadási jelölt: **0.10.0**. [Javítások, tesztek és cPanel-frissítés](docs/KIADAS-0.10.0.md). A Windows sortöréshiba javítva, az Origin teljes futási csomagja és WordPress-regisztrációja elkészült.
 
@@ -31,7 +31,7 @@ A plugin jelenleg a statikus shop alábbi tartalmaira épül:
 - 25 Layero termék demó/fallback adata
 - népszerű termék sorrend és újdonság válogatás
 - kiemelt-termék rotáció fallback: `karacsonyi-lampa` (A hónap terméke) + `szam-lampa-nevvel` + `jurassic-lampa` + `holdfeny-lampa`
-- „Kinek keresed?" ikonos pillek, 5 pontos duotone bizalmi sáv (Helyi gyártás — Szatmárnémetiben készül ponttal), érték-marquee, folyamatlépések, ajándékkereső CTA, letisztult összehasonlító kártya (kiemelt Layero-oszloppal), vélemények, galéria, egyedi rendelés CTA, shop-bizalom, hírlevél és lábjegyzetek
+- „Kinek keresed?" ikonos pillek, 5 pontos duotone bizalmi sáv (Helyi gyártás — Szatmárnémetiben készül ponttal), érték-marquee, folyamatlépések, ajándékkereső CTA, letisztult összehasonlító kártya (kiemelt Layero-oszloppal), vélemények, egyedi rendelés CTA és shop-bizalom
 - a hivatkozott demo képek a pluginben: `assets/demo`
 
 ## Elementor widgetek
@@ -89,6 +89,8 @@ Elérhető shortcode-ok:
 ```
 
 ## WooCommerce integráció
+
+A termékkártyákon és termékoldalakon a készletállapot, készletdarabszám és gyártási idő megjelenítése ki van kapcsolva. Az aktív bővítmény a WooCommerce mennyiségi készletkezelését is kikapcsolja: nincs készletből számított maximum vagy rendelési készletlevonás. A meglévő termékadatok megmaradnak. Ellenőrzés: `tests/stock-policy-wordpress.php` a külön helyi tesztadatbázisban.
 
 A termékkezelő CSV-jében már létező `Meta: _layero_requires_prepayment` (`1`) jelölést a `Payment_Rules` kezeli: utánvét (`cod`) letiltása egyszerű és variációs terméknél, vegyes kosárnál, valamint későbbi rendelésfizetésnél. A szülő jelölése variációknál is érvényes. A szabály a rendelési tételbe is elmentődik. A klasszikus pénztár és Store API szerveroldali védelmet kapott; a blokkos felület és külső fizetési bővítmények működését futó WordPress alatt még ellenőrizni kell. Más, egyedi utánvétes fizetési azonosítók jelenleg nem tartoznak a tiltáshoz.
 

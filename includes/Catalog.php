@@ -136,6 +136,8 @@ final class Catalog {
 				'badge' => $product->is_featured() ? 'Kiemelt' : '',
 				'badges' => Badge_System::for_product($product),
 				'szemelyre_szabott' => Helpers::product_is_personalizable($product),
+				'ajandek' => self::gift_profile($product),
+				'ajanlhato' => $product->is_purchasable() && $product->is_in_stock(),
 				'keszlet' => $product->is_in_stock() ? 'rendelheto' : 'elfogyott', 'opciok' => array(),
 			);
 		}
@@ -146,5 +148,22 @@ final class Catalog {
 				'count' => self::category_count($category['id']));
 		}
 		return array('products' => $items, 'categories' => $cats, 'urls' => $urls);
+	}
+
+	/** Use only the explicit Product Management classification; never infer a match. */
+	public static function gift_profile($product) {
+		$raw = $product->get_meta('_layero_gift_profile', true);
+		$profile = is_string($raw) ? json_decode($raw, true) : $raw;
+		if (! is_array($profile) || 1 !== ($profile['version'] ?? null) || true !== ($profile['enabled'] ?? null)) { return null; }
+		$result = array('version' => 1, 'enabled' => true);
+		foreach (array('kinek', 'alkalom', 'stilus') as $key) {
+			if (! isset($profile[$key]) || ! is_array($profile[$key]) || count($profile[$key]) > 30) { return null; }
+			$result[$key] = array();
+			foreach ($profile[$key] as $value) {
+				if (! is_string($value) || ! preg_match('/^[a-z0-9-]{1,40}$/', $value)) { return null; }
+				$result[$key][] = $value;
+			}
+		}
+		return $result;
 	}
 }

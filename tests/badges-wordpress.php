@@ -39,7 +39,7 @@ try {
 	Badge_System::save($product);
 	badge_check($old === $product->get_meta('_layero_badge_config', true), 'Unrelated saves preserve badge configuration.');
 	$product->set_stock_status('outofstock');
-	badge_check(in_array('soldOut', array_column(Badge_System::for_product($product), 'id'), true), 'Out-of-stock follows WooCommerce.');
+	badge_check(! in_array('soldOut', array_column(Badge_System::for_product($product), 'id'), true), 'Stock status is not published as a badge.');
 	$product->set_stock_status('instock');
 	$product->update_meta_data('_layero_product_badges', '"<script>alert(1)</script>|info');
 	$html = Helpers::product_card($product);

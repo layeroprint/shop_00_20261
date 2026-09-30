@@ -12,10 +12,19 @@ final class Badge_System {
 		return $catalog ?: array('groups' => array(), 'badges' => array());
 	}
 
+	public static function for_storefront($items) {
+		$hidden = array('inStock', 'lowStock', 'soldOut', 'backInStock', 'madeToOrder', 'backorder', 'preorder', 'comingSoon', 'productionTime', 'deliveryEstimate');
+		return array_values(array_filter($items, static function ($item) use ($hidden) {
+			$id = is_string($item) ? $item : ($item['id'] ?? '');
+			$label = is_array($item) ? (string) ($item['label'] ?? $item['value'] ?? '') : '';
+			return ! in_array($id, $hidden, true) && ! preg_match('/munkanap|zile lucrătoare|készlet|raktáron|elfogyott|\bstoc\b/ui', $label);
+		}));
+	}
+
 	public static function for_product($product) {
 		$config = $product->get_meta('_layero_badge_config', true);
 		$config = is_array($config) ? $config : array();
-		if ('manual' === $product->get_meta('_layero_badge_mode', true)) { return $config; }
+		if ('manual' === $product->get_meta('_layero_badge_mode', true)) { return self::for_storefront($config); }
 		$items = array();
 		foreach (Helpers::product_badges($product) as $badge) {
 			$label = $badge['label'];
@@ -33,18 +42,7 @@ final class Badge_System {
 				$items[] = array('id' => 'personal', 'label' => 'Személyre szabható');
 			}
 		}
-		$time = Helpers::product_lead_time_label($product);
-		if ($time) { $items[] = array('id' => 'productionTime', 'value' => $time); }
-		// WooCommerce instock means orderable, not necessarily ready-made stock.
-		if (! $product->is_in_stock()) { $items[] = array('id' => 'soldOut'); }
-		elseif ($product->is_on_backorder(1)) { $items[] = array('id' => 'backorder'); }
-		$config = $product->get_meta('_layero_badge_config', true);
-		$fulfillment = $product->get_meta('_layero_fulfillment_mode', true);
-		if ($product->is_in_stock() && ! $product->is_on_backorder(1)) {
-			if ('stocked' === $fulfillment) { $items[] = array('id' => 'inStock'); }
-			elseif ('made_to_order' === $fulfillment) { $items[] = array('id' => 'madeToOrder'); }
-		}
-		return array_merge($items, is_array($config) ? $config : array());
+		return self::for_storefront(array_merge($items, $config));
 	}
 
 	public static function admin_fields($product) {
@@ -53,7 +51,7 @@ final class Badge_System {
 		$selected = array();
 		foreach (is_array($config) ? $config : array() as $item) { $selected[$item['id']] = $item; }
 		echo '<div class="options_group layero-badge-system" style="padding:12px">';
-		echo '<h4>Layero Badge System</h4><p>Csak a termékre érvényes, ellenőrzött jelöléseket válaszd. Az akció, a személyre szabás és a gyártási idő a meglévő termékadatokból is megjelenik. A készletjelzés nem módosítja a rendelhetőséget.</p>';
+		echo '<h4>Layero Badge System</h4><p>Csak a termékre érvényes, ellenőrzött jelöléseket válaszd. Az akció és a személyre szabás a meglévő termékadatokból is megjelenik. A készlet- és határidőjelzések a webshopban ki vannak kapcsolva.</p>';
 		echo '<input type="hidden" name="_layero_badge_system_present" value="1">';
 		foreach ($catalog['groups'] as $group) {
 			echo '<details style="margin:8px 0"><summary style="cursor:pointer;padding:8px;font-weight:600">' . esc_html($group['label']) . '</summary><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;padding:8px">';

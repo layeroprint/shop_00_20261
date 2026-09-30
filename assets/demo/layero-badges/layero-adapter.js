@@ -30,7 +30,7 @@
   function enhance(rootNode=document,options={}) {
     const locale=document.documentElement.lang.toLowerCase().startsWith('ro')?'ro':'hu';
     rootNode.querySelectorAll('[data-lyrb-details]').forEach(node=>{
-      try { node.innerHTML=A.groupHTML(A.resolve(JSON.parse(node.dataset.lyrbDetails),{locale,...options}).all,{locale,...options}); }
+      try { node.innerHTML=A.groupHTML(A.resolve(A.forStorefront(JSON.parse(node.dataset.lyrbDetails)),{locale,...options}).all,{locale,...options}); }
       catch(error) { console.warn('Layero Badges: hibás termékjelzések.',error.message); }
     });
     const cards=[];
@@ -41,7 +41,7 @@
       try {
         input=card.hasAttribute('data-lyrb-badges')?JSON.parse(card.dataset.lyrbBadges):readLegacy(card);
         if(!Array.isArray(input))throw new TypeError('A data-lyrb-badges értéke JSON-tömb legyen.');
-        return A.mountCard(card,input,{locale:document.documentElement.lang.toLowerCase().startsWith('ro')?'ro':'hu',...options});
+        return A.mountCard(card,A.forStorefront(input),{locale:document.documentElement.lang.toLowerCase().startsWith('ro')?'ro':'hu',...options});
       } catch(error) {
         // Leave original labels in place on malformed host data.
         console.warn('Layero Badges: kártya kihagyva.',card.dataset.layeroProductId,error.message);

@@ -53,7 +53,7 @@ foreach (array('dekoraciok' => 26, 'rajongoi' => 3) as $slug => $count) {
         $p->set_regular_price(100 + $i); $p->set_category_ids(array($term->term_id)); $p->set_catalog_visibility('visible');
         $promoted = 'dekoraciok' === $slug && 1 === $i;
         $p->set_sale_price($promoted ? 80 : ''); $p->set_featured($promoted);
-        $p->update_meta_data('_layero_badge_keys', $promoted ? array('new') : array());
+        $p->update_meta_data('_layero_badge_keys', $promoted ? array('new', 'bestseller') : array());
         $p->update_meta_data('_layero_personalizable', $promoted ? 'yes' : 'no');
         $p->set_rating_counts($promoted ? array(5 => 10) : array());
         $p->set_average_rating($promoted ? '5.0' : '0');

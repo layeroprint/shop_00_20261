@@ -447,30 +447,7 @@ final class Helpers {
 	}
 
 	public static function product_lead_time_label($product) {
-		if (! $product || ! method_exists($product, 'get_meta')) {
-			return '';
-		}
-
-		$value = sanitize_key((string) $product->get_meta('_layero_lead_time', true));
-		$options = self::lead_time_options();
-		if ('none' === $value) {
-			return '';
-		}
-		if ('custom' === $value) {
-			return Shop_Content::without_legacy_lead_time(trim((string) $product->get_meta('_layero_lead_time_custom', true)), '');
-		}
-		if (isset($options[$value])) {
-			return $options[$value];
-		}
-
-		$type = self::product_card_type_key($product);
-		if (in_array($type, array('kulcstartok', 'dekoraciok'), true)) {
-			return $options['3-7'];
-		}
-		if (in_array($type, array('ceges', 'egyedi'), true)) {
-			return $options['7-12'];
-		}
-
+		// Product lead times are not displayed, including old imported values.
 		return '';
 	}
 
@@ -507,6 +484,7 @@ final class Helpers {
 	}
 
 	public static function product_badges_html($badges) {
+		$badges = Badge_System::for_storefront($badges);
 		if (empty($badges)) {
 			return '';
 		}
@@ -662,20 +640,7 @@ final class Helpers {
 	}
 
 	private static function demo_product_card_chips_html($product) {
-		$category = sanitize_key((string) ($product['category'] ?? ''));
-		$chips = array();
-		if (in_array($category, array('kulcstartok', 'dekoraciok'), true)) {
-			$lead_time = __('3–7 munkanap', 'layero-shop-ui');
-		} elseif (in_array($category, array('ceges', 'egyedi'), true)) {
-			$lead_time = __('7–12 munkanap', 'layero-shop-ui');
-		} else {
-			$lead_time = '';
-		}
-		if ($lead_time) {
-			$chips[] = array('label' => $lead_time, 'style' => 'time');
-		}
-
-		return self::product_card_chips_from_array($chips);
+		return '';
 	}
 
 	public static function product_card($product, $args = array()) {
@@ -723,13 +688,12 @@ final class Helpers {
 				<?php echo self::product_image($product, $args['image_size']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php if ($gallery_ids) : ?><?php echo wp_get_attachment_image($gallery_ids[0], $args['image_size'], false, array('class' => 'sh-pc-img2', 'loading' => 'lazy', 'alt' => '')); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php endif; ?>
 				<?php if ($personalizable) : ?><span class="sh-personal-mark lyr-product-card__personal"><span aria-hidden="true">✦</span> <?php esc_html_e('Személyre szabható', 'layero-shop-ui'); ?></span><?php endif; ?>
-				<?php if ($home_style) : ?><div class="sh-card-tools">
+				<div class="sh-card-tools">
 					<button class="sh-heart lyr-product-card__wish" type="button" data-layero-wish-toggle data-layero-product-id="<?php echo esc_attr($product->get_id()); ?>" aria-label="<?php esc_attr_e('Kedvencekhez adás', 'layero-shop-ui'); ?>"><?php echo self::icon('heart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
-				</div><?php endif; ?>
+					<button class="sh-compare-btn" type="button" data-compare="<?php echo esc_attr($product->get_slug()); ?>" aria-label="Összehasonlításhoz" aria-pressed="false" title="Összehasonlítás"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M8 3v18M16 3v18M4 7l4-4 4 4M12 17l4 4 4-4"/></svg></button>
+				</div>
+				<div class="sh-quickview"><button type="button" data-qv="<?php echo esc_attr($product->get_slug()); ?>">Gyorsnézet</button></div>
 			</figure>
-			<?php if (! $home_style) : ?><button class="sh-heart lyr-product-card__wish" type="button" data-layero-wish-toggle data-layero-product-id="<?php echo esc_attr($product->get_id()); ?>" aria-label="<?php esc_attr_e('Kedvencekhez adás', 'layero-shop-ui'); ?>">
-				<?php echo self::icon('heart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-			</button><?php endif; ?>
 			<div class="sh-prod-card__body lyr-product-card__body">
 				<a class="sh-card-link" href="<?php echo esc_url($link); ?>" aria-label="<?php echo esc_attr($product->get_name()); ?>"></a>
 				<?php if ($home_style) : ?><span class="sh-prod-card__name"><?php echo esc_html($product->get_name()); ?></span><?php endif; ?>

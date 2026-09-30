@@ -345,8 +345,9 @@ class Product_Grid extends Base_Widget {
 		<div class="lyr-catalog-toolbar">
 			<nav class="lyr-catalog-pills sh-pills" aria-label="Termékkategóriák">
 				<a class="sh-pill <?php echo '' === $active_category ? 'is-active' : ''; ?>" <?php if ('' === $active_category) { echo 'aria-current="page"'; } ?> href="<?php echo esc_url(Helpers::products_url('', $base)); ?>">Mind</a>
-				<?php foreach (Shop_Content::categories() as $category) : ?>
-				<a class="sh-pill <?php echo $active_category === $category['id'] ? 'is-active' : ''; ?>" <?php if ($active_category === $category['id']) { echo 'aria-current="page"'; } ?> href="<?php echo esc_url(Helpers::products_url($category['id'], $base)); ?>"><?php echo esc_html($category['name']); ?></a>
+				<?php foreach (Shop_Content::categories() as $category) :
+					$url = ! empty($category['quote']) ? home_url('ceges' === $category['id'] ? '/cegeknek/' : '/egyedi-rendeles/') : Helpers::products_url($category['id'], $base); ?>
+				<a class="sh-pill <?php echo $active_category === $category['id'] ? 'is-active' : ''; ?>" <?php if ($active_category === $category['id']) { echo 'aria-current="page"'; } ?> href="<?php echo esc_url($url); ?>"><?php echo esc_html($category['name']); ?></a>
 				<?php endforeach; ?>
 			</nav>
 			<div class="lyr-catalog-tools">

@@ -82,6 +82,7 @@ body.woocommerce div.product .woocommerce-tabs ul.tabs li { border-radius:12px 1
 .woocommerce a.button:focus-visible, .woocommerce button.button:focus-visible { outline:3px solid #0a7c92; outline-offset:3px; }
 
 /* The live catalogue follows the shared shop's category / sidebar / grid layout. */
+.lyr-product-card .sh-card-tools .lyr-product-card__wish { position: static; }
 .lyr-products--listing { padding: 0 0 64px; }
 .lyr-catalog-head { position: relative; padding: 30px 0 38px; margin: 0 0 26px; color: #fff; }
 .lyr-catalog-head > .shop-wrap { position: relative; z-index: 1; }

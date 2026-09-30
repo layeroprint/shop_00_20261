@@ -155,5 +155,14 @@
     card.dataset.lyrbState = result.state || 'normal';
     return {ok:true,...result};
   }
-  return Object.freeze({version:'1.0.0',catalog,groups:DATA.groups,icons:ICONS,tones,variants,escape,iconHTML,normalize,resolve,badgeHTML,groupHTML,mountCard});
+  // Shop policy: imported or manually selected stock/time badges stay private.
+  function forStorefront(items) {
+    const hidden = ['inStock','lowStock','soldOut','backInStock','madeToOrder','backorder','preorder','comingSoon','productionTime','deliveryEstimate'];
+    return (Array.isArray(items) ? items : []).filter(item => {
+      const id = typeof item === 'string' ? item : item && item.id;
+      const label = item && typeof item === 'object' ? String(item.label || item.value || '') : '';
+      return !hidden.includes(id) && !/munkanap|zile lucrătoare|készlet|raktáron|elfogyott|\bstoc\b/i.test(label);
+    });
+  }
+  return Object.freeze({version:'1.0.0',catalog,groups:DATA.groups,icons:ICONS,tones,variants,escape,iconHTML,normalize,resolve,badgeHTML,groupHTML,mountCard,forStorefront});
 });

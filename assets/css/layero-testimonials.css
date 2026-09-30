@@ -150,17 +150,29 @@
 .lyr-testimonials--studio .lr-summary__number > span { color: var(--lr-accent); font-weight: 500; }
 .lyr-testimonials--studio .lr-summary__label { color: var(--lr-muted); font-size: 0.8125rem; line-height: 1.5; }
 
-/* Desktop: egyszerre látható mindhárom vélemény. */
+/* Minden nézetben vízszintes slider; asztalon három kártya fér el. */
 .lyr-testimonials--studio .lr-track {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(var(--lr-columns, 3), minmax(0, 1fr));
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--lr-columns, 3) - 1) * 18px) / var(--lr-columns, 3));
   gap: 18px;
   align-items: stretch;
-  margin: 0;
-  padding: 0;
-  overflow: visible;
+  margin: -2px 0 -8px;
+  padding: 2px 0 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #b6c8d0 transparent;
+  scroll-behavior: auto;
 }
+.lyr-testimonials--studio .lr-track::-webkit-scrollbar { height: 4px; }
+.lyr-testimonials--studio .lr-track::-webkit-scrollbar-thumb { background: #b6c8d0; border-radius: 99px; }
+.lyr-testimonials--studio .lr-track::-webkit-scrollbar-track { background: transparent; }
+.lyr-testimonials--studio .lr-card:last-child { scroll-snap-align: end; }
 
 /* Nem kattintható kártyák: nincs kurzorcsere vagy elmozduló hover-keret. */
 .lyr-testimonials--studio .lr-card {
@@ -176,6 +188,7 @@
   gap: 0;
   min-width: 0;
   min-height: 354px;
+  scroll-snap-align: start;
   margin: 0;
   padding: clamp(24px, 2.35vw, 31px);
   border: 1px solid var(--lr-line);
@@ -194,6 +207,10 @@
 .lyr-testimonials--studio .lr-card.sh-reveal,
 .lyr-testimonials--studio .lr-card.sh-reveal.is-in { opacity: 1; transform: none; transition-delay: 0s; }
 .lyr-testimonials--studio .lr-card:hover { transform: none; }
+
+/* Tartalomra váró helyek: nincs kitalált idézet, csillagszám vagy szerző. */
+.lyr-testimonials--studio .lr-card--placeholder { border-style: dashed; box-shadow: none; }
+.lyr-testimonials--studio .lr-card--placeholder .lr-quote p { color: var(--lr-card-muted); }
 
 .lyr-testimonials--studio .lr-card--featured {
   --lr-card-ink: #f3f6f8;
@@ -424,24 +441,9 @@
   .lyr-testimonials--studio .lr-summary__icon { width: 45px; height: 45px; flex-basis: 45px; }
   .lyr-testimonials--studio .lr-summary__number { font-size: 2.1875rem; }
   .lyr-testimonials--studio .lr-track {
-    grid-template-columns: none;
-    grid-auto-flow: column;
     grid-auto-columns: calc((100% - 18px) / 2);
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 2px 0 18px;
-    margin: -2px 0 -8px;
-    scroll-snap-type: x proximity;
-    overscroll-behavior-x: contain;
-    scrollbar-width: thin;
-    scrollbar-color: #b6c8d0 transparent;
-    scroll-behavior: auto;
   }
-  .lyr-testimonials--studio .lr-track::-webkit-scrollbar { height: 4px; }
-  .lyr-testimonials--studio .lr-track::-webkit-scrollbar-thumb { background: #b6c8d0; border-radius: 99px; }
-  .lyr-testimonials--studio .lr-track::-webkit-scrollbar-track { background: transparent; }
-  .lyr-testimonials--studio .lr-card { scroll-snap-align: start; min-height: 348px; }
-  .lyr-testimonials--studio .lr-card:last-child { scroll-snap-align: end; }
+  .lyr-testimonials--studio .lr-card { min-height: 348px; }
   .lyr-testimonials--studio .lr-signoff { display: none; }
   .lyr-testimonials--studio .lr-scroll-hint { display: block; }
   .lyr-testimonials--studio .lr-foot { margin-top: 20px; }
@@ -498,7 +500,7 @@
   .lyr-testimonials.lyr-testimonials--studio { padding-block: 20px; background: #fff; }
   .lyr-testimonials--studio .lr-head { grid-template-columns: 1fr auto; }
   .lyr-testimonials--studio .lr-title { max-width: none; font-size: 24pt; }
-  .lyr-testimonials--studio .lr-track { display: grid; grid-template-columns: 1fr; grid-auto-flow: row; overflow: visible; padding: 0; margin: 0; }
+  .lyr-testimonials--studio .lr-track { display: grid; grid-template-columns: 1fr; grid-auto-flow: row; grid-auto-columns: auto; overflow: visible; padding: 0; margin: 0; }
   .lyr-testimonials--studio .lr-card { break-inside: avoid; min-height: 0; box-shadow: none; }
   .lyr-testimonials--studio .lr-card--featured { --lr-card-ink: #111; --lr-card-muted: #444; --lr-card-line: #ccc; --lr-card-stars: #6e5109; background: #fff; border-color: #999; }
   .lyr-testimonials--studio .lr-card--featured .lr-topic,

@@ -221,6 +221,13 @@
 
 	function refreshWishButtons(context) {
 		var items = wishGet();
+		document.querySelectorAll('.sh-wish-badge').forEach(function (badge) {
+			badge.textContent = items.length;
+			badge.classList.toggle('is-on', items.length > 0);
+		});
+		document.querySelectorAll('.sh-wish-btn').forEach(function (link) {
+			link.setAttribute('aria-label', 'Kedvencek, ' + items.length + ' termék');
+		});
 		(context || document).querySelectorAll('[data-layero-wish-toggle]').forEach(function (button) {
 			var id = String(button.getAttribute('data-layero-product-id') || '');
 			var active = id && items.indexOf(id) !== -1;
@@ -816,6 +823,7 @@
 	}
 
 	document.addEventListener('DOMContentLoaded', function () { boot(document); });
+	document.addEventListener('layero:wishlist-rendered', function () { initWishlist(document); });
 	$(window).on('elementor/frontend/init', function () {
 		if (!window.elementorFrontend) return;
 		window.elementorFrontend.hooks.addAction('frontend/element_ready/global', function ($scope) {

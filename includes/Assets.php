@@ -26,6 +26,7 @@ final class Assets {
 	}
 
 	public function register() {
+		wp_register_script('layero-variants', LAYERO_SHOP_UI_URL . 'assets/demo/layero-variants.js', array(), LAYERO_SHOP_UI_VERSION, true);
         wp_register_script('layero-badges', LAYERO_SHOP_UI_URL . 'assets/demo/layero-badges/layero-badges.js', array(), '20260930-badges', true);
         wp_register_script('layero-badge-adapter', LAYERO_SHOP_UI_URL . 'assets/demo/layero-badges/layero-adapter.js', array('layero-badges'), '20260930-badges', true);
 		wp_register_style(
@@ -75,7 +76,7 @@ final class Assets {
 		wp_register_script(
 			'layero-static-shop',
 			LAYERO_SHOP_UI_URL . 'assets/js/layero-static-shop.js',
-			array('layero-static-data', 'layero-origin', 'layero-badge-adapter'),
+			array('layero-static-data', 'layero-origin', 'layero-badge-adapter', 'layero-variants'),
 			LAYERO_SHOP_UI_VERSION,
 			true
 		);

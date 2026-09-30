@@ -68,7 +68,7 @@ const ADAPTER = `  var STATIC_CFG = window.LayeroShopStatic || {};
     if (root.matches && root.matches(selector)) nodes.unshift(root);
     return nodes;
   }
-  var purchaseSelector = '[data-add], [data-add-quote], [data-dr-add], [data-qv], [data-qv-add], #sh-add-btn, #sh-bundle-add, .sh-stickybar button';
+  var purchaseSelector = '[data-add], [data-add-quote], [data-dr-add], [data-qv-add], #sh-add-btn, #sh-bundle-add, .sh-stickybar button';
   function wooProductUrl(id) {
     return (STATIC_CFG.productUrls && STATIC_CFG.productUrls[id]) ||
       (STATIC_CFG.urls && STATIC_CFG.urls['kategoria.html']);
@@ -77,13 +77,13 @@ const ADAPTER = `  var STATIC_CFG = window.LayeroShopStatic || {};
   // the real Woo product page, where prices, variations and fields are checked.
   if (STATIC_CFG.commerce === 'woocommerce') {
     document.addEventListener('click', function (event) {
-      var target = event.target.closest && event.target.closest(purchaseSelector + ', .sh-cart-btn');
+      var target = event.target.closest && event.target.closest(purchaseSelector);
       if (!target) return;
       event.preventDefault();
       event.stopImmediatePropagation();
       var id = target.getAttribute('data-add') || target.getAttribute('data-add-quote') ||
-        target.getAttribute('data-dr-add') || target.getAttribute('data-qv') || new URLSearchParams(location.search).get('id');
-      var url = target.matches('.sh-cart-btn') ? STATIC_CFG.urls['kosar.html'] : wooProductUrl(id);
+        target.getAttribute('data-dr-add') || target.getAttribute('data-qv-add') || new URLSearchParams(location.search).get('id');
+      var url = wooProductUrl(id);
       if (url) location.assign(url);
     }, true);
   }
@@ -114,12 +114,21 @@ const ADAPTER = `  var STATIC_CFG = window.LayeroShopStatic || {};
       if (next) img.setAttribute('href', next);
     });
     if (STATIC_CFG.commerce === 'woocommerce') {
+      var wishes = staticNodes('[data-wish]', root);
+      wishes.forEach(function (button) {
+        var id = button.getAttribute('data-wish');
+        var product = (window.SHOP_PRODUCTS || []).find(function (item) { return item.id === id; });
+        if (!product || !product.wc_id) return;
+        button.removeAttribute('data-wish');
+        button.setAttribute('data-layero-wish-toggle', '');
+        button.setAttribute('data-layero-product-id', product.wc_id);
+      });
+      if (wishes.length) document.dispatchEvent(new CustomEvent('layero:wishlist-rendered'));
       staticNodes(purchaseSelector, root).forEach(function (button) {
         if (button.hasAttribute('data-qv')) return;
         if (button.textContent !== 'Termék megnyitása') button.textContent = 'Termék megnyitása';
         button.setAttribute('aria-label', 'Termék megnyitása');
       });
-      staticNodes('.sh-cart-badge', root).forEach(function (badge) { badge.hidden = true; });
     }
   }
 `;
@@ -194,6 +203,9 @@ function prepareSync(shopRoot = SHOP_ROOT, pluginRoot = PLUGIN_ROOT) {
   add('assets/css/layero-static-shop.css', shopCss);
   add('assets/js/layero-static-data.js', shopData);
   add('assets/js/layero-static-shop.js', adaptedJs);
+  const variantsJs = read(path.join(shopRoot, 'assets/layero-variants.js'));
+  new vm.Script(variantsJs, { filename: 'layero-variants.js' });
+  add('assets/demo/layero-variants.js', variantsJs);
   const consentJs = read(path.join(shopRoot, 'assets/layero-consent.js'));
   new vm.Script(consentJs, { filename: 'layero-consent.js' });
   add('assets/js/layero-consent.js', consentJs);

@@ -11,7 +11,7 @@
     if (form.dataset.layeroOnlineReady) return;
     form.dataset.layeroOnlineReady = '1';
     var rules = [['[name="name"], [name="nev"], #cf-nev', 100], ['input[type="email"]', 254], ['textarea', 4000]];
-    rules.forEach(function (rule) { var field = form.querySelector(rule[0]); if (field && field.maxLength < 0) field.maxLength = rule[1]; });
+    rules.forEach(function (rule) { var field = form.querySelector(rule[0]); if (field && (field.maxLength < 0 || field.maxLength > rule[1])) field.maxLength = rule[1]; });
     if (!form.querySelector('[name="consent"]')) {
       var label = text('label', ' Elolvastam az adatvédelmi tájékoztatót. ');
       label.className = 'lyr-form-consent';
@@ -54,6 +54,12 @@
     data.set('message', value(form, '[name="message"], [name="uzenet"], [name="otlet"], #cf-uzenet, textarea'));
     data.set('topic', form.getAttribute('data-layero-form-topic') || value(form, '[name="tema"]:checked, #cf-tema') || 'Kapcsolat / ajánlatkérés');
     data.set('occasion', value(form, '[name="occasion"], [name="alkalom"]:checked'));
+    data.set('company', value(form, '[name="company"], [name="ceg"]'));
+    data.set('phone', value(form, '[name="phone"], [name="tel"]'));
+    data.set('quantity', value(form, '[name="quantity"], [name="darab"]'));
+    data.set('deadline', value(form, '[name="deadline"], [name="hatarido"]'));
+    data.set('direction', value(form, '[name="direction"]:checked, [name="irany"]:checked, [name="tema"]:checked'));
+    if (form.hasAttribute('data-b2b-quote')) data.set('topic', 'Céges ajánlatkérés');
     data.set('action', 'layero_contact_submit'); data.set('nonce', config.contactNonce);
     var button = form.querySelector('[type="submit"]');
     form.dataset.layeroSending = '1'; if (button) button.disabled = true; status.textContent = 'Küldés…';

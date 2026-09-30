@@ -14,8 +14,10 @@ final class Page_Builder {
 		add_action('init', array(__CLASS__, 'maybe_ensure_required_pages'), 20);
 		add_action('admin_init', array(__CLASS__, 'maybe_upgrade_faq'));
 		add_action('admin_init', array(__CLASS__, 'maybe_upgrade_catalog'));
+		add_action('admin_init', array(__CLASS__, 'maybe_upgrade_information_pages'));
 		add_action('admin_init', array(__CLASS__, 'maybe_restore_home_whofor'));
 		add_action('admin_init', array(__CLASS__, 'maybe_remove_obsolete_blocks'));
+		add_action('admin_init', array(__CLASS__, 'maybe_remove_home_gallery'));
 		add_filter('wp_robots', array(__CLASS__, 'legal_draft_robots'));
 		add_action('admin_action_layero_build_pages', array(__CLASS__, 'handle_build'));
 		add_action('admin_notices', array(__CLASS__, 'admin_notice'));
@@ -232,7 +234,6 @@ final class Page_Builder {
 			'layero_product_carousel',
 			'layero_why_layero',
 			'layero_testimonials',
-			'layero_gallery_strip',
 			'layero_custom_cta',
 			'layero_why_shop',
 		);
@@ -315,6 +316,31 @@ final class Page_Builder {
 		}
 	}
 
+	/** Remove only the retired homepage gallery, preserving a separate recovery snapshot. */
+	public static function maybe_remove_home_gallery() {
+		if (! current_user_can('manage_options') || 'page' !== get_option('show_on_front')) { return; }
+		$post_id = (int) get_option('page_on_front');
+		$page = get_post($post_id);
+		if (! $page || 'page' !== $page->post_type || get_post_meta($post_id, '_layero_home_gallery_revision', true)) { return; }
+		$raw = get_post_meta($post_id, '_elementor_data', true);
+		$data = json_decode($raw, true);
+		if (! is_array($data)) { return; }
+		$removed = 0;
+		$updated = self::without_widgets($data, array('layero_gallery_strip'), $removed);
+		if (! $removed) { return; }
+		$backup = array('elementor_data' => $raw, 'post_content' => $page->post_content, 'saved_at' => gmdate('c'));
+		if (! get_post_meta($post_id, '_layero_home_gallery_backup', true)
+			&& ! add_post_meta($post_id, '_layero_home_gallery_backup', wp_slash($backup), true)) { return; }
+		if (! update_post_meta($post_id, '_elementor_data', wp_slash(wp_json_encode($updated)))) { return; }
+		delete_post_meta($post_id, '_elementor_element_cache');
+		delete_post_meta($post_id, '_elementor_css');
+		if (class_exists('\\Elementor\\Core\\Files\\CSS\\Post')) {
+			(new \Elementor\Core\Files\CSS\Post($post_id))->delete();
+		}
+		clean_post_cache($post_id);
+		update_post_meta($post_id, '_layero_home_gallery_revision', '1');
+	}
+
 	private static function without_widgets($elements, $types, &$removed) {
 		$kept = array();
 		foreach ($elements as $element) {
@@ -332,6 +358,10 @@ final class Page_Builder {
 	   RÓLUNK (About)
 	   ────────────────────────────────────────────────────────────── */
 	private static function about_data() {
+		return self::information_page('rolunk');
+	}
+
+	private static function legacy_about_data() {
 		$asset = self::asset_url();
 		$sections = array();
 
@@ -571,6 +601,10 @@ final class Page_Builder {
 	   ────────────────────────────────────────────────────────────── */
 
 	private static function contact_data() {
+		return self::information_page('kapcsolat');
+	}
+
+	private static function legacy_contact_data() {
 		$sections = array();
 
 		$sections[] = self::html_section(
@@ -606,6 +640,48 @@ final class Page_Builder {
 		return array(
 			self::html_section('<div data-layero-page="kviz"><div id="sh-quiz-mount"></div></div>'),
 		);
+	}
+
+	private static function information_page($slug) {
+		return array(self::wrap_in_section(array(self::make_widget('layero_static_page', array('page' => $slug)))));
+	}
+
+	/** Replace only unchanged generated pages, after preserving their original Elementor data. */
+	public static function maybe_upgrade_information_pages() {
+		if (! current_user_can('manage_options')) { return; }
+		foreach (array('rolunk' => 'legacy_about_data', 'kapcsolat' => 'legacy_contact_data') as $slug => $method) {
+			$page = self::find_page_by_slug($slug);
+			if (! $page || get_post_meta($page->ID, '_layero_information_revision', true)) { continue; }
+			$raw = get_post_meta($page->ID, '_elementor_data', true);
+			$data = json_decode($raw, true);
+			if (! is_array($data) || self::information_signature($data) !== self::information_signature(self::$method())) { continue; }
+			$backup = array('elementor_data' => $raw, 'post_content' => $page->post_content, 'saved_at' => gmdate('c'));
+			if (! add_post_meta($page->ID, '_layero_information_backup_0_10_18', wp_slash($backup), true)) { continue; }
+			self::set_elementor_data($page->ID, self::information_page($slug));
+			delete_post_meta($page->ID, '_elementor_element_cache');
+			delete_post_meta($page->ID, '_elementor_css');
+			if (class_exists('\\Elementor\\Core\\Files\\CSS\\Post')) { (new \Elementor\Core\Files\CSS\Post($page->ID))->delete(); }
+			clean_post_cache($page->ID);
+			update_post_meta($page->ID, '_layero_information_revision', '0.10.18');
+		}
+	}
+
+	private static function information_signature($elements) {
+		$normalize = function ($value) use (&$normalize) {
+			if (is_object($value)) { $value = get_object_vars($value); }
+			if (is_array($value)) {
+				unset($value['_id']);
+				foreach ($value as $key => $item) { $value[$key] = $normalize($item); }
+				ksort($value);
+				return $value;
+			}
+			if (! is_string($value)) { return $value; }
+			$value = str_replace(array(self::asset_url(), '.png'), array('ASSET/', '.webp'), $value);
+			return preg_replace('/\s+/u', ' ', trim($value));
+		};
+		return array_map(function ($widget) use ($normalize) {
+			return array($widget['elType'] ?? '', $widget['widgetType'] ?? '', $normalize($widget['settings'] ?? array()), self::information_signature($widget['elements'] ?? array()));
+		}, $elements);
 	}
 
 	/* ──────────────────────────────────────────────────────────────

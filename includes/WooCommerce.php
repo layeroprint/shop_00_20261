@@ -18,6 +18,12 @@ final class WooCommerce {
 	}
 
 	private function __construct() {
+		// Layero does not track quantities or publish stock availability.
+		add_filter('pre_option_woocommerce_manage_stock', array($this, 'stock_management_disabled'));
+		add_filter('pre_option_woocommerce_stock_format', array($this, 'stock_amount_hidden'));
+		add_filter('woocommerce_get_availability_text', '__return_empty_string');
+		add_filter('woocommerce_get_stock_html', '__return_empty_string');
+		add_filter('woocommerce_display_product_attributes', array($this, 'visible_product_attributes'));
 		add_filter('woocommerce_product_data_tabs', array($this, 'add_product_visual_tab'));
 		add_action('woocommerce_product_data_panels', array($this, 'render_product_visual_panel'));
 		add_action('woocommerce_admin_process_product_object', array($this, 'save_product_visual_fields'));
@@ -28,6 +34,21 @@ final class WooCommerce {
 		add_action('woocommerce_checkout_create_order_line_item', array($this, 'add_order_item_meta'), 10, 4);
 		add_shortcode('layero_mini_cart', array($this, 'mini_cart_shortcode'));
 		add_filter('woocommerce_loop_add_to_cart_link', array($this, 'personalization_link'), 10, 2);
+	}
+
+	public function stock_management_disabled() {
+		return 'no';
+	}
+
+	public function stock_amount_hidden() {
+		return 'no_amount';
+	}
+
+	public function visible_product_attributes($attributes) {
+		return array_filter($attributes, static function ($attribute) {
+			$label = wp_strip_all_tags($attribute['label'] ?? '');
+			return ! preg_match('/gyártási idő|készlet|raktár|stock|lead.?time/ui', $label);
+		});
 	}
 
 	public function personalization_link($html, $product) {
@@ -146,7 +167,7 @@ final class WooCommerce {
 				'label' => __('Gyártási idő', 'layero-shop-ui'),
 				'value' => $lead_time,
 				'options' => $lead_options,
-				'description' => __('A termékkártyán kis információs címkeként jelenik meg.', 'layero-shop-ui'),
+				'description' => __('A webshopban a gyártási idő kijelzése ki van kapcsolva; ez a mező csak korábbi adatok megőrzésére szolgál.', 'layero-shop-ui'),
 				'desc_tip' => true,
 			)
 		);

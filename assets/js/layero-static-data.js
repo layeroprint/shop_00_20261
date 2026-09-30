@@ -306,7 +306,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "volkswagen-logos-kulcstarto",
@@ -408,7 +427,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "ferrari-logos-kulcstarto",
@@ -515,7 +553,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "roblox-robux-logos-kulcstarto",
@@ -617,7 +674,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "skoda-logos-kulcstarto",
@@ -725,7 +801,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "bmw-logos-kulcstarto",
@@ -827,7 +922,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "toyota-logos-kulcstarto",
@@ -935,7 +1049,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "ford-logos-kulcstarto",
@@ -1037,7 +1170,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "audi-logos-kulcstarto",
@@ -1139,7 +1291,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "f1-logos-kulcstarto",
@@ -1241,7 +1412,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "fc-barcelona-kulcstarto",
@@ -1348,7 +1538,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "real-madrid-kulcstarto",
@@ -1452,7 +1661,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "hello-kitty-kulcstarto",
@@ -1550,7 +1778,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "mickey-mouse-kulcstarto",
@@ -1648,7 +1895,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "mario-kerdojel-kocka-kulcstarto",
@@ -1746,7 +2012,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "angel-lilo-stitch-kulcstarto",
@@ -1848,7 +2133,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "stitch-kulcstarto",
@@ -1951,7 +2255,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "demogorgon-stranger-things-kulcstarto",
@@ -2054,7 +2377,25 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "minecraft-crafting-table-clicker-kulcstarto",
@@ -2158,7 +2499,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "minecraft-tnt-kulcstarto",
@@ -2261,7 +2621,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "minecraft-skeleton-kulcstarto",
@@ -2361,7 +2740,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "golden-retriever-flexi-kulcstarto",
@@ -2472,7 +2870,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "mosomedve-flexi-kulcstarto",
@@ -2577,7 +2994,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "fekete-cica-flexi-kulcstarto",
@@ -2680,7 +3116,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "tacsko-flexi-kulcstarto",
@@ -2788,7 +3243,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "beagle-kulcstarto",
@@ -2886,215 +3360,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
-  },
-  {
-    "id": "maci-szivvel-barna-kulcstarto",
-    "nev": "Maci szívvel kulcstartó (barna)",
-    "cat": "kulcstartok",
-    "ar": 10,
-    "kepek": [
-      "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg",
-      "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
-      "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg"
     ],
-    "leiras": "Barna macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-    "hosszu": [
-      "A kis medve két mancsával tartja a piros szívet. A 3D nyomtatott felület szövetszerű mintázata különleges részletet ad a figurának; szeretetteljes apró ajándék párnak vagy barátnak.",
-      "3D nyomtatott PLA figura, fém kulcskarikával. A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek. Az ár 1 darab kulcstartóra vonatkozik."
-    ],
-    "opciok": [],
-    "specs": [
-      [
-        "Méret (tájékoztató)",
-        "Kb. 4–5 cm (a nyomtatott rész hossza, fémkarika nélkül)."
-      ]
-    ],
-    "keszleten": true,
-    "szemelyre_szabott": false,
-    "visszakuldheto": true,
-    "seo": {
-      "cim": "Maci szívvel kulcstartó (barna) | Layero",
-      "meta_leiras": "Barna macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "slug": "maci-szivvel-barna-kulcstarto",
-      "kozossegi_cim": "Maci szívvel kulcstartó (barna)",
-      "kozossegi_leiras": "Barna macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "kozossegi_kep": "/images/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg"
-    },
-    "azonositok": [],
-    "csatornak": {
-      "webshop": true,
-      "seo": true,
-      "google": false,
-      "meta": false
-    },
-    "structured_data": {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Maci szívvel kulcstartó (barna)",
-      "description": "Barna macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "sku": "LAY-KEY-027",
-      "image": [
-        "/images/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg",
-        "/images/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
-        "/images/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg"
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
       ],
-      "url": "https://layero.ro/termek/maci-szivvel-barna-kulcstarto",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "RON",
-        "price": 10,
-        "availability": "https://schema.org/InStock",
-        "url": "https://layero.ro/termek/maci-szivvel-barna-kulcstarto"
-      }
-    },
-    "keszlet_adatok": [
-      {
-        "variacio_id": null,
-        "sku": "LAY-KEY-027",
-        "fizikailag": 10,
-        "foglalt": 0,
-        "elerheto": 10,
-        "minimum": 0,
-        "varhato_beerkezes": null,
-        "polc": "",
-        "forras": "local"
-      }
-    ],
-    "gyartas": {
-      "mode": "stocked",
-      "ready_now": true,
-      "lead_days": 0,
-      "message": "Saját készleten — azonnal csomagolható."
-    },
-    "kapcsolatok": {
-      "kapcsolodo": [],
-      "kiegeszitok": [],
-      "upsell": []
-    },
-    "csomagok": [],
-    "nyelvek": {
-      "hu": {
-        "name": "Maci szívvel kulcstartó (barna)",
-        "slug": "maci-szivvel-barna-kulcstarto",
-        "short_description": "Barna macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "description": "<p>A kis medve két mancsával tartja a piros szívet. A 3D nyomtatott felület szövetszerű mintázata különleges részletet ad a figurának; szeretetteljes apró ajándék párnak vagy barátnak.</p>\n<ul>\n<li>3D nyomtatott PLA figura, fém kulcskarikával.</li>\n<li>A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek.</li>\n<li>Az ár 1 darab kulcstartóra vonatkozik.</li>\n</ul>",
-        "seo_title": "Maci szívvel kulcstartó (barna) | Layero",
-        "meta_description": "Barna macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "social_title": "Maci szívvel kulcstartó (barna)",
-        "social_description": "Barna macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "social_image": "/images/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg"
-      }
-    },
-    "elerheto_nyelvek": [
-      "hu"
-    ]
-  },
-  {
-    "id": "maci-szivvel-kek-kulcstarto",
-    "nev": "Maci szívvel kulcstartó (kék)",
-    "cat": "kulcstartok",
-    "ar": 10,
-    "kepek": [
-      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
-      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
-      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
-      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
-      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
-    ],
-    "leiras": "Kék macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-    "hosszu": [
-      "A kék medve és az élénk piros szív színpárja emeli ki ezt a figurát. A szövetszerű mintázat a 3D nyomtatott felület része, amely közelről is látványossá teszi a kis ajándékot.",
-      "3D nyomtatott PLA figura, fém kulcskarikával. A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek. Az ár 1 darab kulcstartóra vonatkozik."
-    ],
-    "opciok": [],
-    "specs": [
-      [
-        "Méret (tájékoztató)",
-        "Kb. 4–5 cm (a nyomtatott rész hossza, fémkarika nélkül)."
-      ]
-    ],
-    "keszleten": true,
-    "szemelyre_szabott": false,
-    "visszakuldheto": true,
-    "seo": {
-      "cim": "Maci szívvel kulcstartó (kék) | Layero",
-      "meta_leiras": "Kék macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "slug": "maci-szivvel-kek-kulcstarto",
-      "kozossegi_cim": "Maci szívvel kulcstartó (kék)",
-      "kozossegi_leiras": "Kék macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "kozossegi_kep": "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg"
-    },
-    "azonositok": [],
-    "csatornak": {
-      "webshop": true,
-      "seo": true,
-      "google": false,
-      "meta": false
-    },
-    "structured_data": {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Maci szívvel kulcstartó (kék)",
-      "description": "Kék macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "sku": "LAY-KEY-028",
-      "image": [
-        "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
-        "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
-        "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
-        "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
-        "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
       ],
-      "url": "https://layero.ro/termek/maci-szivvel-kek-kulcstarto",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "RON",
-        "price": 10,
-        "availability": "https://schema.org/InStock",
-        "url": "https://layero.ro/termek/maci-szivvel-kek-kulcstarto"
-      }
-    },
-    "keszlet_adatok": [
-      {
-        "variacio_id": null,
-        "sku": "LAY-KEY-028",
-        "fizikailag": 10,
-        "foglalt": 0,
-        "elerheto": 10,
-        "minimum": 0,
-        "varhato_beerkezes": null,
-        "polc": "",
-        "forras": "local"
-      }
-    ],
-    "gyartas": {
-      "mode": "stocked",
-      "ready_now": true,
-      "lead_days": 0,
-      "message": "Saját készleten — azonnal csomagolható."
-    },
-    "kapcsolatok": {
-      "kapcsolodo": [],
-      "kiegeszitok": [],
-      "upsell": []
-    },
-    "csomagok": [],
-    "nyelvek": {
-      "hu": {
-        "name": "Maci szívvel kulcstartó (kék)",
-        "slug": "maci-szivvel-kek-kulcstarto",
-        "short_description": "Kék macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "description": "<p>A kék medve és az élénk piros szív színpárja emeli ki ezt a figurát. A szövetszerű mintázat a 3D nyomtatott felület része, amely közelről is látványossá teszi a kis ajándékot.</p>\n<ul>\n<li>3D nyomtatott PLA figura, fém kulcskarikával.</li>\n<li>A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek.</li>\n<li>Az ár 1 darab kulcstartóra vonatkozik.</li>\n</ul>",
-        "seo_title": "Maci szívvel kulcstartó (kék) | Layero",
-        "meta_description": "Kék macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "social_title": "Maci szívvel kulcstartó (kék)",
-        "social_description": "Kék macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "social_image": "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg"
-      }
-    },
-    "elerheto_nyelvek": [
-      "hu"
-    ]
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "mehecske-kulcstarto",
@@ -3196,7 +3481,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "kutya-ruhaban-kulcstarto",
@@ -3296,211 +3600,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
-  },
-  {
-    "id": "polip-piros-kulcstarto",
-    "nev": "Polip kulcstartó (piros)",
-    "cat": "kulcstartok",
-    "ar": 10,
-    "kepek": [
-      "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg",
-      "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
-      "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg"
     ],
-    "leiras": "Piros polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-    "hosszu": [
-      "A kerek fej körül szétterülő karok látványos sziluettet adnak a piros polipnak. A csuklós részeknek köszönhetően a figura alakja mozgatható, így minden kézbevételnél más pózt vehet fel.",
-      "3D nyomtatott PLA figura, fém kulcskarikával. A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek. Az ár 1 darab kulcstartóra vonatkozik."
-    ],
-    "opciok": [],
-    "specs": [
-      [
-        "Méret (tájékoztató)",
-        "Kb. 4–5 cm (a nyomtatott rész hossza, fémkarika nélkül)."
-      ]
-    ],
-    "keszleten": true,
-    "szemelyre_szabott": false,
-    "visszakuldheto": true,
-    "seo": {
-      "cim": "Polip kulcstartó (piros) | Layero",
-      "meta_leiras": "Piros polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "slug": "polip-piros-kulcstarto",
-      "kozossegi_cim": "Polip kulcstartó (piros)",
-      "kozossegi_leiras": "Piros polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "kozossegi_kep": "/images/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg"
-    },
-    "azonositok": [],
-    "csatornak": {
-      "webshop": true,
-      "seo": true,
-      "google": false,
-      "meta": false
-    },
-    "structured_data": {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Polip kulcstartó (piros)",
-      "description": "Piros polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "sku": "LAY-KEY-031",
-      "image": [
-        "/images/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg",
-        "/images/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
-        "/images/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg"
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
       ],
-      "url": "https://layero.ro/termek/polip-piros-kulcstarto",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "RON",
-        "price": 10,
-        "availability": "https://schema.org/InStock",
-        "url": "https://layero.ro/termek/polip-piros-kulcstarto"
-      }
-    },
-    "keszlet_adatok": [
-      {
-        "variacio_id": null,
-        "sku": "LAY-KEY-031",
-        "fizikailag": 10,
-        "foglalt": 0,
-        "elerheto": 10,
-        "minimum": 0,
-        "varhato_beerkezes": null,
-        "polc": "",
-        "forras": "local"
-      }
-    ],
-    "gyartas": {
-      "mode": "stocked",
-      "ready_now": true,
-      "lead_days": 0,
-      "message": "Saját készleten — azonnal csomagolható."
-    },
-    "kapcsolatok": {
-      "kapcsolodo": [],
-      "kiegeszitok": [],
-      "upsell": []
-    },
-    "csomagok": [],
-    "nyelvek": {
-      "hu": {
-        "name": "Polip kulcstartó (piros)",
-        "slug": "polip-piros-kulcstarto",
-        "short_description": "Piros polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "description": "<p>A kerek fej körül szétterülő karok látványos sziluettet adnak a piros polipnak. A csuklós részeknek köszönhetően a figura alakja mozgatható, így minden kézbevételnél más pózt vehet fel.</p>\n<ul>\n<li>3D nyomtatott PLA figura, fém kulcskarikával.</li>\n<li>A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek.</li>\n<li>Az ár 1 darab kulcstartóra vonatkozik.</li>\n</ul>",
-        "seo_title": "Polip kulcstartó (piros) | Layero",
-        "meta_description": "Piros polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "social_title": "Polip kulcstartó (piros)",
-        "social_description": "Piros polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "social_image": "/images/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg"
-      }
-    },
-    "elerheto_nyelvek": [
-      "hu"
-    ]
-  },
-  {
-    "id": "polip-rozsaszin-kulcstarto",
-    "nev": "Polip kulcstartó (rózsaszín)",
-    "cat": "kulcstartok",
-    "ar": 10,
-    "kepek": [
-      "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
-      "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
-      "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
-    ],
-    "leiras": "Rózsaszín polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-    "hosszu": [
-      "A rózsaszín polip kerek feje és szétterülő karjai könnyen felismerhető formát alkotnak. Mozgatható részletei teszik különlegessé ezt a táskára vagy kulcsokra akasztható figurát.",
-      "3D nyomtatott PLA figura, fém kulcskarikával. A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek. Az ár 1 darab kulcstartóra vonatkozik."
-    ],
-    "opciok": [],
-    "specs": [
-      [
-        "Méret (tájékoztató)",
-        "Kb. 4–5 cm (a nyomtatott rész hossza, fémkarika nélkül)."
-      ]
-    ],
-    "keszleten": true,
-    "szemelyre_szabott": false,
-    "visszakuldheto": true,
-    "seo": {
-      "cim": "Polip kulcstartó (rózsaszín) | Layero",
-      "meta_leiras": "Rózsaszín polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "slug": "polip-rozsaszin-kulcstarto",
-      "kozossegi_cim": "Polip kulcstartó (rózsaszín)",
-      "kozossegi_leiras": "Rózsaszín polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "kozossegi_kep": "/images/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg"
-    },
-    "azonositok": [],
-    "csatornak": {
-      "webshop": true,
-      "seo": true,
-      "google": false,
-      "meta": false
-    },
-    "structured_data": {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Polip kulcstartó (rózsaszín)",
-      "description": "Rózsaszín polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-      "sku": "LAY-KEY-032",
-      "image": [
-        "/images/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
-        "/images/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
-        "/images/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
       ],
-      "url": "https://layero.ro/termek/polip-rozsaszin-kulcstarto",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "RON",
-        "price": 10,
-        "availability": "https://schema.org/InStock",
-        "url": "https://layero.ro/termek/polip-rozsaszin-kulcstarto"
-      }
-    },
-    "keszlet_adatok": [
-      {
-        "variacio_id": null,
-        "sku": "LAY-KEY-032",
-        "fizikailag": 10,
-        "foglalt": 0,
-        "elerheto": 10,
-        "minimum": 0,
-        "varhato_beerkezes": null,
-        "polc": "",
-        "forras": "local"
-      }
-    ],
-    "gyartas": {
-      "mode": "stocked",
-      "ready_now": true,
-      "lead_days": 0,
-      "message": "Saját készleten — azonnal csomagolható."
-    },
-    "kapcsolatok": {
-      "kapcsolodo": [],
-      "kiegeszitok": [],
-      "upsell": []
-    },
-    "csomagok": [],
-    "nyelvek": {
-      "hu": {
-        "name": "Polip kulcstartó (rózsaszín)",
-        "slug": "polip-rozsaszin-kulcstarto",
-        "short_description": "Rózsaszín polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "description": "<p>A rózsaszín polip kerek feje és szétterülő karjai könnyen felismerhető formát alkotnak. Mozgatható részletei teszik különlegessé ezt a táskára vagy kulcsokra akasztható figurát.</p>\n<ul>\n<li>3D nyomtatott PLA figura, fém kulcskarikával.</li>\n<li>A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek.</li>\n<li>Az ár 1 darab kulcstartóra vonatkozik.</li>\n</ul>",
-        "seo_title": "Polip kulcstartó (rózsaszín) | Layero",
-        "meta_description": "Rózsaszín polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "social_title": "Polip kulcstartó (rózsaszín)",
-        "social_description": "Rózsaszín polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
-        "social_image": "/images/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg"
-      }
-    },
-    "elerheto_nyelvek": [
-      "hu"
-    ]
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "emoji-szivszem-kulcstarto",
@@ -3600,7 +3719,25 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "evfordulo",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "malac-kulcstarto",
@@ -3704,7 +3841,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "glock-pisztoly-kulcstarto",
@@ -3804,7 +3960,25 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "mercedes-logos-kulcstarto",
@@ -3906,7 +4080,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "deutz-fahr-logos-kulcstarto",
@@ -4008,7 +4201,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "monster-energy-kulcstarto",
@@ -4110,7 +4322,25 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "john-deere-logos-kulcstarto",
@@ -4213,7 +4443,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "focilabda-kulcstarto",
@@ -4315,7 +4564,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "leopard-hernyo-flexi-kulcstarto",
@@ -4414,7 +4682,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "medve-kulcstarto",
@@ -4516,7 +4803,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "ballagasi-kulcstarto",
@@ -4620,7 +4926,22 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat"
+      ],
+      "alkalom": [
+        "ballagas"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "minnie-mouse-shadow-box-lampa",
@@ -4741,7 +5062,27 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "feny",
+        "dekor",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "fortnite-led-lampa",
@@ -4851,7 +5192,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "feny",
+        "dekor",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "assassins-creed-led-tabla",
@@ -4969,7 +5329,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "feny",
+        "dekor",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "hello-fall-oszi-felirat",
@@ -5081,7 +5460,24 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "oszi-tok-vaza",
@@ -5197,7 +5593,24 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "bordazott-korte-dekor",
@@ -5313,7 +5726,24 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "leveles-mintas-mecsestarto",
@@ -5437,7 +5867,25 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "feny",
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "jurassic-park-lithophane-lampa",
@@ -5556,7 +6004,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "feny",
+        "dekor",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "f1-2026-versenynaptar",
@@ -5668,7 +6135,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "dekor",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "3d-tulipan-csokor",
@@ -5780,7 +6266,28 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "ballagas",
+        "karacsony",
+        "evfordulo",
+        "csak-ugy",
+        "anyak-napja"
+      ],
+      "stilus": [
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "szemuvegtarto",
@@ -5886,7 +6393,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus",
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "motoros-borostarto",
@@ -6009,7 +6535,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "dekor",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "bordazott-gomb-lampa",
@@ -6115,7 +6660,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "feny",
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "days-until-christmas-visszaszamlalo",
@@ -6223,7 +6787,24 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "karacsony"
+      ],
+      "stilus": [
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "karacsonyi-falu-lampa",
@@ -6335,7 +6916,25 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "karacsony"
+      ],
+      "stilus": [
+        "feny",
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "voronoi-szogletes-lampa",
@@ -6448,7 +7047,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "feny",
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "csaladi-szobor",
@@ -6560,7 +7178,28 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "evfordulo",
+        "csak-ugy",
+        "babaszuletes",
+        "anyak-napja"
+      ],
+      "stilus": [
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "szarvas-shadow-box-lampa",
@@ -6670,7 +7309,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "feny",
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "baba-elefant-szuletesi-lampa",
@@ -6786,7 +7444,24 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat"
+      ],
+      "alkalom": [
+        "babaszuletes"
+      ],
+      "stilus": [
+        "feny",
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "szarvas-borostarto",
@@ -6898,7 +7573,25 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "karacsonyi-fenyofa-lampa",
@@ -7010,7 +7703,25 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "karacsony"
+      ],
+      "stilus": [
+        "feny",
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "lord-of-the-rings-plakat-tabla",
@@ -7122,7 +7833,25 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "dekor",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "oszi-leveles-tal",
@@ -7230,7 +7959,15 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "enabled": false,
+      "kinek": [],
+      "alkalom": [],
+      "stilus": []
+    },
+    "ajanlhato": false
   },
   {
     "id": "leveles-viragtarto",
@@ -7340,7 +8077,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy",
+        "anyak-napja"
+      ],
+      "stilus": [
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "f1-2025-versenynaptar",
@@ -7456,7 +8212,26 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "dekor",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "stitch-nevtabla-lampa",
@@ -7573,7 +8348,27 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "feny",
+        "dekor",
+        "rajongoi"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "olelkezo-par-szobor",
@@ -7685,7 +8480,24 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     },
     "elerheto_nyelvek": [
       "hu"
-    ]
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "evfordulo",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "dekor"
+      ],
+      "enabled": true
+    }
   },
   {
     "id": "sziv-ekg-dekor",
@@ -7782,6 +8594,440 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
         "slug": "sziv-ekg-dekor",
         "short_description": "3D nyomtatott szív EKG (szívverés) vonalú dekoráció. Romantikus ajándék pároknak, orvosoknak, nővéreknek! Tartós PLA anyagból készült.",
         "description": "<p>3D nyomtatott szív EKG (szívverés) vonalú dekoráció. Romantikus ajándék pároknak, orvosoknak, nővéreknek! Tartós PLA anyagból készült.</p>\n<p><strong>Miért jó választás?</strong> Ez a karakteres 3D nyomtatott dekoráció kis részletekkel teszi személyesebbé az otthont. Polcon, komódon, asztalon vagy egy tematikus összeállítás részeként is könnyen elhelyezhető.</p>\n<p><strong>Részletek, amelyek számítanak.</strong> A rétegről rétegre felépített forma közelről izgalmas textúrát, távolabbról egységes sziluettet mutat. A könnyű PLA anyag praktikus, a tárgy pedig egyszerűen áthelyezhető, amikor új hangulatot szeretnél teremteni.</p>\n<p><strong>Öröm adni és használni.</strong> Ajándéknak is jó választás, mert nem tömegtermék-hatású, hanem egy konkrét érdeklődéshez, alkalomhoz vagy enteriőrhöz kapcsolódik. Születésnapra, ünnepre, lakásavatóra vagy kedves meglepetésként is örömet szerezhet.</p>\n<p><strong>Tedd személyesebbé a mindennapokat.</strong> Válaszd, ha egy látványos, mégis könnyen kombinálható darabot keresel, amely több személyiséget visz a helyiségbe.</p>",
+        "seo_title": "",
+        "meta_description": "",
+        "social_title": "",
+        "social_description": "",
+        "social_image": ""
+      }
+    },
+    "elerheto_nyelvek": [
+      "hu"
+    ],
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "evfordulo",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "dekor"
+      ],
+      "enabled": true
+    }
+  },
+  {
+    "id": "maci-szivvel-kulcstarto",
+    "nev": "Maci szívvel kulcstartó",
+    "cat": "kulcstartok",
+    "ar": 10,
+    "kepek": [
+      "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg",
+      "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
+      "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg",
+      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
+      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
+      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
+      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
+      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
+    ],
+    "leiras": "Választható színű macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
+    "hosszu": [
+      "A kis medve két mancsával tartja a piros szívet. A 3D nyomtatott felület szövetszerű mintázata különleges részletet ad a figurának; szeretetteljes apró ajándék párnak vagy barátnak.",
+      "3D nyomtatott PLA figura, fém kulcskarikával. A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek. Az ár 1 darab kulcstartóra vonatkozik."
+    ],
+    "opciok": [
+      {
+        "id": "szin",
+        "nev": "Szín",
+        "ertekek": [
+          "Barna",
+          "Kék"
+        ],
+        "variacio": true
+      }
+    ],
+    "specs": [
+      [
+        "Méret (tájékoztató)",
+        "Kb. 4–5 cm (a nyomtatott rész hossza, fémkarika nélkül)."
+      ]
+    ],
+    "keszleten": true,
+    "badges": [
+      {
+        "id": "inStock"
+      }
+    ],
+    "variaciok": [
+      {
+        "id": "19",
+        "sku": "LAY-KEY-027-V",
+        "regi_id": "maci-szivvel-barna-kulcstarto",
+        "attributumok": {
+          "szin": "Barna"
+        },
+        "ar": 10,
+        "kepek": [
+          "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg",
+          "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
+          "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg",
+          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
+          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
+          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
+          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
+          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
+        ],
+        "rendelheto": true,
+        "max_mennyiseg": 10
+      },
+      {
+        "id": "20",
+        "sku": "LAY-KEY-028-V",
+        "regi_id": "maci-szivvel-kek-kulcstarto",
+        "attributumok": {
+          "szin": "Kék"
+        },
+        "ar": 10,
+        "kepek": [
+          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
+          "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
+          "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg",
+          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
+          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
+          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
+          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
+        ],
+        "rendelheto": true,
+        "max_mennyiseg": 10
+      }
+    ],
+    "ar_max": 10,
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "par",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "evfordulo",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    },
+    "ajanlhato": true,
+    "szemelyre_szabott": false,
+    "visszakuldheto": true,
+    "seo": {
+      "cim": "Maci szívvel kulcstartó",
+      "meta_leiras": "Választható színű macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
+      "slug": "maci-szivvel-kulcstarto",
+      "kozossegi_cim": "Maci szívvel kulcstartó",
+      "kozossegi_leiras": "",
+      "kozossegi_kep": "/images/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg"
+    },
+    "azonositok": [],
+    "csatornak": {
+      "webshop": true,
+      "seo": true,
+      "google": false,
+      "meta": false
+    },
+    "structured_data": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Maci szívvel kulcstartó",
+      "description": "Választható színű macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
+      "sku": "LAY-VAR-MACI-SZIV",
+      "image": [
+        "/images/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg",
+        "/images/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
+        "/images/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg",
+        "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
+        "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
+        "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
+        "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
+        "/images/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
+      ],
+      "url": "https://layero.ro/termek/maci-szivvel-kulcstarto",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "RON",
+        "price": 10,
+        "availability": "https://schema.org/InStock",
+        "url": "https://layero.ro/termek/maci-szivvel-kulcstarto"
+      }
+    },
+    "keszlet_adatok": [
+      {
+        "variacio_id": null,
+        "sku": "LAY-VAR-MACI-SZIV",
+        "fizikailag": 10,
+        "foglalt": 0,
+        "elerheto": 10,
+        "minimum": 0,
+        "varhato_beerkezes": null,
+        "polc": "",
+        "forras": "local"
+      },
+      {
+        "variacio_id": 19,
+        "sku": "LAY-KEY-027-V",
+        "fizikailag": 10,
+        "foglalt": 0,
+        "elerheto": 10,
+        "minimum": 0,
+        "varhato_beerkezes": null,
+        "polc": "",
+        "forras": "local"
+      },
+      {
+        "variacio_id": 20,
+        "sku": "LAY-KEY-028-V",
+        "fizikailag": 10,
+        "foglalt": 0,
+        "elerheto": 10,
+        "minimum": 0,
+        "varhato_beerkezes": null,
+        "polc": "",
+        "forras": "local"
+      }
+    ],
+    "gyartas": {
+      "mode": "stocked",
+      "ready_now": true,
+      "lead_days": 0,
+      "message": "Saját készleten — azonnal csomagolható."
+    },
+    "kapcsolatok": {
+      "kapcsolodo": [],
+      "kiegeszitok": [],
+      "upsell": []
+    },
+    "csomagok": [],
+    "nyelvek": {
+      "hu": {
+        "name": "Maci szívvel kulcstartó",
+        "slug": "maci-szivvel-kulcstarto",
+        "short_description": "Választható színű macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
+        "description": "<p>A kis medve két mancsával tartja a piros szívet. A 3D nyomtatott felület szövetszerű mintázata különleges részletet ad a figurának; szeretetteljes apró ajándék párnak vagy barátnak.</p>\n<ul>\n<li>3D nyomtatott PLA figura, fém kulcskarikával.</li>\n<li>A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek.</li>\n<li>Az ár 1 darab kulcstartóra vonatkozik.</li>\n</ul>",
+        "seo_title": "",
+        "meta_description": "",
+        "social_title": "",
+        "social_description": "",
+        "social_image": ""
+      }
+    },
+    "elerheto_nyelvek": [
+      "hu"
+    ]
+  },
+  {
+    "id": "polip-kulcstarto",
+    "nev": "Polip kulcstartó",
+    "cat": "kulcstartok",
+    "ar": 10,
+    "kepek": [
+      "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg",
+      "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
+      "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg",
+      "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
+      "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
+      "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
+    ],
+    "leiras": "választható színű polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
+    "hosszu": [
+      "A kerek fej körül szétterülő karok látványos sziluettet adnak a választható színű polipnak. A csuklós részeknek köszönhetően a figura alakja mozgatható, így minden kézbevételnél más pózt vehet fel.",
+      "3D nyomtatott PLA figura, fém kulcskarikával. A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek. Az ár 1 darab kulcstartóra vonatkozik."
+    ],
+    "opciok": [
+      {
+        "id": "szin",
+        "nev": "Szín",
+        "ertekek": [
+          "Piros",
+          "Rózsaszín"
+        ],
+        "variacio": true
+      }
+    ],
+    "specs": [
+      [
+        "Méret (tájékoztató)",
+        "Kb. 4–5 cm (a nyomtatott rész hossza, fémkarika nélkül)."
+      ]
+    ],
+    "keszleten": true,
+    "badges": [
+      {
+        "id": "inStock"
+      }
+    ],
+    "variaciok": [
+      {
+        "id": "21",
+        "sku": "LAY-KEY-031-V",
+        "regi_id": "polip-piros-kulcstarto",
+        "attributumok": {
+          "szin": "Piros"
+        },
+        "ar": 10,
+        "kepek": [
+          "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg",
+          "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
+          "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg",
+          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
+          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
+          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
+        ],
+        "rendelheto": true,
+        "max_mennyiseg": 10
+      },
+      {
+        "id": "22",
+        "sku": "LAY-KEY-032-V",
+        "regi_id": "polip-rozsaszin-kulcstarto",
+        "attributumok": {
+          "szin": "Rózsaszín"
+        },
+        "ar": 10,
+        "kepek": [
+          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
+          "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
+          "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg",
+          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
+          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
+        ],
+        "rendelheto": true,
+        "max_mennyiseg": 10
+      }
+    ],
+    "ar_max": 10,
+    "ajandek": {
+      "version": 1,
+      "kinek": [
+        "gyerek",
+        "par",
+        "szulo",
+        "barat",
+        "magam"
+      ],
+      "alkalom": [
+        "szuletesnap",
+        "karacsony",
+        "csak-ugy"
+      ],
+      "stilus": [
+        "praktikus"
+      ],
+      "enabled": true
+    },
+    "ajanlhato": true,
+    "szemelyre_szabott": false,
+    "visszakuldheto": true,
+    "seo": {
+      "cim": "Polip kulcstartó",
+      "meta_leiras": "választható színű polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
+      "slug": "polip-kulcstarto",
+      "kozossegi_cim": "Polip kulcstartó",
+      "kozossegi_leiras": "",
+      "kozossegi_kep": "/images/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg"
+    },
+    "azonositok": [],
+    "csatornak": {
+      "webshop": true,
+      "seo": true,
+      "google": false,
+      "meta": false
+    },
+    "structured_data": {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Polip kulcstartó",
+      "description": "választható színű polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
+      "sku": "LAY-VAR-POLIP",
+      "image": [
+        "/images/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg",
+        "/images/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
+        "/images/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg",
+        "/images/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
+        "/images/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
+        "/images/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
+      ],
+      "url": "https://layero.ro/termek/polip-kulcstarto",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "RON",
+        "price": 10,
+        "availability": "https://schema.org/InStock",
+        "url": "https://layero.ro/termek/polip-kulcstarto"
+      }
+    },
+    "keszlet_adatok": [
+      {
+        "variacio_id": null,
+        "sku": "LAY-VAR-POLIP",
+        "fizikailag": 10,
+        "foglalt": 0,
+        "elerheto": 10,
+        "minimum": 0,
+        "varhato_beerkezes": null,
+        "polc": "",
+        "forras": "local"
+      },
+      {
+        "variacio_id": 21,
+        "sku": "LAY-KEY-031-V",
+        "fizikailag": 10,
+        "foglalt": 0,
+        "elerheto": 10,
+        "minimum": 0,
+        "varhato_beerkezes": null,
+        "polc": "",
+        "forras": "local"
+      },
+      {
+        "variacio_id": 22,
+        "sku": "LAY-KEY-032-V",
+        "fizikailag": 10,
+        "foglalt": 0,
+        "elerheto": 10,
+        "minimum": 0,
+        "varhato_beerkezes": null,
+        "polc": "",
+        "forras": "local"
+      }
+    ],
+    "gyartas": {
+      "mode": "stocked",
+      "ready_now": true,
+      "lead_days": 0,
+      "message": "Saját készleten — azonnal csomagolható."
+    },
+    "kapcsolatok": {
+      "kapcsolodo": [],
+      "kiegeszitok": [],
+      "upsell": []
+    },
+    "csomagok": [],
+    "nyelvek": {
+      "hu": {
+        "name": "Polip kulcstartó",
+        "slug": "polip-kulcstarto",
+        "short_description": "választható színű polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
+        "description": "<p>A kerek fej körül szétterülő karok látványos sziluettet adnak a választható színű polipnak. A csuklós részeknek köszönhetően a figura alakja mozgatható, így minden kézbevételnél más pózt vehet fel.</p>\n<ul>\n<li>3D nyomtatott PLA figura, fém kulcskarikával.</li>\n<li>A nyomtatott rész hossza kb. 4–5 cm; a fémkarika és a lánc nem része ennek a méretnek.</li>\n<li>Az ár 1 darab kulcstartóra vonatkozik.</li>\n</ul>",
         "seo_title": "",
         "meta_description": "",
         "social_title": "",

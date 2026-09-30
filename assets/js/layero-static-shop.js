@@ -7,6 +7,7 @@
 
   var CART_KEY = 'layero_shop_cart_v1';
   var WISH_KEY = 'sh_wishlist';
+  var V = window.LayeroVariants;
   var IS_WOO = !!(window.LayeroShopStatic && window.LayeroShopStatic.commerce === 'woocommerce');
   document.addEventListener('submit', function (event) {
     if (event.target.matches('form[data-cq-form], form[data-b2b-quote]')) return;
@@ -47,7 +48,7 @@
     if (root.matches && root.matches(selector)) nodes.unshift(root);
     return nodes;
   }
-  var purchaseSelector = '[data-add], [data-add-quote], [data-dr-add], [data-qv], [data-qv-add], #sh-add-btn, #sh-bundle-add, .sh-stickybar button';
+  var purchaseSelector = '[data-add], [data-add-quote], [data-dr-add], [data-qv-add], #sh-add-btn, #sh-bundle-add, .sh-stickybar button';
   function wooProductUrl(id) {
     return (STATIC_CFG.productUrls && STATIC_CFG.productUrls[id]) ||
       (STATIC_CFG.urls && STATIC_CFG.urls['kategoria.html']);
@@ -56,13 +57,13 @@
   // the real Woo product page, where prices, variations and fields are checked.
   if (STATIC_CFG.commerce === 'woocommerce') {
     document.addEventListener('click', function (event) {
-      var target = event.target.closest && event.target.closest(purchaseSelector + ', .sh-cart-btn');
+      var target = event.target.closest && event.target.closest(purchaseSelector);
       if (!target) return;
       event.preventDefault();
       event.stopImmediatePropagation();
       var id = target.getAttribute('data-add') || target.getAttribute('data-add-quote') ||
-        target.getAttribute('data-dr-add') || target.getAttribute('data-qv') || new URLSearchParams(location.search).get('id');
-      var url = target.matches('.sh-cart-btn') ? STATIC_CFG.urls['kosar.html'] : wooProductUrl(id);
+        target.getAttribute('data-dr-add') || target.getAttribute('data-qv-add') || new URLSearchParams(location.search).get('id');
+      var url = wooProductUrl(id);
       if (url) location.assign(url);
     }, true);
   }
@@ -93,17 +94,26 @@
       if (next) img.setAttribute('href', next);
     });
     if (STATIC_CFG.commerce === 'woocommerce') {
+      var wishes = staticNodes('[data-wish]', root);
+      wishes.forEach(function (button) {
+        var id = button.getAttribute('data-wish');
+        var product = (window.SHOP_PRODUCTS || []).find(function (item) { return item.id === id; });
+        if (!product || !product.wc_id) return;
+        button.removeAttribute('data-wish');
+        button.setAttribute('data-layero-wish-toggle', '');
+        button.setAttribute('data-layero-product-id', product.wc_id);
+      });
+      if (wishes.length) document.dispatchEvent(new CustomEvent('layero:wishlist-rendered'));
       staticNodes(purchaseSelector, root).forEach(function (button) {
         if (button.hasAttribute('data-qv')) return;
         if (button.textContent !== 'Termék megnyitása') button.textContent = 'Termék megnyitása';
         button.setAttribute('aria-label', 'Termék megnyitása');
       });
-      staticNodes('.sh-cart-badge', root).forEach(function (badge) { badge.hidden = true; });
     }
   }
   function prodById(id) {
-    for (var i = 0; i < SHOP_PRODUCTS.length; i++) if (SHOP_PRODUCTS[i].id === id) return SHOP_PRODUCTS[i];
-    return null;
+    var found = V.lookup(SHOP_PRODUCTS, id);
+    return found ? found.product : null;
   }
   var ANALYTICS_ENDPOINT = window.LAYERO_ANALYTICS_ENDPOINT || (/^(localhost|127\.0\.0\.1)$/i.test(location.hostname) ? 'http://127.0.0.1:3000/api/analytics/events' : '');
   function analyticsChannel() {
@@ -144,6 +154,9 @@
   /* minden ár-kiírás EZEN megy át — pénznem/formátum váltás egy helyen */
   function fmtPrice(n) { return n + ' RON'; }
   function fmtAr(ar) { return ar > 0 ? fmtPrice(ar) : 'Ajánlat alapján'; }
+  function productSearchText(p) {
+    return [p.nev, p.leiras].concat((p.opciok || []).map(function (o) { return (o.ertekek || []).join(' '); })).join(' ').toLowerCase();
+  }
 
   /* fizetési-mód chipsor a döntési pontokra (vételdoboz, kosár, pénztár) —
      vizuális bizalomjel; az utánvét-chip csak ott, ahol tényleg elérhető */
@@ -182,6 +195,10 @@
   }
   /* ár-blokk: akciós (áthúzott régi + piros most) vagy sima */
   function priceHtml(p) {
+    if (V.isVariable(p)) {
+      var range = V.range(p);
+      return '<span class="now">' + (range.min === range.max ? fmtAr(range.min) : fmtPrice(range.min) + ' – ' + fmtPrice(range.max)) + '</span>';
+    }
     if (p.ar <= 0) return '<span class="now">' + fmtAr(p.ar) + '</span>';
     if (p.regi_ar && p.regi_ar > p.ar) {
       return '<span class="now on-sale">' + fmtPrice(p.ar) + '</span><span class="was">' + fmtPrice(p.regi_ar) + '</span>';
@@ -202,7 +219,8 @@
           id: String(option.id || '').replace(/[^a-z0-9_-]/gi, '-'),
           nev: String(option.nev || 'Opció'),
           ertekek: Array.isArray(option.ertekek) ? option.ertekek.filter(Boolean).map(String) : [],
-          defaultIndex: 0
+          variacio: option.variacio === true,
+          defaultIndex: option.variacio === true ? -1 : 0
         };
       }).filter(function (option) { return option.ertekek.length; });
     }
@@ -217,16 +235,19 @@
       var title = esc(option.nev);
       if (withSizeGuide && isSize) title = '<span class="sh-opt__hd">' + title + ' <button class="sh-sizeguide" type="button" data-sizeguide>Mérettáblázat</button></span>';
       else title = '<span>' + title + '</span>';
-      return '<div class="sh-opt">' + title + '<div class="sh-opt__row" ' + dataAttr + ' data-option-id="' + esc(option.id) + '">' +
+      return '<div class="sh-opt' + (option.variacio ? ' sh-opt--variation' : '') + '">' + title + '<div class="sh-opt__row" role="group" aria-label="' + esc(option.nev) + '" ' + dataAttr + ' data-option-id="' + esc(option.id) + '">' +
         option.ertekek.map(function (value, index) {
-          return '<button type="button" class="' + (index === Math.min(option.defaultIndex, option.ertekek.length - 1) ? 'is-on' : '') + '">' + esc(value) + '</button>';
+          var on = index === Math.min(option.defaultIndex, option.ertekek.length - 1);
+          var preview = option.variacio && (p.variaciok || []).find(function (v) { return (v.attributumok || {})[option.id] === value; });
+          return '<button type="button" aria-pressed="' + on + '" data-option-value="' + esc(value) + '" class="' + (on ? 'is-on' : '') + '">' +
+            (preview && preview.kepek && preview.kepek[0] ? '<img src="' + esc(preview.kepek[0]) + '" alt="" loading="lazy" decoding="async">' : '') + '<span>' + esc(value) + '</span></button>';
         }).join('') + '</div></div>';
     }).join('');
   }
   function selectedOptionText(root, selector) {
     return $all(selector, root).map(function (row) {
       var selected = $('.is-on', row);
-      return selected ? selected.textContent : '';
+      return selected ? selected.getAttribute('data-option-value') || selected.textContent : '';
     }).filter(Boolean).join(' · ');
   }
   function defaultVariant(p) {
@@ -234,41 +255,59 @@
       return option.ertekek[Math.min(option.defaultIndex, option.ertekek.length - 1)] || '';
     }).filter(Boolean).join(' · ');
   }
+  function variationSummary(p) {
+    if (!V.isVariable(p)) return '';
+    var colors = V.options(p).find(function (o) { return /sz[ií]n|colou?r/i.test(o.id + ' ' + o.nev); });
+    return '<span class="sh-variant-summary">' + esc(colors ? colors.ertekek.length + ' színben' : p.variaciok.length + ' változatban') + '</span>';
+  }
+  function bindVariations(root, p, selector, initial, onChange) {
+    var selected = initial ? Object.assign({}, initial.attributumok) : {};
+    var state = { current: initial || null };
+    var rows = $all(selector, root).filter(function (row) { return row.closest('.sh-opt--variation'); });
+    function update() {
+      state.current = V.resolve(p, selected);
+      rows.forEach(function (row) {
+        var id = row.getAttribute('data-option-id');
+        $all('button', row).forEach(function (b) {
+          var value = b.getAttribute('data-option-value');
+          var on = selected[id] === value;
+          b.classList.toggle('is-on', on);
+          b.setAttribute('aria-pressed', String(on));
+          b.disabled = !V.possible(p, selected, id, value) && !on;
+          b.title = b.disabled ? 'Ez a kombináció jelenleg nem választható' : '';
+        });
+      });
+      var status = $('[data-variation-status]', root);
+      if (status) status.textContent = state.current ? V.available(state.current) ? V.label(p, state.current) : 'Ez a változat jelenleg nem választható.' : 'Válaszd ki a neked tetsző változatot.';
+      onChange(state.current);
+    }
+    rows.forEach(function (row) {
+      row.addEventListener('click', function (event) {
+        var b = event.target.closest('button');
+        if (!b || b.disabled || !row.contains(b)) return;
+        var id = row.getAttribute('data-option-id'), value = b.getAttribute('data-option-value');
+        if (selected[id] === value) delete selected[id]; else selected[id] = value;
+        update();
+      });
+    });
+    var reset = $('[data-variation-reset]', root);
+    if (reset) reset.addEventListener('click', function () { selected = {}; update(); });
+    update();
+    return state;
+  }
+  function changeCartQuantity(items, item, delta) {
+    var next = Math.max(1, Math.min(99, item.qty + delta));
+    var p = prodById(item.id), v = V.find(p, item.variationId);
+    var others = items.filter(function (r) { return r !== item && r.id === item.id && String(r.variationId) === String(item.variationId); }).reduce(function (n, r) { return n + r.qty; }, 0);
+    if (delta > 0 && V.isVariable(p) && (!V.available(v) || next + others > V.limit(v))) {
+      toast('Ebből a változatból több darab jelenleg nem választható.'); return;
+    }
+    item.qty = next;
+  }
   /* (a generált „X-en nézik most" típusú ál-sürgetés eltávolítva —
      kitalált számok bizalmat rombolnak és megtévesztő gyakorlatnak minősülnek) */
   var CART_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.3 10.5a1.5 1.5 0 0 1-1.5 1.7H6.2a1.5 1.5 0 0 1-1.5-1.7L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>';
-  var HONAPOK = ['jan.', 'febr.', 'márc.', 'ápr.', 'máj.', 'jún.', 'júl.', 'aug.', 'szept.', 'okt.', 'nov.', 'dec.'];
-  function addWorkdays(days) {
-    var d = new Date();
-    while (days > 0) {
-      d.setDate(d.getDate() + 1);
-      if (d.getDay() !== 0 && d.getDay() !== 6) days--;
-    }
-    return d;
-  }
-  function fmtDatum(d) { return HONAPOK[d.getMonth()] + ' ' + d.getDate() + '.'; }
-  /* várható kézbesítési ablak: gyártási munkanapok + futár-puffer */
-  function etaRange(minDays, maxDays) {
-    return { tol: addWorkdays(minDays + 2), ig: addWorkdays(maxDays + 3) };
-  }
-  function productionTime(p) {
-    var rows = (p && p.specs) || [];
-    for (var i = 0; i < rows.length; i++) {
-      if (/^gyártási idő$/i.test(String(rows[i][0] || '').trim())) {
-        var value = String(rows[i][1] || '');
-        return /^5[–-]10 munkanap$/i.test(value.trim()) ? '' : value;
-      }
-    }
-    return '';
-  }
-  /* saját készletnél nincs gyártási várakozás; egyébként a specifikáció az igazság forrása */
-  function prodDays(p) {
-    if (p && p.keszleten === true) return { min: 0, max: 0 };
-    var t = productionTime(p);
-    var m = String(t).match(/(\d+)\D+(\d+)/);
-    return m ? { min: parseInt(m[1], 10), max: parseInt(m[2], 10) } : null;
-  }
-  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
   function param(name) { return new URLSearchParams(location.search).get(name); }
   var scrollLockDepth = 0;
   var scrollLockPrev = '';
@@ -299,23 +338,30 @@
 
   /* ── kosár ───────────────────────────────────────────────────── */
   function cartGet() {
-    try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+    try { return V.normalizeCart(JSON.parse(localStorage.getItem(CART_KEY)) || [], SHOP_PRODUCTS); }
     catch (e) { return []; }
   }
   function cartSet(items) {
-    localStorage.setItem(CART_KEY, JSON.stringify(items));
+    localStorage.setItem(CART_KEY, JSON.stringify(V.normalizeCart(items, SHOP_PRODUCTS)));
     updateBadge();
   }
-  function cartAdd(id, qty, variant, analyticsMeta) {
+  function cartAdd(id, qty, variant, analyticsMeta, variationId, extra) {
+    var product = prodById(id);
+    if (!product || IS_WOO) return false;
+    var selected = V.find(product, variationId);
+    if (V.isVariable(product) && !selected) { openQuickView(product.id); return false; }
+    if (V.isVariable(product) && !V.available(selected)) { toast('Ez a változat jelenleg nem választható.'); return false; }
     var items = cartGet();
-    var key = id + '|' + (variant || '');
+    var key = selected ? V.key(product.id, selected.id, extra) : id + '|' + (variant || '');
+    var already = selected ? items.filter(function (it) { return it.id === product.id && String(it.variationId) === String(selected.id); }).reduce(function (sum, it) { return sum + it.qty; }, 0) : 0;
+    if (selected && already + qty > V.limit(selected)) { toast('Ehhez a változathoz legfeljebb ' + V.limit(selected) + ' darab választható összesen.'); return false; }
     var found = null;
     items.forEach(function (it) { if (it.key === key) found = it; });
     if (found) found.qty += qty;
-    else items.push({ key: key, id: id, qty: qty, variant: variant || '' });
+    else items.push({ key: key, id: product.id, qty: qty, variant: variant || '', variationId: selected ? String(selected.id) : undefined, extra: extra || '' });
     cartSet(items);
-    var product = prodById(id);
-    if (product) trackProductEvent('add_to_cart', product, Object.assign({ quantity: qty, value: Number(product.ar || 0) * qty }, analyticsMeta || {}));
+    if (product) trackProductEvent('add_to_cart', product, Object.assign({ quantity: qty, value: Number(selected ? selected.ar : product.ar || 0) * qty }, analyticsMeta || {}));
+    return true;
   }
 
   /* kupon + ajándékcsomagolás állapot */
@@ -331,7 +377,12 @@
     opts = opts || {};
     var items = cartGet().map(function (it) {
       var p = prodById(it.id);
-      return p ? { it: it, p: p, sor: p.ar * it.qty } : null;
+      if (!p) return null;
+      var v = V.find(p, it.variationId);
+      var sameQuantity = cartGet().filter(function (row) { return row.id === it.id && String(row.variationId) === String(it.variationId); }).reduce(function (n, row) { return n + row.qty; }, 0);
+      var invalid = V.isVariable(p) && (!V.available(v) || sameQuantity > V.limit(v));
+      var shown = V.isVariable(p) ? V.view(p, v) : p;
+      return { it: it, p: shown, sor: invalid ? 0 : Math.round(shown.ar * it.qty * 100) / 100, invalid: invalid };
     }).filter(Boolean);
     var subtotal = items.reduce(function (s, r) { return s + r.sor; }, 0);
     var count = items.reduce(function (s, r) { return s + r.it.qty; }, 0);
@@ -353,12 +404,13 @@
     var total = subtotal - discount + shipping + gift + codFee;
     return { items: items, subtotal: subtotal, count: count, coupon: coupon,
              discount: discount, gift: gift, shipping: shipping, codFee: codFee, total: total,
-             freeByCoupon: freeByCoupon, belowMin: subtotal > 0 && subtotal < MIN_ORDER };
+             freeByCoupon: freeByCoupon, invalid: items.some(function (r) { return r.invalid; }), belowMin: items.some(function (r) { return r.invalid; }) || (subtotal > 0 && subtotal < MIN_ORDER) };
   }
   function cartCount() {
     return cartGet().reduce(function (n, it) { return n + it.qty; }, 0);
   }
   function updateBadge() {
+    if (IS_WOO) return; // The live badge is supplied by WooCommerce cart fragments.
     var badge = $('.sh-cart-badge');
     if (!badge) return;
     var n = cartCount();
@@ -368,7 +420,7 @@
 
   /* ── kívánságlista ───────────────────────────────────────────── */
   function wishGet() {
-    try { return JSON.parse(localStorage.getItem(WISH_KEY)) || []; }
+    try { return (JSON.parse(localStorage.getItem(WISH_KEY)) || []).map(function (id) { var p = prodById(id); return p ? p.id : id; }).filter(function (id, i, all) { return all.indexOf(id) === i; }); }
     catch (e) { return []; }
   }
   function wishHas(id) { return wishGet().indexOf(id) !== -1; }
@@ -571,7 +623,7 @@
     // spec-címkék uniója, az első előfordulás sorrendjében
     var labels = [];
     prods.forEach(function (p) {
-      (p.specs || []).forEach(function (row) { if (labels.indexOf(row[0]) === -1) labels.push(row[0]); });
+      (p.specs || []).filter(visibleProductSpec).forEach(function (row) { if (labels.indexOf(row[0]) === -1) labels.push(row[0]); });
     });
     function specVal(p, label) {
       var found = '—';
@@ -705,7 +757,7 @@
         var q = raw.toLowerCase();
         if (q.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
         var hits = SHOP_PRODUCTS.filter(function (p) {
-          return (p.nev + ' ' + p.leiras).toLowerCase().indexOf(q) !== -1;
+          return productSearchText(p).indexOf(q) !== -1;
         }).slice(0, 6);
         if (!hits.length) {
           box.innerHTML = '<div class="sh-search__empty">Nincs találat erre: „' + esc(raw) + '”.<br><a href="egyedi-rendeles.html">Indíts egyedi rendelést ›</a></div>';
@@ -740,7 +792,7 @@
           (IS_WOO ? '' : '<span data-theme="eco">Napelemes műhelyben, közel nulla CO₂-kibocsátással gyártunk</span>' +
           '<span data-theme="teal">PLA biopolimerből nyomtatunk — növényi alapú, lebomló anyag</span>' +
           '<span data-theme="amber">Ingyenes szállítás 200 lej feletti rendelésre</span>') +
-          '<span data-theme="navy">Saját készletről vagy rendelésre — mindig a termékoldalon jelzett módon</span>' +
+          '<span data-theme="navy">Személyes ajándékok a saját műhelyünkből</span>' +
         '</span>' +
         '<nav class="sh-topbar__links">' +
           '<a href="tel:+40756642387">' + ICO.phone + '<span>+40 756 642 387</span></a>' +
@@ -750,9 +802,9 @@
       '</div></div>' +
       /* fő sor */
       '<div class="sh-header__inner">' +
-        '<a class="sh-logo" href="index.html">' +
-          '<img src="assets/layero-asset-0251.webp" alt="">' +
-          'Layero <small>Shop</small>' +
+        '<a class="sh-logo sh-brand" href="index.html" aria-label="Layero Shop – főoldal">' +
+          '<img src="assets/layero-asset-0251.webp" alt="" width="44" height="44">' +
+          '<span class="sh-brand__type"><span class="sh-brand__name">Layero</span><small>Shop</small></span>' +
         '</a>' +
         '<nav class="sh-nav" id="sh-nav">' +
           searchForm('mobile') +
@@ -766,9 +818,10 @@
                   '<div class="sh-mega__grid">' +
                     visibleCats().map(function (c) {
                       var count = IS_WOO && typeof c.count === 'number' ? c.count : SHOP_PRODUCTS.filter(function (p) { return p.cat === c.id; }).length;
-                      return '<a href="kategoria.html?cat=' + c.id + '">' +
+                      var target = c.ajanlat ? (c.id === 'ceges' ? 'cegeknek.html' : 'egyedi-rendeles.html') : 'kategoria.html?cat=' + c.id;
+                      return '<a href="' + target + '">' +
                         '<figure><img src="' + c.img + '" alt="" loading="lazy" decoding="async"></figure>' +
-                        '<span><strong>' + esc(c.nev) + '</strong><small>' + count + ' termék</small></span>' +
+                        '<span><strong>' + esc(c.nev) + '</strong><small>' + (c.ajanlat ? 'Árajánlat alapján' : count + ' termék') + '</small></span>' +
                         '<i class="sh-mega__arr" aria-hidden="true">›</i>' +
                       '</a>';
                     }).join('') +
@@ -844,7 +897,7 @@
       '<div class="shop-wrap">' +
         '<div class="sh-footer__intro">' +
           '<div class="sh-footer__brand">' +
-            '<a class="sh-footer__logo" href="index.html" aria-label="Layero Shop – főoldal"><img src="assets/layero-asset-0251.webp" alt="" width="48" height="48"><span>Layero<small>Shop</small></span></a>' +
+            '<a class="sh-footer__logo sh-brand" href="index.html" aria-label="Layero Shop – főoldal"><img src="assets/layero-asset-0251.webp" alt="" width="60" height="60"><span class="sh-brand__type"><span class="sh-brand__name">Layero</span><small>Shop</small></span></a>' +
             '<p>Rétegről rétegre.<br><span>Személyesen neked.</span></p>' +
           '</div>' +
           '<div class="sh-footer__story">' +
@@ -856,7 +909,7 @@
         '<div class="sh-footer__cols">' +
         '<nav class="sh-footer__nav" aria-labelledby="sh-footer-shop"><h2 id="sh-footer-shop">Fedezd fel</h2>' +
           '<a href="kategoria.html">Összes termék</a>' +
-          visibleCats().slice(0, 4).map(function (c) { return '<a href="kategoria.html?cat=' + esc(encodeURIComponent(c.id)) + '">' + esc(c.nev) + '</a>'; }).join('') +
+          visibleCats().slice(0, 4).map(function (c) { var href = c.ajanlat ? (c.id === 'ceges' ? 'cegeknek.html' : 'egyedi-rendeles.html') : 'kategoria.html?cat=' + encodeURIComponent(c.id); return '<a href="' + esc(href) + '">' + esc(c.nev) + '</a>'; }).join('') +
           '<a href="kviz.html">Ajándékkereső</a>' +
         '</nav>' +
         '<nav class="sh-footer__nav" aria-labelledby="sh-footer-help"><h2 id="sh-footer-help">Segítünk</h2>' +
@@ -907,6 +960,7 @@
   /* ── mini-kosár drawer ───────────────────────────────────────── */
   var drawerEl = null, drawerOv = null;
   function buildDrawer() {
+    if (IS_WOO) return; // WordPress renders a drawer backed by the real cart.
     drawerOv = document.createElement('div');
     drawerOv.className = 'sh-drawer-ov';
     drawerEl = document.createElement('aside');
@@ -931,13 +985,13 @@
       var pm = t.closest('[data-dr-minus]'); var pl = t.closest('[data-dr-plus]');
       if (pm || pl) {
         var key = (pm || pl).getAttribute(pm ? 'data-dr-minus' : 'data-dr-plus');
-        var arr = cartGet(); arr.forEach(function (x) { if (x.key === key) x.qty = Math.max(1, Math.min(99, x.qty + (pm ? -1 : 1))); });
+        var arr = cartGet(); arr.forEach(function (x) { if (x.key === key) changeCartQuantity(arr, x, pm ? -1 : 1); });
         cartSet(arr); renderDrawer(); return;
       }
       var up = t.closest('[data-dr-add]');
       if (up) {
         var upProduct = prodById(up.getAttribute('data-dr-add'));
-        cartAdd(up.getAttribute('data-dr-add'), 1, upProduct ? defaultVariant(upProduct) : '');
+        if (!cartAdd(up.getAttribute('data-dr-add'), 1, upProduct ? defaultVariant(upProduct) : '')) return;
         toast('Hozzáadva a kosárhoz'); renderDrawer(); return;
       }
       var gw = t.closest('[data-dr-gift]');
@@ -1002,9 +1056,9 @@
           return '<div class="sh-drawer-item">' +
             '<figure><img src="' + r.p.kepek[0] + '" alt="" loading="lazy" decoding="async"></figure>' +
             '<div><b>' + esc(r.p.nev) + '</b>' + (r.it.variant ? '<small>' + esc(r.it.variant) + '</small>' : '<small></small>') +
-              '<div class="sh-qty"><button type="button" data-dr-minus="' + r.it.key + '">−</button><output>' + r.it.qty + '</output><button type="button" data-dr-plus="' + r.it.key + '">+</button></div>' +
+              '<div class="sh-qty"><button type="button" data-dr-minus="' + esc(r.it.key) + '">−</button><output>' + r.it.qty + '</output><button type="button" data-dr-plus="' + esc(r.it.key) + '">+</button></div>' +
             '</div>' +
-            '<div style="text-align:right"><div class="sh-drawer-item__price">' + fmtPrice(r.sor) + '</div><button class="sh-drawer-item__rm" type="button" data-dr-rm="' + r.it.key + '">Törlés</button></div>' +
+            '<div style="text-align:right"><div class="sh-drawer-item__price">' + fmtPrice(r.sor) + '</div><button class="sh-drawer-item__rm" type="button" data-dr-rm="' + esc(r.it.key) + '">Törlés</button></div>' +
           '</div>';
         }).join('') +
         (up ? '<div class="sh-upsell"><h4>Tedd mellé</h4><div class="sh-upsell__item">' +
@@ -1028,7 +1082,7 @@
         (t.gift ? '<div class="sh-sumrow"><span>Ajándékcsomagolás</span><span>' + fmtPrice(t.gift) + '</span></div>' : '') +
         '<div class="sh-sumrow"><span>Szállítás</span><span>' + (t.shipping === 0 ? 'Ingyenes' : fmtPrice(t.shipping)) + '</span></div>' +
         '<div class="sh-sumrow total"><span>Összesen</span><span>' + fmtPrice(t.total) + '</span></div>' +
-        (t.belowMin ? '<p class="sh-coupon__msg err">Minimális rendelés ' + fmtPrice(MIN_ORDER) + ' — még ' + fmtPrice(MIN_ORDER - t.subtotal) + '.</p>' : '') +
+        (t.invalid ? '<p class="sh-coupon__msg err">Egy változat vagy mennyiség már nem elérhető. Ellenőrizd a kosarat.</p>' : t.belowMin ? '<p class="sh-coupon__msg err">Minimális rendelés ' + fmtPrice(MIN_ORDER) + ' — még ' + fmtPrice(MIN_ORDER - t.subtotal) + '.</p>' : '') +
         '<a class="sh-btn sh-btn--primary' + (t.belowMin ? ' is-disabled' : '') + '" href="penztar.html"' + (t.belowMin ? ' aria-disabled="true" style="opacity:.45;pointer-events:none"' : '') + '>Tovább a pénztárhoz</a>' +
         '<a class="sh-btn sh-btn--ghost" href="kosar.html">Kosár megtekintése</a>' +
         '<p class="sh-drawer__secure">' + ICO.shield + ' Biztonságos, SSL-titkosított fizetés</p>' +
@@ -1077,7 +1131,7 @@
         e.preventDefault(); e.stopPropagation();
         var ap = prodById(add.getAttribute('data-add'));
         if (ap) {
-          cartAdd(ap.id, 1, defaultVariant(ap));
+          if (!cartAdd(ap.id, 1, defaultVariant(ap))) return;
           openDrawer();  // pro AOV: azonnal megnyílik a kosár upsell-lel
         }
         return;
@@ -1092,7 +1146,9 @@
 
   /* ── gyorsnézet-modal ────────────────────────────────────────── */
   var qvEl = null;
+  var qvReturnFocus = null;
   function openQuickView(id) {
+    if (!qvEl || !qvEl.classList.contains('is-open')) qvReturnFocus = document.activeElement;
     var p = prodById(id);
     if (!p) return;
     var cat = catById(p.cat);
@@ -1101,6 +1157,14 @@
       qvEl.className = 'sh-qv';
       qvEl.setAttribute('role', 'dialog');
       qvEl.setAttribute('aria-modal', 'true');
+      qvEl.setAttribute('aria-label', 'Termék gyorsnézet');
+      qvEl.addEventListener('keydown', function (event) {
+        if (event.key !== 'Tab') return;
+        var focusable = $all('button:not(:disabled), a[href]', qvEl).filter(function (el) { return el.getClientRects().length; });
+        var first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      });
       document.body.appendChild(qvEl);
       qvEl.addEventListener('click', function (e) { if (e.target === qvEl || e.target.closest('[data-qv-close]')) closeQuickView(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && qvEl.classList.contains('is-open')) closeQuickView(); });
@@ -1118,12 +1182,13 @@
             '<h2>' + esc(p.nev) + '</h2>' +
             infoChips(p, true) +
             rateHtml(p, false) +
-            '<div class="sh-qv__price">' + (p.regi_ar && p.regi_ar > p.ar ? '<span style="color:#e04726">' + fmtPrice(p.ar) + '</span> <span style="text-decoration:line-through;color:var(--faint);font-weight:450;font-size:.85rem">' + fmtPrice(p.regi_ar) + '</span>' : fmtAr(p.ar) + (p.ar > 0 ? '<small>-tól</small>' : '')) + '</div>' +
+            '<div class="sh-qv__price">' + (IS_WOO ? p.price_html : (p.regi_ar && p.regi_ar > p.ar ? '<span style="color:#e04726">' + fmtPrice(p.ar) + '</span> <span style="text-decoration:line-through;color:var(--faint);font-weight:450;font-size:.85rem">' + fmtPrice(p.regi_ar) + '</span>' : fmtAr(p.ar) + (p.ar > 0 ? '<small>-tól</small>' : ''))) + '</div>' +
             '<p class="sh-qv__desc">' + esc(p.leiras) + '</p>' +
             (p.ar > 0
               ? optionRowsHtml(p, 'data-qv-option', false) +
+                (V.isVariable(p) ? '<p class="sh-variation-status" role="status" data-variation-status></p><button type="button" class="sh-variation-reset" data-variation-reset>Választás törlése</button>' : '') +
                 '<div class="sh-qv__foot">' +
-                  '<button class="sh-btn sh-btn--primary" type="button" data-qv-add style="flex:1;">Kosárba teszem</button>' +
+                  '<button class="sh-btn sh-btn--primary" type="button" data-qv-add="' + p.id + '" style="flex:1;">Kosárba teszem</button>' +
                   '<a class="sh-link" href="termek.html?id=' + p.id + '">Részletek ›</a>' +
                 '</div>'
               : '<div class="sh-qv__foot"><a class="sh-btn sh-btn--primary" href="kapcsolat.html" style="flex:1;">Ajánlatot kérek</a><a class="sh-link" href="termek.html?id=' + p.id + '">Részletek ›</a></div>'
@@ -1133,43 +1198,51 @@
       '</div>';
 
     if (p.ar > 0) {
-      $all('[data-qv-option]', qvEl).forEach(function (row) {
+      $all('[data-qv-option]', qvEl).filter(function (row) { return !row.closest('.sh-opt--variation'); }).forEach(function (row) {
         row.addEventListener('click', function (e) {
           var b = e.target.closest('button'); if (!b) return;
           $all('button', row).forEach(function (x) { x.classList.remove('is-on'); });
           b.classList.add('is-on');
         });
       });
+      var quickState = V.isVariable(p) ? bindVariations(qvEl, p, '[data-qv-option]', null, function (v) {
+        $('[data-qv-add]', qvEl).disabled = !V.available(v);
+        $('.sh-qv__price', qvEl).innerHTML = priceHtml(v ? V.view(p, v) : p);
+        if (v) { var image = $('.sh-qv__media img', qvEl); image.src = v.kepek[0]; image.alt = p.nev + ' – ' + V.label(p, v); }
+      }) : { current: null };
       $('[data-qv-add]', qvEl).addEventListener('click', function () {
-        cartAdd(p.id, 1, selectedOptionText(qvEl, '[data-qv-option]'));
+        var extra = selectedOptionText(qvEl, '.sh-opt:not(.sh-opt--variation) [data-qv-option]');
+        var text = quickState.current ? V.label(p, quickState.current) + (extra ? ' · ' + extra : '') : selectedOptionText(qvEl, '[data-qv-option]');
+        if (!cartAdd(p.id, 1, text, null, quickState.current && quickState.current.id, extra)) return;
         closeQuickView();
         openDrawer();
       });
     }
-    requestAnimationFrame(function () { qvEl.classList.add('is-open'); });
-    lockScroll();
+    if (!qvEl.classList.contains('is-open')) lockScroll();
+    requestAnimationFrame(function () { qvEl.classList.add('is-open'); $('[data-qv-close]', qvEl).focus(); });
   }
   function closeQuickView() {
     if (!qvEl || !qvEl.classList.contains('is-open')) return;
     qvEl.classList.remove('is-open');
     unlockScroll();
+    if (qvReturnFocus && document.contains(qvReturnFocus)) qvReturnFocus.focus();
   }
 
   // Explicit array from WordPress or the product manager takes precedence.
+  function visibleProductSpec(row) {
+    return !/gyártási idő|készlet|raktár|stock|lead.?time/i.test(String(row[0] || ''));
+  }
   function productBadges(p) {
-    if (Array.isArray(p.badges)) return p.badges;
-    var items = [], days = prodDays(p), pct = discountPct(p);
+    if (Array.isArray(p.badges)) return window.LayeroBadges ? LayeroBadges.forStorefront(p.badges) : [];
+    var items = [], pct = discountPct(p);
     if (pct > 0 && pct <= 100) items.push({ id: 'salePercent', value: pct });
     if (p.badge) {
       var ids = { 'Bestseller': 'bestseller', 'Új': 'new', 'Szezonális': 'seasonal' };
       items.push(ids[p.badge] ? { id: ids[p.badge] } : { id: 'custom', label: p.badge, zone: 'overlay' });
     }
     if (p.szemelyre_szabott === true) items.push({ id: 'personal', label: 'Személyre szabható' });
-    if (p.keszlet === 'elfogyott') items.push({ id: 'soldOut' });
-    else if (p.keszleten === true) items.push({ id: 'inStock', label: 'Saját készleten' });
-    if (days && p.keszleten !== true) items.push({ id: 'productionTime', value: days.min + '–' + days.max + ' munkanap' });
     if (p.csak_elore_fizetes === true) items.push({ id: 'custom', label: 'Csak előre fizetés', zone: 'service' });
-    return items;
+    return window.LayeroBadges ? LayeroBadges.forStorefront(items) : items;
   }
   function badgeOptions() { return { locale: document.documentElement.lang.indexOf('ro') === 0 ? 'ro' : 'hu', variant: 'signature' }; }
   function productBadgeDetails(p) {
@@ -1178,14 +1251,11 @@
     return '<div class="lyrb-product-details">' + LayeroBadges.groupHTML(LayeroBadges.resolve(productBadges(p), options).all, options) + '</div>';
   }
 
-  /* ── őszinte infó-chipek: személyre szabás + teljesítési mód ─── */
+  /* ── terméktulajdonságok, készlet- és időjelzés nélkül ─────── */
   function infoChips(p, full) {
     if (window.LayeroBadges) return productBadgeDetails(p);
-    var d = prodDays(p);
     var chips = '';
     if (p.szemelyre_szabott === true) chips += '<span class="sh-chip-info">Személyre szabható</span>';
-    if (p.keszleten === true) chips += '<span class="sh-chip-info sh-chip-info--time">Saját készleten</span>';
-    else if (d) chips += '<span class="sh-chip-info sh-chip-info--time">' + d.min + '–' + d.max + ' munkanap</span>';
     if (full && p.csak_elore_fizetes === true) chips += '<span class="sh-chip-info sh-chip-info--pay" title="Utánvét nem elérhető · Doar cu plată în avans">Csak előre fizetés</span>';
     return chips ? '<div class="sh-chip-row">' + chips + '</div>' : '';
   }
@@ -1217,9 +1287,10 @@
         '<span class="sh-prod-card__name">' + esc(p.nev) + '</span>' +
         '<span class="sh-prod-card__cat">' + (cat ? esc(cat.nev) : '') + '</span>' +
         rateHtml(p, false) +
+        variationSummary(p) +
         '<span class="sh-prod-card__price">' + priceHtml(p) + '</span>' +
         (p.ar > 0
-          ? '<button class="sh-card-add" type="button" data-add="' + p.id + '">' + CART_ICON + 'Kosárba</button>'
+          ? '<button class="sh-card-add" type="button" data-add="' + p.id + '">' + CART_ICON + (V.isVariable(p) ? 'Változatot választok' : 'Kosárba') + '</button>'
           : '<button class="sh-card-add" type="button" data-add-quote="' + p.id + '">Ajánlatot kérek</button>') +
       '</div>' +
     '</div>';
@@ -1838,15 +1909,16 @@
     Object.keys(FEAT).forEach(function (k) { F[k] = false; });
 
     function priceActive() { return F.min > PMIN || F.max < PMAX; }
-    function passPrice(p) {
+  function passPrice(p) {
       if (!priceActive()) return true; /* teljes sávnál az ajánlat-alapú (0 lej) is látszik */
+      if (V.isVariable(p)) return p.variaciok.some(function (v) { return V.available(v) && v.ar >= F.min && v.ar <= F.max; });
       return p.ar > 0 && p.ar >= F.min && p.ar <= F.max;
     }
     function baseList() {
       var list = SHOP_PRODUCTS.filter(function (p) { return active === 'all' || p.cat === active; });
       if (query) {
         var ql = query.toLowerCase();
-        list = list.filter(function (p) { return (p.nev + ' ' + p.leiras).toLowerCase().indexOf(ql) !== -1; });
+        list = list.filter(function (p) { return productSearchText(p).indexOf(ql) !== -1; });
       }
       return list;
     }
@@ -1975,7 +2047,7 @@
       if (lead) {
         lead.textContent = query
           ? 'Keresési találatok a teljes Layero-kínálatból.'
-          : (cat ? cat.leiras : 'A teljes kínálat — saját készletről vagy rendelésre gyártva.');
+          : (cat ? cat.leiras : 'A teljes kínálat — ajándékok és dekorációk a saját műhelyünkből.');
       }
       var kicker = $('#sh-cat-kicker');
       if (kicker) kicker.textContent = query ? 'Keresés' : 'Kollekció';
@@ -2078,7 +2150,15 @@
   function renderTermek() {
     var mount = $('#sh-product-mount');
     if (!mount) return;
-    var p = prodById(param('id')) || SHOP_PRODUCTS[0];
+    var originalId = param('id');
+    var entry = V.lookup(SHOP_PRODUCTS, originalId);
+    var p = entry ? entry.product : SHOP_PRODUCTS[0];
+    var initialVariation = entry && entry.variation ? entry.variation : V.find(p, param('valtozat'));
+    if (entry && entry.variation) {
+      var canonical = new URL(location.href); canonical.searchParams.set('id', p.id); canonical.searchParams.set('valtozat', entry.variation.id);
+      history.replaceState(null, '', canonical.href);
+    }
+    var selectionState = { current: null };
     trackProductEvent('product_view', p);
     var cat = catById(p.cat);
     var kerheto = p.ar > 0;
@@ -2121,7 +2201,8 @@
       brand: { '@type': 'Brand', name: 'Layero' }
     };
     if (rtLd.n) prodLd.aggregateRating = { '@type': 'AggregateRating', ratingValue: rtLd.r, reviewCount: rtLd.n };
-    if (p.ar > 0) prodLd.offers = { '@type': 'Offer', price: p.ar, priceCurrency: 'RON', availability: 'https://schema.org/InStock', url: location.href };
+    if (V.isVariable(p)) prodLd.offers = { '@type': 'AggregateOffer', lowPrice: V.range(p).min, highPrice: V.range(p).max, priceCurrency: 'RON', offerCount: p.variaciok.length, url: location.href };
+    else if (p.ar > 0) prodLd.offers = { '@type': 'Offer', price: p.ar, priceCurrency: 'RON', availability: 'https://schema.org/InStock', url: location.href };
     injectJsonLd(prodLd);
     injectJsonLd({
       '@context': 'https://schema.org', '@type': 'BreadcrumbList',
@@ -2131,10 +2212,6 @@
         { '@type': 'ListItem', position: 3, name: p.nev, item: location.href }
       ]
     });
-
-    // várható kézbesítés a gyártási időből + szállítás
-    var gyNapok = prodDays(p);
-    var pdpEta = gyNapok ? etaRange(gyNapok.min, gyNapok.max) : null;
 
     mount.innerHTML =
       '<nav class="sh-crumbs shop-wrap" aria-label="Morzsamenü">' +
@@ -2167,10 +2244,9 @@
           productBadgeDetails(p) +
           '<p class="sh-pinfo__desc">' + esc(p.leiras) + '</p>' +
           (rateHtml(p, true) || (kerheto ? '<a class="sh-pinfo__review" href="#sh-velemenyek"><span aria-hidden="true">☆</span> Még nincs értékelés</a>' : '')) +
-          '<div class="sh-pprice"><div><div class="sh-pinfo__price">' + fmtAr(p.ar) +
+          '<div class="sh-pprice"><div><div class="sh-pinfo__price">' + (V.isVariable(p) ? priceHtml(p) : fmtAr(p.ar)) +
             (discountPct(p) ? '<del>' + fmtPrice(p.regi_ar) + '</del>' : '') +
             '</div>' + (kerheto ? '<small>RON / darab</small>' : '<small>A részletek alapján egyeztetjük</small>') + '</div>' +
-            (kerheto ? '<span class="sh-pstock' + (p.keszleten === true ? ' is-stock' : '') + '">' + (p.keszleten === true ? 'Saját készleten' : 'Rendelésre készül') + '</span>' : '') +
           '</div>' +
           (kerheto ?
             (szemelyre ?
@@ -2180,6 +2256,7 @@
                 '<p class="sh-persz-hint" id="sh-persz-help">Legfeljebb 18 karakter. A pontos elhelyezést a tervezéskor egyeztetjük.</p>' +
               '</div>' : '') +
             optionRowsHtml(p, 'data-product-option', true) +
+            (V.isVariable(p) ? '<p class="sh-variation-status" role="status" data-variation-status>Válaszd ki a neked tetsző változatot.</p><button type="button" class="sh-variation-reset" data-variation-reset>Választás törlése</button>' : '') +
             (eloreFizetes ?
               '<div class="sh-prepay" style="margin:12px 0;padding:12px 14px;border:1px solid #e0b64f;background:#fdf6e3;border-radius:10px;font-size:.85rem;line-height:1.55">' +
                 '💳 <b>Csak előre fizetéssel rendelhető</b> — bankkártya, Apple Pay, Google Pay vagy banki átutalás. ' +
@@ -2196,10 +2273,6 @@
               '<button class="sh-btn sh-btn--primary" id="sh-add-btn" type="button">' + CART_ICON + '<span>Kosárba teszem</span><span aria-hidden="true">→</span></button>' +
             '</div>' +
             '<p class="sh-product-demo">Előnézeti kosár — itt még nem adsz le rendelést.</p>' +
-            (pdpEta ? '<div class="sh-delivery">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h13v9H1zM14 11h4l3 3v3h-7z"/><circle cx="5.5" cy="19" r="1.8"/><circle cx="17.5" cy="19" r="1.8"/></svg>' +
-              '<span>Ha ma rendelsz, várhatóan <b>' + fmtDatum(pdpEta.tol) + ' – ' + fmtDatum(pdpEta.ig) + '</b> között kézbesítjük.</span>' +
-            '</div>' : '') +
             payChipsHtml(!eloreFizetes) +
             '<div class="sh-notify-wrap" id="sh-notify-wrap"></div>'
           :
@@ -2207,7 +2280,7 @@
           ) +
           '<ul class="sh-product-benefits">' +
             '<li>' + ICO.pin + '<span><b>Saját műhely</b><small>Szatmárnémetiben</small></span></li>' +
-            '<li>' + ICO.clock + '<span><b>' + (p.keszleten === true ? 'Saját készletről' : 'Egyedi gyártás') + '</b><small>' + (p.keszleten === true ? 'Azonnal csomagolható' : (productionTime(p) ? esc(productionTime(p)) : 'Egyeztetett határidővel')) + '</small></span></li>' +
+            '<li>' + ICO.box + '<span><b>Gondos kivitelezés</b><small>Figyelem a részletekre</small></span></li>' +
             '<li>' + ICO.mail + '<a href="kapcsolat.html"><b>Kérdezz bátran</b><small>Segítünk az ötletedben</small></a></li>' +
           '</ul>' +
           '<div class="sh-product-volume"><span>Több darabban gondolkodsz?</span><a href="cegeknek.html">Kérj egyedi ajánlatot <span aria-hidden="true">→</span></a></div>' +
@@ -2225,9 +2298,7 @@
           '<aside class="sh-specs">' +
             '<h3>Specifikáció</h3>' +
             '<table>' +
-              (p.specs || []).filter(function (row) {
-                return !(/^gyártási idő$/i.test(String(row[0] || '').trim()) && /^5[–-]10 munkanap$/i.test(String(row[1] || '').trim()));
-              }).map(function (row) {
+              (p.specs || []).filter(visibleProductSpec).map(function (row) {
                 return '<tr><td>' + esc(row[0]) + '</td><td>' + esc(row[1]) + '</td></tr>';
               }).join('') +
             '</table>' +
@@ -2244,7 +2315,7 @@
               (eloreFizetes
                 ? 'Ez a termék személyre szabott, ezért <b>csak előre fizetéssel</b> (bankkártya, Apple Pay, Google Pay vagy átutalás) rendelhető — utánvét nem elérhető.'
                 : 'Fizethetsz bankkártyával, Apple Pay-jel, Google Pay-jel vagy utánvéttel.') + '</p>' +
-              '<p>A gyártási idő terméktől függően 3–15 munkanap — a pontos időt a termék specifikációjában és a visszaigazoló e-mailben is megtalálod.</p>' +
+              '<p>A gyártás és a kézbesítés részleteiről a rendelés egyeztetésekor adunk tájékoztatást.</p>' +
             '</div></details>' +
             '<details><summary>Visszaküldés és garancia</summary><div>' + (kerheto ? guaranteeBlock : '') +
               '<p><b>2 éves törvényi jótállás (garanție legală de conformitate):</b> minden termékünkre kiterjed. Gyártási, anyag- vagy nyomtatási hibára cserét vagy teljes visszatérítést adunk — elég egy fotó a hibáról.</p>' +
@@ -2283,7 +2354,7 @@
 
     if (kerheto) {
       // termékenként engedélyezett választók
-      $all('[data-product-option]', mount).forEach(function (row) {
+      $all('[data-product-option]', mount).filter(function (row) { return !row.closest('.sh-opt--variation'); }).forEach(function (row) {
         row.addEventListener('click', function (e) {
           var b = e.target.closest('button');
           if (!b) return;
@@ -2295,16 +2366,32 @@
       var qty = 1;
       var out = $('#sh-qty-val');
       function updateQuantity(next) {
-        qty = Math.max(1, Math.min(99, next));
+        qty = Math.max(1, Math.min(selectionState.current ? Math.max(1, V.limit(selectionState.current)) : 99, next));
         out.textContent = qty;
         $('#sh-order-count').textContent = qty;
-        $('#sh-order-total').textContent = fmtPrice(Math.round(p.ar * qty * 100) / 100);
+        $('#sh-order-total').textContent = V.isVariable(p) && !selectionState.current ? 'Válassz változatot' : fmtPrice(Math.round((selectionState.current ? selectionState.current.ar : p.ar) * qty * 100) / 100);
         $('#sh-qty-minus').disabled = qty === 1;
-        $('#sh-qty-plus').disabled = qty === 99;
+        $('#sh-qty-plus').disabled = qty >= (selectionState.current ? V.limit(selectionState.current) : 99);
       }
       $('#sh-qty-minus').addEventListener('click', function () { updateQuantity(qty - 1); });
       $('#sh-qty-plus').addEventListener('click', function () { updateQuantity(qty + 1); });
       updateQuantity(1);
+      if (V.isVariable(p)) selectionState = bindVariations(mount, p, '[data-product-option]', initialVariation, function (v) {
+        selectionState.current = v;
+        $('.sh-pinfo__price', mount).innerHTML = priceHtml(v ? V.view(p, v) : p);
+        $('#sh-add-btn').disabled = !V.available(v);
+        if (v) {
+          var url = new URL(location.href); url.searchParams.set('valtozat', v.id); history.replaceState(null, '', url.href);
+          var img = $('#sh-pmain'); img.src = (v.kepek || p.kepek)[0]; img.alt = p.nev + ' – ' + V.label(p, v);
+          $all('.sh-pgallery__thumbs button', mount).forEach(function (b, i) {
+            var on = b.getAttribute('data-src') === img.getAttribute('src'); b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on));
+            if (on) $('#sh-gallery-index', mount).textContent = String(i + 1).padStart(2, '0');
+          });
+        } else { var clearUrl = new URL(location.href); clearUrl.searchParams.delete('valtozat'); history.replaceState(null, '', clearUrl.href); }
+        updateQuantity(qty);
+        var sticky = $('.sh-stickybar');
+        if (sticky) { var button = $('button', sticky); if (button) button.disabled = !V.available(v); $('strong', sticky).textContent = v ? fmtPrice(v.ar) : 'Válassz változatot'; if (v) $('img', sticky).src = v.kepek[0]; }
+      });
 
       // Élő felirat-előnézet a galéria alatti külön kártyán.
       /* A névmező csak személyre szabható terméknél létezik */
@@ -2326,10 +2413,12 @@
 
       // kosárba tétel (a sticky sáv is ezt hívja)
       function doAdd() {
-        var variant = selectedOptionText(mount, '[data-product-option]');
+        var extra = selectedOptionText(mount, '.sh-opt:not(.sh-opt--variation) [data-product-option]');
+        var variant = selectionState.current ? V.label(p, selectionState.current) : selectedOptionText(mount, '[data-product-option]');
+        if (selectionState.current && extra) variant += ' · ' + extra;
         var felirat = persz ? persz.value.trim() : '';
         if (felirat) variant += (variant ? ' · ' : '') + '„' + felirat + '”';
-        cartAdd(p.id, qty, variant);
+        if (!cartAdd(p.id, qty, variant, null, selectionState.current && selectionState.current.id, [extra, felirat].filter(Boolean).join(' · '))) return;
         openDrawer();
       }
       $('#sh-add-btn').addEventListener('click', doAdd);
@@ -2376,7 +2465,7 @@
             sku: item.sku || ''
           };
         });
-        var bundleBlocked = managedBundle.purchasable === false || bundleItems.some(function (item) { return item.required && !item.purchasable; });
+        var bundleBlocked = managedBundle.purchasable === false || bundleItems.some(function (item) { return (item.required && !item.purchasable) || V.isVariable(prodById(item.id)); });
         $('#sh-bundle-mount').innerHTML =
           '<div class="sh-bundle">' +
             '<h3>' + esc(managedBundle.title || 'Gyakran veszik együtt') + '</h3>' +
@@ -2389,7 +2478,7 @@
                 bundleItems.map(function (item, index) {
                   return '<label>' + (!item.required ? '<input type="checkbox" data-bundle-optional="' + index + '" checked> ' : '') + esc(item.name) + (item.quantity > 1 ? ' × ' + item.quantity : '') + '</label>';
                 }).join(' + ') +
-                (bundleBlocked ? '<small>Egy kötelező komponens jelenleg nem elérhető.</small>' : '') +
+                (bundleBlocked ? '<small>A változatot igénylő darabokat a saját termékoldalukon válaszd ki.</small>' : '') +
               '</div>' +
               '<button class="sh-btn sh-btn--dark" type="button" id="sh-bundle-add" ' + (bundleBlocked ? 'disabled' : '') + '>Mindet a kosárba</button>' +
             '</div>' +
@@ -2413,10 +2502,11 @@
       bar.innerHTML =
         '<div class="sh-stickybar__inner">' +
           '<figure><img src="' + p.kepek[0] + '" alt="" loading="lazy" decoding="async"></figure>' +
-          '<div class="sh-stickybar__name"><b>' + esc(p.nev) + '</b><span><strong>' + fmtAr(p.ar) + '</strong>' + (pdpEta ? '<em> · kézbesítés: ' + fmtDatum(pdpEta.tol) + ' – ' + fmtDatum(pdpEta.ig) + '</em>' : '') + '</span></div>' +
+          '<div class="sh-stickybar__name"><b>' + esc(p.nev) + '</b><span><strong>' + fmtAr(p.ar) + '</strong>' + '</span></div>' +
           '<button class="sh-btn sh-btn--primary" type="button">Kosárba</button>' +
         '</div>';
       document.body.appendChild(bar);
+      if (V.isVariable(p)) { $('button', bar).disabled = !V.available(selectionState.current); $('strong', bar).textContent = selectionState.current ? fmtPrice(selectionState.current.ar) : 'Válassz változatot'; if (selectionState.current) $('img', bar).src = selectionState.current.kepek[0]; }
       $('button', bar).addEventListener('click', doAdd);
       if ('IntersectionObserver' in window) {
         var buyIO = new IntersectionObserver(function (entries) {
@@ -2465,7 +2555,7 @@
           '<div class="sh-cart-empty shop-wrap">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.5 12.5a1.5 1.5 0 0 1-1.5 1.5H6a1.5 1.5 0 0 1-1.5-1.5L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>' +
             '<h2>A kosarad üres</h2>' +
-            '<p>Nézz körül a termékek között — készletes és rendelésre gyártott darabokat is találsz.</p>' +
+            '<p>Nézz körül a személyes ajándékok és dekorációk között.</p>' +
             '<a class="sh-btn sh-btn--primary" href="kategoria.html">Vásárlás megkezdése</a>' +
           '</div>';
         return;
@@ -2473,11 +2563,12 @@
 
       var rows = items.map(function (r) {
         var it = r.it, p = r.p, tetel = r.sor;
-        return '<div class="sh-cart-item" data-key="' + it.key + '">' +
+        return '<div class="sh-cart-item" data-key="' + esc(it.key) + '">' +
           '<figure><a href="termek.html?id=' + p.id + '"><img src="' + p.kepek[0] + '" alt="' + esc(p.nev) + '" loading="lazy" decoding="async"></a></figure>' +
           '<div>' +
             '<div class="sh-cart-item__name">' + esc(p.nev) + '</div>' +
             (it.variant ? '<div class="sh-cart-item__meta">' + esc(it.variant) + '</div>' : '') +
+            (r.invalid ? '<p class="sh-cart-variation-error">Ez a változat vagy mennyiség már nem elérhető. <a href="termek.html?id=' + esc(p.id) + '">Válassz újra</a>, vagy távolítsd el.</p>' : '') +
             '<div class="sh-cart-item__actions">' +
               '<div class="sh-qty">' +
                 '<button type="button" data-act="minus" aria-label="Kevesebb">−</button>' +
@@ -2533,7 +2624,7 @@
             '<div class="sh-summary__row"><span>Szállítás</span><span>' + (t.shipping === 0 ? 'Ingyenes' : fmtPrice(t.shipping)) + '</span></div>' +
             '<div class="sh-summary__row total"><span>Összesen</span><span>' + fmtPrice(t.total) + '</span></div>' +
             '<a class="sh-btn sh-btn--primary" href="penztar.html"' + (minHianyzik ? ' aria-disabled="true" style="opacity:.45;pointer-events:none"' : '') + '>Tovább a pénztárhoz</a>' +
-            (minHianyzik ? '<p class="sh-summary__hint" style="color:var(--gold)">A minimális rendelési érték ' + fmtPrice(MIN_ORDER) + ' — még ' + fmtPrice(MIN_ORDER - t.subtotal) + ' hiányzik.</p>' : '') +
+            (t.invalid ? '<p class="sh-cart-variation-error">A folytatáshoz javítsd a jelzett tételeket.</p>' : minHianyzik ? '<p class="sh-summary__hint" style="color:var(--gold)">A minimális rendelési érték ' + fmtPrice(MIN_ORDER) + ' — még ' + fmtPrice(MIN_ORDER - t.subtotal) + ' hiányzik.</p>' : '') +
             (items.some(function (r) { return r.p.csak_elore_fizetes === true; })
               ? payChipsHtml(false) + '<p class="sh-summary__hint">A kosárban személyre szabott termék van, ezért <b>utánvét nem elérhető</b>.</p>'
               : payChipsHtml(true)) +
@@ -2541,8 +2632,9 @@
         '</div>';
 
       $all('[data-add]', mount).forEach(function (b) {
-        b.addEventListener('click', function () {
-          cartAdd(b.getAttribute('data-add'), 1, '');
+        b.addEventListener('click', function (event) {
+          event.stopPropagation();
+          if (!cartAdd(b.getAttribute('data-add'), 1, '')) return;
           toast('A kosárba került!');
           draw();
         });
@@ -2557,8 +2649,8 @@
         items2.forEach(function (x) { if (x.key === key) it = x; });
         if (!it) return;
         var act = btn.getAttribute('data-act');
-        if (act === 'plus') it.qty = Math.min(99, it.qty + 1);
-        if (act === 'minus') it.qty = Math.max(1, it.qty - 1);
+        if (act === 'plus') changeCartQuantity(items2, it, 1);
+        if (act === 'minus') changeCartQuantity(items2, it, -1);
         if (act === 'remove') items2 = items2.filter(function (x) { return x.key !== key; });
         cartSet(items2);
         draw();
@@ -2607,7 +2699,8 @@
         '<div class="sh-sumrow"><span>Szállítás</span><span>' + (tt.shipping === 0 ? 'Ingyenes' : fmtPrice(tt.shipping)) + '</span></div>' +
         (tt.codFee ? '<div class="sh-sumrow"><span>Utánvét felár</span><span>+' + fmtPrice(tt.codFee) + '</span></div>' : '') +
         '<div class="sh-sumrow total"><span>Fizetendő</span><span>' + fmtPrice(tt.total) + '</span></div>' +
-        '<button class="sh-btn sh-btn--primary" type="submit" form="sh-co-form">Megrendelés elküldése</button>' +
+        (tt.belowMin ? '<p class="sh-cart-variation-error">' + (tt.invalid ? 'Egy változat vagy mennyiség már nem elérhető.' : 'A minimális rendelési érték 50 RON.') + ' <a href="kosar.html">Vissza a kosárhoz</a></p>' : '') +
+        '<button class="sh-btn sh-btn--primary" type="submit" form="sh-co-form"' + (tt.belowMin ? ' disabled' : '') + '>Megrendelés elküldése</button>' +
         '<ul class="sh-co-trust">' +
           '<li>' + ICO.shield + ' SSL-titkosított, biztonságos fizetés</li>' +
           '<li>' + ICO.shield + ' 2 év törvényi jótállás minden termékre</li>' +
@@ -2695,6 +2788,7 @@
     // megrendelés
     $('#sh-co-form', mount).addEventListener('submit', function (e) {
       e.preventDefault();
+      if (cartTotals().belowMin) { toast('Ellenőrizd a kosárban jelzett tételeket és a minimális rendelési értéket.'); return; }
       if (!this.checkValidity()) { this.reportValidity(); return; }
       // A browser preview must not create a fictitious order or clear the cart.
       openInfoModal('A rendelés még nem lett elküldve',
@@ -2821,35 +2915,37 @@
 
   /* ── AJÁNDÉKKERESŐ KVÍZ ──────────────────────────────────────── */
   var QUIZ = [
-    { label: 'Kinek?', q: 'Kit lepnél meg?', hint: 'Gondolj arra, akinek mosolyt csalnál az arcára.', opts: [
-      { t: 'Gyereknek', d: 'Egy kis varázslat a saját világába', icon: 'bear', cat: { 'baba-gyerek': 4, lampak: 1, rajongoi: 1 }, words: ['dínó', 'dinó', 'gyerek', 'baba'], ids: { 'jurassic-lampa': 4 } },
-      { t: 'A páromnak', d: 'Valami, ami kettőnkről szól', icon: 'heart', cat: { lampak: 1, dekoraciok: 1 }, words: ['szív', 'szerelem', 'páros', 'évforduló'], ids: { 'eletfa-mecses-szett': 3, 'tulipan-vaza': 2 } },
-      { t: 'Szülőnek, nagyszülőnek', d: 'Személyes figyelmesség, sok szeretettel', icon: 'flower', cat: { dekoraciok: 2 }, words: ['család', 'nagyszülő', 'anyák'], ids: { 'eletfa-mecses-szett': 3, 'szarvas-bortarto': 2 } },
-      { t: 'Barátnak, kollégának', d: 'A kedvenc hobbijához vagy a mindennapokhoz', icon: 'users', cat: { kulcstartok: 2, rajongoi: 2 }, words: ['hobbi', 'barát', 'kolléga'] },
-      { t: 'Magamnak, otthonra', d: 'Mert magadnak is ér meglepetést szerezni', icon: 'home', cat: { dekoraciok: 3, lampak: 2 } },
-      { t: 'Céges partnernek', d: 'Egy gesztus, amiben a márkánk is benne van', icon: 'case', cat: { ceges: 5 }, words: ['logós', 'logózott', 'céges'], ids: { 'logos-kulcstarto': 3 } }
+    { label: "Kinek?", q: "Kit lepnél meg?", hint: "Gondolj arra, akinek mosolyt csalnál az arcára.", opts: [
+      {"t":"Gyereknek","d":"Kedves kiegészítő vagy dekoráció a szobájába","icon":"bear","group":"kinek","value":"gyerek"},
+      {"t":"A páromnak","d":"Valami, ami kettőnkről szól","icon":"heart","group":"kinek","value":"par"},
+      {"t":"Szülőnek, nagyszülőnek","d":"Személyes figyelmesség, sok szeretettel","icon":"flower","group":"kinek","value":"szulo"},
+      {"t":"Barátnak, kollégának","d":"A kedvenc hobbijához vagy a mindennapokhoz","icon":"users","group":"kinek","value":"barat"},
+      {"t":"Magamnak, otthonra","d":"Mert magadnak is ér meglepetést szerezni","icon":"home","group":"kinek","value":"magam"},
+      {"t":"Céges partnernek","d":"Egy gesztus, amiben a márkánk is benne van","icon":"case","group":"kinek","value":"ceges"}
     ] },
-    { label: 'Mire?', q: 'Mit ünnepeltek?', hint: 'A nagy alkalmak és az apró gesztusok is számítanak.', opts: [
-      { t: 'Születésnap, névnap', d: 'Az ő napja, az ő ajándéka', icon: 'cake', cat: { lampak: 1, rajongoi: 1 }, words: ['születésnap', 'névnap'] },
-      { t: 'Ballagás, diploma', d: 'Egy új fejezet kezdetére', icon: 'cap', words: ['ballagás', 'diploma'], ids: { 'bagoly-figura': 4, 'programozo-lampa': 3 } },
-      { t: 'Karácsony', d: 'Személyes meglepetés a fa alá', icon: 'tree', cat: { szezonalis: 4 }, words: ['karácsony', 'advent', 'ünnepi'], ids: { 'karacsonyi-lampa': 4 } },
-      { t: 'Évforduló, szerelem', d: 'A közös pillanatok emlékére', icon: 'heart', words: ['szív', 'évforduló', 'szerelem'], ids: { 'eletfa-mecses-szett': 4, 'tulipan-vaza': 2 } },
-      { t: 'Céges alkalom', d: 'Köszönet a közös munkáért', icon: 'case', cat: { ceges: 4 }, words: ['céges', 'logós', 'logózott'] },
-      { t: 'Csak úgy', d: 'A legjobb meglepetés néha váratlan', icon: 'spark', cat: { lampak: 1, dekoraciok: 1, kulcstartok: 1, rajongoi: 1, 'baba-gyerek': 1 } }
+    { label: "Mire?", q: "Mit ünnepeltek?", hint: "A nagy alkalmak és az apró gesztusok is számítanak.", opts: [
+      {"t":"Születésnap, névnap","d":"Az ő napja, az ő ajándéka","icon":"cake","group":"alkalom","value":"szuletesnap"},
+      {"t":"Ballagás, diploma","d":"Egy új fejezet kezdetére","icon":"cap","group":"alkalom","value":"ballagas"},
+      {"t":"Karácsony","d":"Személyes meglepetés a fa alá","icon":"tree","group":"alkalom","value":"karacsony"},
+      {"t":"Évforduló, szerelem","d":"A közös pillanatok emlékére","icon":"heart","group":"alkalom","value":"evfordulo"},
+      {"t":"Céges alkalom","d":"Köszönet a közös munkáért","icon":"case","group":"alkalom","value":"ceges"},
+      {"t":"Csak úgy","d":"A legjobb meglepetés néha váratlan","icon":"spark","group":"alkalom","value":"csak-ugy"},
+      {"t":"Babaszületés","d":"Emlék az első közös pillanatokról","icon":"bear","group":"alkalom","value":"babaszuletes"},
+      {"t":"Anyák napja","d":"Egy kedves köszönet anyának, mamának","icon":"flower","group":"alkalom","value":"anyak-napja"}
     ] },
-    { label: 'Milyet?', q: 'Minek örülne igazán?', hint: 'Válaszd azt az irányt, ami a leginkább illik hozzá.', opts: [
-      { t: 'Fény és hangulat', d: 'Lámpák, amik otthonossá teszik a teret', icon: 'lamp', reason: 'A fények és a hangulat miatt választottuk.', cat: { lampak: 6 }, words: ['lámpa', 'világító'] },
-      { t: 'Apró és praktikus', d: 'Egy kedves részlet a mindennapokban', icon: 'key', reason: 'A praktikus ajándékok közül válogattuk.', cat: { kulcstartok: 6 }, words: ['kulcstartó'] },
-      { t: 'Szép tárgy az otthonába', d: 'Dekoráció, amire jó ránézni', icon: 'home', reason: 'Az otthonába keresett dekorációkhoz illik.', cat: { dekoraciok: 6 } },
-      { t: 'A kedvenc világából', d: 'Hobbi, karakterek és gyűjtői darabok', icon: 'game', reason: 'A rajongói, gyűjtői irányhoz kapcsolódik.', cat: { rajongoi: 6 }, words: ['rajongó', 'gamer', 'sárkány'] },
-      { t: 'Valami teljesen egyedi', d: 'Saját ötletből születő ajándék', icon: 'pen', reason: 'Saját ötletedből készülhet el.', cat: { egyedi: 8 }, ids: { 'egyedi-otlet': 10 } },
-      { t: 'Még keresem az ihletet', d: 'Mutassatok többféle ötletet', icon: 'spark' }
+    { label: "Milyet?", q: "Minek örülne igazán?", hint: "Válaszd azt az irányt, ami a leginkább illik hozzá.", opts: [
+      {"t":"Fény és hangulat","d":"Lámpák, amik otthonossá teszik a teret","icon":"lamp","reason":"A fények és a hangulat miatt választottuk.","group":"stilus","value":"feny"},
+      {"t":"Apró és praktikus","d":"Egy kedves részlet a mindennapokban","icon":"key","reason":"A praktikus ajándékok közül válogattuk.","group":"stilus","value":"praktikus"},
+      {"t":"Szép tárgy az otthonába","d":"Dekoráció, amire jó ránézni","icon":"home","reason":"Az otthonába keresett dekorációkhoz illik.","group":"stilus","value":"dekor"},
+      {"t":"A kedvenc világából","d":"Hobbi, karakterek és gyűjtői darabok","icon":"game","reason":"A rajongói, gyűjtői irányhoz kapcsolódik.","group":"stilus","value":"rajongoi"},
+      {"t":"Valami teljesen egyedi","d":"Saját ötletből születő ajándék","icon":"pen","reason":"Saját ötletedből készülhet el.","group":"stilus","value":"egyedi"},
+      {"t":"Még keresem az ihletet","d":"Mutassatok többféle ötletet","icon":"spark","group":"stilus","any":true}
     ] },
-    { label: 'Mennyiért?', q: 'Mekkora keretben gondolkodsz?', hint: 'A termék árával számolunk, szállítási díj nélkül.', opts: [
-      { t: '100 RON-ig', d: 'Egy kedves figyelmesség', icon: 'gift', maxAr: 100 },
-      { t: '100–200 RON', d: 'Egy személyes meglepetés', icon: 'gift', minAr: 100, maxAr: 200 },
-      { t: '200 RON felett', d: 'Egy igazán különleges darab', icon: 'gift', minAr: 200 },
-      { t: 'Mutassatok minden árban', d: 'Előbb az ötletet szeretném megtalálni', icon: 'spark' }
+    { label: "Mennyiért?", q: "Mekkora keretben gondolkodsz?", hint: "A termék árával számolunk, szállítási díj nélkül.", opts: [
+      {"t":"100 RON-ig","d":"Egy kedves figyelmesség","icon":"gift","maxAr":100},
+      {"t":"100–200 RON","d":"Egy személyes meglepetés","icon":"gift","minAr":100,"maxAr":200},
+      {"t":"200 RON felett","d":"Egy igazán különleges darab","icon":"gift","minAr":200},
+      {"t":"Mutassatok minden árban","d":"Előbb az ötletet szeretném megtalálni","icon":"spark"}
     ] }
   ];
 
@@ -2878,36 +2974,38 @@
   }
 
   function quizMatch(p, opt) {
-    if (!opt) return 0;
-    var score = (opt.cat && opt.cat[p.cat] || 0) + (opt.ids && opt.ids[p.id] || 0);
-    var text = String(p.nev || '') + ' ' + String(p.leiras || '');
-    text = text.toLocaleLowerCase('hu');
-    if (opt.words && opt.words.some(function (word) { return text.indexOf(word) !== -1; })) score += 4;
-    return score;
+    var profile = p.ajandek;
+    if (!opt || !profile || profile.version !== 1 || profile.enabled !== true) return 0;
+    if (opt.any) return 1;
+    var values = profile[opt.group];
+    if (!Array.isArray(values) || values.indexOf(opt.value) === -1) return 0;
+    // A szűkebb, kifejezetten erre az alkalomra/célcsoportra sorolt termék előrébb kerül.
+    return Math.max(1, 12 - values.length);
   }
 
   function quizResults(answers) {
-    var budget = answers[3] || {};
+    if (!Array.isArray(answers) || answers.length !== 4 || answers.some(function (a) { return !a; })) return [];
+    var budget = answers[3];
     var limited = budget.minAr !== undefined || budget.maxAr !== undefined;
-    // A megadott keret valódi szűrő. Ismeretlen ár nem számít beleférő ajánlatnak.
     var list = SHOP_PRODUCTS.filter(function (p) {
-      var price = Number(p.ar);
-      if (!Number.isFinite(price) || price < 0) return false;
-      if (limited && price <= 0) return false;
-      return !(budget.minAr !== undefined && price <= budget.minAr) &&
-        !(budget.maxAr !== undefined && price > budget.maxAr);
+      // Besorolás nélküli mintatermékből nem gyártunk látszólag megfelelő találatot.
+      if (!p.ajandek || p.ajandek.enabled !== true || p.ajanlhato === false) return false;
+      if ((p.badges || []).some(function (b) { return b.id === 'soldOut' || b.id === 'comingSoon'; })) return false;
+      if (typeof p.ar !== 'number' || !Number.isFinite(p.ar) || p.ar < 0 || (limited && p.ar === 0)) return false;
+      return !(budget.minAr !== undefined && p.ar <= budget.minAr) &&
+        !(budget.maxAr !== undefined && p.ar > budget.maxAr);
     }).map(function (p, index) {
       var matches = answers.slice(0, 3).map(function (opt) { return quizMatch(p, opt); });
-      return { p: p, index: index, s: matches.reduce(function (sum, value) { return sum + value; }, 0), matches: matches };
-    });
-    list.sort(function (a, b) { return b.s - a.s || b.matches[2] - a.matches[2] || a.index - b.index; });
-    return list.filter(function (r) { return r.s > 0; }).slice(0, 3);
+      return { p: p, index: index, s: matches[1] * 3 + matches[2] * 2 + matches[0], matches: matches };
+    }).filter(function (hit) { return hit.matches.every(function (score) { return score > 0; }); });
+    list.sort(function (a, b) { return b.s - a.s || a.index - b.index; });
+    return list.slice(0, 3);
   }
 
   function renderKviz() {
     var mount = $('#sh-quiz-mount');
     if (!mount) return;
-    var storageKey = 'layero_gift_finder_v2';
+    var storageKey = 'layero_gift_finder_v3';
     var step = 0;
     var picks = [null, null, null, null];
     try {
@@ -3009,7 +3107,7 @@
         '<p>' + (hits.length ? 'A válaszaid alapján válogattuk. Nézd meg, melyikben ismersz rá igazán.' : 'Ezekkel a válaszokkal most nincs megfelelő ajánlatunk' + (limited ? ' a megadott árkeretben.' : '.') ) + '</p></div>' +
         summaryHtml() + '<p class="sh-quiz__edit-note">A választásaidra kattintva finomíthatod az ajánlásokat.</p>' +
         (hits.length ? '<div class="sh-quiz__results">' + hits.map(function (hit, i) {
-          var reason = hit.matches[2] && selected[2].reason ? selected[2].reason : hit.matches[1] ? 'A választott alkalomhoz kapcsolódó ötlet.' : 'A megajándékozotthoz választott irány alapján.';
+          var reason = selected[0].t + ' · ' + selected[1].t + (selected[2].any ? '' : ' · ' + selected[2].t);
           return '<article class="sh-quiz__recommendation"><div class="sh-quiz__pick-label">' + (i === 0 ? quizIcon('spark') + ' Első tippünk' : '0' + (i + 1) + ' · Még egy jó irány') + '</div>' + prodCard(hit.p) +
             '<p class="sh-quiz__reason">' + quizIcon('check') + '<span>' + esc(reason) + (limited ? '<small>A választott árkereten belül.</small>' : hit.p.ar <= 0 ? '<small>Az ár egyedi egyeztetéssel alakul ki.</small>' : '') + '</span></p></article>';
         }).join('') + '</div>' : '<div class="sh-quiz__empty">' + quizIcon('search') + '<h3>Egy kis változtatás, új ötletek.</h3><p>Próbálj másik stílust vagy tágabb árkeretet. A válaszaid megmaradnak.</p><button type="button" class="sh-quiz__next" data-step="3">Módosítom a keretet ' + quizIcon('arrow') + '</button></div>') +
@@ -3866,7 +3964,7 @@
       if (btn) {
         // rács- / gyorsnézet-kártya
         var p = prod(btn.getAttribute('data-add'));
-        if (!p || !p.kepek || !p.kepek[0]) return;
+        if (!p || !p.kepek || !p.kepek[0] || Array.isArray(p.variaciok)) return;
         imgUrl = p.kepek[0];
         var host = btn.closest('.sh-prod-card') || btn.closest('.sh-qv__box') || document;
         src = host.querySelector ? (host.querySelector('figure img') || host.querySelector('img')) : null;

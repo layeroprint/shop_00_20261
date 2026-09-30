@@ -8,6 +8,8 @@ php -d xdebug.mode=off tests/commerce.php
 node tools/sync-static.js --check
 ```
 
+A 0.10.18 célzott próbái a fenti helyi WordPressben: `tests/commerce-ui-wordpress.php` és `tests/information-pages-wordpress.php`, ugyanazzal az `eval-file` hívással. Az első valódi kosárfragmentumokat és mennyiségvégpontot, a második mentést, ismételt futást és az egyedi oldalak megőrzését ellenőrzi.
+
 ## Valódi WordPress-próba
 
 A 2026-09-29-i helyi környezet a webshop gyökerének ignorált `output/wp-test/` mappájában van. Nem része a kiadásnak. WordPress/Elementor/WooCommerce/Hello Elementor hivatalos letöltésekből; a plugin helyi mappája csatlakozik a teszt WordPresshez.
@@ -24,6 +26,7 @@ A webshop gyökeréből, a helyi adatbázis elindítása után:
 php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/setup-wordpress.php --path=output/wp-test/wordpress
 php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/wordpress.php --path=output/wp-test/wordpress
 php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/badges-wordpress.php --path=output/wp-test/wordpress
+php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/stock-policy-wordpress.php --path=output/wp-test/wordpress
 php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/forms-wordpress.php --path=output/wp-test/wordpress
 php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/hero-wordpress.php --path=output/wp-test/wordpress
 php -d memory_limit=512M -d xdebug.mode=off output/wp-test/wp-cli.phar eval-file layero_shop_00_2026/tests/testimonials-wordpress.php --path=output/wp-test/wordpress

@@ -15,6 +15,7 @@ $contact_data = (new ReflectionMethod($builder, 'contact_data'))->invoke(null);
 $home_types = wp_list_pluck($widgets->invoke(null, $home), 'widgetType');
 $contact_types = wp_list_pluck($widgets->invoke(null, $contact_data), 'widgetType');
 cleanup_check(! in_array('layero_newsletter_banner', $home_types, true) && ! in_array('layero_footnotes', $home_types, true), 'New homepage omits both retired blocks.');
+cleanup_check(! in_array('layero_gallery_strip', $home_types, true), 'New homepage omits the retired gallery strip.');
 cleanup_check(! in_array('layero_newsletter_banner', $contact_types, true), 'New contact page omits the retired banner.');
 
 $make_widget = new ReflectionMethod($builder, 'make_widget');
@@ -51,6 +52,39 @@ try {
     cleanup_check($stored_raw === ($backup['elementor_data'] ?? ''), 'Original Elementor data is backed up.');
     $builder::maybe_remove_obsolete_blocks();
     cleanup_check($after === get_post_meta($page_id, '_elementor_data', true), 'Migration is idempotent.');
+
+    // The gallery upgrade must also run after the earlier block cleanup finished.
+    $gallery = $make_widget->invoke(null, 'layero_gallery_strip');
+    $custom = $make_widget->invoke(null, 'html', array('html' => '<p>Keep "quotes" and \\paths</p>'));
+    $mixed = $wrap->invoke(null, array($gallery, $custom));
+    $mixed_kept = $mixed;
+    $mixed_kept['elements'][0]['elements'] = array($custom);
+    $gallery_only = $wrap->invoke(null, array($gallery));
+    $gallery_raw = wp_json_encode(array($keep, $gallery_only, $mixed));
+    update_post_meta($page_id, '_elementor_data', wp_slash($gallery_raw));
+    update_post_meta($page_id, '_elementor_element_cache', 'stale-cache');
+    update_post_meta($page_id, '_elementor_css', array('time' => 1));
+    $content_before = get_post($page_id)->post_content;
+    wp_set_current_user(0);
+    $builder::maybe_remove_home_gallery();
+    cleanup_check($gallery_raw === get_post_meta($page_id, '_elementor_data', true), 'Anonymous request cannot remove the gallery.');
+    wp_set_current_user($admins[0]->ID);
+    update_option('show_on_front', 'posts');
+    $builder::maybe_remove_home_gallery();
+    cleanup_check($gallery_raw === get_post_meta($page_id, '_elementor_data', true), 'Posts homepage leaves the stored page untouched.');
+    update_option('show_on_front', 'page');
+    $builder::maybe_remove_home_gallery();
+    $gallery_after = get_post_meta($page_id, '_elementor_data', true);
+    $expected = json_decode(wp_json_encode(array($keep, $mixed_kept)), true);
+    cleanup_check($expected === json_decode($gallery_after, true), 'Gallery and its empty section are removed; mixed sections and custom content survive.');
+    $gallery_backup = get_post_meta($page_id, '_layero_home_gallery_backup', true);
+    cleanup_check($gallery_raw === ($gallery_backup['elementor_data'] ?? '') && $content_before === ($gallery_backup['post_content'] ?? null), 'Separate gallery backup preserves original page data.');
+    cleanup_check($backup === get_post_meta($page_id, '_layero_obsolete_blocks_backup', true), 'Earlier cleanup backup is preserved.');
+    cleanup_check($content_before === get_post($page_id)->post_content, 'Page content is unchanged.');
+    cleanup_check(! metadata_exists('post', $page_id, '_elementor_element_cache') && ! metadata_exists('post', $page_id, '_elementor_css'), 'Elementor caches are invalidated.');
+    cleanup_check('1' === get_post_meta($page_id, '_layero_home_gallery_revision', true), 'Gallery upgrade records completion.');
+    $builder::maybe_remove_home_gallery();
+    cleanup_check($gallery_after === get_post_meta($page_id, '_elementor_data', true) && $gallery_backup === get_post_meta($page_id, '_layero_home_gallery_backup', true), 'Repeated gallery upgrade preserves the page and backup.');
 } finally {
     update_option('page_on_front', $old_front);
     update_option('show_on_front', $old_show);

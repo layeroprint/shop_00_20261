@@ -16,7 +16,8 @@ layero_check($prices(\LayeroShop\Helpers::query_products(array('category' => 'la
 layero_check(count(\LayeroShop\Helpers::query_products(array('search' => 'Holdfény'))) === 1, 'search finds native product');
 layero_check(count(\LayeroShop\Helpers::query_products(array('search' => 'no-such-layero-product'))) === 0, 'empty search stays empty');
 $snapshot = \LayeroShop\Catalog::snapshot();
-layero_check(count($snapshot['products']) === 31, 'hidden product excluded from public snapshot');
+$public_ids = array_column($snapshot['products'], 'wc_id');
+layero_check(count($public_ids) >= 31 && ! in_array(wc_get_product_id_by_sku('QA-hidden'), $public_ids, true), 'hidden product excluded from public snapshot');
 layero_check(\LayeroShop\Catalog::category_count('lampak') === 6, 'category count equals native products');
 $lamp = wc_get_product(wc_get_product_id_by_sku('QA-szam-lampa-nevvel'));
 $schema = \LayeroShop\Personalization::schema($lamp);
@@ -26,7 +27,13 @@ layero_check(is_wp_error(\LayeroShop\Personalization::values($schema, array('nam
 layero_check(is_wp_error(\LayeroShop\Personalization::values($schema, array('name' => 'A', 'number' => '9', 'color' => 'Red'))), 'unavailable option rejected');
 $first = \LayeroShop\Helpers::query_products(array('limit' => 24, 'offset' => 0));
 $second = \LayeroShop\Helpers::query_products(array('limit' => 24, 'offset' => 24));
-layero_check(count($first) === 24 && count($second) === 7, 'pagination reaches all products');
+layero_check(count($first) === 24 && count($second) === min(24, count($public_ids) - 24), 'pagination fills pages for the current fixture');
+$all_pages = array();
+for ($offset = 0; $offset < count($public_ids); $offset += 24) {
+	$all_pages = array_merge($all_pages, array_map(function ($p) { return $p->get_id(); }, \LayeroShop\Helpers::query_products(array('limit' => 24, 'offset' => $offset))));
+}
+sort($all_pages); sort($public_ids);
+layero_check($all_pages === $public_ids, 'pagination reaches every public product exactly once');
 layero_check(! array_intersect(array_map(function ($p) { return $p->get_id(); }, $first), array_map(function ($p) { return $p->get_id(); }, $second)), 'no overlap between pages');
 wc_load_cart();
 WC()->cart->empty_cart();
