@@ -123,10 +123,14 @@
   function mediaHTML(input, options = {}) {
     const result = resolve(input,options);
     if (!result.all.length) return '';
-    const visible = result.all.slice(0,2), hidden = result.all.slice(2);
+    const personal = result.all.find(item => item.id === 'personal');
+    const top = result.all.filter(item => item.id !== 'personal');
+    const visible = top.slice(0,2), hidden = top.slice(2);
     const locale = safeLocale(options.locale);
     const more = hidden.length ? `<details class="lyrb-more"><summary><span>+${hidden.length} ${locale==='ro'?'detalii':'további'}</span>${iconHTML('plus')}</summary><div class="lyrb-more__list">${groupHTML(hidden,options)}</div></details>` : '';
-    return `<div class="lyrb-overlay" data-lyrb-generated role="group" aria-label="${locale==='ro'?'Etichete produs':'Termékjelzések'}">${groupHTML(visible,options)}${more}</div>`;
+    const overlay = top.length ? `<div class="lyrb-overlay" data-lyrb-generated role="group" aria-label="${locale==='ro'?'Etichete produs':'Termékjelzések'}">${groupHTML(visible,options)}${more}</div>` : '';
+    const bottom = personal ? `<span class="sh-personal-mark lyr-product-card__personal lyrb-personal-mark" data-lyrb-generated data-lyrb-id="personal"><span aria-hidden="true">✦</span> ${escape(personal.label)}</span>` : '';
+    return overlay + bottom;
   }
   /** Mount into an existing product card; existing shopping links and handlers are retained. */
   function mountCard(card, input, options = {}) {
@@ -136,6 +140,7 @@
     if (!media || !body) return {ok:false,reason:'Hiányzó képrész vagy kártyatörzs.'};
     const result = resolve(input,options);
     card.querySelectorAll('[data-lyrb-generated]').forEach(el => el.remove());
+    media.querySelectorAll('.sh-personal-mark, .lyr-product-card__personal').forEach(el => el.remove());
     card.classList.add('lyrb-card','lyrb-enhanced');
     card.dataset.lyrbVariant = variants.includes(options.variant) ? options.variant : 'signature';
     media.insertAdjacentHTML('beforeend',mediaHTML(input,options));

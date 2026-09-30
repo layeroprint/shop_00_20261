@@ -12,7 +12,11 @@
     const personal=card.querySelector('.lyr-product-chip--personal, .lyr-product-card__personal, .sh-personal-mark');
     const time=card.querySelector('.lyr-product-chip--time');
     const sale=card.querySelector('.sh-badge--sale');
-    if(personal)result.push({id:'personal',label:personal.textContent.trim()});
+    if(personal) {
+      const label=personal.cloneNode(true);
+      label.querySelectorAll('[aria-hidden="true"]').forEach(icon=>icon.remove());
+      result.push({id:'personal',label:label.textContent.trim()});
+    }
     if(time)result.push({id:'productionTime',value:time.textContent.trim()});
     card.querySelectorAll('.sh-badge:not(.sh-badge--sale)').forEach(badge=>{
       const label=badge.textContent.trim();

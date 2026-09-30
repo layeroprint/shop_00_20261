@@ -141,7 +141,14 @@
 }
 
 /* Layero host integration: preserve the existing product card and image layout. */
-.lyrb-enhanced .sh-personal-mark,.lyrb-enhanced .lyr-product-card__personal {display:none;}
+.lyrb-personal-mark {
+  position:absolute;left:10px;bottom:10px;z-index:2;display:inline-flex;
+  align-items:center;gap:5px;max-width:calc(100% - 20px);padding:7px 10px;
+  border:1px solid rgba(255,255,255,.24);border-radius:999px;
+  background:rgba(2,8,18,.86);color:#fff;box-shadow:0 4px 14px rgba(2,8,18,.22);
+  font-size:.7rem;font-weight:720;line-height:1.15;white-space:normal;pointer-events:none;
+}
+.lyrb-personal-mark > span {color:var(--brand-gold,#d99a2b);}
 .lyrb-enhanced .lyrb-overlay {inset:10px 64px auto 10px;max-height:calc(100% - 20px);}
 .lyrb-enhanced .lyrb-more {z-index:6;}
 .lyrb-enhanced :is(a,button,summary):focus-visible,.lyrb-more > summary:focus-visible {outline:3px solid #0a7c92;outline-offset:3px;}
