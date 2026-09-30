@@ -16,9 +16,6 @@
       reviewForm.addEventListener('invalid', function () { compose.open = true; }, true);
     }
     var main = root.querySelector('#lyr-product-main-image');
-    var dialog = root.querySelector('#lyr-gallery-dialog');
-    var zoom = root.querySelector('[data-layero-gallery-open]');
-    var close = root.querySelector('[data-layero-gallery-close]');
     root.querySelectorAll('[data-layero-gallery-image]').forEach(function (button, index) {
       button.addEventListener('click', function () {
         if (!main) return;
@@ -35,17 +32,6 @@
         });
       });
     });
-    if (dialog && zoom && typeof dialog.showModal === 'function') {
-      zoom.addEventListener('click', function () {
-        var enlarged = dialog.querySelector('img');
-        enlarged.src = main.currentSrc || main.src;
-        enlarged.alt = main.alt;
-        dialog.showModal();
-      });
-      close.addEventListener('click', function () { dialog.close(); });
-      dialog.addEventListener('click', function (event) { if (event.target === dialog) dialog.close(); });
-      dialog.addEventListener('close', function () { zoom.focus({ preventScroll: true }); });
-    }
     root.querySelectorAll('.lyr-personalization').forEach(function (panel) {
       var heading = document.createElement('div');
       heading.className = 'sh-personalize__heading';

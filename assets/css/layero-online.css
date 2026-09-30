@@ -67,10 +67,6 @@ body.woocommerce div.product .woocommerce-tabs ul.tabs li { border-radius:12px 1
 .lyr-single-reviews { max-width:var(--maxw); }
 .lyr-single-reviews #reviews { margin-top:22px; }
 .lyr-single-product :is(a,button,input,select,textarea,summary):focus-visible { outline:3px solid #087c90; outline-offset:3px; }
-.lyr-gallery-dialog { border:0; border-radius:12px; padding:48px 18px 18px; max-width:min(96vw,1100px); max-height:94vh; background:#fff; }
-.lyr-gallery-dialog::backdrop { background:rgba(2,8,18,.82); }
-.lyr-gallery-dialog img { display:block; max-width:100%; max-height:calc(94vh - 72px); object-fit:contain; }
-.lyr-gallery-dialog button { position:absolute; right:12px; top:8px; border:0; background:none; color:#172b3a; font-size:32px; cursor:pointer; }
 @media(max-width:860px) { .lyr-single-product .sh-pgallery { position:static; } }
 @media(max-width:600px) { .lyr-single-product .sh-crumbs { padding-top:18px; } .lyr-single-product .sh-product { padding-top:20px; } .lyr-single-buy form.cart button.single_add_to_cart_button { min-width:180px; } }
 .lyr-personalization label { display:block; margin-top:12px; font-weight:600; }

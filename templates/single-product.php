@@ -104,6 +104,5 @@ get_header();
 		<?php foreach ($related_ids as $related_id) { $related = wc_get_product($related_id); if ($related && $related->is_visible()) { echo \LayeroShop\Helpers::product_card($related); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} } ?>
 	</div></section><?php endif; ?></div>
-	<?php if ($image_ids) : ?><dialog class="lyr-gallery-dialog" id="lyr-gallery-dialog" aria-label="Termékkép nagyítása"><button type="button" data-layero-gallery-close aria-label="Bezárás">×</button><img src="<?php echo esc_url(wp_get_attachment_image_url($image_ids[0], 'full')); ?>" alt="<?php echo esc_attr($product->get_name()); ?>"></dialog><?php endif; ?>
 </main>
 <?php wp_reset_postdata(); get_footer(); ?>

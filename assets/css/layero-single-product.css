@@ -30,7 +30,6 @@ body[data-page="termek"] .lyr-single-product .sh-pgallery__thumbs { flex-wrap: n
 .lyr-single-buy form.cart .lyr-personalization select { border-color: #d5e2e8; border-radius: 11px; font-size: .85rem; min-height: 46px; }
 .lyr-single-buy form.cart .variations label { font-size: .7rem; letter-spacing: 0; text-transform: none; }
 .lyr-single-product .sh-pstage > div.sh-pgallery__main::after { display: none; }
-html:has(.lyr-gallery-dialog[open]) { overflow: hidden; }
 .lyr-single-reviews.sh-product-reviews { max-width: none; }
 .lyr-single-product .lyr-single-reviews #reviews #comments .woocommerce-Reviews-title,
 .lyr-single-reviews.is-empty #reviews #comments { display: none; }

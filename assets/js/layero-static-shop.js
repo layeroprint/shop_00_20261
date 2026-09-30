@@ -4121,7 +4121,7 @@
   (function () {
     var wrap = $('.sh-pgallery__main');
     if (!wrap) return;
-    var mainImg = $('#sh-pmain');
+    var mainImg = $('img', wrap);
 
     // pan-zoom: a kurzor alatti részletre nagyít
     if (fine && !reduce && mainImg) {
@@ -4147,12 +4147,13 @@
     // lightbox
     var lbx = null, idx = 0, zoomed = false, galleryTrigger = null, galleryOverflow = '';
     function srcs() {
-      var t = [].slice.call(document.querySelectorAll('.sh-pgallery__thumbs button'));
-      return t.length ? t.map(function (b) { return new URL(b.getAttribute('data-src'), document.baseURI).href; }) : (mainImg ? [mainImg.src] : []);
+      var t = [].slice.call(wrap.closest('.sh-pgallery').querySelectorAll('.sh-pgallery__thumbs button'));
+      var images = t.map(function (b) { return b.getAttribute('data-src') || b.getAttribute('data-layero-gallery-image'); }).filter(Boolean);
+      return images.length ? images.map(function (src) { return new URL(src, document.baseURI).href; }) : (mainImg ? [mainImg.src] : []);
     }
     function build() {
       if (lbx) return;
-      lbx = document.createElement('div');
+      lbx = document.createElement('dialog');
       lbx.className = 'sh-lbx';
       lbx.setAttribute('role', 'dialog');
       lbx.setAttribute('aria-modal', 'true');
@@ -4172,9 +4173,10 @@
       $('.sh-lbx__cap', lbx).textContent = h1 ? h1.textContent : '';
       var stage = $('.sh-lbx__stage', lbx);
       $('.sh-lbx__close', lbx).addEventListener('click', close);
+      lbx.addEventListener('cancel', function (e) { e.preventDefault(); close(); });
       $('.sh-lbx__nav--prev', lbx).addEventListener('click', function () { go(idx - 1); });
       $('.sh-lbx__nav--next', lbx).addEventListener('click', function () { go(idx + 1); });
-      lbx.addEventListener('click', function (e) { if (e.target === lbx) close(); });
+      lbx.addEventListener('click', function (e) { if (e.target === lbx || e.target === stage) close(); });
       // kattintásra 2× zoom a kattintás pontjára
       stage.addEventListener('click', function (e) {
         if (e.target.tagName !== 'IMG') return;
@@ -4209,7 +4211,7 @@
       var dots = $('.sh-lbx__dots', lbx);
       var focusedDot = dots.contains(document.activeElement);
       dots.innerHTML = list.map(function (_, n) {
-        return '<button type="button"' + (n === idx ? ' class="is-on"' : '') + ' aria-label="' + (n + 1) + '. kép"></button>';
+        return '<button type="button"' + (n === idx ? ' class="is-on"' : '') + ' aria-pressed="' + (n === idx ? 'true' : 'false') + '" aria-label="' + (n + 1) + '. kép"></button>';
       }).join('');
       [].forEach.call(dots.children, function (b, n) {
         b.addEventListener('click', function () { go(n); });
@@ -4217,7 +4219,7 @@
       if (focusedDot) dots.children[idx].focus();
     }
     function onKey(e) {
-      if (e.key === 'Escape') close();
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
       else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         e.preventDefault();
         go(idx + (e.key === 'ArrowLeft' ? -1 : 1));
@@ -4231,11 +4233,15 @@
     }
     function open(startSrc) {
       build();
+      if (lbx.open) return;
       galleryTrigger = document.activeElement;
       var list = srcs();
-      var at = Math.max(0, list.indexOf(startSrc));
+      var active = wrap.closest('.sh-pgallery').querySelector('.sh-pgallery__thumbs button.is-on');
+      var selected = active && (active.getAttribute('data-src') || active.getAttribute('data-layero-gallery-image'));
+      var at = Math.max(0, list.indexOf(selected ? new URL(selected, document.baseURI).href : startSrc));
       go(at);
       lbx.classList.add('is-open');
+      lbx.showModal();
       galleryOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', onKey);
@@ -4244,9 +4250,10 @@
     function close() {
       if (!lbx || !lbx.classList.contains('is-open')) return;
       lbx.classList.remove('is-open');
+      lbx.close();
       document.body.style.overflow = galleryOverflow;
       document.removeEventListener('keydown', onKey);
-      if (galleryTrigger) galleryTrigger.focus();
+      if (galleryTrigger) galleryTrigger.focus({ preventScroll: true });
     }
     wrap.addEventListener('click', function () {
       open(mainImg ? (mainImg.currentSrc || mainImg.src) : null);
