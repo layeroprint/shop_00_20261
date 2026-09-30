@@ -26,7 +26,7 @@ WC()->customer->set_shipping_postcode('010001');
 WC()->cart->calculate_totals();
 $fragments = apply_filters('woocommerce_add_to_cart_fragments', array());
 $check(strpos($fragments['.sh-cart-badge'], '>3</span>') !== false, 'badge counts quantities, not lines');
-$mini = $fragments['div.widget_shopping_cart_content'];
+$mini = $fragments['.lyr-woo-cart-content'];
 $check(strpos($mini, 'data-cart-count="3"') !== false, 'mini-cart and badge agree');
 $check(strpos($mini, 'Név:') !== false && strpos($mini, '<p>0</p>') !== false, 'personalization and zero value are visible');
 $check(strpos($mini, '<teszt>') === false, 'user-provided fields cannot become HTML');
@@ -66,7 +66,7 @@ $_POST = $_REQUEST = array();
 WC()->cart->empty_cart();
 $fragments = apply_filters('woocommerce_add_to_cart_fragments', array());
 $check(strpos($fragments['.sh-cart-badge'], '>0</span>') !== false && strpos($fragments['.sh-cart-badge'], 'is-on') === false, 'empty cart clears badge');
-$check(strpos($fragments['div.widget_shopping_cart_content'], 'Felfedezem a termékeket') !== false, 'empty drawer offers shopping');
+$check(strpos($fragments['.lyr-woo-cart-content'], 'Felfedezem a termékeket') !== false, 'empty drawer offers shopping');
 
 $profile_product = new WC_Product_Simple();
 $profile = array('version' => 1, 'enabled' => true, 'kinek' => array('gyerek'), 'alkalom' => array('babaszuletes'), 'stilus' => array('feny'));

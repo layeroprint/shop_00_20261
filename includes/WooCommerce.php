@@ -391,9 +391,6 @@ final class WooCommerce {
 				<span><?php echo esc_html__('Kosár', 'layero-shop-ui'); ?></span>
 				<b><?php echo esc_html(WC()->cart ? WC()->cart->get_cart_contents_count() : 0); ?></b>
 			</button>
-			<div class="lyr-mini-cart__panel" data-layero-cart-panel hidden>
-				<?php woocommerce_mini_cart(); ?>
-			</div>
 		</div>
 		<?php
 		return ob_get_clean();

@@ -10,6 +10,8 @@ node tools/sync-static.js --check
 
 A 0.10.18 célzott próbái a fenti helyi WordPressben: `tests/commerce-ui-wordpress.php` és `tests/information-pages-wordpress.php`, ugyanazzal az `eval-file` hívással. Az első valódi kosárfragmentumokat és mennyiségvégpontot, a második mentést, ismételt futást és az egyedi oldalak megőrzését ellenőrzi.
 
+A 0.10.19 kosárpanel-próbája: `tests/cart-drawer-wordpress.php`, ugyanazzal az `eval-file` hívással. Valódi kuponokat, szállítási küszöböket, ajándékcsomagolási díjat és rendelési díjmentést ellenőriz. Kizárólag az alábbi elkülönített helyi adatbázison futtatható; ideiglenes rendelését és adó-/szállítási szabályait eltávolítja.
+
 ## Valódi WordPress-próba
 
 A 2026-09-29-i helyi környezet a webshop gyökerének ignorált `output/wp-test/` mappájában van. Nem része a kiadásnak. WordPress/Elementor/WooCommerce/Hello Elementor hivatalos letöltésekből; a plugin helyi mappája csatlakozik a teszt WordPresshez.

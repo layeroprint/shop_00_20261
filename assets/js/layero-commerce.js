@@ -6,29 +6,23 @@
     var trigger = null;
     var previousOverflow = '';
     var requestedFreshFragments = false;
-    var pendingQuantityFocus = null;
+    var busy = false;
+    var fragmentRequests = [];
+    var cartTriggers = '.sh-cart-btn, [data-layero-cart-toggle]';
 
     function refreshPageTotals() {
       if (document.body.classList.contains('lyr-cart-page')) $(document.body).trigger('wc_update_cart');
       if (document.body.classList.contains('lyr-checkout-page')) $(document.body).trigger('update_checkout');
+      $(document.body).trigger('wc_fragment_refresh');
     }
-    function unlockQuantity() {
-      drawer.querySelectorAll('[aria-busy]').forEach(function (content) { content.removeAttribute('aria-busy'); });
-      drawer.querySelectorAll('[data-drawer-quantity]').forEach(function (button) {
-        button.disabled = Number(button.dataset.drawerQuantity) < 0 && Number(button.closest('[data-cart-key]').dataset.quantity) <= 1;
-      });
-    }
-
     function announce(message) {
       var status = document.querySelector('.lyr-commerce-status');
       if (status) status.textContent = message;
-      var drawerStatus = drawer.querySelector('.lyr-cart-status');
-      if (drawerStatus) drawerStatus.textContent = message;
+      drawer.querySelector('.lyr-cart-status').textContent = message;
     }
     function sync() {
       var content = drawer.querySelector('[data-cart-count]');
-      if (!content || !content.dataset.cartNonce || !content.dataset.quantityUrl) {
-        // Discard a pre-upgrade WooCommerce fragment once, without a refresh loop.
+      if (!content || content.dataset.cartVersion !== '2') {
         if (!requestedFreshFragments) {
           requestedFreshFragments = true;
           $(document.body).trigger('wc_fragment_refresh');
@@ -36,13 +30,13 @@
         return;
       }
       var count = Math.max(0, parseInt(content.dataset.cartCount, 10) || 0);
-      document.querySelectorAll('.sh-cart-badge').forEach(function (badge) {
+      document.querySelectorAll('.sh-cart-badge, [data-layero-cart-toggle] b').forEach(function (badge) {
         badge.hidden = false;
         badge.textContent = count;
         badge.classList.toggle('is-on', count > 0);
         badge.setAttribute('aria-hidden', 'true');
       });
-      document.querySelectorAll('.sh-cart-btn').forEach(function (button) {
+      document.querySelectorAll(cartTriggers).forEach(function (button) {
         button.setAttribute('aria-label', 'Kosár, ' + count + ' darab');
         button.setAttribute('aria-haspopup', 'dialog');
         button.setAttribute('aria-controls', drawer.id);
@@ -54,8 +48,8 @@
     }
     function open(source) {
       if (!drawer.showModal) return;
-      trigger = source || document.activeElement;
       if (!drawer.open) {
+        trigger = source || document.activeElement;
         previousOverflow = document.body.style.overflow;
         drawer.showModal();
         document.body.style.overflow = 'hidden';
@@ -67,64 +61,142 @@
       sync();
       if (trigger && trigger.isConnected) trigger.focus({ preventScroll: true });
     });
+    function focusControl(selector) {
+      if (!drawer.open) return;
+      var target = selector && drawer.querySelector(selector);
+      if (!target || target.disabled) target = drawer.querySelector('[data-layero-cart-close]');
+      target.focus({ preventScroll: true });
+    }
+    function mutate(url, data, focusSelector) {
+      if (busy) return;
+      fragmentRequests.slice().forEach(function (request) { request.abort(); });
+      busy = true;
+      var content = drawer.querySelector('.lyr-woo-cart-content');
+      var list = content.querySelector('.sh-drawer__body');
+      var listScroll = list ? list.scrollTop : 0;
+      var bodyScroll = drawer.querySelector('.lyr-cart-drawer__body').scrollTop;
+      var controls = Array.from(content.querySelectorAll('button, input'));
+      var disabled = controls.map(function (control) { return control.disabled; });
+      controls.forEach(function (control) { control.disabled = true; });
+      content.setAttribute('aria-busy', 'true');
+      data.nonce = content.dataset.cartNonce;
+      announce('Kosár frissítése…');
+      var controller = new AbortController();
+      var timeout = setTimeout(function () { controller.abort(); }, 15000);
+      fetch(url, { method: 'POST', credentials: 'same-origin', body: new URLSearchParams(data), signal: controller.signal })
+        .then(function (response) { return response.json().then(function (payload) {
+          if (!response.ok || !payload.success) throw new Error(payload.data && payload.data.message || 'A frissítés nem sikerült.');
+          if (!payload.data.fragments || !payload.data.fragments['.lyr-woo-cart-content']) throw new Error('A kosár válasza hiányos. Frissítsd az oldalt.');
+          return payload.data;
+        }); })
+        .then(function (payload) {
+          Object.keys(payload.fragments).forEach(function (selector) { $(selector).replaceWith(payload.fragments[selector]); });
+          sync();
+          var updatedList = drawer.querySelector('.sh-drawer__body');
+          if (updatedList) updatedList.scrollTop = listScroll;
+          drawer.querySelector('.lyr-cart-drawer__body').scrollTop = bodyScroll;
+          announce(payload.message);
+          focusControl(focusSelector);
+          refreshPageTotals();
+        })
+        .catch(function (error) {
+          // A lost response can follow a committed mutation: never retry automatically.
+          var gift = content.querySelector('[data-cart-giftwrap]');
+          if (gift) gift.checked = gift.defaultChecked;
+          announce(error.name === 'AbortError' || error instanceof TypeError
+            ? 'Hálózati hiba. A Kosár megtekintése linken ellenőrizd a tartalmát, mielőtt újra próbálod.'
+            : error.message);
+        })
+        .finally(function () {
+          clearTimeout(timeout);
+          busy = false;
+          content.removeAttribute('aria-busy');
+          controls.forEach(function (control, index) { control.disabled = disabled[index]; });
+        });
+    }
+    drawer.addEventListener('submit', function (event) {
+      var form = event.target.closest('[data-cart-coupon]');
+      if (!form) return;
+      event.preventDefault();
+      var content = drawer.querySelector('[data-cart-count]');
+      mutate(content.dataset.actionUrl, { operation: 'apply_coupon', value: form.elements.coupon_code.value.trim() }, '#lyr-drawer-coupon');
+    });
+    drawer.addEventListener('change', function (event) {
+      if (!event.target.matches('[data-cart-giftwrap]')) return;
+      var content = drawer.querySelector('[data-cart-count]');
+      mutate(content.dataset.actionUrl, { operation: 'giftwrap', value: event.target.checked ? 'yes' : 'no' }, '[data-cart-giftwrap]');
+    });
     drawer.addEventListener('click', function (event) {
-      var quantityButton = event.target.closest('[data-drawer-quantity]');
-      if (quantityButton) {
-        var content = drawer.querySelector('[data-cart-count]');
-        var row = quantityButton.closest('[data-cart-key]');
-        if (!content || content.getAttribute('aria-busy') === 'true') return;
-        var quantity = Math.max(1, Number(row.dataset.quantity) + Number(quantityButton.dataset.drawerQuantity));
-        var data = new URLSearchParams({ nonce: content.dataset.cartNonce, key: row.dataset.cartKey, quantity: quantity });
-        content.setAttribute('aria-busy', 'true');
-        content.querySelectorAll('[data-drawer-quantity]').forEach(function (button) { button.disabled = true; });
-        announce('Kosár frissítése…');
-        fetch(content.dataset.quantityUrl, { method: 'POST', credentials: 'same-origin', body: data })
-          .then(function (response) { return response.json().then(function (payload) {
-            if (!response.ok || !payload.success) throw new Error(payload.data && payload.data.message || 'A frissítés nem sikerült.');
-            return payload;
-          }); })
-          .then(function () {
-            pendingQuantityFocus = { key: row.dataset.cartKey, direction: quantityButton.dataset.drawerQuantity };
-            announce('A mennyiséget frissítettük.');
-            refreshPageTotals();
-            $(document.body).trigger('wc_fragment_refresh');
-          })
-          .catch(function (error) {
-            unlockQuantity();
-            announce(error.message || 'Hálózati hiba. Ellenőrizd a kosarad, mielőtt újra próbálod.');
-          });
+      if (busy && event.target.closest('a')) {
+        event.preventDefault();
+        announce('A kosár frissítése folyamatban van…');
+        return;
       }
+      var content = drawer.querySelector('[data-cart-count]');
+      var quantityButton = event.target.closest('[data-drawer-quantity]');
+      var remove = event.target.closest('[data-cart-remove]');
+      var coupon = event.target.closest('[data-cart-remove-coupon]');
+      if (quantityButton) {
+        var row = quantityButton.closest('[data-cart-key]');
+        var quantity = Math.max(1, Number(row.dataset.quantity) + Number(quantityButton.dataset.drawerQuantity));
+        mutate(content.dataset.quantityUrl, { key: row.dataset.cartKey, quantity: quantity },
+          '[data-cart-key="' + CSS.escape(row.dataset.cartKey) + '"] [data-drawer-quantity="' + quantityButton.dataset.drawerQuantity + '"]');
+      }
+      if (remove) mutate(content.dataset.actionUrl, { operation: 'remove', value: remove.dataset.cartRemove }, '[data-cart-remove]');
+      if (coupon) mutate(content.dataset.actionUrl, { operation: 'remove_coupon', value: coupon.dataset.cartRemoveCoupon }, '#lyr-drawer-coupon');
       if (event.target.closest('[data-layero-cart-close]')) drawer.close();
       if (event.target === drawer) {
         var bounds = drawer.getBoundingClientRect();
         if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) drawer.close();
       }
     });
+    // Capture before older header/shortcode handlers: one click opens only this drawer.
     document.addEventListener('click', function (event) {
-      var button = event.target.closest('.sh-cart-btn');
-      if (button && !event.ctrlKey && !event.metaKey && !event.shiftKey && event.button === 0 && drawer.showModal) {
-        event.preventDefault();
-        open(button);
-      }
+      var button = event.target.closest(cartTriggers);
+      if (!button || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0 || !drawer.showModal) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      document.querySelectorAll('[data-layero-cart-panel]').forEach(function (panel) { panel.hidden = true; });
+      open(button);
+      $(document.body).trigger('wc_fragment_refresh');
+    }, true);
+    document.addEventListener('click', function (event) {
       var quantityButton = event.target.closest('[data-layero-quantity]');
-      if (quantityButton) {
-        var input = quantityButton.closest('.lyr-cart-quantity').querySelector('input.qty');
-        if (!input || input.disabled || input.readOnly) return;
-        var step = Number(input.step) || 1;
-        var min = input.min === '' ? 0 : Number(input.min);
-        var max = input.max === '' ? Infinity : Number(input.max);
-        input.value = Math.min(max, Math.max(min, Number(input.value || min) + Number(quantityButton.dataset.layeroQuantity) * step));
-        $(input).trigger('change');
+      if (!quantityButton) return;
+      var input = quantityButton.closest('.lyr-cart-quantity').querySelector('input.qty');
+      if (!input || input.disabled || input.readOnly) return;
+      var step = Number(input.step) || 1;
+      var min = input.min === '' ? 0 : Number(input.min);
+      var max = input.max === '' ? Infinity : Number(input.max);
+      input.value = Math.min(max, Math.max(min, Number(input.value || min) + Number(quantityButton.dataset.layeroQuantity) * step));
+      $(input).trigger('change');
+    });
+    // Preserve draft and focus through WooCommerce's background fragment refresh.
+    $(document).ajaxSend(function (event, xhr, settings) {
+      if (settings.url.indexOf('get_refreshed_fragments') === -1) return;
+      fragmentRequests.push(xhr);
+      xhr.always(function () { fragmentRequests = fragmentRequests.filter(function (request) { return request !== xhr; }); });
+      var input = drawer.querySelector('#lyr-drawer-coupon');
+      var draft = input ? input.value : '';
+      var focused = document.activeElement;
+      var focusSelector = null;
+      if (focused && drawer.contains(focused)) {
+        if (focused.id) focusSelector = '#' + CSS.escape(focused.id);
+        else if (focused.matches('[data-cart-giftwrap]')) focusSelector = '[data-cart-giftwrap]';
+        else if (focused.matches('[data-drawer-quantity]')) focusSelector = '[data-cart-key="' + CSS.escape(focused.closest('[data-cart-key]').dataset.cartKey) + '"] [data-drawer-quantity="' + focused.dataset.drawerQuantity + '"]';
+        else if (focused.matches('[data-cart-remove]')) focusSelector = '[data-cart-remove="' + CSS.escape(focused.dataset.cartRemove) + '"]';
       }
+      var list = drawer.querySelector('.sh-drawer__body');
+      var scroll = list ? list.scrollTop : 0;
+      xhr.done(function () {
+        var updatedInput = drawer.querySelector('#lyr-drawer-coupon');
+        if (updatedInput && !updatedInput.value) updatedInput.value = draft;
+        var updatedList = drawer.querySelector('.sh-drawer__body');
+        if (updatedList) updatedList.scrollTop = scroll;
+        if (focused && !focused.isConnected && focusSelector) focusControl(focusSelector);
+      });
     });
     $(document.body).on('wc_fragments_loaded wc_fragments_refreshed updated_wc_div updated_checkout', sync);
-    $(document.body).on('wc_fragments_refreshed', function () {
-      if (!pendingQuantityFocus) return;
-      unlockQuantity();
-      var target = drawer.querySelector('[data-cart-key="' + CSS.escape(pendingQuantityFocus.key) + '"] [data-drawer-quantity="' + pendingQuantityFocus.direction + '"]');
-      if (drawer.open && target) (target.disabled ? target.parentNode.querySelector('[data-drawer-quantity="1"]') : target).focus({ preventScroll: true });
-      pendingQuantityFocus = null;
-    });
     $(document.body).on('added_to_cart', function (event, fragments, hash, button) {
       sync();
       announce('A termék a kosaradba került.');
@@ -134,15 +206,11 @@
       sync();
       refreshPageTotals();
       announce('A terméket eltávolítottuk a kosárból.');
-      if (drawer.open) drawer.querySelector('[data-layero-cart-close]').focus({ preventScroll: true });
     });
     $(document.body).on('wc_fragments_ajax_error', function () {
-      pendingQuantityFocus = null;
-      unlockQuantity();
       announce('A kosár frissítése nem sikerült. A Kosár megtekintése linken ellenőrizheted a tartalmát.');
     });
     sync();
-    // The standard product form keeps server validation (including variations and personalization).
     if (document.querySelector('.lyr-single-product .woocommerce-message .wc-forward')) {
       announce('A termék a kosaradba került.');
       open(document.querySelector('.single_add_to_cart_button'));
