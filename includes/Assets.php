@@ -26,6 +26,8 @@ final class Assets {
 	}
 
 	public function register() {
+        wp_register_script('layero-badges', LAYERO_SHOP_UI_URL . 'assets/demo/layero-badges/layero-badges.js', array(), '20260930-badges', true);
+        wp_register_script('layero-badge-adapter', LAYERO_SHOP_UI_URL . 'assets/demo/layero-badges/layero-adapter.js', array('layero-badges'), '20260930-badges', true);
 		wp_register_style(
 			'layero-shop-ui',
 			LAYERO_SHOP_UI_URL . 'assets/css/layero-shop-ui.css',
@@ -49,13 +51,15 @@ final class Assets {
 
 		wp_register_style('layero-origin', LAYERO_SHOP_UI_URL . 'assets/demo/layero-origin/lyo-origin.css', array('layero-static-shop'), LAYERO_SHOP_UI_VERSION);
 		wp_register_style('layero-origin-integration', LAYERO_SHOP_UI_URL . 'assets/demo/layero-origin/integration.css', array('layero-origin'), LAYERO_SHOP_UI_VERSION);
+		wp_register_style('layero-testimonials', LAYERO_SHOP_UI_URL . 'assets/css/layero-testimonials.css', array('layero-shop-ui', 'layero-static-shop'), LAYERO_SHOP_UI_VERSION);
 		wp_register_script('layero-origin-mount', LAYERO_SHOP_UI_URL . 'assets/demo/layero-origin/mount.js', array(), LAYERO_SHOP_UI_VERSION, true);
 		wp_register_script('layero-origin', LAYERO_SHOP_UI_URL . 'assets/demo/layero-origin/lyo-origin.js', array('layero-origin-mount'), LAYERO_SHOP_UI_VERSION, true);
+		wp_register_script('layero-testimonials', LAYERO_SHOP_UI_URL . 'assets/js/layero-testimonials.js', array(), LAYERO_SHOP_UI_VERSION, true);
 
 		wp_register_script(
 			'layero-shop-ui',
 			LAYERO_SHOP_UI_URL . 'assets/js/layero-shop-ui.js',
-			array('jquery'),
+			array('jquery', 'layero-badge-adapter'),
 			LAYERO_SHOP_UI_VERSION,
 			true
 		);
@@ -71,7 +75,7 @@ final class Assets {
 		wp_register_script(
 			'layero-static-shop',
 			LAYERO_SHOP_UI_URL . 'assets/js/layero-static-shop.js',
-			array('layero-static-data', 'layero-origin'),
+			array('layero-static-data', 'layero-origin', 'layero-badge-adapter'),
 			LAYERO_SHOP_UI_VERSION,
 			true
 		);
@@ -94,6 +98,12 @@ final class Assets {
 		wp_enqueue_script('layero-static-shop');
 		wp_enqueue_script('layero-online', LAYERO_SHOP_UI_URL . 'assets/js/layero-online.js', array('layero-static-shop', 'layero-shop-ui'), LAYERO_SHOP_UI_VERSION, true);
 		wp_enqueue_style('layero-online', LAYERO_SHOP_UI_URL . 'assets/css/layero-online.css', array('layero-static-shop', 'layero-shop-ui'), LAYERO_SHOP_UI_VERSION);
+		wp_enqueue_style('layero-testimonials');
+		wp_enqueue_script('layero-testimonials');
+		wp_enqueue_style('layero-badges', LAYERO_SHOP_UI_URL . 'assets/demo/layero-badges/layero-badges.css', array('layero-online'), '20260930-badges');
+		if (function_exists('is_product') && is_product()) {
+			wp_enqueue_script('layero-single-product', LAYERO_SHOP_UI_URL . 'assets/js/layero-single-product.js', array(), LAYERO_SHOP_UI_VERSION, true);
+		}
 
 		wp_add_inline_script(
 			'layero-static-data',

@@ -92,6 +92,7 @@ final class WooCommerce {
 		);
 		echo '</div>';
 
+		Badge_System::admin_fields($product);
 		echo '<div class="options_group layero-product-badges">';
 		echo '<p class="form-field layero-badge-picker"><label>' . esc_html__('Vizuális címkék', 'layero-shop-ui') . '</label><span class="layero-badge-picker__content">';
 		foreach (Helpers::badge_definitions() as $key => $definition) {
@@ -101,7 +102,7 @@ final class WooCommerce {
 			echo '<span>' . esc_html($definition['label']) . '</span><small>' . esc_html($definition['description']) . '</small>';
 			echo '</label>';
 		}
-		echo '<em>' . esc_html__('Legfeljebb 5 címke látszik. Az akciós százalékot a WooCommerce normál és akciós árából automatikusan számítjuk, ezért azt itt nem kell felvenned.', 'layero-shop-ui') . '</em>';
+		echo '<em>' . esc_html__('Zónánként két jelvény látszik, a többi lenyitható. Az akciós százalékot a WooCommerce normál és akciós árából automatikusan számítjuk, ezért azt itt nem kell felvenned.', 'layero-shop-ui') . '</em>';
 		echo '</span></p>';
 		woocommerce_wp_textarea_input(
 			array(
@@ -206,6 +207,7 @@ final class WooCommerce {
 		}
 		$product->update_meta_data('_layero_product_type', $type);
 		$product->update_meta_data('_layero_card_type_label', $type_label);
+		Badge_System::save($product);
 		$product->update_meta_data('_layero_badge_keys', $badge_keys);
 		$product->update_meta_data('_layero_product_badges', $badges);
 		$product->update_meta_data('_layero_personalizable', $personalizable);

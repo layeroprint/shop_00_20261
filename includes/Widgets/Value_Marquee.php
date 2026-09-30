@@ -104,7 +104,7 @@ class Value_Marquee extends Base_Widget {
 			<?php for ($copy = 0; $copy < 2; $copy++) : ?>
 				<div class="sh-marquee__track" <?php echo $copy ? 'aria-hidden="true"' : ''; ?>>
 					<?php foreach ($items as $item) : ?>
-						<span><?php echo esc_html($item['text'] ?? ''); ?></span><i aria-hidden="true"><?php echo esc_html($separator); ?></i>
+						<span><?php echo esc_html(Shop_Content::without_legacy_lead_time($item['text'] ?? '', 'Rendelésre készül')); ?></span><i aria-hidden="true"><?php echo esc_html($separator); ?></i>
 					<?php endforeach; ?>
 				</div>
 			<?php endfor; ?>

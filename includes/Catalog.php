@@ -93,8 +93,10 @@ final class Catalog {
 			$high = $product->is_type('variable') ? (float) wc_get_price_to_display($product, array('price' => $product->get_variation_price('max'))) : $low;
 			if ($has_price) { $prices[] = $low; $prices[] = $high; }
 			$badges = Helpers::product_badge_keys($product);
+			$badge_config = $product->get_meta('_layero_badge_config', true);
+			if (is_array($badge_config)) { $badges = array_merge($badges, array_column($badge_config, 'id')); }
 			$values = array('sale' => $product->is_on_sale(), 'new' => in_array('new', $badges, true),
-				'bestseller' => $product->is_featured() || in_array('bestseller', $badges, true),
+				'bestseller' => in_array('bestseller', $badges, true),
 				'personalizable' => Helpers::product_is_personalizable($product),
 				'top_rated' => $product->get_rating_count() > 0 && (float) $product->get_average_rating() >= 4.8);
 			foreach ($values as $key => $value) { if ($value) { $counts[$key]++; } }
@@ -131,6 +133,7 @@ final class Catalog {
 				'leiras' => wp_strip_all_tags($product->get_short_description() ?: $product->get_description()),
 				'hosszu' => array(wp_strip_all_tags($product->get_description())), 'specs' => array(),
 				'badge' => $product->is_featured() ? 'Kiemelt' : '',
+				'badges' => Badge_System::for_product($product),
 				'szemelyre_szabott' => Helpers::product_is_personalizable($product),
 				'keszlet' => $product->is_in_stock() ? 'rendelheto' : 'elfogyott', 'opciok' => array(),
 			);

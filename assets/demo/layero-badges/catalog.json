@@ -1,0 +1,973 @@
+{
+  "groups": [
+    {
+      "id": "personal",
+      "label": "Személyre szabás",
+      "labelRo": "Personalizare",
+      "description": "A termékben rejlő lehetőségek.",
+      "icon": "pen"
+    },
+    {
+      "id": "highlight",
+      "label": "Kiemelések",
+      "labelRo": "Selecții",
+      "description": "Népszerűség, minőség és márkaérték.",
+      "icon": "crown"
+    },
+    {
+      "id": "offer",
+      "label": "Akciók és előnyök",
+      "labelRo": "Oferte și beneficii",
+      "description": "Kedvezmények, csomagok, extra érték.",
+      "icon": "percent"
+    },
+    {
+      "id": "lifecycle",
+      "label": "Újdonság és kollekció",
+      "labelRo": "Noutăți și colecții",
+      "description": "Életciklus, szezon és megjelenés.",
+      "icon": "sparkles"
+    },
+    {
+      "id": "availability",
+      "label": "Készlet és rendelés",
+      "labelRo": "Stoc și comandă",
+      "description": "A vásárlási döntéshez fontos állapotok.",
+      "icon": "box"
+    },
+    {
+      "id": "service",
+      "label": "Szállítás és szolgáltatás",
+      "labelRo": "Livrare și servicii",
+      "description": "Határidők és választható szolgáltatások.",
+      "icon": "truck"
+    },
+    {
+      "id": "material",
+      "label": "Gyártás és anyag",
+      "labelRo": "Producție și materiale",
+      "description": "Igazolható tulajdonságok, pontos állítások.",
+      "icon": "cube"
+    },
+    {
+      "id": "condition",
+      "label": "Állapot és utógondozás",
+      "labelRo": "Stare și asistență",
+      "description": "Termékállapot és érvényes feltételek.",
+      "icon": "shield"
+    }
+  ],
+  "badges": [
+    {
+      "id": "personal",
+      "labels": {
+        "hu": "Névre szabható",
+        "ro": "Personalizabil cu nume"
+      },
+      "group": "personal",
+      "icon": "pen",
+      "tone": "cyan",
+      "zone": "feature",
+      "priority": 90,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "personal"
+      }
+    },
+    {
+      "id": "engraved",
+      "labels": {
+        "hu": "Gravírozható",
+        "ro": "Gravabil"
+      },
+      "group": "personal",
+      "icon": "engrave",
+      "tone": "cyan",
+      "zone": "feature",
+      "priority": 75,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "engraved"
+      }
+    },
+    {
+      "id": "photo",
+      "labels": {
+        "hu": "Saját fotóval",
+        "ro": "Cu fotografia ta"
+      },
+      "group": "personal",
+      "icon": "image",
+      "tone": "cyan",
+      "zone": "feature",
+      "priority": 75,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "photo"
+      }
+    },
+    {
+      "id": "logo",
+      "labels": {
+        "hu": "Saját logóval",
+        "ro": "Cu logo-ul tău"
+      },
+      "group": "personal",
+      "icon": "flag",
+      "tone": "cyan",
+      "zone": "feature",
+      "priority": 72,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "logo"
+      }
+    },
+    {
+      "id": "color",
+      "labels": {
+        "hu": "Választható szín",
+        "ro": "Culori la alegere"
+      },
+      "group": "personal",
+      "icon": "palette",
+      "tone": "cyan",
+      "zone": "feature",
+      "priority": 55,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "color"
+      }
+    },
+    {
+      "id": "size",
+      "labels": {
+        "hu": "Egyedi méret",
+        "ro": "Dimensiune la comandă"
+      },
+      "group": "personal",
+      "icon": "ruler",
+      "tone": "cyan",
+      "zone": "feature",
+      "priority": 58,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "size"
+      }
+    },
+    {
+      "id": "message",
+      "labels": {
+        "hu": "Saját felirattal",
+        "ro": "Cu mesajul tău"
+      },
+      "group": "personal",
+      "icon": "type",
+      "tone": "cyan",
+      "zone": "feature",
+      "priority": 70,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "message"
+      }
+    },
+    {
+      "id": "bestseller",
+      "labels": {
+        "hu": "Bestseller",
+        "ro": "Bestseller"
+      },
+      "group": "highlight",
+      "icon": "crown",
+      "tone": "gold",
+      "zone": "overlay",
+      "priority": 85,
+      "note": "Értékesítési adatokból vagy jóváhagyott kereskedői besorolásból. A szekció címe önmagában nem bizonyíték.",
+      "sample": {
+        "id": "bestseller"
+      }
+    },
+    {
+      "id": "popular",
+      "labels": {
+        "hu": "Népszerű",
+        "ro": "Popular"
+      },
+      "group": "highlight",
+      "icon": "flame",
+      "tone": "amber",
+      "zone": "overlay",
+      "priority": 60,
+      "note": "Valós, meghatározott időszakra vonatkozó népszerűségi adatok alapján.",
+      "sample": {
+        "id": "popular"
+      }
+    },
+    {
+      "id": "topRated",
+      "labels": {
+        "hu": "Kiváló értékelés",
+        "ro": "Foarte apreciat"
+      },
+      "group": "highlight",
+      "icon": "star",
+      "tone": "gold",
+      "zone": "overlay",
+      "priority": 65,
+      "note": "Csak igazolt értékelések és előre rögzített értékelési küszöb mellett.",
+      "sample": {
+        "id": "topRated"
+      }
+    },
+    {
+      "id": "recommended",
+      "labels": {
+        "hu": "Layero ajánlja",
+        "ro": "Recomandat de Layero"
+      },
+      "group": "highlight",
+      "icon": "checkCircle",
+      "tone": "navy",
+      "zone": "overlay",
+      "priority": 58,
+      "note": "A kereskedő szerkesztett ajánlása, nem vásárlói értékelés.",
+      "sample": {
+        "id": "recommended"
+      }
+    },
+    {
+      "id": "exclusive",
+      "labels": {
+        "hu": "Csak nálunk",
+        "ro": "Exclusiv la noi"
+      },
+      "group": "highlight",
+      "icon": "key",
+      "tone": "navy",
+      "zone": "overlay",
+      "priority": 60,
+      "note": "Csak ténylegesen kizárólagosan forgalmazott termékre.",
+      "sample": {
+        "id": "exclusive"
+      }
+    },
+    {
+      "id": "premium",
+      "labels": {
+        "hu": "Prémium",
+        "ro": "Premium"
+      },
+      "group": "highlight",
+      "icon": "diamond",
+      "tone": "gold",
+      "zone": "overlay",
+      "priority": 55,
+      "note": "Jóváhagyott termékbesorolás; ne helyettesítse a pontos termékleírást.",
+      "sample": {
+        "id": "premium"
+      }
+    },
+    {
+      "id": "award",
+      "labels": {
+        "hu": "Díjnyertes",
+        "ro": "Premiat"
+      },
+      "group": "highlight",
+      "icon": "award",
+      "tone": "gold",
+      "zone": "overlay",
+      "priority": 63,
+      "note": "Konkrét, ellenőrizhető díjjal, az érintett termékre.",
+      "sample": {
+        "id": "award"
+      }
+    },
+    {
+      "id": "salePercent",
+      "labels": {
+        "hu": "−{value}%",
+        "ro": "−{value}%"
+      },
+      "group": "offer",
+      "icon": "percent",
+      "tone": "red",
+      "zone": "overlay",
+      "priority": 95,
+      "note": "A backend által ellenőrzött, a megfelelő referenciaárból számolt kedvezmény. A motor nem állapít meg referenciaárat.",
+      "sample": {
+        "id": "salePercent",
+        "value": 20
+      }
+    },
+    {
+      "id": "sale",
+      "labels": {
+        "hu": "Akció",
+        "ro": "Ofertă"
+      },
+      "group": "offer",
+      "icon": "tag",
+      "tone": "red",
+      "zone": "overlay",
+      "priority": 90,
+      "note": "Csak aktív és ellenőrzött akcióhoz.",
+      "sample": {
+        "id": "sale"
+      }
+    },
+    {
+      "id": "coupon",
+      "labels": {
+        "hu": "−{value}% kuponnal",
+        "ro": "−{value}% cu cupon"
+      },
+      "group": "offer",
+      "icon": "ticket",
+      "tone": "red",
+      "zone": "feature",
+      "priority": 65,
+      "note": "A kupon feltételeit és tényleges jogosultságát a webshop ellenőrzi.",
+      "sample": {
+        "id": "coupon",
+        "value": 10
+      }
+    },
+    {
+      "id": "bundle",
+      "labels": {
+        "hu": "Csomagajánlat",
+        "ro": "Ofertă la pachet"
+      },
+      "group": "offer",
+      "icon": "layers",
+      "tone": "amber",
+      "zone": "overlay",
+      "priority": 62,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "bundle"
+      }
+    },
+    {
+      "id": "gift",
+      "labels": {
+        "hu": "Ajándék jár hozzá",
+        "ro": "Cadou inclus"
+      },
+      "group": "offer",
+      "icon": "gift",
+      "tone": "rose",
+      "zone": "feature",
+      "priority": 70,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "gift"
+      }
+    },
+    {
+      "id": "member",
+      "labels": {
+        "hu": "Tagsági kedvezmény",
+        "ro": "Reducere pentru membri"
+      },
+      "group": "offer",
+      "icon": "user",
+      "tone": "violet",
+      "zone": "feature",
+      "priority": 50,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "member"
+      }
+    },
+    {
+      "id": "volume",
+      "labels": {
+        "hu": "Mennyiségi kedvezmény",
+        "ro": "Reducere de volum"
+      },
+      "group": "offer",
+      "icon": "boxes",
+      "tone": "amber",
+      "zone": "feature",
+      "priority": 50,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "volume"
+      }
+    },
+    {
+      "id": "new",
+      "labels": {
+        "hu": "Újdonság",
+        "ro": "Nou"
+      },
+      "group": "lifecycle",
+      "icon": "sparkles",
+      "tone": "cyan",
+      "zone": "overlay",
+      "priority": 75,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "new"
+      }
+    },
+    {
+      "id": "limited",
+      "labels": {
+        "hu": "Limitált kiadás",
+        "ro": "Ediție limitată"
+      },
+      "group": "lifecycle",
+      "icon": "gem",
+      "tone": "violet",
+      "zone": "overlay",
+      "priority": 72,
+      "note": "Valós sorozatkorlátozás vagy rögzített elérhetőség alapján.",
+      "sample": {
+        "id": "limited"
+      }
+    },
+    {
+      "id": "seasonal",
+      "labels": {
+        "hu": "Szezonális",
+        "ro": "Sezonier"
+      },
+      "group": "lifecycle",
+      "icon": "sun",
+      "tone": "amber",
+      "zone": "overlay",
+      "priority": 50,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "seasonal"
+      }
+    },
+    {
+      "id": "preorder",
+      "labels": {
+        "hu": "Előrendelhető",
+        "ro": "Precomandă"
+      },
+      "group": "lifecycle",
+      "icon": "calendar",
+      "tone": "violet",
+      "zone": "overlay",
+      "priority": 970,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "preorder"
+      }
+    },
+    {
+      "id": "comingSoon",
+      "labels": {
+        "hu": "Hamarosan",
+        "ro": "În curând"
+      },
+      "group": "lifecycle",
+      "icon": "clock",
+      "tone": "neutral",
+      "zone": "overlay",
+      "priority": 980,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "comingSoon"
+      }
+    },
+    {
+      "id": "lastChance",
+      "labels": {
+        "hu": "Utolsó darabok",
+        "ro": "Ultimele bucăți"
+      },
+      "group": "lifecycle",
+      "icon": "hourglass",
+      "tone": "amber",
+      "zone": "overlay",
+      "priority": 80,
+      "note": "Ténylegesen kifutó vagy utolsó készletre; nem mesterséges sürgetésre.",
+      "sample": {
+        "id": "lastChance"
+      }
+    },
+    {
+      "id": "clearance",
+      "labels": {
+        "hu": "Végkiárusítás",
+        "ro": "Lichidare de stoc"
+      },
+      "group": "lifecycle",
+      "icon": "archive",
+      "tone": "red",
+      "zone": "overlay",
+      "priority": 88,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "clearance"
+      }
+    },
+    {
+      "id": "inStock",
+      "labels": {
+        "hu": "Raktáron",
+        "ro": "În stoc"
+      },
+      "group": "availability",
+      "icon": "checkCircle",
+      "tone": "green",
+      "zone": "service",
+      "priority": 70,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "inStock"
+      }
+    },
+    {
+      "id": "lowStock",
+      "labels": {
+        "hu": "Már csak {value} db",
+        "ro": "Doar {value} buc."
+      },
+      "group": "availability",
+      "icon": "alert",
+      "tone": "amber",
+      "zone": "service",
+      "priority": 96,
+      "note": "A valós, értékesíthető készletből. Nem generál véletlenszerű készletszámot.",
+      "sample": {
+        "id": "lowStock",
+        "value": 3
+      }
+    },
+    {
+      "id": "soldOut",
+      "labels": {
+        "hu": "Elfogyott",
+        "ro": "Stoc epuizat"
+      },
+      "group": "availability",
+      "icon": "ban",
+      "tone": "neutral",
+      "zone": "overlay",
+      "priority": 1000,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "soldOut"
+      }
+    },
+    {
+      "id": "madeToOrder",
+      "labels": {
+        "hu": "Rendelésre készül",
+        "ro": "Realizat la comandă"
+      },
+      "group": "availability",
+      "icon": "workshop",
+      "tone": "neutral",
+      "zone": "service",
+      "priority": 85,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "madeToOrder"
+      }
+    },
+    {
+      "id": "backInStock",
+      "labels": {
+        "hu": "Újra raktáron",
+        "ro": "Din nou în stoc"
+      },
+      "group": "availability",
+      "icon": "refresh",
+      "tone": "green",
+      "zone": "overlay",
+      "priority": 78,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "backInStock"
+      }
+    },
+    {
+      "id": "digital",
+      "labels": {
+        "hu": "Digitális termék",
+        "ro": "Produs digital"
+      },
+      "group": "availability",
+      "icon": "download",
+      "tone": "violet",
+      "zone": "feature",
+      "priority": 65,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "digital"
+      }
+    },
+    {
+      "id": "backorder",
+      "labels": {
+        "hu": "Utánrendelhető",
+        "ro": "Disponibil la comandă"
+      },
+      "group": "availability",
+      "icon": "packageClock",
+      "tone": "amber",
+      "zone": "service",
+      "priority": 92,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "backorder"
+      }
+    },
+    {
+      "id": "productionTime",
+      "labels": {
+        "hu": "{value}",
+        "ro": "{value}"
+      },
+      "group": "service",
+      "icon": "clock",
+      "tone": "neutral",
+      "zone": "service",
+      "priority": 75,
+      "note": "Pontosítsd, hogy gyártási, feladási vagy teljes szállítási idő. A forrás „5–10 munkanap” szövegét változatlanul kezeli.",
+      "sample": {
+        "id": "productionTime",
+        "value": "5–10 munkanap"
+      },
+      "sampleRo": {
+        "id": "productionTime",
+        "value": "5–10 zile lucrătoare"
+      }
+    },
+    {
+      "id": "express",
+      "labels": {
+        "hu": "Expressz szállítás",
+        "ro": "Livrare expres"
+      },
+      "group": "service",
+      "icon": "bolt",
+      "tone": "cyan",
+      "zone": "service",
+      "priority": 65,
+      "note": "Csak valóban elérhető expressz szolgáltatáshoz; a gyártási időt nem írja felül.",
+      "sample": {
+        "id": "express"
+      }
+    },
+    {
+      "id": "freeShipping",
+      "labels": {
+        "hu": "Ingyenes szállítás",
+        "ro": "Livrare gratuită"
+      },
+      "group": "service",
+      "icon": "truck",
+      "tone": "green",
+      "zone": "service",
+      "priority": 60,
+      "note": "Csak teljesülő szállítási feltételeknél. A kosárértékhez vagy régióhoz kötött ajánlatot egyértelműen kell jelezni.",
+      "sample": {
+        "id": "freeShipping"
+      }
+    },
+    {
+      "id": "pickup",
+      "labels": {
+        "hu": "Személyesen átvehető",
+        "ro": "Ridicare personală"
+      },
+      "group": "service",
+      "icon": "pin",
+      "tone": "neutral",
+      "zone": "service",
+      "priority": 45,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "pickup"
+      }
+    },
+    {
+      "id": "deliveryEstimate",
+      "labels": {
+        "hu": "Érkezés: {value}",
+        "ro": "Sosește: {value}"
+      },
+      "group": "service",
+      "icon": "calendar",
+      "tone": "neutral",
+      "zone": "service",
+      "priority": 70,
+      "note": "Csak az adott termékre, címre és választott szállításra érvényes becslésből.",
+      "sample": {
+        "id": "deliveryEstimate",
+        "value": "2–3 munkanap"
+      },
+      "sampleRo": {
+        "id": "deliveryEstimate",
+        "value": "2–3 zile lucrătoare"
+      }
+    },
+    {
+      "id": "oversized",
+      "labels": {
+        "hu": "Túlméretes csomag",
+        "ro": "Colet agabaritic"
+      },
+      "group": "service",
+      "icon": "move",
+      "tone": "neutral",
+      "zone": "service",
+      "priority": 90,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "oversized"
+      }
+    },
+    {
+      "id": "giftWrap",
+      "labels": {
+        "hu": "Ajándékcsomagolás",
+        "ro": "Ambalare cadou"
+      },
+      "group": "service",
+      "icon": "gift",
+      "tone": "rose",
+      "zone": "feature",
+      "priority": 60,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "giftWrap"
+      }
+    },
+    {
+      "id": "printed3d",
+      "labels": {
+        "hu": "3D nyomtatott",
+        "ro": "Imprimat 3D"
+      },
+      "group": "material",
+      "icon": "cube",
+      "tone": "neutral",
+      "zone": "feature",
+      "priority": 45,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "printed3d"
+      }
+    },
+    {
+      "id": "handmade",
+      "labels": {
+        "hu": "Kézzel készült",
+        "ro": "Lucrat manual"
+      },
+      "group": "material",
+      "icon": "hand",
+      "tone": "amber",
+      "zone": "feature",
+      "priority": 45,
+      "note": "Csak a tényleges gyártási folyamatnak megfelelő állításként.",
+      "sample": {
+        "id": "handmade"
+      }
+    },
+    {
+      "id": "local",
+      "labels": {
+        "hu": "Helyben készült",
+        "ro": "Produs local"
+      },
+      "group": "material",
+      "icon": "home",
+      "tone": "green",
+      "zone": "feature",
+      "priority": 48,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "local"
+      }
+    },
+    {
+      "id": "recycled",
+      "labels": {
+        "hu": "Újrahasznosított anyag",
+        "ro": "Material reciclat"
+      },
+      "group": "material",
+      "icon": "recycle",
+      "tone": "green",
+      "zone": "feature",
+      "priority": 40,
+      "note": "Az érintett anyagra és igazolt összetételre vonatkozó állítás legyen.",
+      "sample": {
+        "id": "recycled"
+      }
+    },
+    {
+      "id": "plasticFreePack",
+      "labels": {
+        "hu": "Műanyagmentes csomag",
+        "ro": "Ambalaj fără plastic"
+      },
+      "group": "material",
+      "icon": "leaf",
+      "tone": "green",
+      "zone": "service",
+      "priority": 40,
+      "note": "Kifejezetten a csomagolásra vonatkozik, nem a termék teljes környezeti hatására.",
+      "sample": {
+        "id": "plasticFreePack"
+      }
+    },
+    {
+      "id": "certified",
+      "labels": {
+        "hu": "Tanúsított alapanyag",
+        "ro": "Material certificat"
+      },
+      "group": "material",
+      "icon": "shield",
+      "tone": "green",
+      "zone": "feature",
+      "priority": 48,
+      "note": "Megnevezett, érvényes tanúsítás és pontos hatókör szükséges a termékleírásban.",
+      "sample": {
+        "id": "certified"
+      }
+    },
+    {
+      "id": "vegan",
+      "labels": {
+        "hu": "Vegán",
+        "ro": "Vegan"
+      },
+      "group": "material",
+      "icon": "sprout",
+      "tone": "green",
+      "zone": "feature",
+      "priority": 42,
+      "note": "Ellenőrzött anyagösszetétel és gyártási információ alapján.",
+      "sample": {
+        "id": "vegan"
+      }
+    },
+    {
+      "id": "refurbished",
+      "labels": {
+        "hu": "Felújított",
+        "ro": "Recondiționat"
+      },
+      "group": "condition",
+      "icon": "wrench",
+      "tone": "neutral",
+      "zone": "overlay",
+      "priority": 84,
+      "note": "A tényleges termékállapotot és felújítási tartalmat a leírás is részletezze.",
+      "sample": {
+        "id": "refurbished"
+      }
+    },
+    {
+      "id": "openBox",
+      "labels": {
+        "hu": "Bontott csomagolás",
+        "ro": "Ambalaj deschis"
+      },
+      "group": "condition",
+      "icon": "openBox",
+      "tone": "neutral",
+      "zone": "overlay",
+      "priority": 82,
+      "note": "A csomagolás állapotát jelzi; a termék tényleges állapotát külön is közöld.",
+      "sample": {
+        "id": "openBox"
+      }
+    },
+    {
+      "id": "outlet",
+      "labels": {
+        "hu": "Outlet",
+        "ro": "Outlet"
+      },
+      "group": "condition",
+      "icon": "shoppingBag",
+      "tone": "amber",
+      "zone": "overlay",
+      "priority": 60,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "outlet"
+      }
+    },
+    {
+      "id": "sample",
+      "labels": {
+        "hu": "Bemutatódarab",
+        "ro": "Produs de prezentare"
+      },
+      "group": "condition",
+      "icon": "swatch",
+      "tone": "neutral",
+      "zone": "overlay",
+      "priority": 81,
+      "note": "Bemutatódarab állapotának és esetleges használati nyomainak feltüntetésével.",
+      "sample": {
+        "id": "sample"
+      }
+    },
+    {
+      "id": "set",
+      "labels": {
+        "hu": "Szettben",
+        "ro": "Set"
+      },
+      "group": "condition",
+      "icon": "grid",
+      "tone": "navy",
+      "zone": "feature",
+      "priority": 60,
+      "note": "Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.",
+      "sample": {
+        "id": "set"
+      }
+    },
+    {
+      "id": "warranty",
+      "labels": {
+        "hu": "{value} hónap garancia",
+        "ro": "Garanție {value} luni"
+      },
+      "group": "condition",
+      "icon": "shield",
+      "tone": "neutral",
+      "zone": "service",
+      "priority": 45,
+      "note": "Csak az adott termékre érvényes, jóváhagyott garanciafeltételekkel; nem helyettesít jogi tájékoztatást.",
+      "sample": {
+        "id": "warranty",
+        "value": 24
+      }
+    },
+    {
+      "id": "returns",
+      "labels": {
+        "hu": "{value} napos visszaküldés",
+        "ro": "Retur în {value} zile"
+      },
+      "group": "condition",
+      "icon": "rotateBack",
+      "tone": "neutral",
+      "zone": "service",
+      "priority": 40,
+      "note": "Csak az adott termékre alkalmazható, jóváhagyott visszaküldési feltételekkel; nem alkalmazza automatikusan személyre szabott termékre.",
+      "sample": {
+        "id": "returns",
+        "value": 30
+      }
+    }
+  ]
+}

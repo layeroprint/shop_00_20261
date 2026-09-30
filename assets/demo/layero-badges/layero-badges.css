@@ -1,0 +1,142 @@
+/* LAYERO / PRODUCT BADGES 1.0
+   Load after the existing shop stylesheet. Prefix lyrb-* confines the new system.
+   No webfont, CDN, animation or image dependency. Inherits existing Inter/Sora.
+*/
+.lyrb-badge {
+  --lyrb-fg:#32465c; --lyrb-bg:#eff2f6; --lyrb-line:#d9e1e9;
+  --lyrb-solid:#243a50; --lyrb-on:#fff;
+  box-sizing:border-box; display:inline-flex; align-items:center; gap:6px;
+  min-height:27px; max-width:100%; padding:5px 10px;
+  border:1px solid var(--lyrb-line); border-radius:8px;
+  background:var(--lyrb-bg); color:var(--lyrb-fg);
+  font-family:var(--font,'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif);
+  font-size:11.5px; line-height:1.25; font-weight:650; letter-spacing:0;
+  text-transform:none; text-align:left; vertical-align:middle; box-shadow:none;
+}
+.lyrb-badge[data-tone="navy"] {--lyrb-fg:#243a50;--lyrb-bg:#edf1f5;--lyrb-line:#d5dee7;--lyrb-solid:#102a40;}
+.lyrb-badge[data-tone="cyan"] {--lyrb-fg:#086375;--lyrb-bg:#e5f5f8;--lyrb-line:#bce0e7;--lyrb-solid:#086375;}
+.lyrb-badge[data-tone="gold"] {--lyrb-fg:#73511b;--lyrb-bg:#fcf2dc;--lyrb-line:#ead8ad;--lyrb-solid:#14283b;--lyrb-on:#f5d59e;}
+.lyrb-badge[data-tone="amber"] {--lyrb-fg:#7d4714;--lyrb-bg:#fff1e1;--lyrb-line:#eed3b0;--lyrb-solid:#8b4915;}
+.lyrb-badge[data-tone="red"] {--lyrb-fg:#a22d2d;--lyrb-bg:#fff0ed;--lyrb-line:#f2cbc4;--lyrb-solid:#b33832;}
+.lyrb-badge[data-tone="green"] {--lyrb-fg:#246344;--lyrb-bg:#edf7ef;--lyrb-line:#c7e4ce;--lyrb-solid:#276747;}
+.lyrb-badge[data-tone="violet"] {--lyrb-fg:#644288;--lyrb-bg:#f3eef9;--lyrb-line:#ddd0ee;--lyrb-solid:#68438d;}
+.lyrb-badge[data-tone="rose"] {--lyrb-fg:#92375e;--lyrb-bg:#fcedf3;--lyrb-line:#f0cddb;--lyrb-solid:#973c61;}
+.lyrb-badge[data-tone="neutral"] {--lyrb-fg:#505d69;--lyrb-bg:#f3f5f7;--lyrb-line:#dce2e7;--lyrb-solid:#4a5866;}
+.lyrb-badge[data-variant="signature"][data-weight="strong"] {background:var(--lyrb-solid);color:var(--lyrb-on);border-color:var(--lyrb-solid);box-shadow:0 2px 5px #07182a0e;font-weight:700;}
+.lyrb-badge[data-variant="outline"] {background:#fff;color:var(--lyrb-fg);border-color:var(--lyrb-line);}
+.lyrb-badge__label {min-width:0;overflow-wrap:anywhere;}
+.lyrb-icon {display:block;width:14px;height:14px;flex:0 0 14px;max-width:none;overflow:visible;}
+.lyrb-badge[data-lyrb-id="salePercent"] .lyrb-icon {display:none;}
+.lyrb-badge[data-lyrb-id="salePercent"][data-weight="strong"] {font-size:13px;letter-spacing:-.02em;padding:5px 10px;}
+/* Opt-in premium card layout; no unrelated .sh-* element is restyled. */
+.lyrb-premium-card {
+  position:relative;display:flex;flex-direction:column;min-width:0;
+  border:1px solid #e1e6e9;border-radius:20px;overflow:hidden;
+  background:#fff;color:#182b3c;isolation:isolate;
+  box-shadow:0 3px 8px #112c3f03;
+  font-family:var(--font,'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif);
+  transition:border-color .2s,box-shadow .2s;
+}
+.lyrb-premium-card:hover {border-color:#bdcdd6;box-shadow:0 12px 32px #102d4210;transform:none;}
+.lyrb-premium-card .lyr-product-card__media,.lyrb-premium-card .lyrb-premium-card__media {
+  position:relative;aspect-ratio:1 / 1.02;margin:0;overflow:hidden;background:#f0f1f2;
+}
+.lyrb-premium-card .lyr-product-card__media > img,.lyrb-premium-card .lyrb-premium-card__media > img {
+  position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;
+  z-index:0;transition:transform .4s;
+}
+.lyrb-premium-card:hover .lyr-product-card__media > img,.lyrb-premium-card:hover .lyrb-premium-card__media > img {transform:scale(1.025);}
+.lyrb-enhanced .lyrb-overlay {
+  position:absolute;inset:14px 64px auto 14px;z-index:4;
+  display:flex;flex-direction:column;align-items:flex-start;gap:6px;pointer-events:none;
+}
+.lyrb-overlay .lyrb-badge {max-width:100%;}
+.lyrb-premium-card .lyr-product-card__wish,.lyrb-premium-card .lyrb-premium-card__wish {
+  position:absolute;top:9px;right:9px;z-index:5;display:grid;place-items:center;
+  width:44px;height:44px;min-width:44px;min-height:44px;padding:0;
+  color:#5c6b76;background:#ffffffed;border:1px solid #e1e6e9;border-radius:50%;
+  cursor:pointer;opacity:1;transform:none;box-shadow:none;
+}
+.lyrb-premium-card .lyr-product-card__wish svg,.lyrb-premium-card .lyrb-premium-card__wish svg {width:18px;height:18px;}
+.lyrb-premium-card .lyrb-premium-card__wish[aria-pressed="true"] {color:#a33b61;background:#fff2f7;border-color:#e9b9ca;}
+.lyrb-premium-card .lyrb-premium-card__wish[aria-pressed="true"] svg {fill:currentColor;}
+.lyrb-premium-card .lyr-product-card__body,.lyrb-premium-card .lyrb-premium-card__body {
+  display:flex;flex-direction:column;flex:1;min-width:0;gap:0;padding:18px 17px 17px;
+}
+.lyrb-premium-card .sh-prod-card__cat,.lyrb-premium-card .lyrb-premium-card__category {
+  display:block;margin:0 0 7px;font-size:10px;line-height:1.5;letter-spacing:.105em;font-weight:650;
+  text-transform:uppercase;color:#677684;
+}
+.lyrb-premium-card .sh-prod-card__cat a {position:relative;z-index:2;}
+.lyrb-premium-card .sh-prod-card__name,.lyrb-premium-card .lyrb-premium-card__title {
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+  color:#152c3d;font-size:15px;line-height:1.45;letter-spacing:-.025em;font-weight:650;
+  min-height:43.5px;margin:0 0 11px;
+}
+.lyrb-premium-card .lyrb-premium-card__title a {color:inherit;text-decoration:none;}
+.lyrb-premium-card .lyrb-premium-card__title a::after {content:"";position:absolute;inset:0;z-index:1;}
+.lyrb-premium-card .sh-card-link::after {z-index:1;}
+.lyrb-features,.lyrb-services {display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;}
+.lyrb-features {margin:0 0 11px;}
+.lyrb-services {margin:0 0 8px;}
+.lyrb-services .lyrb-badge {border-color:transparent;background:transparent;border-radius:0;padding:2px 0;min-height:22px;font-size:11px;gap:5px;margin-right:5px;}
+.lyrb-services .lyrb-badge .lyrb-icon {width:13px;height:13px;flex-basis:13px;}
+.lyrb-premium-card .lyr-product-card__price,.lyrb-premium-card .lyrb-premium-card__price {
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:7px;margin-top:auto;
+  padding-top:12px;min-height:43px;font-size:21px;line-height:1.3;letter-spacing:-.04em;
+  font-weight:750;color:#182d3c;
+}
+.lyrb-premium-card .lyrb-premium-card__price small {font-size:12px;letter-spacing:0;font-weight:550;}
+.lyrb-premium-card .lyr-product-card__price del,.lyrb-premium-card .lyrb-premium-card__price del {font-size:12px;color:#697883;font-weight:450;letter-spacing:-.01em;order:2;}
+.lyrb-premium-card .lyr-product-card__price ins {text-decoration:none;color:#a62f29;}
+.lyrb-premium-card .lyrb-premium-card__price .is-sale {color:#a62f29;}
+.lyrb-premium-card .lyrb-premium-card__price .source-note {font-size:9px;color:#697883;font-weight:400;letter-spacing:0;}
+.lyrb-premium-card .lyr-product-card__add,.lyrb-premium-card .lyrb-premium-card__cta {
+  position:relative;z-index:3;display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;min-height:44px;margin-top:14px;padding:10px 13px;border:1px solid #cee4e9;
+  border-radius:11px;background:#eaf6f8;color:#086375;font-size:12px;font-weight:650;
+  line-height:1.4;text-decoration:none;text-align:center;box-sizing:border-box;cursor:pointer;
+  transition:background .2s,color .2s;
+}
+.lyrb-premium-card .lyr-product-card__add:hover,.lyrb-premium-card .lyrb-premium-card__cta:hover {background:#086375;border-color:#086375;color:white;transform:none;}
+.lyrb-premium-card .lyr-product-card__add svg,.lyrb-premium-card .lyrb-premium-card__cta svg {width:15px;height:15px;flex-basis:15px;}
+.lyrb-premium-card .lyrb-premium-card__cta[disabled] {color:#667684;background:#edf0f2;border-color:#e0e5e8;cursor:not-allowed;}
+.lyrb-more {position:relative;z-index:3;margin:-3px 0 2px;}
+.lyrb-more > summary {display:inline-flex;align-items:center;gap:6px;list-style:none;min-height:40px;padding:0 3px;cursor:pointer;color:#526977;font-size:11px;font-weight:600;}
+.lyrb-more > summary::-webkit-details-marker {display:none;}
+.lyrb-more > summary > span {text-decoration:underline;text-decoration-color:#bdcdd5;text-underline-offset:4px;}
+.lyrb-more > summary .lyrb-icon {width:12px;height:12px;flex-basis:12px;transition:transform .2s;}
+.lyrb-more[open] > summary .lyrb-icon {transform:rotate(45deg);}
+.lyrb-more__list {display:flex;flex-wrap:wrap;gap:6px;padding:5px 0 13px;}
+/* Hide only duplicates on successfully enhanced cards. Original DOM remains available. */
+.lyrb-enhanced .lyr-product-card__chips,.lyrb-enhanced .sh-badges,.lyrb-enhanced .sh-chip-row {display:none;}
+.lyrb-premium-card :is(a,button,summary):focus-visible {outline:3px solid #0a7c92;outline-offset:3px;}
+.lyrb-premium-card .lyrb-premium-card__title a:focus-visible {outline:none;}
+.lyrb-premium-card:has(.lyrb-premium-card__title a:focus-visible) {outline:3px solid #0a7c92;outline-offset:3px;}
+.lyrb-premium-card .screen-reader-text,.lyrb-sr-only {position:absolute!important;width:1px!important;height:1px!important;clip-path:inset(50%)!important;overflow:hidden!important;white-space:nowrap!important;}
+@media(max-width:560px) {
+ .lyrb-premium-card {border-radius:17px;}
+ .lyrb-enhanced .lyrb-overlay {inset:11px 58px auto 11px;gap:5px;}
+ .lyrb-premium-card .lyr-product-card__body,.lyrb-premium-card .lyrb-premium-card__body {padding:15px 13px;}
+ .lyrb-premium-card .lyrb-premium-card__title,.lyrb-premium-card .sh-prod-card__name {font-size:14px;min-height:40.6px;}
+ .lyrb-badge {font-size:11px;padding:4px 8px;min-height:25px;gap:5px;}
+ .lyrb-premium-card .lyrb-premium-card__cta {font-size:11px;}
+}
+@media(prefers-reduced-motion:reduce) {
+ .lyrb-premium-card,.lyrb-premium-card img,.lyrb-premium-card a,.lyrb-more .lyrb-icon {transition:none!important;}
+ .lyrb-premium-card:hover .lyr-product-card__media > img,.lyrb-premium-card:hover .lyrb-premium-card__media > img {transform:none;}
+}
+@media(forced-colors:active) {
+ .lyrb-badge {border:1px solid CanvasText;color:CanvasText!important;background:Canvas!important;}
+ .lyrb-premium-card .lyrb-premium-card__cta {border:1px solid ButtonText;}
+}
+
+/* Layero host integration: preserve the existing product card and image layout. */
+.lyrb-enhanced .sh-personal-mark,.lyrb-enhanced .lyr-product-card__personal {display:none;}
+.lyrb-enhanced .lyrb-overlay {inset:10px 64px auto 10px;}
+.lyrb-enhanced .lyrb-features {margin-top:8px;}
+.lyrb-enhanced .lyrb-more {z-index:6;}
+.lyrb-enhanced :is(a,button,summary):focus-visible,.lyrb-more > summary:focus-visible {outline:3px solid #0a7c92;outline-offset:3px;}
+.lyrb-product-details {display:flex;flex-wrap:wrap;gap:6px;margin:12px 0;}
+.lyrb-enhanced .sh-card-tools {z-index:5;}
+.lyrb-enhanced .sh-card-tools .sh-heart {width:44px;height:44px;opacity:1;transform:none;}

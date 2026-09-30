@@ -31,7 +31,7 @@ var SHOP_PRODUCTS = [
       'A lámpa rendelésre készül: a szám, a név, a sportág és a póz is cserélhető. Foci, kosár, kézilabda vagy bármilyen más téma — küldd el, mire gondolsz, és a digitális tervet jóváhagyásra megmutatjuk gyártás előtt.',
       'USB-ről működik, érintőkapcsolóval. Stabil, súlyozott talpat kap, így polcra, éjjeliszekrényre és íróasztalra is biztonságosan kihelyezhető.'
     ],
-    specs: [['Anyag', 'PLA biopolimer, matt felület'], ['Méret', 'kb. 18 × 20 cm (Közepes)'], ['Világítás', 'meleg fehér LED, USB'], ['Kapcsoló', 'érintős, a talpban'], ['Személyre szabás', 'szám, név, sportág, póz'], ['Gyártási idő', '5–10 munkanap']] },
+    specs: [['Anyag', 'PLA biopolimer, matt felület'], ['Méret', 'kb. 18 × 20 cm (Közepes)'], ['Világítás', 'meleg fehér LED, USB'], ['Kapcsoló', 'érintős, a talpban'], ['Személyre szabás', 'szám, név, sportág, póz']] },
   { id: 'programozo-lampa',    nev: 'Programozó kör-lámpa',          cat: 'lampak',      ar: 219, szemelyre_szabott: true,
     kepek: ['assets/termekvilag/hero_slider/layero-asset-0018.webp', 'assets/termekvilag/hero_slider/layero-asset-0009.webp'],
     leiras: 'Egyedi névvel és üzenettel gravírozott, áramkör-mintás világító dekoráció a jövő informatikusának.',
@@ -39,7 +39,7 @@ var SHOP_PRODUCTS = [
       'Ballagásra, diplomára vagy első munkanapra: a programozó kör-lámpa egy teljes kis világot rajzol fénybe — monitorok előtt ülő alak, szerverek, áramkör-minták, és középen a saját kódsorod: Név = "…", Üzenet = "…".',
       'A szöveg tetszőlegesen átírható, így ugyanez a design működik mérnöknek, gamernek vagy bárkinek, akinek a képernyő a második otthona. A kétrétegű előlap nappal is szép kontrasztot ad, este pedig a meleg háttérfény emeli ki a részleteket.'
     ],
-    specs: [['Anyag', 'PLA biopolimer'], ['Átmérő', 'kb. 20 cm'], ['Világítás', 'meleg fehér LED, USB'], ['Személyre szabás', 'név + egyedi üzenet'], ['Gyártási idő', '5–10 munkanap']] },
+    specs: [['Anyag', 'PLA biopolimer'], ['Átmérő', 'kb. 20 cm'], ['Világítás', 'meleg fehér LED, USB'], ['Személyre szabás', 'név + egyedi üzenet']] },
   { id: 'jurassic-lampa',      nev: 'Dínós henger-lámpa névvel',     cat: 'lampak',      ar: 199, regi_ar: 249, szemelyre_szabott: true,
     kepek: ['assets/termekvilag/hero_slider/layero-asset-0011.webp', 'assets/termekvilag/hero_slider/layero-asset-0017.webp'],
     leiras: 'Kőmintás felületű, névre szóló henger-lámpa dinós motívummal — a gyerekszoba kedvence.',
@@ -47,7 +47,7 @@ var SHOP_PRODUCTS = [
       'A henger-lámpa különlegessége a litofán technika: a fal vastagságának változása rajzolja ki a képet, így kikapcsolva egyszerű kőmintás hengert látsz, bekapcsolva viszont előtűnik a teljes dinós jelenet és a név.',
       'Éjszakai fénynek is tökéletes: a meleg, szűrt fény nem vakít, a gyerekszobában pont annyi világosságot ad, amennyi az elalváshoz kell. A név betűtípusa a témához illeszkedik, és bármilyen névvel kérhető.'
     ],
-    specs: [['Anyag', 'PLA, litofán technika'], ['Méret', 'kb. 11 × 19 cm'], ['Világítás', 'meleg fehér LED, USB'], ['Személyre szabás', 'név, motívum'], ['Gyártási idő', '5–10 munkanap']] },
+    specs: [['Anyag', 'PLA, litofán technika'], ['Méret', 'kb. 11 × 19 cm'], ['Világítás', 'meleg fehér LED, USB'], ['Személyre szabás', 'név, motívum']] },
   { id: 'hullam-gomblampa',    nev: 'Hullám asztali lámpa',          cat: 'lampak',      ar: 249, regi_ar: 299, badge: 'Új', szemelyre_szabott: false, visszakuldheto: true,
     kepek: ['assets/termekvilag/hero_slider/layero-asset-0016.webp', 'assets/termekvilag/hero_slider/layero-asset-0019.webp'],
     leiras: 'Organikus, csavart bordázatú lámpabúra fa lábakon, meleg fényű LED-del — skandináv hangulat bármelyik szobába.',
@@ -55,7 +55,7 @@ var SHOP_PRODUCTS = [
       'A hullám lámpa nem személyre szabott darab, hanem designtárgy: a csavart bordázat úgy szórja szét a fényt, hogy a búra teljes felülete egyenletesen izzik, árnyékjáték nélkül. Nappali dohányzóasztalra, hálószoba éjjeliszekrényére vagy dolgozósarokba egyaránt illik.',
       'A tömörfa hatású lábak és a matt búra kellemesen semleges párost alkotnak, így bármilyen belső térhez passzol — a skandináv minimáltól az indusztriálig.'
     ],
-    specs: [['Anyag', 'PLA búra, fa hatású láb'], ['Méret', 'kb. 22 × 30 cm'], ['Világítás', 'E14 foglalat, LED izzóval'], ['Kapcsoló', 'vezetéken'], ['Gyártási idő', '5–10 munkanap']] },
+    specs: [['Anyag', 'PLA búra, fa hatású láb'], ['Méret', 'kb. 22 × 30 cm'], ['Világítás', 'E14 foglalat, LED izzóval'], ['Kapcsoló', 'vezetéken']] },
   { id: 'karacsonyi-lampa',    nev: 'Karácsonyi kedvenc-lámpa',      cat: 'lampak',      ar: 229, badge: 'Szezonális', szemelyre_szabott: true,
     kepek: ['assets/termekvilag/hero_slider/layero-asset-0017.webp', 'assets/termekvilag/hero_slider/layero-asset-0019.webp'],
     leiras: 'Világító ünnepi jelenet a te kutyusaiddal — fotó alapján készül, hogy a család minden tagja ott legyen a fa alatt.',
@@ -71,7 +71,7 @@ var SHOP_PRODUCTS = [
       'A holdfény lámpa a természet nyugalmát hozza a szobába: hegyvonulat, fenyves és egy szarvas sziluettje rajzolódik ki a kör alakú, holdat idéző fénylap előtt. A rejtett LED-sor hátulról világít, így a fény puha és vakításmentes.',
       'Több méretben készül, így polcra, komódra és nagyobb felületre is találsz megfelelőt. Szarvas helyett farkas, medve vagy saját motívum is kérhető.'
     ],
-    specs: [['Anyag', 'PLA biopolimer'], ['Méret', '3 méretben (16 / 20 / 26 cm)'], ['Világítás', 'rejtett LED-sor, USB'], ['Személyre szabás', 'motívum cserélhető'], ['Gyártási idő', '5–10 munkanap']] },
+    specs: [['Anyag', 'PLA biopolimer'], ['Méret', '3 méretben (16 / 20 / 26 cm)'], ['Világítás', 'rejtett LED-sor, USB'], ['Személyre szabás', 'motívum cserélhető']] },
 
   /* ── Kulcstartók ── */
   { id: 'logos-kulcstarto',    nev: 'Logós kulcstartó',              cat: 'kulcstartok', ar: 39, badge: 'Bestseller', szemelyre_szabott: true,
@@ -89,7 +89,7 @@ var SHOP_PRODUCTS = [
       'Egy csapat, egy design, hat név: a szett minden darabja ugyanazt a formavilágot viseli, de mindenki a sajátját kapja. Fociedzésre, pecás bandának, motoros klubnak vagy a baráti körnek — a közös identitás apró, hordható formája.',
       'A szett alapára 6 darabra vonatkozik; nagyobb csapatnak darabonként bővíthető. A forma, a színek és a betűtípus is igazítható a csapat arculatához.'
     ],
-    specs: [['Anyag', 'PETG'], ['Tartalom', '6 db, egyedi nevekkel'], ['Bővíthető', 'igen, darabonként'], ['Személyre szabás', 'forma, szín, nevek'], ['Gyártási idő', '5–10 munkanap']] },
+    specs: [['Anyag', 'PETG'], ['Tartalom', '6 db, egyedi nevekkel'], ['Bővíthető', 'igen, darabonként'], ['Személyre szabás', 'forma, szín, nevek']] },
 
   /* ── Dekorációk ── */
   { id: 'tulipan-vaza',        nev: 'Tulipán üvegcső-váza',          cat: 'dekoraciok',  ar: 119, regi_ar: 149, badge: 'Új', szemelyre_szabott: false,
@@ -115,7 +115,7 @@ var SHOP_PRODUCTS = [
       'A fekvő szarvas agancsai közé fektetett palack olyan, mintha egy kastély borospincéjéből érkezett volna. A kőhatású, márványmintás felület nemes megjelenést ad, a súlyozott talp pedig stabilan tartja a legnehezebb palackot is.',
       'Névnapra, házavatóra, főnöknek vagy após-ajándéknak telitalálat — és a palack elfogyása után is marad belőle egy szobor.'
     ],
-    specs: [['Anyag', 'PLA, kő hatású felület'], ['Méret', 'kb. 28 × 20 cm'], ['Terhelhetőség', 'standard 0,75 l palack'], ['Gravírozás', 'név / dátum kérhető a talpra'], ['Gyártási idő', '5–10 munkanap']] },
+    specs: [['Anyag', 'PLA, kő hatású felület'], ['Méret', 'kb. 28 × 20 cm'], ['Terhelhetőség', 'standard 0,75 l palack'], ['Gravírozás', 'név / dátum kérhető a talpra']] },
   { id: 'eletfa-mecses-szett', nev: 'Életfa mécses-szett (1–10)',    cat: 'dekoraciok',  ar: 179, szemelyre_szabott: true,
     kepek: ['assets/termekvilag/hero_slider/layero-asset-0014.webp', 'assets/termekvilag/hero_slider/layero-asset-0020.webp'],
     leiras: 'Tíz mécsestartó, amin egy fa nő évről évre — évfordulóra, születésnapokra, vagy adventi visszaszámláláshoz.',
@@ -123,7 +123,7 @@ var SHOP_PRODUCTS = [
       'Az életfa szett tíz mécsestartóból áll: az elsőn még csak egy hajtás, a tizediken terebélyes lombkorona — a fa évről évre nő, ahogy a kapcsolatotok, a gyerek vagy a vállalkozás is. Minden évfordulón eggyel több mécses kerül az asztalra.',
       'LED-es teamécsessel és hagyományos mécsessel is használható. A számok helyére évszámok vagy nevek is kérhetők, így emléktárgyból akár családi rituálé is lehet.'
     ],
-    specs: [['Anyag', 'PLA, hőálló betéttel'], ['Tartalom', '10 db mécsestartó'], ['Mécses', 'LED és gyertya is'], ['Személyre szabás', 'számok / évszámok / nevek'], ['Gyártási idő', '5–10 munkanap']] },
+    specs: [['Anyag', 'PLA, hőálló betéttel'], ['Tartalom', '10 db mécsestartó'], ['Mécses', 'LED és gyertya is'], ['Személyre szabás', 'számok / évszámok / nevek']] },
 
   /* ── Céges megoldások ── */
   { id: 'qr-nfc-display',      nev: 'QR + NFC asztali display',      cat: 'ceges',       ar: 179, regi_ar: 219, badge: 'B2B kedvenc', szemelyre_szabott: true,
@@ -134,7 +134,7 @@ var SHOP_PRODUCTS = [
       'Referencia: a Bázis Bisztró asztalain két hét alatt megduplázta a beérkező Google-értékelések számát. Étterembe, kávézóba, szépségszalonba, rendelőbe — mindenhova, ahol az ügyfél vár valamire, és közben a kezében a telefon.',
       'Az ár egy darabra vonatkozik, teljes arculati testreszabással. Több asztalos szettekre mennyiségi kedvezményt adunk.'
     ],
-    specs: [['Anyag', 'PLA/PETG, domborított grafika'], ['Méret', 'kb. 12 × 18 cm'], ['NFC', 'programozott chip, cserélhető cél-URL'], ['QR', 'domborított, kopásálló'], ['Testreszabás', 'logó, színek, felirat'], ['Gyártási idő', '5–10 munkanap']] },
+    specs: [['Anyag', 'PLA/PETG, domborított grafika'], ['Méret', 'kb. 12 × 18 cm'], ['NFC', 'programozott chip, cserélhető cél-URL'], ['QR', 'domborított, kopásálló'], ['Testreszabás', 'logó, színek, felirat']] },
   { id: 'ceges-ajandekcsomag', nev: 'Céges ajándékcsomag',           cat: 'ceges',       ar: 449, szemelyre_szabott: true,
     kepek: ['assets/termekvilag/hero_slider/layero-asset-0027.webp', 'assets/termekvilag/hero_slider/layero-asset-0022.webp'],
     leiras: 'Logózott ajándéktárgyak díszdobozban — partnereknek, munkatársaknak, rendezvényekre.',
@@ -152,7 +152,7 @@ var SHOP_PRODUCTS = [
       'A virágcsokor elhervad, a bagoly marad: a diplomás bagoly talapzatán a saját üzeneted áll — „Gratulálunk Robi! Sok sikert! 2025" —, és még húsz év múlva is ott ül majd a könyvespolcon, a diploma mellett.',
       'A talapzat felirata teljesen szabad szöveg, a kalap bojtjának színe pedig a szak színéhez igazítható. Óvodai és iskolai ballagásra kicsinyített változat is kérhető.'
     ],
-    specs: [['Anyag', 'PLA, többszínű nyomtatás'], ['Magasság', 'kb. 18 cm talapzattal'], ['Felirat', 'szabad szöveg, 3 sor'], ['Bojt színe', 'választható'], ['Gyártási idő', '5–10 munkanap']] },
+    specs: [['Anyag', 'PLA, többszínű nyomtatás'], ['Magasság', 'kb. 18 cm talapzattal'], ['Felirat', 'szabad szöveg, 3 sor'], ['Bojt színe', 'választható']] },
   { id: 'camino-szobor',       nev: 'El Camino emlék-szobor',        cat: 'rajongoi',    ar: 189, badge: 'Egyedi', szemelyre_szabott: true,
     kepek: ['assets/termekvilag/hero_slider/layero-asset-0010.webp', 'assets/termekvilag/hero_slider/layero-asset-0023.webp'],
     leiras: 'Személyre szabott zarándok-figura névvel, megtett távval és évszámmal — egy nagy út méltó lezárása.',

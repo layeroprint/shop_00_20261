@@ -28,7 +28,7 @@ class Corporate_Benefits extends Base_Widget {
 		$stat->add_control('label', array('label' => __('Magyarázat', 'layero-shop-ui'), 'type' => Controls_Manager::TEXT));
 		$this->add_control('stats', array('type' => Controls_Manager::REPEATER, 'fields' => $stat->get_controls(), 'title_field' => '{{{ value }}} — {{{ label }}}', 'default' => array(
 			array('value' => '24–48 h', 'label' => 'árajánlat a megkereséstől'),
-			array('value' => '5–10 nap', 'label' => 'jellemző gyártási idő'),
+			array('value' => 'Egyedi', 'label' => 'egyeztetett ütemezés'),
 			array('value' => '2 év', 'label' => 'jótállás minden darabra'),
 			array('value' => '1 műhely', 'label' => 'tervezéstől a csomagolásig'),
 		)));
@@ -46,7 +46,7 @@ class Corporate_Benefits extends Base_Widget {
 					<div><div class="sh-review__stars" aria-label="<?php esc_attr_e('5 csillag', 'layero-shop-ui'); ?>">★★★★★</div><blockquote>„<?php echo wp_kses($settings['quote'] ?? '', array('em' => array(), 'strong' => array())); ?>”</blockquote><footer><span class="sh-review__avatar" aria-hidden="true"><?php echo esc_html($settings['initials'] ?? ''); ?></span><div><strong><?php echo esc_html($settings['name'] ?? ''); ?></strong><span><?php echo esc_html($settings['role'] ?? ''); ?></span></div></footer></div>
 					<?php if ($image) : ?><figure><img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($settings['role'] ?? ''); ?>" loading="lazy" decoding="async"></figure><?php endif; ?>
 				</div>
-				<?php if ($stats) : ?><div class="sh-stats lyr-corp-case__stats"><?php foreach ($stats as $item) : ?><div class="sh-stat sh-reveal"><b><?php echo esc_html($item['value'] ?? ''); ?></b><span><?php echo esc_html($item['label'] ?? ''); ?></span></div><?php endforeach; ?></div><?php endif; ?>
+				<?php if ($stats) : ?><div class="sh-stats lyr-corp-case__stats"><?php foreach ($stats as $item) : ?><?php $old_time = Shop_Content::without_legacy_lead_time($item['value'] ?? '', '') !== ($item['value'] ?? ''); ?><div class="sh-stat sh-reveal"><b><?php echo esc_html($old_time ? 'Egyedi' : ($item['value'] ?? '')); ?></b><span><?php echo esc_html($old_time ? 'egyeztetett ütemezés' : ($item['label'] ?? '')); ?></span></div><?php endforeach; ?></div><?php endif; ?>
 			</div>
 		</section>
 		<?php

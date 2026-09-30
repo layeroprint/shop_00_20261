@@ -194,6 +194,10 @@ function prepareSync(shopRoot = SHOP_ROOT, pluginRoot = PLUGIN_ROOT) {
   add('assets/css/layero-static-shop.css', shopCss);
   add('assets/js/layero-static-data.js', shopData);
   add('assets/js/layero-static-shop.js', adaptedJs);
+  const testimonialsJs = read(path.join(shopRoot, 'assets/testimonials.js'));
+  new vm.Script(testimonialsJs, { filename: 'layero-testimonials.js' });
+  add('assets/css/layero-testimonials.css', read(path.join(shopRoot, 'assets/testimonials.css')));
+  add('assets/js/layero-testimonials.js', testimonialsJs);
   const pageTexts = [];
   PAGES.forEach(function (page) {
     const html = read(path.join(shopRoot, page));
@@ -202,6 +206,7 @@ function prepareSync(shopRoot = SHOP_ROOT, pluginRoot = PLUGIN_ROOT) {
   });
   const refs = new Set(collectAssetRefs([shopCss, shopData, shopJs].concat(pageTexts)));
   ORIGIN_FILES.forEach(file => refs.add('assets/layero-origin/' + file));
+  ['catalog.json', 'layero-badges.js', 'layero-badges.css', 'layero-adapter.js'].forEach(file => refs.add('assets/layero-badges/' + file));
   // The fragment and CSS contain paths relative to the Origin directory.
   const originHtml = read(path.join(shopRoot, 'assets/layero-origin/origin-modal.html'));
   const originCss = read(path.join(shopRoot, 'assets/layero-origin/lyo-origin.css'));

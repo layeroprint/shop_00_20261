@@ -39,7 +39,7 @@ class Corporate_FAQ extends Base_Widget {
 			'title_field' => '{{{ question }}}',
 			'default' => array(
 				array('question' => 'Van minimum rendelési mennyiség?', 'answer' => 'Nincs általános kötelező minimum. Egyedi prototípust és kis szériát is vállalunk; a darabár természetesen a mennyiséggel kedvezőbbé válhat.'),
-				array('question' => 'Mennyi idő alatt készül el egy céges rendelés?', 'answer' => 'A tervezés és jóváhagyás után a legtöbb rendelés 5–10 munkanap alatt készül el. Nagy széria vagy összetett projekt esetén az ajánlatban külön gyártási ütemezést adunk.'),
+				array('question' => 'Mennyi idő alatt készül el egy céges rendelés?', 'answer' => 'A pontos gyártási ütemezést a terv, a mennyiség és a jóváhagyás alapján az ajánlatban egyeztetjük.'),
 				array('question' => 'Kaphatunk mintadarabot a teljes gyártás előtt?', 'answer' => 'Igen. Nagyobb rendelésnél kérhető fizikai prototípus, egyszerűbb munkáknál pedig digitális látványtervet küldünk jóváhagyásra.'),
 				array('question' => 'Milyen fájlformátumban küldjük a logót?', 'answer' => 'A vektoros SVG, PDF vagy AI a legjobb, de jó minőségű PNG-ből is el tudunk indulni. Ha csak egy fotó vagy vázlat van, azt is küldd el.'),
 				array('question' => 'Céges számla és proforma kérhető?', 'answer' => 'Igen. Céges adatokat tartalmazó számlát és igény esetén proforma díjbekérőt is biztosítunk.'),
@@ -59,7 +59,7 @@ class Corporate_FAQ extends Base_Widget {
 				<?php $this->render_section_header($settings, 'lyr-corp-section__head'); ?>
 				<div class="lyr-corp-faq__items">
 					<?php foreach ($items as $index => $item) : ?>
-						<details<?php echo 0 === $index ? ' open' : ''; ?>><summary><span><?php echo esc_html($item['question'] ?? ''); ?></span><i aria-hidden="true"></i></summary><div><p><?php echo esc_html($item['answer'] ?? ''); ?></p></div></details>
+						<details<?php echo 0 === $index ? ' open' : ''; ?>><summary><span><?php echo esc_html($item['question'] ?? ''); ?></span><i aria-hidden="true"></i></summary><div><p><?php echo esc_html(Shop_Content::without_legacy_lead_time($item['answer'] ?? '', 'A pontos gyártási ütemezést a terv, a mennyiség és a jóváhagyás alapján az ajánlatban egyeztetjük.')); ?></p></div></details>
 					<?php endforeach; ?>
 				</div>
 			</div>

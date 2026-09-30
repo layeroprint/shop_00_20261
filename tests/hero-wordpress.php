@@ -28,3 +28,58 @@ $html = hero_render(array('slides' => $lifestyle));
 hero_check(3 === substr_count($html, '<article class="sh-slide ') && false !== strpos($html, $lifestyle[0]['title']), 'Custom campaign is not overwritten by migration.');
 $old[0]['image'] = array('url' => home_url('/custom.webp'));
 hero_check(7 === substr_count(hero_render(array('slides' => $old)), '<article class="sh-slide '), 'Custom legacy media prevents migration.');
+
+// A gyorssáv visszaállítása kizárólag elkülönített helyi próbaoldalon történik.
+$builder = '\LayeroShop\Page_Builder';
+$home_data = (new ReflectionMethod($builder, 'home_data'))->invoke(null);
+$home_types = wp_list_pluck((new ReflectionMethod($builder, 'faq_widgets'))->invoke(null, $home_data), 'widgetType');
+hero_check(array_slice($home_types, 0, 3) === array('layero_hero_slider', 'layero_whofor', 'layero_trust_bar'), 'New homepage places gift navigation directly after the hero.');
+$original_front = get_option('page_on_front');
+$original_show = get_option('show_on_front');
+$original_user = get_current_user_id();
+$test_page = wp_insert_post(array('post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'QA ajándék gyorssáv', 'post_name' => 'qa-ajandek-gyorssav'));
+$legacy = $home_data;
+array_splice($legacy, 1, 1);
+$legacy[0]['elements'][0]['elements'][0]['settings'] = array('autoplay_speed' => 0, 'hero_style' => 'studio');
+$raw = wp_json_encode($legacy);
+try {
+    update_option('show_on_front', 'page');
+    update_option('page_on_front', $test_page);
+    update_post_meta($test_page, '_elementor_data', wp_slash($raw));
+    $raw = get_post_meta($test_page, '_elementor_data', true);
+    wp_set_current_user(0);
+    $builder::maybe_restore_home_whofor();
+    hero_check($raw === get_post_meta($test_page, '_elementor_data', true), 'Anonymous request cannot restore or change homepage content.');
+    $admins = get_users(array('role' => 'administrator', 'number' => 1));
+    wp_set_current_user($admins[0]->ID);
+    $builder::maybe_restore_home_whofor();
+    $after = get_post_meta($test_page, '_elementor_data', true);
+    $data = json_decode($after, true);
+    $siblings = $data[0]['elements'][0]['elements'];
+    hero_check('layero_whofor' === $siblings[1]['widgetType'], 'Navigation is the immediate next element after the existing hero.');
+    array_splice($data[0]['elements'][0]['elements'], 1, 1);
+    hero_check($data === json_decode($raw, true), 'All existing widgets, IDs, settings and content are preserved.');
+    $backup = get_post_meta($test_page, '_layero_home_whofor_backup', true);
+    hero_check($backup['elementor_data'] === $raw, 'Original Elementor data is backed up exactly.');
+    $builder::maybe_restore_home_whofor();
+    hero_check($after === get_post_meta($test_page, '_elementor_data', true), 'Repeated migration does not duplicate the bar.');
+    delete_post_meta($test_page, '_layero_home_whofor_revision');
+    $builder::maybe_restore_home_whofor();
+    hero_check($after === get_post_meta($test_page, '_elementor_data', true), 'An existing gift navigation is retained without duplication.');
+    $nav_widget = \Elementor\Plugin::instance()->elements_manager->create_element_instance($siblings[1]);
+    ob_start(); $nav_widget->print_element(); $nav_html = ob_get_clean();
+    hero_check(7 === substr_count($nav_html, '<a ') && false !== strpos($nav_html, 'Nem tudom — kvíz'), 'All six gift links and the quiz link render.');
+    hero_check(false !== strpos($nav_html, '/termekek/?cat=rajongoi') && false !== strpos($nav_html, '/kviz/'), 'Gift links retain the filtered catalogue and quiz destinations.');
+    update_post_meta($test_page, '_elementor_data', wp_slash(wp_json_encode(array_slice($legacy, 1))));
+    $without_hero = get_post_meta($test_page, '_elementor_data', true);
+    $builder::maybe_restore_home_whofor();
+    hero_check($without_hero === get_post_meta($test_page, '_elementor_data', true), 'A page without the Layero hero is not modified.');
+} catch (\Throwable $error) {
+    $test_error = $error;
+} finally {
+    update_option('page_on_front', $original_front);
+    update_option('show_on_front', $original_show);
+    wp_set_current_user($original_user);
+    wp_delete_post($test_page, true);
+}
+if (isset($test_error)) { WP_CLI::error($test_error->getMessage()); }

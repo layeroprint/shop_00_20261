@@ -7,6 +7,10 @@ if (! defined('ABSPATH')) {
 }
 
 final class Shop_Content {
+	public static function without_legacy_lead_time($text, $replacement) {
+		return preg_match('/5\s*[–-]\s*10/u', (string) $text) ? $replacement : $text;
+	}
+
 	public static function asset_url($path) {
 		return LAYERO_SHOP_UI_URL . 'assets/demo/' . ltrim($path, '/');
 	}
@@ -50,7 +54,7 @@ final class Shop_Content {
 		return array(
 			array('icon' => 'truck', 'tint' => 'accent', 'title' => 'Ingyenes szállítás', 'text' => '200 lej feletti rendelésre'),
 			array('icon' => 'tag', 'tint' => 'gold', 'title' => 'Már 50 lejtől', 'text' => 'alacsony minimális rendelés'),
-			array('icon' => 'bolt', 'tint' => 'coral', 'title' => 'Gyors gyártás', 'text' => '5–10 munkanap alatt'),
+			array('icon' => 'bolt', 'tint' => 'coral', 'title' => 'Rendelésre készül', 'text' => 'saját műhelyünkben'),
 			array('icon' => 'leaf', 'tint' => 'eco', 'title' => 'Környezetbarát', 'text' => 'PLA + napelemes gyártás'),
 			array('icon' => 'pin', 'tint' => 'ink', 'title' => 'Helyi gyártás', 'text' => 'Szatmárnémetiben készül'),
 		);
@@ -73,7 +77,7 @@ final class Shop_Content {
 			array('text' => 'Egyetlen példány a világon'),
 			array('text' => 'PLA biopolimer'),
 			array('text' => 'Napelemes műhely'),
-			array('text' => '5–10 nap alatt nálad'),
+			array('text' => 'Rendelésre készül'),
 			array('text' => '2 év jótállás'),
 			array('text' => '4.9★ vásárlói élmény'),
 		);
@@ -228,7 +232,7 @@ final class Shop_Content {
 		return array(
 			array('number' => '1', 'title' => 'Kiválasztod és személyre szabod', 'text' => 'Név, felirat, szín, méret — vagy saját ötlet, fotó, referenciakép alapján.'),
 			array('number' => '2', 'title' => 'Egyeztetjük a részleteket', 'text' => 'E-mailben pontosítjuk a szöveget, a színt és a méretet — csak a jóváhagyásod után nyomtatunk.'),
-			array('number' => '3', 'title' => 'Nyomtatjuk és kézbesítjük', 'text' => 'Napelemes műhelyben, PLA biopolimerből — 5–10 munkanap alatt az ajtódig.'),
+			array('number' => '3', 'title' => 'Nyomtatjuk és kézbesítjük', 'text' => 'Napelemes műhelyben, PLA biopolimerből készül, majd gondosan becsomagolva küldjük el.'),
 		);
 	}
 
@@ -254,9 +258,9 @@ final class Shop_Content {
 
 	public static function testimonials() {
 		return array(
-			array('stars' => 5, 'quote' => 'A fiam nevével készült dínós lámpa azóta is minden este világít. A minőség sokkal jobb, mint amire számítottam.', 'name' => 'Kiss Emese', 'meta' => 'Dínós henger-lámpa'),
-			array('stars' => 5, 'quote' => 'Céges QR-displayt rendeltünk az étterembe - két hét alatt megduplázódtak a Google-értékeléseink.', 'name' => 'Balogh Tamás', 'meta' => 'QR + NFC display'),
-			array('stars' => 5, 'quote' => 'Egyedi ötlettel kerestem meg őket, és pontosan azt kaptam, amit elképzeltem. Minden lépés profi volt.', 'name' => 'Szabó Nóra', 'meta' => 'Egyedi rendelés'),
+			array('stars' => 5, 'quote' => 'A fiam nevével készült dínós lámpa azóta is minden este világít. A minőség sokkal jobb, mint amire számítottam.', 'name' => 'Kiss Emese', 'meta' => 'Dínós henger-lámpa', 'topic' => 'Névre szóló ajándék', 'card_style' => 'featured', 'product_icon' => 'lamp'),
+			array('stars' => 5, 'quote' => 'Céges QR-displayt rendeltünk az étterembe - két hét alatt megduplázódtak a Google-értékeléseink.', 'name' => 'Balogh Tamás', 'meta' => 'QR + NFC display', 'topic' => 'Céges megoldás', 'card_style' => 'standard', 'product_icon' => 'display'),
+			array('stars' => 5, 'quote' => 'Egyedi ötlettel kerestem meg őket, és pontosan azt kaptam, amit elképzeltem. Minden lépés profi volt.', 'name' => 'Szabó Nóra', 'meta' => 'Egyedi rendelés', 'topic' => 'Egyedi elképzelés', 'card_style' => 'warm', 'product_icon' => 'sparkle'),
 		);
 	}
 

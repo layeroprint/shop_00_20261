@@ -1,0 +1,159 @@
+/** Layero Badges 1.0 — dependency-free display components.
+ * Trusted product facts are supplied by the host application, never invented here.
+ * Browser: window.LayeroBadges. Node: require('./layero-badges.js').
+ */
+(function(root, factory) {
+  'use strict';
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.LayeroBadges = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function() {
+  'use strict';
+  const DATA = {"groups":[{"id":"personal","label":"Személyre szabás","labelRo":"Personalizare","description":"A termékben rejlő lehetőségek.","icon":"pen"},{"id":"highlight","label":"Kiemelések","labelRo":"Selecții","description":"Népszerűség, minőség és márkaérték.","icon":"crown"},{"id":"offer","label":"Akciók és előnyök","labelRo":"Oferte și beneficii","description":"Kedvezmények, csomagok, extra érték.","icon":"percent"},{"id":"lifecycle","label":"Újdonság és kollekció","labelRo":"Noutăți și colecții","description":"Életciklus, szezon és megjelenés.","icon":"sparkles"},{"id":"availability","label":"Készlet és rendelés","labelRo":"Stoc și comandă","description":"A vásárlási döntéshez fontos állapotok.","icon":"box"},{"id":"service","label":"Szállítás és szolgáltatás","labelRo":"Livrare și servicii","description":"Határidők és választható szolgáltatások.","icon":"truck"},{"id":"material","label":"Gyártás és anyag","labelRo":"Producție și materiale","description":"Igazolható tulajdonságok, pontos állítások.","icon":"cube"},{"id":"condition","label":"Állapot és utógondozás","labelRo":"Stare și asistență","description":"Termékállapot és érvényes feltételek.","icon":"shield"}],"badges":[{"id":"personal","labels":{"hu":"Névre szabható","ro":"Personalizabil cu nume"},"group":"personal","icon":"pen","tone":"cyan","zone":"feature","priority":90,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"personal"}},{"id":"engraved","labels":{"hu":"Gravírozható","ro":"Gravabil"},"group":"personal","icon":"engrave","tone":"cyan","zone":"feature","priority":75,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"engraved"}},{"id":"photo","labels":{"hu":"Saját fotóval","ro":"Cu fotografia ta"},"group":"personal","icon":"image","tone":"cyan","zone":"feature","priority":75,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"photo"}},{"id":"logo","labels":{"hu":"Saját logóval","ro":"Cu logo-ul tău"},"group":"personal","icon":"flag","tone":"cyan","zone":"feature","priority":72,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"logo"}},{"id":"color","labels":{"hu":"Választható szín","ro":"Culori la alegere"},"group":"personal","icon":"palette","tone":"cyan","zone":"feature","priority":55,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"color"}},{"id":"size","labels":{"hu":"Egyedi méret","ro":"Dimensiune la comandă"},"group":"personal","icon":"ruler","tone":"cyan","zone":"feature","priority":58,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"size"}},{"id":"message","labels":{"hu":"Saját felirattal","ro":"Cu mesajul tău"},"group":"personal","icon":"type","tone":"cyan","zone":"feature","priority":70,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"message"}},{"id":"bestseller","labels":{"hu":"Bestseller","ro":"Bestseller"},"group":"highlight","icon":"crown","tone":"gold","zone":"overlay","priority":85,"note":"Értékesítési adatokból vagy jóváhagyott kereskedői besorolásból. A szekció címe önmagában nem bizonyíték.","sample":{"id":"bestseller"}},{"id":"popular","labels":{"hu":"Népszerű","ro":"Popular"},"group":"highlight","icon":"flame","tone":"amber","zone":"overlay","priority":60,"note":"Valós, meghatározott időszakra vonatkozó népszerűségi adatok alapján.","sample":{"id":"popular"}},{"id":"topRated","labels":{"hu":"Kiváló értékelés","ro":"Foarte apreciat"},"group":"highlight","icon":"star","tone":"gold","zone":"overlay","priority":65,"note":"Csak igazolt értékelések és előre rögzített értékelési küszöb mellett.","sample":{"id":"topRated"}},{"id":"recommended","labels":{"hu":"Layero ajánlja","ro":"Recomandat de Layero"},"group":"highlight","icon":"checkCircle","tone":"navy","zone":"overlay","priority":58,"note":"A kereskedő szerkesztett ajánlása, nem vásárlói értékelés.","sample":{"id":"recommended"}},{"id":"exclusive","labels":{"hu":"Csak nálunk","ro":"Exclusiv la noi"},"group":"highlight","icon":"key","tone":"navy","zone":"overlay","priority":60,"note":"Csak ténylegesen kizárólagosan forgalmazott termékre.","sample":{"id":"exclusive"}},{"id":"premium","labels":{"hu":"Prémium","ro":"Premium"},"group":"highlight","icon":"diamond","tone":"gold","zone":"overlay","priority":55,"note":"Jóváhagyott termékbesorolás; ne helyettesítse a pontos termékleírást.","sample":{"id":"premium"}},{"id":"award","labels":{"hu":"Díjnyertes","ro":"Premiat"},"group":"highlight","icon":"award","tone":"gold","zone":"overlay","priority":63,"note":"Konkrét, ellenőrizhető díjjal, az érintett termékre.","sample":{"id":"award"}},{"id":"salePercent","labels":{"hu":"−{value}%","ro":"−{value}%"},"group":"offer","icon":"percent","tone":"red","zone":"overlay","priority":95,"note":"A backend által ellenőrzött, a megfelelő referenciaárból számolt kedvezmény. A motor nem állapít meg referenciaárat.","sample":{"id":"salePercent","value":20}},{"id":"sale","labels":{"hu":"Akció","ro":"Ofertă"},"group":"offer","icon":"tag","tone":"red","zone":"overlay","priority":90,"note":"Csak aktív és ellenőrzött akcióhoz.","sample":{"id":"sale"}},{"id":"coupon","labels":{"hu":"−{value}% kuponnal","ro":"−{value}% cu cupon"},"group":"offer","icon":"ticket","tone":"red","zone":"feature","priority":65,"note":"A kupon feltételeit és tényleges jogosultságát a webshop ellenőrzi.","sample":{"id":"coupon","value":10}},{"id":"bundle","labels":{"hu":"Csomagajánlat","ro":"Ofertă la pachet"},"group":"offer","icon":"layers","tone":"amber","zone":"overlay","priority":62,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"bundle"}},{"id":"gift","labels":{"hu":"Ajándék jár hozzá","ro":"Cadou inclus"},"group":"offer","icon":"gift","tone":"rose","zone":"feature","priority":70,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"gift"}},{"id":"member","labels":{"hu":"Tagsági kedvezmény","ro":"Reducere pentru membri"},"group":"offer","icon":"user","tone":"violet","zone":"feature","priority":50,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"member"}},{"id":"volume","labels":{"hu":"Mennyiségi kedvezmény","ro":"Reducere de volum"},"group":"offer","icon":"boxes","tone":"amber","zone":"feature","priority":50,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"volume"}},{"id":"new","labels":{"hu":"Újdonság","ro":"Nou"},"group":"lifecycle","icon":"sparkles","tone":"cyan","zone":"overlay","priority":75,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"new"}},{"id":"limited","labels":{"hu":"Limitált kiadás","ro":"Ediție limitată"},"group":"lifecycle","icon":"gem","tone":"violet","zone":"overlay","priority":72,"note":"Valós sorozatkorlátozás vagy rögzített elérhetőség alapján.","sample":{"id":"limited"}},{"id":"seasonal","labels":{"hu":"Szezonális","ro":"Sezonier"},"group":"lifecycle","icon":"sun","tone":"amber","zone":"overlay","priority":50,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"seasonal"}},{"id":"preorder","labels":{"hu":"Előrendelhető","ro":"Precomandă"},"group":"lifecycle","icon":"calendar","tone":"violet","zone":"overlay","priority":970,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"preorder"}},{"id":"comingSoon","labels":{"hu":"Hamarosan","ro":"În curând"},"group":"lifecycle","icon":"clock","tone":"neutral","zone":"overlay","priority":980,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"comingSoon"}},{"id":"lastChance","labels":{"hu":"Utolsó darabok","ro":"Ultimele bucăți"},"group":"lifecycle","icon":"hourglass","tone":"amber","zone":"overlay","priority":80,"note":"Ténylegesen kifutó vagy utolsó készletre; nem mesterséges sürgetésre.","sample":{"id":"lastChance"}},{"id":"clearance","labels":{"hu":"Végkiárusítás","ro":"Lichidare de stoc"},"group":"lifecycle","icon":"archive","tone":"red","zone":"overlay","priority":88,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"clearance"}},{"id":"inStock","labels":{"hu":"Raktáron","ro":"În stoc"},"group":"availability","icon":"checkCircle","tone":"green","zone":"service","priority":70,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"inStock"}},{"id":"lowStock","labels":{"hu":"Már csak {value} db","ro":"Doar {value} buc."},"group":"availability","icon":"alert","tone":"amber","zone":"service","priority":96,"note":"A valós, értékesíthető készletből. Nem generál véletlenszerű készletszámot.","sample":{"id":"lowStock","value":3}},{"id":"soldOut","labels":{"hu":"Elfogyott","ro":"Stoc epuizat"},"group":"availability","icon":"ban","tone":"neutral","zone":"overlay","priority":1000,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"soldOut"}},{"id":"madeToOrder","labels":{"hu":"Rendelésre készül","ro":"Realizat la comandă"},"group":"availability","icon":"workshop","tone":"neutral","zone":"service","priority":85,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"madeToOrder"}},{"id":"backInStock","labels":{"hu":"Újra raktáron","ro":"Din nou în stoc"},"group":"availability","icon":"refresh","tone":"green","zone":"overlay","priority":78,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"backInStock"}},{"id":"digital","labels":{"hu":"Digitális termék","ro":"Produs digital"},"group":"availability","icon":"download","tone":"violet","zone":"feature","priority":65,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"digital"}},{"id":"backorder","labels":{"hu":"Utánrendelhető","ro":"Disponibil la comandă"},"group":"availability","icon":"packageClock","tone":"amber","zone":"service","priority":92,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"backorder"}},{"id":"productionTime","labels":{"hu":"{value}","ro":"{value}"},"group":"service","icon":"clock","tone":"neutral","zone":"service","priority":75,"note":"Pontosítsd, hogy gyártási, feladási vagy teljes szállítási idő. A forrás „5–10 munkanap” szövegét változatlanul kezeli.","sample":{"id":"productionTime","value":"5–10 munkanap"},"sampleRo":{"id":"productionTime","value":"5–10 zile lucrătoare"}},{"id":"express","labels":{"hu":"Expressz szállítás","ro":"Livrare expres"},"group":"service","icon":"bolt","tone":"cyan","zone":"service","priority":65,"note":"Csak valóban elérhető expressz szolgáltatáshoz; a gyártási időt nem írja felül.","sample":{"id":"express"}},{"id":"freeShipping","labels":{"hu":"Ingyenes szállítás","ro":"Livrare gratuită"},"group":"service","icon":"truck","tone":"green","zone":"service","priority":60,"note":"Csak teljesülő szállítási feltételeknél. A kosárértékhez vagy régióhoz kötött ajánlatot egyértelműen kell jelezni.","sample":{"id":"freeShipping"}},{"id":"pickup","labels":{"hu":"Személyesen átvehető","ro":"Ridicare personală"},"group":"service","icon":"pin","tone":"neutral","zone":"service","priority":45,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"pickup"}},{"id":"deliveryEstimate","labels":{"hu":"Érkezés: {value}","ro":"Sosește: {value}"},"group":"service","icon":"calendar","tone":"neutral","zone":"service","priority":70,"note":"Csak az adott termékre, címre és választott szállításra érvényes becslésből.","sample":{"id":"deliveryEstimate","value":"2–3 munkanap"},"sampleRo":{"id":"deliveryEstimate","value":"2–3 zile lucrătoare"}},{"id":"oversized","labels":{"hu":"Túlméretes csomag","ro":"Colet agabaritic"},"group":"service","icon":"move","tone":"neutral","zone":"service","priority":90,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"oversized"}},{"id":"giftWrap","labels":{"hu":"Ajándékcsomagolás","ro":"Ambalare cadou"},"group":"service","icon":"gift","tone":"rose","zone":"feature","priority":60,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"giftWrap"}},{"id":"printed3d","labels":{"hu":"3D nyomtatott","ro":"Imprimat 3D"},"group":"material","icon":"cube","tone":"neutral","zone":"feature","priority":45,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"printed3d"}},{"id":"handmade","labels":{"hu":"Kézzel készült","ro":"Lucrat manual"},"group":"material","icon":"hand","tone":"amber","zone":"feature","priority":45,"note":"Csak a tényleges gyártási folyamatnak megfelelő állításként.","sample":{"id":"handmade"}},{"id":"local","labels":{"hu":"Helyben készült","ro":"Produs local"},"group":"material","icon":"home","tone":"green","zone":"feature","priority":48,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"local"}},{"id":"recycled","labels":{"hu":"Újrahasznosított anyag","ro":"Material reciclat"},"group":"material","icon":"recycle","tone":"green","zone":"feature","priority":40,"note":"Az érintett anyagra és igazolt összetételre vonatkozó állítás legyen.","sample":{"id":"recycled"}},{"id":"plasticFreePack","labels":{"hu":"Műanyagmentes csomag","ro":"Ambalaj fără plastic"},"group":"material","icon":"leaf","tone":"green","zone":"service","priority":40,"note":"Kifejezetten a csomagolásra vonatkozik, nem a termék teljes környezeti hatására.","sample":{"id":"plasticFreePack"}},{"id":"certified","labels":{"hu":"Tanúsított alapanyag","ro":"Material certificat"},"group":"material","icon":"shield","tone":"green","zone":"feature","priority":48,"note":"Megnevezett, érvényes tanúsítás és pontos hatókör szükséges a termékleírásban.","sample":{"id":"certified"}},{"id":"vegan","labels":{"hu":"Vegán","ro":"Vegan"},"group":"material","icon":"sprout","tone":"green","zone":"feature","priority":42,"note":"Ellenőrzött anyagösszetétel és gyártási információ alapján.","sample":{"id":"vegan"}},{"id":"refurbished","labels":{"hu":"Felújított","ro":"Recondiționat"},"group":"condition","icon":"wrench","tone":"neutral","zone":"overlay","priority":84,"note":"A tényleges termékállapotot és felújítási tartalmat a leírás is részletezze.","sample":{"id":"refurbished"}},{"id":"openBox","labels":{"hu":"Bontott csomagolás","ro":"Ambalaj deschis"},"group":"condition","icon":"openBox","tone":"neutral","zone":"overlay","priority":82,"note":"A csomagolás állapotát jelzi; a termék tényleges állapotát külön is közöld.","sample":{"id":"openBox"}},{"id":"outlet","labels":{"hu":"Outlet","ro":"Outlet"},"group":"condition","icon":"shoppingBag","tone":"amber","zone":"overlay","priority":60,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"outlet"}},{"id":"sample","labels":{"hu":"Bemutatódarab","ro":"Produs de prezentare"},"group":"condition","icon":"swatch","tone":"neutral","zone":"overlay","priority":81,"note":"Bemutatódarab állapotának és esetleges használati nyomainak feltüntetésével.","sample":{"id":"sample"}},{"id":"set","labels":{"hu":"Szettben","ro":"Set"},"group":"condition","icon":"grid","tone":"navy","zone":"feature","priority":60,"note":"Csak a termékre ténylegesen érvényes, jóváhagyott adat alapján jelenjen meg.","sample":{"id":"set"}},{"id":"warranty","labels":{"hu":"{value} hónap garancia","ro":"Garanție {value} luni"},"group":"condition","icon":"shield","tone":"neutral","zone":"service","priority":45,"note":"Csak az adott termékre érvényes, jóváhagyott garanciafeltételekkel; nem helyettesít jogi tájékoztatást.","sample":{"id":"warranty","value":24}},{"id":"returns","labels":{"hu":"{value} napos visszaküldés","ro":"Retur în {value} zile"},"group":"condition","icon":"rotateBack","tone":"neutral","zone":"service","priority":40,"note":"Csak az adott termékre alkalmazható, jóváhagyott visszaküldési feltételekkel; nem alkalmazza automatikusan személyre szabott termékre.","sample":{"id":"returns","value":30}}]};
+  const ICONS = {"pen":"<path d=\"m15.5 4.5 4 4M4 20l4.8-1 11-11a2.8 2.8 0 0 0-4-4l-11 11L4 20Z\"/><path d=\"M12 20h8\"/>","engrave":"<path d=\"m14 3 7 7-6 6-7-7 6-6ZM5 12l7 7M3 21h18M4 18l3-3\"/>","image":"<rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"4\"/><circle cx=\"8\" cy=\"8\" r=\"1.5\"/><path d=\"m3 17 5-5 4 4 4-6 5 7\"/>","flag":"<path d=\"M5 21V4m0 0c5-4 9 4 14 0v11c-5 4-9-4-14 0\"/>","palette":"<path d=\"M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.3-3.5 1.5 1.5 0 0 1 1-2.6H17A4 4 0 0 0 21 11a9 9 0 0 0-9-8Z\"/><path d=\"M7 10h.01M10 6.5h.01M15 7h.01M17.5 10.5h.01\" stroke-width=\"3\"/>","ruler":"<rect x=\"3\" y=\"6\" width=\"18\" height=\"12\" rx=\"2\"/><path d=\"M7 6v4m4-4v6m4-6v4m4-4v6\"/>","type":"<path d=\"M4 6V4h16v2M12 4v16m-4 0h8\"/>","crown":"<path d=\"m3 7 4 4 5-7 5 7 4-4-2 11H5L3 7ZM6 21h12\"/>","flame":"<path d=\"M12 3c2 5-3 6-1 10 2-1 3-3 3-5 3 2 5 5 5 8a7 7 0 0 1-14 0c0-3 2-6 7-13Z\"/>","star":"<path d=\"m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z\"/>","checkCircle":"<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m8 12 2.5 2.5L16 9\"/>","key":"<circle cx=\"8\" cy=\"8\" r=\"5\"/><path d=\"m11.5 11.5 9 9M17 17l3-3m-6 0 3-3\"/>","diamond":"<path d=\"m3 9 4-5h10l4 5-9 12L3 9Zm0 0h18M7 4l5 17 5-17\"/>","award":"<circle cx=\"12\" cy=\"8\" r=\"5\"/><path d=\"m8 12-2 9 6-3 6 3-2-9\"/>","percent":"<path d=\"m5 19 14-14\"/><circle cx=\"7\" cy=\"7\" r=\"3\"/><circle cx=\"17\" cy=\"17\" r=\"3\"/>","tag":"<path d=\"M3 3h8l10 10-8 8L3 11V3Z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1\"/>","ticket":"<path d=\"M4 5h16v5a2 2 0 0 0 0 4v5H4v-5a2 2 0 0 0 0-4V5Z\"/><path d=\"M15 5v2m0 3v4m0 3v2\"/>","layers":"<path d=\"m12 3 10 5-10 5L2 8l10-5ZM2 12l10 5 10-5M2 16l10 5 10-5\"/>","gift":"<rect x=\"3\" y=\"8\" width=\"18\" height=\"4\" rx=\"1\"/><path d=\"M5 12v9h14v-9M12 8v13\"/><path d=\"M12 8H8a3 3 0 1 1 3-3l1 3Zm0 0h4a3 3 0 1 0-3-3l-1 3Z\"/>","user":"<circle cx=\"12\" cy=\"7\" r=\"4\"/><path d=\"M4 21v-2a8 8 0 0 1 16 0v2\"/>","boxes":"<path d=\"m12 2 5 3-5 3-5-3 5-3Zm-5 3v6l5 3 5-3V5M7 11l-5 3 5 3 5-3m-10 0v6l5 3 5-3v-6m5-3 5 3-5 3-5-3m5 3v6l5-3v-6\"/>","sparkles":"<path d=\"m12 3 2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3L12 3ZM20 2v4m-2-2h4\"/>","gem":"<path d=\"M7 3h10l5 8-10 11L2 11l5-8Zm-5 8h20M7 3l5 19 5-19\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5\"/>","calendar":"<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"3\"/><path d=\"M7 3v4m10-4v4M3 11h18m-14 5h3\"/>","clock":"<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/>","hourglass":"<path d=\"M6 3h12M6 21h12M7 3v4l10 10v4M17 3v4L7 17v4\"/>","archive":"<rect x=\"3\" y=\"3\" width=\"18\" height=\"5\" rx=\"1\"/><path d=\"M5 8v13h14V8m-9 4h4\"/>","box":"<path d=\"m12 3 9 5-9 5-9-5 9-5Zm-9 5v10l9 5 9-5V8M12 13v10M7 5.8l9 5\"/>","alert":"<path d=\"m12 3 10 18H2L12 3Zm0 6v5m0 3h.01\"/>","ban":"<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m6 6 12 12\"/>","workshop":"<path d=\"M3 21V9l6 3V7l6 3V3h6v18H3Zm3-4h2m3 0h2m3 0h2\"/>","refresh":"<path d=\"M20 7v5h-5M4 17v-5h5M6 6a8 8 0 0 1 14 6M4 12a8 8 0 0 0 14 6\"/>","download":"<path d=\"M12 3v12m-5-5 5 5 5-5M4 15v6h16v-6\"/>","packageClock":"<path d=\"m12 3 9 5-9 5-9-5 9-5Zm-9 5v10l6 3M12 13v2M21 8v4\"/><circle cx=\"17\" cy=\"18\" r=\"4\"/><path d=\"M17 16v2l1 1\"/>","truck":"<path d=\"M3 5h11v12H3V5Zm11 5h4l3 4v3h-7M3 10H1\"/><circle cx=\"7\" cy=\"18\" r=\"3\"/><circle cx=\"17\" cy=\"18\" r=\"3\"/>","bolt":"<path d=\"m13 2-10 12h8l-1 8L21 10h-8l0-8Z\"/>","pin":"<path d=\"M19 10c0 5-7 12-7 12S5 15 5 10a7 7 0 1 1 14 0Z\"/><circle cx=\"12\" cy=\"10\" r=\"2.5\"/>","move":"<path d=\"M12 2v20M2 12h20M8 6l4-4 4 4M8 18l4 4 4-4M6 8l-4 4 4 4m12-8 4 4-4 4\"/>","cube":"<path d=\"m12 2 9 5v10l-9 5-9-5V7l9-5Zm0 10v10M3 7l9 5 9-5M7.5 4.5l9 5\"/>","hand":"<path d=\"M7 13V8a2 2 0 0 1 4 0v5-9a2 2 0 0 1 4 0v9-6a2 2 0 0 1 4 0v9a6 6 0 0 1-10 5l-6-7a2 2 0 0 1 3-2l1 1Z\"/>","home":"<path d=\"m3 10 9-7 9 7M5 9v12h14V9M9 21v-7h6v7\"/>","recycle":"<path d=\"m9 3 3-1 4 7m-1-5 1 5-5-1M20 11l2 3-4 7m3-3-3 3-2-5M9 21H5l-4-7m1 5-1-5 5 1\"/>","leaf":"<path d=\"M20 3C8 1 2 7 4 15s16 8 16-12ZM4 20 16 8\"/>","shield":"<path d=\"M12 2 3 6v6c0 6 9 10 9 10s9-4 9-10V6l-9-4Z\"/><path d=\"m8 12 3 3 5-6\"/>","sprout":"<path d=\"M12 22v-9M12 13C5 13 3 9 3 4c7 0 9 4 9 9Zm0-3c0-5 3-8 9-8 0 6-3 8-9 8Z\"/>","wrench":"<path d=\"M14 3a7 7 0 0 0-7 9l-5 5a3 3 0 0 0 4 4l5-5a7 7 0 0 0 10-8l-5 4-4-4 4-5-2 0Z\"/>","openBox":"<path d=\"m12 8 8-4 3 5-8 4-3-5Zm0 0L4 4 1 9l8 4 3-5Zm-8 4v7l8 4 8-4v-7M12 15v8\"/>","shoppingBag":"<path d=\"M5 7h14l2 14H3L5 7ZM9 8V5a3 3 0 0 1 6 0v3\"/>","swatch":"<path d=\"M3 3h7v15a3.5 3.5 0 0 1-7 0V3ZM10 6l5-3 4 6-9 6m2-2h10v8H6\"/><path d=\"M6.5 17h.01\" stroke-width=\"3\"/>","grid":"<rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"2\"/>","rotateBack":"<path d=\"M3 4v6h6M3 10a9 9 0 1 1 1 7\"/>","heart":"<path d=\"M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 22l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z\"/>","arrow":"<path d=\"M4 12h16m-6-6 6 6-6 6\"/>","plus":"<path d=\"M12 5v14M5 12h14\"/>","close":"<path d=\"m6 6 12 12M6 18 18 6\"/>","copy":"<rect x=\"8\" y=\"8\" width=\"13\" height=\"13\" rx=\"2\"/><path d=\"M16 8V3H3v13h5\"/>","search":"<circle cx=\"10.5\" cy=\"10.5\" r=\"7.5\"/><path d=\"m16 16 5 5\"/>","check":"<path d=\"m5 12 4 4L19 6\"/>","code":"<path d=\"m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18\"/>","info":"<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 11v6m0-10h.01\" stroke-width=\"2\"/>"};
+  const catalog = Object.freeze(DATA.badges.map(item => Object.freeze(item)));
+  const byId = new Map(catalog.map(item => [item.id, item]));
+  const tones = ['navy','cyan','gold','amber','red','green','violet','rose','neutral'];
+  const variants = ['signature','soft','outline'];
+  const zones = ['overlay','feature','service'];
+  const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const cleanText = (value, max = 64) => String(value ?? '').replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, max);
+  const safeLocale = locale => locale === 'ro' ? 'ro' : 'hu';
+  const iconHTML = name => `<svg class="lyrb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${Object.hasOwn(ICONS,name) ? ICONS[name] : ICONS.tag}</svg>`;
+  function normalize(input, options = {}) {
+    const item = typeof input === 'string' ? {id:input} : input;
+    if (!item || typeof item !== 'object' || item.active === false) return null;
+    const locale = safeLocale(options.locale);
+    const base = byId.get(item.id);
+    if (!base && item.id !== 'custom') return null;
+    const now = options.now instanceof Date ? options.now.getTime() : Date.now();
+    for (const field of ['startsAt','endsAt']) {
+      if (item[field] != null) {
+        const time = Date.parse(item[field]);
+        if (!Number.isFinite(time) || (field === 'startsAt' ? now < time : now >= time)) return null;
+      }
+    }
+    let label;
+    if (item.id === 'custom') {
+      label = cleanText(item.label, 44);
+      if (!label) return null;
+    } else {
+      label = base.labels[locale];
+      if (label.includes('{value}')) {
+        let value = item.value;
+        if (['salePercent','coupon'].includes(item.id)) {
+          value = Number(value);
+          if (!Number.isFinite(value) || value <= 0 || value > 100) return null;
+          value = new Intl.NumberFormat(locale, {maximumFractionDigits:1}).format(value);
+        } else if (['lowStock','warranty','returns'].includes(item.id)) {
+          value = Number(value);
+          if (!Number.isSafeInteger(value) || value < 1 || value > 99999) return null;
+        } else {
+          value = cleanText(value, 48);
+          if (!value) return null;
+        }
+        label = label.replace('{value}', value);
+      }
+      // Explicit host-provided translation or exact legacy copy. Always plain text.
+      if (item.label != null) label = cleanText(item.label, 64) || label;
+    }
+    return {
+      id:item.id,
+      key:item.id === 'custom' ? 'custom:' + label.toLocaleLowerCase() : item.id,
+      label,
+      tone:base ? base.tone : (tones.includes(item.tone) ? item.tone : 'navy'),
+      icon:base ? base.icon : (Object.hasOwn(ICONS,item.icon) ? item.icon : 'tag'),
+      zone:base ? base.zone : (zones.includes(item.zone) ? item.zone : 'feature'),
+      priority:base ? base.priority : Math.min(99,Math.max(0,Number(item.priority) || 40)),
+      group:base ? base.group : 'custom',
+      input:{...item},
+      note:base ? base.note : 'Egyedi, a kereskedő által megadott termékjelzés.'
+    };
+  }
+  /** Deterministic deduplication, mutually exclusive stock states and visual hierarchy. */
+  function resolve(input, options = {}) {
+    if (!Array.isArray(input)) throw new TypeError('A badge lista tömb legyen.');
+    const seen = new Set(), omitted = [], invalid = [];
+    let all = [];
+    for (const entry of input) {
+      const item = normalize(entry,options);
+      if (!item) { invalid.push(entry); continue; }
+      if (!seen.has(item.key)) { seen.add(item.key); all.push(item); }
+    }
+    const remove = (ids,reason) => {
+      all = all.filter(item => {
+        if (!ids.includes(item.id)) return true;
+        omitted.push({id:item.id,label:item.label,reason}); return false;
+      });
+    };
+    // Choose the more restrictive state if contradictory facts were passed.
+    const states = ['soldOut','comingSoon','preorder','backorder','madeToOrder','lowStock','backInStock','inStock'];
+    const activeState = states.find(id => all.some(item => item.id === id));
+    if (activeState) remove(states.filter(id => id !== activeState),'Ütköző elérhetőségi állapot.');
+    if (['soldOut','comingSoon'].includes(activeState)) {
+      remove(['express','lastChance','clearance','salePercent','sale','coupon','gift'],'Nem rendelhető terméknél visszafogott megjelenítés.');
+    }
+    if (['madeToOrder','preorder','backorder'].includes(activeState)) {
+      remove(['express','lastChance'],'A gyártási / beszerzési állapottal ütköző sürgetés.');
+    }
+    if (all.some(item => item.id === 'digital')) {
+      remove(['freeShipping','express','pickup','oversized','giftWrap','plasticFreePack','productionTime','deliveryEstimate'],'Digitális terméknél nem értelmezett fizikai szolgáltatás.');
+    }
+    if (all.some(item => item.id === 'salePercent')) remove(['sale'],'A százalékos akció már közli ezt az információt.');
+    if (all.some(item => item.id === 'bestseller')) remove(['popular'],'Az erősebb népszerűségi jelzés elegendő.');
+    all.sort((a,b) => b.priority-a.priority);
+    const cap = (name, fallback) => Number.isInteger(options[name]) ? Math.min(6,Math.max(0,options[name])) : fallback;
+    const limits = {overlay:cap('overlayLimit',2),feature:cap('featureLimit',2),service:cap('serviceLimit',2)};
+    const result = {all, overlay:[],feature:[],service:[],hidden:[],omitted,invalid,state:activeState || null};
+    for (const item of all) {
+      if (result[item.zone].length < limits[item.zone]) result[item.zone].push(item);
+      else result.hidden.push(item);
+    }
+    return result;
+  }
+  function badgeHTML(input, options = {}) {
+    const item = normalize(input && input.key && input.input ? input.input : input,options);
+    if (!item) return '';
+    const variant = variants.includes(options.variant) ? options.variant : 'signature';
+    const weight = options.strong === true || (options.strong !== false && item.zone === 'overlay') ? 'strong' : 'quiet';
+    return `<span class="lyrb-badge" data-lyrb-id="${escape(item.id)}" data-tone="${item.tone}" data-variant="${variant}" data-weight="${weight}">${iconHTML(item.icon)}<span class="lyrb-badge__label">${escape(item.label)}</span></span>`;
+  }
+  function groupHTML(items, options = {}) { return items.map(item => badgeHTML(item, options)).join(''); }
+  /** Mount into an existing product card; existing shopping links and handlers are retained. */
+  function mountCard(card, input, options = {}) {
+    if (!card || typeof card.querySelector !== 'function') throw new TypeError('A kártya DOM-elem legyen.');
+    const media = card.querySelector('.lyr-product-card__media, .lyrb-card__media, figure');
+    const body = card.querySelector('.lyr-product-card__body, .sh-prod-card__body, .lyrb-card__body');
+    if (!media || !body) return {ok:false,reason:'Hiányzó képrész vagy kártyatörzs.'};
+    const result = resolve(input,options);
+    card.querySelectorAll('[data-lyrb-generated]').forEach(el => el.remove());
+    card.classList.add('lyrb-card','lyrb-enhanced');
+    card.dataset.lyrbVariant = variants.includes(options.variant) ? options.variant : 'signature';
+    const make = (className,markup) => {
+      const node = document.createElement('div'); node.className=className;
+      node.dataset.lyrbGenerated=''; node.innerHTML=markup; return node;
+    };
+    if (result.overlay.length) {
+      const overlays = make('lyrb-overlay',groupHTML(result.overlay,options));
+      overlays.setAttribute('role','group');
+      overlays.setAttribute('aria-label',safeLocale(options.locale)==='ro'?'Etichete produs':'Termékjelzések');
+      media.append(overlays);
+    }
+    const anchor = body.querySelector('.sh-prod-card__name, .lyrb-card__title');
+    const features = make('lyrb-features',groupHTML(result.feature,{...options,strong:false}));
+    if (features.childElementCount) { if(anchor)anchor.after(features);else body.prepend(features); }
+    const service = make('lyrb-services',groupHTML(result.service,{...options,strong:false}));
+    const price = body.querySelector('.lyr-product-card__price, .sh-prod-card__price, .lyrb-card__price');
+    if (service.childElementCount) { if(price)price.before(service);else body.append(service); }
+    if (result.hidden.length) {
+      const detail = document.createElement('details');
+      detail.className='lyrb-more'; detail.dataset.lyrbGenerated='';
+      detail.innerHTML = `<summary><span>+${result.hidden.length} ${safeLocale(options.locale)==='ro'?'detalii':'további'}</span>${iconHTML('plus')}</summary><div class="lyrb-more__list">${groupHTML(result.hidden,{...options,strong:false})}</div>`;
+      if(price)price.before(detail);else body.append(detail);
+    }
+    // Styling only: the host backend remains responsible for purchasability and CTA state.
+    card.dataset.lyrbState = result.state || 'normal';
+    return {ok:true,...result};
+  }
+  return Object.freeze({version:'1.0.0',catalog,groups:DATA.groups,icons:ICONS,tones,variants,escape,iconHTML,normalize,resolve,badgeHTML,groupHTML,mountCard});
+});

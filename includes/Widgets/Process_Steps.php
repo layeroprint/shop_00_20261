@@ -121,7 +121,7 @@ class Process_Steps extends Base_Widget {
 							<li class="sh-reveal">
 								<span class="lp-steps__ic"><?php echo Helpers::icon($step['icon'] ?? 'spark'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 								<b><?php echo esc_html($step['title'] ?? ''); ?></b>
-								<p><?php echo esc_html($step['text'] ?? ''); ?></p>
+								<p><?php echo esc_html(Shop_Content::without_legacy_lead_time($step['text'] ?? '', 'Napelemes műhelyben, PLA biopolimerből készül, majd gondosan becsomagolva küldjük el.')); ?></p>
 								<i class="lp-steps__ghost" aria-hidden="true"><?php echo esc_html(ltrim((string) ($step['number'] ?? ''), '0')); ?></i>
 							</li>
 						<?php endforeach; ?>
@@ -132,7 +132,7 @@ class Process_Steps extends Base_Widget {
 						<article class="sh-reveal">
 							<span class="sh-flow__num"><?php echo esc_html($step['number'] ?? ''); ?></span>
 							<h3><?php echo esc_html($step['title'] ?? ''); ?></h3>
-							<p><?php echo esc_html($step['text'] ?? ''); ?></p>
+							<p><?php echo esc_html(Shop_Content::without_legacy_lead_time($step['text'] ?? '', 'Napelemes műhelyben, PLA biopolimerből készül, majd gondosan becsomagolva küldjük el.')); ?></p>
 							<span class="sh-flow__ghost" aria-hidden="true"><?php echo esc_html($step['number'] ?? ''); ?></span>
 						</article>
 					<?php endforeach; ?>

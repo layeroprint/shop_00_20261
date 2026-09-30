@@ -14,6 +14,8 @@ final class Page_Builder {
 		add_action('init', array(__CLASS__, 'maybe_ensure_required_pages'), 20);
 		add_action('admin_init', array(__CLASS__, 'maybe_upgrade_faq'));
 		add_action('admin_init', array(__CLASS__, 'maybe_upgrade_catalog'));
+		add_action('admin_init', array(__CLASS__, 'maybe_restore_home_whofor'));
+		add_action('admin_init', array(__CLASS__, 'maybe_remove_obsolete_blocks'));
 		add_filter('wp_robots', array(__CLASS__, 'legal_draft_robots'));
 		add_action('admin_action_layero_build_pages', array(__CLASS__, 'handle_build'));
 		add_action('admin_notices', array(__CLASS__, 'admin_notice'));
@@ -213,12 +215,13 @@ final class Page_Builder {
 	}
 
 	/* ──────────────────────────────────────────────────────────────
-	   HOME — all 16 Layero widgets
+	   HOME — Layero widgets
 	   ────────────────────────────────────────────────────────────── */
 
 	private static function home_data() {
 		$widgets = array(
 			'layero_hero_slider',
+			'layero_whofor',
 			'layero_trust_bar',
 			'layero_value_marquee',
 			'layero_category_bento',
@@ -232,8 +235,6 @@ final class Page_Builder {
 			'layero_gallery_strip',
 			'layero_custom_cta',
 			'layero_why_shop',
-			'layero_newsletter_banner',
-			'layero_footnotes',
 		);
 
 		$sections = array();
@@ -247,10 +248,89 @@ final class Page_Builder {
 		return $sections;
 	}
 
+	/** Restore the missing gift navigation without replacing the existing homepage. */
+	public static function maybe_restore_home_whofor() {
+		if (! current_user_can('manage_options') || 'page' !== get_option('show_on_front')) { return; }
+		$page = get_post((int) get_option('page_on_front'));
+		if (! $page || 'page' !== $page->post_type || get_post_meta($page->ID, '_layero_home_whofor_revision', true)) { return; }
+		$raw = get_post_meta($page->ID, '_elementor_data', true);
+		$data = json_decode($raw, true);
+		if (! is_array($data)) { return; }
+		$types = wp_list_pluck(self::faq_widgets($data), 'widgetType');
+		if (1 !== count(array_keys($types, 'layero_hero_slider', true)) || in_array('layero_whofor', $types, true) || false !== strpos($raw, 'sh-whofor')) { return; }
+		if (! self::insert_home_whofor($data)) { return; }
+		$backup = array('elementor_data' => $raw, 'post_content' => $page->post_content, 'saved_at' => gmdate('c'));
+		if (! add_post_meta($page->ID, '_layero_home_whofor_backup', wp_slash($backup), true)) { return; }
+		update_post_meta($page->ID, '_elementor_data', wp_slash(wp_json_encode($data)));
+		delete_post_meta($page->ID, '_elementor_element_cache');
+		delete_post_meta($page->ID, '_elementor_css');
+		if (class_exists('\\Elementor\\Core\\Files\\CSS\\Post')) {
+			(new \Elementor\Core\Files\CSS\Post($page->ID))->delete();
+		}
+		clean_post_cache($page->ID);
+		update_post_meta($page->ID, '_layero_home_whofor_revision', '1');
+	}
+
+	private static function insert_home_whofor(&$elements) {
+		foreach ($elements as $index => &$element) {
+			if ('layero_hero_slider' === ($element['widgetType'] ?? '')) {
+				array_splice($elements, $index + 1, 0, array(self::make_widget('layero_whofor')));
+				return true;
+			}
+			if (! empty($element['elements']) && self::insert_home_whofor($element['elements'])) { return true; }
+		}
+		return false;
+	}
+
+	/** Remove the retired banner and home footnotes from existing Elementor pages. */
+	public static function maybe_remove_obsolete_blocks() {
+		if (! current_user_can('manage_options')) { return; }
+		$pages = array();
+		if ('page' === get_option('show_on_front')) {
+			$pages[(int) get_option('page_on_front')] = array('layero_newsletter_banner', 'layero_footnotes');
+		}
+		$contact = self::find_page('Kapcsolat');
+		if ($contact) { $pages[$contact->ID] = array('layero_newsletter_banner'); }
+
+		foreach ($pages as $post_id => $types) {
+			$page = get_post($post_id);
+			if (! $page || 'page' !== $page->post_type || get_post_meta($post_id, '_layero_obsolete_blocks_revision', true)) { continue; }
+			$raw = get_post_meta($post_id, '_elementor_data', true);
+			$data = json_decode($raw, true);
+			if (! is_array($data)) { continue; }
+			$removed = 0;
+			$updated = self::without_widgets($data, $types, $removed);
+			if (! $removed) { continue; }
+			$backup = array('elementor_data' => $raw, 'post_content' => $page->post_content, 'saved_at' => gmdate('c'));
+			if (! get_post_meta($post_id, '_layero_obsolete_blocks_backup', true)
+				&& ! add_post_meta($post_id, '_layero_obsolete_blocks_backup', wp_slash($backup), true)) { continue; }
+			if (! update_post_meta($post_id, '_elementor_data', wp_slash(wp_json_encode($updated)))) { continue; }
+			delete_post_meta($post_id, '_elementor_element_cache');
+			delete_post_meta($post_id, '_elementor_css');
+			if (class_exists('\\Elementor\\Core\\Files\\CSS\\Post')) {
+				(new \Elementor\Core\Files\CSS\Post($post_id))->delete();
+			}
+			clean_post_cache($post_id);
+			update_post_meta($post_id, '_layero_obsolete_blocks_revision', '1');
+		}
+	}
+
+	private static function without_widgets($elements, $types, &$removed) {
+		$kept = array();
+		foreach ($elements as $element) {
+			if (in_array($element['widgetType'] ?? '', $types, true)) { $removed++; continue; }
+			if (isset($element['elements']) && is_array($element['elements'])) {
+				$had_children = ! empty($element['elements']);
+				$element['elements'] = self::without_widgets($element['elements'], $types, $removed);
+				if ($had_children && ! $element['elements']) { continue; }
+			}
+			$kept[] = $element;
+		}
+		return $kept;
+	}
 	/* ──────────────────────────────────────────────────────────────
 	   RÓLUNK (About)
 	   ────────────────────────────────────────────────────────────── */
-
 	private static function about_data() {
 		$asset = self::asset_url();
 		$sections = array();
@@ -514,8 +594,6 @@ final class Page_Builder {
 			'</form>' .
 			'</section>'
 		);
-
-		$sections[] = self::wrap_in_section(array(self::make_widget('layero_newsletter_banner')));
 
 		return $sections;
 	}

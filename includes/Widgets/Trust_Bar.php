@@ -114,9 +114,10 @@ class Trust_Bar extends Base_Widget {
 		<div class="sh-infobar">
 			<div class="shop-wrap sh-infobar__inner" style="--lyr-infobar-cols: <?php echo esc_attr(max(1, count($items))); ?>;">
 				<?php foreach ($items as $item) : ?>
+					<?php $old_time = Shop_Content::without_legacy_lead_time($item['text'] ?? '', '') !== ($item['text'] ?? ''); ?>
 					<article class="if-<?php echo esc_attr(sanitize_html_class($item['tint'] ?? 'accent')); ?>">
 						<?php echo Helpers::icon($item['icon'] ?? 'check'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						<div><strong><?php echo esc_html($item['title'] ?? ''); ?></strong><span><?php echo esc_html($item['text'] ?? ''); ?></span></div>
+						<div><strong><?php echo esc_html($old_time ? 'Rendelésre készül' : ($item['title'] ?? '')); ?></strong><span><?php echo esc_html(Shop_Content::without_legacy_lead_time($item['text'] ?? '', 'saját műhelyünkben')); ?></span></div>
 					</article>
 				<?php endforeach; ?>
 			</div>

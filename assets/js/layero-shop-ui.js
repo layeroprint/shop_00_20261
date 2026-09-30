@@ -249,6 +249,7 @@
 	}
 
 	function initWishlist(context) {
+		if (window.LayeroBadgeAdapter) window.LayeroBadgeAdapter.enhance(context || document);
 		(context || document).querySelectorAll('[data-layero-wish-toggle]').forEach(function (button) {
 			if (button.dataset.layeroWishReady === '1') return;
 			button.dataset.layeroWishReady = '1';

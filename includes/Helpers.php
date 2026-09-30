@@ -305,7 +305,6 @@ final class Helpers {
 		return array(
 			'none' => __('Ne jelenjen meg', 'layero-shop-ui'),
 			'3-7' => __('3–7 munkanap', 'layero-shop-ui'),
-			'5-10' => __('5–10 munkanap', 'layero-shop-ui'),
 			'7-12' => __('7–12 munkanap', 'layero-shop-ui'),
 			'10-15' => __('10–15 munkanap', 'layero-shop-ui'),
 			'custom' => __('Egyedi szöveg', 'layero-shop-ui'),
@@ -422,14 +421,14 @@ final class Helpers {
 			$badges = array_merge($badges, self::parse_badge_lines((string) $product->get_meta('_layero_product_badges', true)));
 		}
 
-		if (method_exists($product, 'is_featured') && $product->is_featured() && ! self::has_badge_like($badges, array('kiemelt', 'bestseller'))) {
+		if (method_exists($product, 'is_featured') && $product->is_featured() && ! self::has_badge_like($badges, array('kiemelt'))) {
 			$badges[] = array(
-				'label' => __('Bestseller', 'layero-shop-ui'),
+				'label' => __('Kiemelt', 'layero-shop-ui'),
 				'style' => 'best',
 			);
 		}
 
-		return array_slice(self::dedupe_badges($badges), 0, 5);
+		return self::dedupe_badges($badges);
 	}
 
 	public static function product_is_personalizable($product) {
@@ -469,7 +468,7 @@ final class Helpers {
 			return '';
 		}
 		if ('custom' === $value) {
-			return trim((string) $product->get_meta('_layero_lead_time_custom', true));
+			return Shop_Content::without_legacy_lead_time(trim((string) $product->get_meta('_layero_lead_time_custom', true)), '');
 		}
 		if (isset($options[$value])) {
 			return $options[$value];
@@ -483,14 +482,11 @@ final class Helpers {
 			return $options['7-12'];
 		}
 
-		return $options['5-10'];
+		return '';
 	}
 
 	public static function product_card_chips_html($product) {
 		$chips = array();
-		if (self::product_is_personalizable($product)) {
-			$chips[] = array('label' => __('Névre szabható', 'layero-shop-ui'), 'style' => 'personal');
-		}
 		$lead_time = self::product_lead_time_label($product);
 		if ($lead_time) {
 			$chips[] = array('label' => $lead_time, 'style' => 'time');
@@ -565,6 +561,8 @@ final class Helpers {
 	}
 
 	private static function product_sale_badge_label($product) {
+		// A variable product's minimum sale and maximum regular price may be different variants.
+		if ($product->is_type('variable')) { return __('Akció', 'layero-shop-ui'); }
 		$regular = (float) $product->get_regular_price();
 		$price = (float) $product->get_price();
 
@@ -677,17 +675,16 @@ final class Helpers {
 	private static function demo_product_card_chips_html($product) {
 		$category = sanitize_key((string) ($product['category'] ?? ''));
 		$chips = array();
-		if ('dekoraciok' !== $category) {
-			$chips[] = array('label' => __('Névre szabható', 'layero-shop-ui'), 'style' => 'personal');
-		}
 		if (in_array($category, array('kulcstartok', 'dekoraciok'), true)) {
 			$lead_time = __('3–7 munkanap', 'layero-shop-ui');
 		} elseif (in_array($category, array('ceges', 'egyedi'), true)) {
 			$lead_time = __('7–12 munkanap', 'layero-shop-ui');
 		} else {
-			$lead_time = __('5–10 munkanap', 'layero-shop-ui');
+			$lead_time = '';
 		}
-		$chips[] = array('label' => $lead_time, 'style' => 'time');
+		if ($lead_time) {
+			$chips[] = array('label' => $lead_time, 'style' => 'time');
+		}
 
 		return self::product_card_chips_from_array($chips);
 	}
@@ -727,10 +724,11 @@ final class Helpers {
 
 		ob_start();
 		?>
-		<article class="<?php echo esc_attr($classes); ?>" data-layero-product-card data-layero-product-id="<?php echo esc_attr($product->get_id()); ?>">
+		<article class="<?php echo esc_attr($classes); ?>" data-layero-product-card data-lyrb-badges="<?php echo esc_attr(wp_json_encode(Badge_System::for_product($product))); ?>" data-layero-product-id="<?php echo esc_attr($product->get_id()); ?>">
 			<figure class="lyr-product-card__media">
 				<?php echo self::product_badges_html($badges); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php echo self::product_image($product, $args['image_size']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php if ($personalizable) : ?><span class="lyr-product-card__personal"><span aria-hidden="true">✦</span> <?php esc_html_e('Személyre szabható', 'layero-shop-ui'); ?></span><?php endif; ?>
 			</figure>
 			<button class="sh-heart lyr-product-card__wish" type="button" data-layero-wish-toggle data-layero-product-id="<?php echo esc_attr($product->get_id()); ?>" aria-label="<?php esc_attr_e('Kedvencekhez adás', 'layero-shop-ui'); ?>">
 				<?php echo self::icon('heart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -796,6 +794,7 @@ final class Helpers {
 			<figure class="lyr-product-card__media">
 				<?php echo self::product_badges_html($badges); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<img src="<?php echo esc_url(Shop_Content::asset_url($product['image'])); ?>" alt="<?php echo esc_attr($product['name']); ?>" loading="lazy">
+				<?php if ('dekoraciok' !== sanitize_key((string) ($product['category'] ?? ''))) : ?><span class="lyr-product-card__personal"><span aria-hidden="true">✦</span> <?php esc_html_e('Személyre szabható', 'layero-shop-ui'); ?></span><?php endif; ?>
 			</figure>
 			<button class="sh-heart lyr-product-card__wish" type="button" data-layero-wish-toggle data-layero-product-id="<?php echo esc_attr($product['id']); ?>" aria-label="<?php esc_attr_e('Kedvencekhez adás', 'layero-shop-ui'); ?>">
 				<?php echo self::icon('heart'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
