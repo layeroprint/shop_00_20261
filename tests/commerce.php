@@ -139,5 +139,31 @@ namespace {
 	check($zero_item->get_meta('Felirat / név') === '0', 'zero inscription preserved on order');
 	check(isset($GLOBALS['hooks']['woocommerce_available_payment_gateways']), 'payment hook registered');
 	check(isset($GLOBALS['hooks']['woocommerce_add_to_cart_validation']), 'validation hook registered');
+
+	foreach (array('', 'lampak', 'kulcstartok', 'dekoraciok', 'szezonalis', 'rajongoi', 'baba-gyerek', 'ceges', 'egyedi') as $type) {
+		$ordinary = new Product(array('_layero_product_type' => $type));
+		check(!\LayeroShop\Helpers::product_is_personalizable($ordinary), 'category alone does not enable personalization: ' . $type);
+		check($commerce->personalization_link('ordinary cart link', $ordinary) === 'ordinary cart link', 'ordinary purchase link preserved: ' . $type);
+	}
+	check(\LayeroShop\Helpers::product_is_personalizable($custom), 'explicit yes preserves legacy personalization');
+	check(\LayeroShop\Helpers::product_is_personalizable(new Product(array('_layero_personalizable' => '1'))), 'numeric opt-in enables personalization');
+	$GLOBALS['products'][4] = new Product(array('_layero_product_type' => 'lampak'));
+	check($commerce->validate_personalization(true, 4, 1), 'ordinary lamp needs no inscription');
+	check(array() === $commerce->add_cart_item_data(array(), 4, 0), 'ordinary lamp gets no personalization cart data');
+
+	require __DIR__ . '/../includes/Personalization.php';
+	$fields = array(array('id' => 'name', 'label' => 'Név', 'type' => 'text', 'required' => true));
+	check(!\LayeroShop\Helpers::product_is_personalizable($GLOBALS['products'][4]), 'absent schema stays ordinary when schema support is loaded');
+	check(\LayeroShop\Helpers::product_is_personalizable($custom), 'explicit yes without schema keeps legacy fields');
+	check(\LayeroShop\Helpers::product_is_personalizable(new Product(array('_layero_personalization_fields' => $fields))), 'configured fields enable personalization automatically');
+	foreach (array('no', '0') as $value) {
+		check(!\LayeroShop\Helpers::product_is_personalizable(new Product(array('_layero_personalizable' => $value, '_layero_personalization_fields' => $fields))), 'explicit opt-out overrides fields: ' . $value);
+	}
+	foreach (array('', 'yes') as $value) {
+		check(!\LayeroShop\Helpers::product_is_personalizable(new Product(array('_layero_personalizable' => $value, '_layero_personalization_fields' => '[]'))), 'explicit empty schema disables personalization: ' . $value);
+	}
+	check(\LayeroShop\Helpers::product_is_personalizable(new Product(array('_layero_personalization_fields' => '{bad'))), 'invalid schema cannot bypass personalization validation via ordinary cart');
+	$GLOBALS['products'][5] = new Product(array('_layero_personalization_fields' => $fields));
+	check(\LayeroShop\Helpers::product_is_personalizable(new Product(array(), 5)), 'variation inherits parent schema');
 	echo $count . " isolated commerce checks passed.\n";
 }

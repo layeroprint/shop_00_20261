@@ -442,19 +442,8 @@ final class Helpers {
 			$schema = Personalization::schema($product);
 			if (null !== $schema) { return is_wp_error($schema) || ! empty($schema); }
 		}
-		if ('yes' === $value || '1' === $value) {
-			return true;
-		}
-		if ('no' === $value) {
-			return false;
-		}
-
-		$type = self::product_card_type_key($product);
-		if ('dekoraciok' === $type) {
-			return false;
-		}
-
-		return in_array($type, array('lampak', 'kulcstartok', 'szezonalis', 'rajongoi', 'baba-gyerek', 'ceges', 'egyedi'), true) || '' === $type;
+		// A product category alone does not imply personalization support.
+		return 'yes' === $value || '1' === $value;
 	}
 
 	public static function product_lead_time_label($product) {

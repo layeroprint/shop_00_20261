@@ -44,7 +44,8 @@ final class Catalog {
 		foreach ($ids as $id) {
 			$ids = array_merge($ids, get_ancestors($id, 'product_cat', 'taxonomy'));
 		}
-		$slugs = array();
+		$primary = $product->get_meta('_layero_shop_category', true);
+		$slugs = in_array($primary, wp_list_pluck(Shop_Content::categories(), 'id'), true) ? array($primary) : array();
 		foreach (array_unique($ids) as $id) {
 			$term = get_term($id, 'product_cat');
 			if ($term && ! is_wp_error($term)) { $slugs[] = $term->slug; }

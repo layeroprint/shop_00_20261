@@ -122,11 +122,11 @@ final class WooCommerce {
 				'label' => __('Személyre szabható', 'layero-shop-ui'),
 				'value' => $personalizable,
 				'options' => array(
-					'' => __('Automatikus – terméktípus alapján', 'layero-shop-ui'),
+					'' => __('Automatikus – személyre szabási mezők alapján', 'layero-shop-ui'),
 					'yes' => __('Igen – címke és mezők megjelenítése', 'layero-shop-ui'),
 					'no' => __('Nem – ne jelenjen meg', 'layero-shop-ui'),
 				),
-				'description' => __('Igen esetén a „Névre szabható” jelölés és a személyre szabási mezők is megjelennek.', 'layero-shop-ui'),
+				'description' => __('Automatikus módban csak megadott személyre szabási mezőkkel jelenik meg a „Személyre szabom” gomb. A kategória önmagában nem teszi személyre szabhatóvá a terméket. Az Igen beállítás mezőséma nélkül a korábbi felirat/megjegyzés mezőket kapcsolja be.', 'layero-shop-ui'),
 				'desc_tip' => true,
 			)
 		);

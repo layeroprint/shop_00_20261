@@ -35,6 +35,7 @@ final class Plugin {
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Shop_Content.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Helpers.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Badge_System.php';
+		require_once LAYERO_SHOP_UI_PATH . 'includes/Catalog_Import.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Personalization.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Catalog.php';
 		require_once LAYERO_SHOP_UI_PATH . 'includes/Assets.php';
@@ -53,6 +54,7 @@ final class Plugin {
 
 	public function boot() {
 		Catalog::init();
+		Catalog_Import::init();
 		Customer_Account::instance();
 		Forms::instance();
 		Assets::instance();

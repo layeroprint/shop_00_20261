@@ -13,6 +13,9 @@ final class Badge_System {
 	}
 
 	public static function for_product($product) {
+		$config = $product->get_meta('_layero_badge_config', true);
+		$config = is_array($config) ? $config : array();
+		if ('manual' === $product->get_meta('_layero_badge_mode', true)) { return $config; }
 		$items = array();
 		foreach (Helpers::product_badges($product) as $badge) {
 			$label = $badge['label'];
@@ -36,6 +39,11 @@ final class Badge_System {
 		if (! $product->is_in_stock()) { $items[] = array('id' => 'soldOut'); }
 		elseif ($product->is_on_backorder(1)) { $items[] = array('id' => 'backorder'); }
 		$config = $product->get_meta('_layero_badge_config', true);
+		$fulfillment = $product->get_meta('_layero_fulfillment_mode', true);
+		if ($product->is_in_stock() && ! $product->is_on_backorder(1)) {
+			if ('stocked' === $fulfillment) { $items[] = array('id' => 'inStock'); }
+			elseif ('made_to_order' === $fulfillment) { $items[] = array('id' => 'madeToOrder'); }
+		}
 		return array_merge($items, is_array($config) ? $config : array());
 	}
 

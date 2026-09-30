@@ -9,6 +9,7 @@
   var WISH_KEY = 'sh_wishlist';
   var IS_WOO = !!(window.LayeroShopStatic && window.LayeroShopStatic.commerce === 'woocommerce');
   document.addEventListener('submit', function (event) {
+    if (event.target.matches('form[data-cq-form], form[data-b2b-quote]')) return;
     if (IS_WOO || !event.target.matches('#sh-contact-form, #sh-newsletter-form, form[data-lp-quote]')) return;
     event.preventDefault();
     event.stopImmediatePropagation();
@@ -840,64 +841,58 @@
     var footer = document.createElement('footer');
     footer.className = 'sh-footer';
     footer.innerHTML =
-      '<div class="shop-wrap sh-footer__cols">' +
-        '<div class="sh-footer__brand">' +
-          '<a class="sh-footer__logo" href="index.html"><img src="assets/layero-asset-0251.webp" alt="">Layero <small>Shop</small></a>' +
-          '<p>Személyre szabott 3D nyomtatott ajándékok és dekorációk. Szatmárnémetiben tervezve és gyártva — rólad szól, rétegről rétegre.</p>' +
-          /* A közösségi ikonok csak valós profil-URL-ekkel kerüljenek vissza. */
+      '<div class="shop-wrap">' +
+        '<div class="sh-footer__intro">' +
+          '<div class="sh-footer__brand">' +
+            '<a class="sh-footer__logo" href="index.html" aria-label="Layero Shop – főoldal"><img src="assets/layero-asset-0251.webp" alt="" width="48" height="48"><span>Layero<small>Shop</small></span></a>' +
+            '<p>Rétegről rétegre.<br><span>Személyesen neked.</span></p>' +
+          '</div>' +
+          '<div class="sh-footer__story">' +
+            '<span class="sh-footer__eyebrow">Ötletből emlék</span>' +
+            '<p>Személyre szabott 3D nyomtatott ajándékok és dekorációk. Szatmárnémetiben tervezve és készítve, a te történetedhez.</p>' +
+            '<a class="sh-footer__story-link" href="rolunk.html">Ismerd meg a Layerót <span aria-hidden="true">↗</span></a>' +
+          '</div>' +
         '</div>' +
-        '<div><h4>Vásárlás</h4>' +
+        '<div class="sh-footer__cols">' +
+        '<nav class="sh-footer__nav" aria-labelledby="sh-footer-shop"><h2 id="sh-footer-shop">Fedezd fel</h2>' +
           '<a href="kategoria.html">Összes termék</a>' +
-          visibleCats().slice(0, 4).map(function (c) { return '<a href="kategoria.html?cat=' + c.id + '">' + esc(c.nev) + '</a>'; }).join('') +
+          visibleCats().slice(0, 4).map(function (c) { return '<a href="kategoria.html?cat=' + esc(encodeURIComponent(c.id)) + '">' + esc(c.nev) + '</a>'; }).join('') +
           '<a href="kviz.html">Ajándékkereső</a>' +
-          '<a href="kosar.html">Kosár</a>' +
-        '</div>' +
-        '<div><h4>Információk</h4>' +
+        '</nav>' +
+        '<nav class="sh-footer__nav" aria-labelledby="sh-footer-help"><h2 id="sh-footer-help">Segítünk</h2>' +
           '<a href="gyik.html">Gyakori kérdések</a>' +
           '<a href="gyik.html#szallitas">Szállítás és fizetés</a>' +
           '<a href="gyik.html#visszakuldes">Visszaküldés és garancia</a>' +
-          '<a href="aszf.html">ÁSZF</a>' +
-          '<a href="adatvedelem.html">Adatvédelem</a>' +
-        '</div>' +
-        '<div><h4>Layero</h4>' +
-          '<a href="rolunk.html">Rólunk</a>' +
           '<a href="fiok.html">Fiókom</a>' +
-          '<a href="cegeknek.html">Cégeknek</a>' +
+          '<a href="kosar.html">Kosár</a>' +
+        '</nav>' +
+        '<nav class="sh-footer__nav" aria-labelledby="sh-footer-layero"><h2 id="sh-footer-layero">Layero</h2>' +
+          '<a href="rolunk.html">Rólunk</a>' +
           '<a href="egyedi-rendeles.html">Egyedi rendelés</a>' +
+          '<a href="cegeknek.html">Cégeknek</a>' +
           '<a href="kapcsolat.html">Kapcsolat</a>' +
+        '</nav>' +
+        '<section class="sh-footer__contact" aria-labelledby="sh-footer-contact">' +
+          '<span class="sh-footer__eyebrow">Beszéljünk róla</span>' +
+          '<h2 id="sh-footer-contact">Kérdésed van? <br>Itt vagyunk.</h2>' +
+          '<a class="sh-footer__contact-link" href="tel:+40756642387"><span class="sh-footer__contact-icon" aria-hidden="true">' + ICO.phone + '</span><span><strong>+40 756 642 387</strong><small>Hétköznap 9–17 óráig</small></span></a>' +
+          '<a class="sh-footer__contact-link" href="mailto:layeroprint@gmail.com"><span class="sh-footer__contact-icon" aria-hidden="true">' + ICO.mail + '</span><span><strong>layeroprint@gmail.com</strong><small>Írj nekünk e-mailt</small></span></a>' +
+          '<a class="sh-footer__contact-cta" href="kapcsolat.html">Kapcsolatfelvétel <span aria-hidden="true">↗</span></a>' +
+        '</section>' +
         '</div>' +
-        '<div class="sh-footer__contact"><h4>Ügyfélszolgálat</h4><ul>' +
-          '<li>' + ICO.phone + '<span><b>+40 756 642 387</b><br>hétköznap 9–17 óráig</span></li>' +
-          '<li>' + ICO.mail + '<span><b>layeroprint@gmail.com</b><br>válasz 24 órán belül</span></li>' +
-          '<li>' + ICO.pin + '<span>Szatmárnémeti, Románia</span></li>' +
-        '</ul></div>' +
-      '</div>' +
-      (IS_WOO ? '<div class="shop-wrap sh-footer__pay">Az elérhető szállítási és fizetési módokat a pénztár mutatja.</div>' : '<div class="shop-wrap sh-footer__pay">' +
-        '<span>Fizetési lehetőségek:</span>' +
-        '<span class="sh-paybadge">VISA</span>' +
-        '<span class="sh-paybadge">Mastercard</span>' +
-        '<span class="sh-paybadge">Apple Pay</span>' +
-        '<span class="sh-paybadge">Google Pay</span>' +
-        '<span class="sh-paybadge">Utánvét</span>' +
-        '<span class="sh-ssl">' + ICO.shield + 'SSL-titkosított, biztonságos fizetés</span>' +
-      '</div>' +
-      '<div class="shop-wrap sh-footer__trust">' +
-        '<span>' + ICO.shield + '2 év törvényi jótállás</span>' +
-        '<span>' + ICO.retur + '14 napos elállás¹</span>' +
-        '<span>' + ICO.invoice + 'Számla minden rendeléshez</span>' +
-        '<span>' + ICO.box + 'Csomag ellenőrzése átvételkor</span>' +
-        '<small>¹ A nem személyre szabott termékekre. Az egyedi, névre/igényre készült darabokra a jogszabály szerint az elállási jog nem vonatkozik.</small>' +
-      '</div>'
-      ) + '<div class="shop-wrap sh-footer__bottom">' +
-        '<span>© ' + new Date().getFullYear() + ' Layero 3D Design' + (IS_WOO ? '' : ' — demo webshop') + '</span>' +
-        '<nav>' +
+        '<div class="sh-footer__details">' +
+          '<span class="sh-footer__location"><span aria-hidden="true">' + ICO.pin + '</span>Szatmárnémeti, Románia</span>' +
+          '<a href="gyik.html#szallitas">Szállítási és fizetési tudnivalók <span aria-hidden="true">↗</span></a>' +
+        '</div>' +
+        '<div class="sh-footer__bottom">' +
+        '<span>© ' + new Date().getFullYear() + ' Layero 3D Design' + (IS_WOO ? '' : ' · Helyi előnézet') + '</span>' +
+        '<nav aria-label="Jogi információk és adatvédelem">' +
           '<a href="aszf.html">ÁSZF</a>' +
           '<a href="adatvedelem.html">Adatvédelem</a>' +
-          '<a href="gyik.html#visszakuldes">Elállás &amp; garancia</a>' +
           '<a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a>' +
           '<button type="button" data-cookie-open>Sütibeállítások</button>' +
         '</nav>' +
-        '<span>Let’s print your world together, layer by layer</span>' +
+        '</div>' +
       '</div>';
     document.body.appendChild(footer);
 
@@ -2826,114 +2821,209 @@
 
   /* ── AJÁNDÉKKERESŐ KVÍZ ──────────────────────────────────────── */
   var QUIZ = [
-    { q: 'Kinek keresel ajándékot?', opts: [
-      { t: 'Gyereknek', cat: { lampak: 2, rajongoi: 1 }, ids: { 'jurassic-lampa': 3 } },
-      { t: 'A páromnak', cat: { lampak: 2, dekoraciok: 1 }, ids: { 'holdfeny-lampa': 2, 'tulipan-vaza': 2 } },
-      { t: 'Szülőnek / nagyszülőnek', cat: { dekoraciok: 2 }, ids: { 'eletfa-mecses-szett': 2, 'szarvas-bortarto': 2 } },
-      { t: 'Barátnak / kollégának', cat: { kulcstartok: 2, rajongoi: 1 } },
-      { t: 'Magamnak / otthonra', cat: { dekoraciok: 2, lampak: 1 } },
-      { t: 'Céges partnernek', cat: { ceges: 3 } }
+    { label: 'Kinek?', q: 'Kit lepnél meg?', hint: 'Gondolj arra, akinek mosolyt csalnál az arcára.', opts: [
+      { t: 'Gyereknek', d: 'Egy kis varázslat a saját világába', icon: 'bear', cat: { 'baba-gyerek': 4, lampak: 1, rajongoi: 1 }, words: ['dínó', 'dinó', 'gyerek', 'baba'], ids: { 'jurassic-lampa': 4 } },
+      { t: 'A páromnak', d: 'Valami, ami kettőnkről szól', icon: 'heart', cat: { lampak: 1, dekoraciok: 1 }, words: ['szív', 'szerelem', 'páros', 'évforduló'], ids: { 'eletfa-mecses-szett': 3, 'tulipan-vaza': 2 } },
+      { t: 'Szülőnek, nagyszülőnek', d: 'Személyes figyelmesség, sok szeretettel', icon: 'flower', cat: { dekoraciok: 2 }, words: ['család', 'nagyszülő', 'anyák'], ids: { 'eletfa-mecses-szett': 3, 'szarvas-bortarto': 2 } },
+      { t: 'Barátnak, kollégának', d: 'A kedvenc hobbijához vagy a mindennapokhoz', icon: 'users', cat: { kulcstartok: 2, rajongoi: 2 }, words: ['hobbi', 'barát', 'kolléga'] },
+      { t: 'Magamnak, otthonra', d: 'Mert magadnak is ér meglepetést szerezni', icon: 'home', cat: { dekoraciok: 3, lampak: 2 } },
+      { t: 'Céges partnernek', d: 'Egy gesztus, amiben a márkánk is benne van', icon: 'case', cat: { ceges: 5 }, words: ['logós', 'logózott', 'céges'], ids: { 'logos-kulcstarto': 3 } }
     ] },
-    { q: 'Milyen alkalomra?', opts: [
-      { t: 'Születésnap', cat: { lampak: 1, rajongoi: 1 } },
-      { t: 'Ballagás / diploma', ids: { 'bagoly-figura': 3, 'programozo-lampa': 2 } },
-      { t: 'Karácsony', cat: { lampak: 1 }, ids: { 'karacsonyi-lampa': 3 } },
-      { t: 'Évforduló / szerelem', ids: { 'holdfeny-lampa': 2, 'tulipan-vaza': 2, 'sorozat-lampa': 1 } },
-      { t: 'Céges rendezvény', cat: { ceges: 3 } },
-      { t: 'Csak úgy, meglepetésnek', cat: { lampak: 1, dekoraciok: 1, kulcstartok: 1 } }
+    { label: 'Mire?', q: 'Mit ünnepeltek?', hint: 'A nagy alkalmak és az apró gesztusok is számítanak.', opts: [
+      { t: 'Születésnap, névnap', d: 'Az ő napja, az ő ajándéka', icon: 'cake', cat: { lampak: 1, rajongoi: 1 }, words: ['születésnap', 'névnap'] },
+      { t: 'Ballagás, diploma', d: 'Egy új fejezet kezdetére', icon: 'cap', words: ['ballagás', 'diploma'], ids: { 'bagoly-figura': 4, 'programozo-lampa': 3 } },
+      { t: 'Karácsony', d: 'Személyes meglepetés a fa alá', icon: 'tree', cat: { szezonalis: 4 }, words: ['karácsony', 'advent', 'ünnepi'], ids: { 'karacsonyi-lampa': 4 } },
+      { t: 'Évforduló, szerelem', d: 'A közös pillanatok emlékére', icon: 'heart', words: ['szív', 'évforduló', 'szerelem'], ids: { 'eletfa-mecses-szett': 4, 'tulipan-vaza': 2 } },
+      { t: 'Céges alkalom', d: 'Köszönet a közös munkáért', icon: 'case', cat: { ceges: 4 }, words: ['céges', 'logós', 'logózott'] },
+      { t: 'Csak úgy', d: 'A legjobb meglepetés néha váratlan', icon: 'spark', cat: { lampak: 1, dekoraciok: 1, kulcstartok: 1, rajongoi: 1, 'baba-gyerek': 1 } }
     ] },
-    { q: 'Milyen stílus áll közel hozzá?', opts: [
-      { t: 'Világító, hangulatos', cat: { lampak: 3 } },
-      { t: 'Praktikus, apró', cat: { kulcstartok: 3 } },
-      { t: 'Dekoratív lakásdísz', cat: { dekoraciok: 3 } },
-      { t: 'Rajongói / gyűjtői', cat: { rajongoi: 3 } },
-      { t: 'Valami teljesen egyedi', ids: { 'egyedi-otlet': 6 } }
+    { label: 'Milyet?', q: 'Minek örülne igazán?', hint: 'Válaszd azt az irányt, ami a leginkább illik hozzá.', opts: [
+      { t: 'Fény és hangulat', d: 'Lámpák, amik otthonossá teszik a teret', icon: 'lamp', reason: 'A fények és a hangulat miatt választottuk.', cat: { lampak: 6 }, words: ['lámpa', 'világító'] },
+      { t: 'Apró és praktikus', d: 'Egy kedves részlet a mindennapokban', icon: 'key', reason: 'A praktikus ajándékok közül válogattuk.', cat: { kulcstartok: 6 }, words: ['kulcstartó'] },
+      { t: 'Szép tárgy az otthonába', d: 'Dekoráció, amire jó ránézni', icon: 'home', reason: 'Az otthonába keresett dekorációkhoz illik.', cat: { dekoraciok: 6 } },
+      { t: 'A kedvenc világából', d: 'Hobbi, karakterek és gyűjtői darabok', icon: 'game', reason: 'A rajongói, gyűjtői irányhoz kapcsolódik.', cat: { rajongoi: 6 }, words: ['rajongó', 'gamer', 'sárkány'] },
+      { t: 'Valami teljesen egyedi', d: 'Saját ötletből születő ajándék', icon: 'pen', reason: 'Saját ötletedből készülhet el.', cat: { egyedi: 8 }, ids: { 'egyedi-otlet': 10 } },
+      { t: 'Még keresem az ihletet', d: 'Mutassatok többféle ötletet', icon: 'spark' }
     ] },
-    { q: 'Nagyjából mennyit szánnál rá?', opts: [
-      { t: '50–100 lej', maxAr: 100 },
-      { t: '100–200 lej', maxAr: 200 },
-      { t: '200 lej felett', minAr: 200 },
-      { t: 'Az ár most mindegy' }
+    { label: 'Mennyiért?', q: 'Mekkora keretben gondolkodsz?', hint: 'A termék árával számolunk, szállítási díj nélkül.', opts: [
+      { t: '100 RON-ig', d: 'Egy kedves figyelmesség', icon: 'gift', maxAr: 100 },
+      { t: '100–200 RON', d: 'Egy személyes meglepetés', icon: 'gift', minAr: 100, maxAr: 200 },
+      { t: '200 RON felett', d: 'Egy igazán különleges darab', icon: 'gift', minAr: 200 },
+      { t: 'Mutassatok minden árban', d: 'Előbb az ötletet szeretném megtalálni', icon: 'spark' }
     ] }
   ];
 
+  function quizIcon(name) {
+    var paths = {
+      bear: '<circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="13" r="8"/><path d="M9 11h.01M15 11h.01M10 16q2 2 4 0M12 14v2"/>',
+      heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>',
+      flower: '<path d="M12 20v-7m0 5q-6 0-7-5 6 0 7 5Zm0-3q6 0 7-4-6 0-7 4Z"/><path d="M12 3c4-5 8 2 4 4 4 4-3 8-4 3-3 5-8 0-4-3-5-2 0-8 4-4Z"/>',
+      users: '<circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 4v2"/>',
+      home: '<path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8"/>',
+      case: '<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 12q9 6 18 0M12 12v4"/>',
+      cake: '<path d="M4 21V11h16v10ZM4 15q2 4 4 0 2 4 4 0 2 4 4 0 2 4 4 0M8 11V7m4 4V6m4 5V7M8 3v1m4-2v1m4 0v1"/>',
+      cap: '<path d="m2 9 10-5 10 5-10 5ZM6 11v6q6 5 12 0v-6m4-2v8"/>',
+      tree: '<path d="m12 2-5 6h3l-5 6h3l-5 6h18l-5-6h3l-5-6h3ZM12 20v3"/>',
+      spark: '<path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5ZM20 2v4m-2-2h4"/>',
+      lamp: '<path d="M8 3h8l5 12H3ZM12 15v6m-4 0h8M17 15v3"/>',
+      key: '<circle cx="8" cy="8" r="5"/><path d="m12 12 9 9m-3-3 3-3m-6 0 3-3M7 7h.01"/>',
+      game: '<path d="M7 7h10c3 0 6 12 3 13-2 1-4-4-5-4H9c-1 0-3 5-5 4C1 19 4 7 7 7ZM7 10v4m-2-2h4m7-1h.01M18 13h.01M12 7V3"/>',
+      search: '<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',
+      pen: '<path d="m14 4 6 6M3 21l5-1L21 7a2 2 0 0 0-4-4L4 16ZM4 16l4 4M14 21h7"/>',
+      gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13m0-13C3 9 5 0 9 3Zm0 0c9 1 7-8 3-5Z"/>',
+      check: '<path d="m5 12 4 4L19 6"/>',
+      arrow: '<path d="M4 12h16m-6-6 6 6-6 6"/>'
+    };
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (paths[name] || paths.gift) + '</svg>';
+  }
+
+  function quizMatch(p, opt) {
+    if (!opt) return 0;
+    var score = (opt.cat && opt.cat[p.cat] || 0) + (opt.ids && opt.ids[p.id] || 0);
+    var text = String(p.nev || '') + ' ' + String(p.leiras || '');
+    text = text.toLocaleLowerCase('hu');
+    if (opt.words && opt.words.some(function (word) { return text.indexOf(word) !== -1; })) score += 4;
+    return score;
+  }
+
   function quizResults(answers) {
-    var scores = {};
-    var priceOpt = null;
-    answers.forEach(function (opt, step) {
-      if (!opt) return;
-      if (step === QUIZ.length - 1) priceOpt = opt; // ár-lépés
-      SHOP_PRODUCTS.forEach(function (p) {
-        var s = scores[p.id] || 0;
-        if (opt.cat && opt.cat[p.cat]) s += opt.cat[p.cat];
-        if (opt.ids && opt.ids[p.id]) s += opt.ids[p.id];
-        scores[p.id] = s;
-      });
+    var budget = answers[3] || {};
+    var limited = budget.minAr !== undefined || budget.maxAr !== undefined;
+    // A megadott keret valódi szűrő. Ismeretlen ár nem számít beleférő ajánlatnak.
+    var list = SHOP_PRODUCTS.filter(function (p) {
+      var price = Number(p.ar);
+      if (!Number.isFinite(price) || price < 0) return false;
+      if (limited && price <= 0) return false;
+      return !(budget.minAr !== undefined && price <= budget.minAr) &&
+        !(budget.maxAr !== undefined && price > budget.maxAr);
+    }).map(function (p, index) {
+      var matches = answers.slice(0, 3).map(function (opt) { return quizMatch(p, opt); });
+      return { p: p, index: index, s: matches.reduce(function (sum, value) { return sum + value; }, 0), matches: matches };
     });
-    var list = SHOP_PRODUCTS.map(function (p) { return { p: p, s: scores[p.id] || 0 }; });
-    // ársáv: a nem illő árú termékek visszaesnek (de nem tűnnek el)
-    if (priceOpt) list.forEach(function (r) {
-      if (r.p.ar <= 0) return; // egyedi ajánlatkérős kimarad az árszűrésből
-      if (priceOpt.maxAr && r.p.ar > priceOpt.maxAr) r.s -= 2;
-      if (priceOpt.minAr && r.p.ar < priceOpt.minAr) r.s -= 2;
-    });
-    list.sort(function (a, b) { return b.s - a.s || b.p.ar - a.p.ar; });
-    return list.filter(function (r) { return r.s > 0; }).slice(0, 4).map(function (r) { return r.p; });
+    list.sort(function (a, b) { return b.s - a.s || b.matches[2] - a.matches[2] || a.index - b.index; });
+    return list.filter(function (r) { return r.s > 0; }).slice(0, 3);
   }
 
   function renderKviz() {
     var mount = $('#sh-quiz-mount');
     if (!mount) return;
+    var storageKey = 'layero_gift_finder_v2';
     var step = 0;
-    var answers = [];
+    var picks = [null, null, null, null];
+    try {
+      var saved = JSON.parse(sessionStorage.getItem(storageKey));
+      if (saved && Array.isArray(saved.picks) && saved.picks.length === QUIZ.length) {
+        picks = saved.picks.map(function (pick, i) { return Number.isInteger(pick) && QUIZ[i].opts[pick] ? pick : null; });
+        var firstMissing = picks.indexOf(null);
+        step = Math.min(Number.isInteger(saved.step) ? Math.max(0, saved.step) : 0, firstMissing < 0 ? QUIZ.length : firstMissing);
+      }
+    } catch (e) { /* Tárolás nélkül is végig használható. */ }
 
-    function drawStep() {
+    function save() {
+      try { sessionStorage.setItem(storageKey, JSON.stringify({ step: step, picks: picks })); } catch (e) { /* Opcionális munkamenet-mentés. */ }
+    }
+    function complete() { return picks.every(function (pick) { return pick !== null; }); }
+    function answers() { return picks.map(function (pick, i) { return pick === null ? null : QUIZ[i].opts[pick]; }); }
+    function focusPanel() {
+      var heading = $('[data-quiz-heading]', mount);
+      if (!heading) return;
+      heading.focus({ preventScroll: true });
+      var panel = $('#sh-quiz-panel', mount);
+      var top = panel.getBoundingClientRect().top;
+      if (top < 90 || top > window.innerHeight * 0.45) panel.scrollIntoView({ block: 'start', behavior: 'instant' });
+    }
+    function stepsHtml() {
+      return '<nav class="sh-quiz__steps" aria-label="Az ajándékkereső lépései"><ol>' + QUIZ.map(function (q, i) {
+        var available = i === 0 || picks.slice(0, i).every(function (pick) { return pick !== null; });
+        return '<li class="' + (i === step ? 'is-current' : picks[i] !== null ? 'is-done' : '') + '">' +
+          '<button type="button" data-step="' + i + '"' + (available ? '' : ' disabled') + (i === step ? ' aria-current="step"' : '') +
+          ' aria-label="' + (i + 1) + '. lépés: ' + q.label + (picks[i] !== null ? ' – válasz megadva' : '') + '">' +
+          '<span class="sh-quiz__stepnum">' + (picks[i] !== null && i !== step ? quizIcon('check') : i + 1) + '</span><span>' + q.label + '</span></button></li>';
+      }).join('') + '</ol></nav>';
+    }
+    function bindSteps() {
+      $all('[data-step]', mount).forEach(function (button) {
+        button.addEventListener('click', function () { step = Number(button.dataset.step); save(); drawStep(true); });
+      });
+    }
+    function summaryHtml() {
+      return '<div class="sh-quiz__summary" aria-label="A választásaid">' + answers().map(function (opt, i) {
+        return opt ? '<button type="button" data-step="' + i + '" aria-label="' + esc(QUIZ[i].label + ' ' + opt.t + ' – módosítás') + '"><span>' + esc(QUIZ[i].label) + '</span> ' + esc(opt.t) + quizIcon('pen') + '</button>' : '';
+      }).join('') + '</div>';
+    }
+
+    mount.innerHTML = '<div class="sh-quiz shop-wrap">' +
+      '<div class="sh-quiz__top"><a href="index.html">Kezdőlap</a><span aria-hidden="true">/</span><span>Ajándékkereső</span><a class="sh-quiz__browse" href="kategoria.html">Inkább körülnézek ' + quizIcon('arrow') + '</a></div>' +
+      '<div class="sh-quiz__layout"><aside class="sh-quiz__story" aria-labelledby="sh-quiz-title">' +
+        '<div class="sh-quiz__story-copy"><span class="sh-quiz__eyebrow">' + quizIcon('gift') + ' A figyelmesség itt kezdődik</span>' +
+          '<h1 id="sh-quiz-title">Egy ajándék.<br><em>Ami róla szól.</em></h1>' +
+          '<p>Te ismered őt. Mi segítünk megtalálni azt a darabot, amiben magára ismer.</p></div>' +
+        '<img class="sh-quiz__story-image" src="assets/banners/lifestyle-gift-mobile.webp" alt="Anya és kisfia egy névre szóló dínós lámpának örülnek" width="941" height="1672" fetchpriority="high">' +
+        '<div class="sh-quiz__story-note"><span>' + quizIcon('spark') + '</span><div><strong>Apró részletek. Nagy mosolyok.</strong><p>Négy válasz, és máris közelebb az ötlet.</p></div></div>' +
+      '</aside><section class="sh-quiz__panel" id="sh-quiz-panel" aria-label="Ajándékkereső kérdések"></section></div>' +
+      '<p class="sh-quiz__help">Van már egy saját ötleted? <a href="egyedi-rendeles.html">Mesélj róla, megtervezzük együtt ' + quizIcon('arrow') + '</a></p></div>';
+    var panel = $('#sh-quiz-panel', mount);
+
+    function drawStep(moveFocus) {
+      $('.sh-quiz', mount).classList.remove('sh-quiz--result');
       var Q = QUIZ[step];
-      var pct = Math.round(step / QUIZ.length * 100);
-      mount.innerHTML =
-        '<section class="sh-quiz shop-wrap">' +
-          '<div class="sh-quiz__head">' +
-            '<span class="sh-quiz__eyebrow">Ajándékkereső</span>' +
-            '<div class="sh-quiz__prog"><i style="width:' + pct + '%"></i></div>' +
-            '<span class="sh-quiz__count">' + (step + 1) + ' / ' + QUIZ.length + '</span>' +
-          '</div>' +
-          '<h1>' + esc(Q.q) + '</h1>' +
-          '<div class="sh-quiz__opts">' +
-            Q.opts.map(function (o, i) { return '<button type="button" class="sh-quiz__opt" data-i="' + i + '">' + esc(o.t) + '</button>'; }).join('') +
-          '</div>' +
-          (step > 0 ? '<button type="button" class="sh-quiz__back" data-back>‹ Vissza</button>' : '') +
-        '</section>';
-      $all('.sh-quiz__opt', mount).forEach(function (b) {
-        b.addEventListener('click', function () {
-          answers[step] = Q.opts[parseInt(b.getAttribute('data-i'), 10)];
-          if (step < QUIZ.length - 1) { step++; drawStep(); }
-          else drawResult();
+      panel.innerHTML = stepsHtml() +
+        '<div class="sh-quiz__question"><span class="sh-quiz__kicker">' + (step === 3 ? 'Már csak egy kérdés' : 'Ismerjük meg egy kicsit') + ' <span>0' + (step + 1) + ' / 04</span></span>' +
+          '<h2 id="sh-quiz-question" tabindex="-1" data-quiz-heading>' + esc(Q.q) + '</h2><p id="sh-quiz-hint">' + esc(Q.hint) + '</p></div>' +
+        '<form class="sh-quiz__form"><fieldset class="sh-quiz__opts" aria-describedby="sh-quiz-hint"><legend class="sh-quiz__sr">' + esc(Q.q) + '</legend>' +
+          Q.opts.map(function (o, i) {
+            return '<label class="sh-quiz__opt"><input type="radio" name="gift-answer" value="' + i + '"' + (picks[step] === i ? ' checked' : '') + '>' +
+              '<span class="sh-quiz__choice"><span class="sh-quiz__icon">' + quizIcon(o.icon) + '</span><span class="sh-quiz__option-copy"><strong>' + esc(o.t) + '</strong><span>' + esc(o.d) + '</span></span>' +
+              '<span class="sh-quiz__tick">' + quizIcon('check') + '</span></span></label>';
+          }).join('') + '</fieldset>' +
+          '<div class="sh-quiz__actions"><button type="button" class="sh-quiz__back" data-back' + (step === 0 ? ' disabled' : '') + '>' + quizIcon('arrow') + ' Vissza</button>' +
+            '<button type="submit" class="sh-quiz__next"' + (picks[step] === null ? ' disabled' : '') + '>' + (complete() ? 'Ajánlások frissítése' : step === 3 ? 'Mutasd az ötleteket' : 'Tovább') + quizIcon('arrow') + '</button></div>' +
+          '<p class="sh-quiz__micro" role="status">' + (picks[step] === null ? 'Válassz egy lehetőséget a folytatáshoz.' : 'A válaszodat később is módosíthatod.') + '</p>' +
+        '</form>';
+      $all('input[name="gift-answer"]', panel).forEach(function (input) {
+        input.addEventListener('change', function () {
+          picks[step] = Number(input.value);
+          save();
+          $('.sh-quiz__next', panel).disabled = false;
+          $('.sh-quiz__micro', panel).textContent = 'A válaszodat később is módosíthatod.';
         });
       });
-      var back = $('[data-back]', mount);
-      if (back) back.addEventListener('click', function () { step--; drawStep(); });
+      $('form', panel).addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (picks[step] === null) return;
+        if (complete()) { step = QUIZ.length; save(); drawResult(true); }
+        else { step++; save(); drawStep(true); }
+      });
+      $('[data-back]', panel).addEventListener('click', function () { if (step > 0) { step--; save(); drawStep(true); } });
+      bindSteps();
+      if (moveFocus) focusPanel();
     }
 
-    function drawResult() {
-      var hits = quizResults(answers);
-      if (!hits.length) hits = SHOP_PRODUCTS.filter(function (p) { return p.badge === 'Bestseller'; }).slice(0, 4);
-      mount.innerHTML =
-        '<section class="sh-quiz sh-quiz--result shop-wrap">' +
-          '<span class="sh-quiz__eyebrow">Kész is!</span>' +
-          '<h1>Ezt ajánljuk neki.</h1>' +
-          '<p class="sh-quiz__lead">A válaszaid alapján ezek a darabok illenek a legjobban. Mindegyik személyre szabható — a pontos részleteket rendelés után egyeztetjük.</p>' +
-          '<div class="sh-prod-grid">' + hits.map(prodCard).join('') + '</div>' +
-          '<div class="sh-quiz__foot">' +
-            '<button type="button" class="sh-btn sh-btn--ghost" data-restart>Újrakezdem</button>' +
-            '<a class="sh-btn sh-btn--primary" href="kategoria.html">Összes termék böngészése</a>' +
-          '</div>' +
-        '</section>';
-      $('[data-restart]', mount).addEventListener('click', function () { step = 0; answers = []; drawStep(); });
+    function drawResult(moveFocus) {
+      $('.sh-quiz', mount).classList.add('sh-quiz--result');
+      var selected = answers();
+      var hits = quizResults(selected);
+      var limited = selected[3].minAr !== undefined || selected[3].maxAr !== undefined;
+      panel.innerHTML = '<div class="sh-quiz__result-heading"><span class="sh-quiz__eyebrow">' + quizIcon('check') + ' A te ajándékötleteid</span>' +
+        '<h1 tabindex="-1" data-quiz-heading>' + (hits.length ? 'Ezekben ott lehet a mosoly.' : 'Keressünk egy másik irányt.') + '</h1>' +
+        '<p>' + (hits.length ? 'A válaszaid alapján válogattuk. Nézd meg, melyikben ismersz rá igazán.' : 'Ezekkel a válaszokkal most nincs megfelelő ajánlatunk' + (limited ? ' a megadott árkeretben.' : '.') ) + '</p></div>' +
+        summaryHtml() + '<p class="sh-quiz__edit-note">A választásaidra kattintva finomíthatod az ajánlásokat.</p>' +
+        (hits.length ? '<div class="sh-quiz__results">' + hits.map(function (hit, i) {
+          var reason = hit.matches[2] && selected[2].reason ? selected[2].reason : hit.matches[1] ? 'A választott alkalomhoz kapcsolódó ötlet.' : 'A megajándékozotthoz választott irány alapján.';
+          return '<article class="sh-quiz__recommendation"><div class="sh-quiz__pick-label">' + (i === 0 ? quizIcon('spark') + ' Első tippünk' : '0' + (i + 1) + ' · Még egy jó irány') + '</div>' + prodCard(hit.p) +
+            '<p class="sh-quiz__reason">' + quizIcon('check') + '<span>' + esc(reason) + (limited ? '<small>A választott árkereten belül.</small>' : hit.p.ar <= 0 ? '<small>Az ár egyedi egyeztetéssel alakul ki.</small>' : '') + '</span></p></article>';
+        }).join('') + '</div>' : '<div class="sh-quiz__empty">' + quizIcon('search') + '<h3>Egy kis változtatás, új ötletek.</h3><p>Próbálj másik stílust vagy tágabb árkeretet. A válaszaid megmaradnak.</p><button type="button" class="sh-quiz__next" data-step="3">Módosítom a keretet ' + quizIcon('arrow') + '</button></div>') +
+        '<div class="sh-quiz__custom"><span class="sh-quiz__custom-icon">' + quizIcon('pen') + '</span><div><h3>Valami csak neki szólót képzeltél el?</h3><p>Saját ötletből is készülhet ajándék. A részleteket és az árat egyeztetjük.</p></div><a href="egyedi-rendeles.html">Mesélek az ötletemről ' + quizIcon('arrow') + '</a></div>' +
+        '<div class="sh-quiz__foot"><button type="button" class="sh-quiz__back" data-restart>Új ajándékot keresek</button><a href="kategoria.html">Megnézem a teljes kínálatot ' + quizIcon('arrow') + '</a></div>';
+      $('[data-restart]', panel).addEventListener('click', function () { step = 0; picks = [null, null, null, null]; save(); drawStep(true); });
+      bindSteps();
       syncCompareUI();
       observeReveals();
+      if (moveFocus) focusPanel();
     }
 
-    drawStep();
+    if (step === QUIZ.length && complete()) drawResult(false);
+    else drawStep(false);
   }
 
   /* ── FIÓK OLDAL (demo) ───────────────────────────────────────── */
@@ -3321,6 +3411,7 @@
   if (page === 'fiok') renderFiok();
   if (page === 'kviz') renderKviz();
   if (page === 'gyik') initGyik();
+  if (page === 'egyedi-rendeles') initCustomOrder();
   if (page === '404') {
     var c404 = $('#sh-404-cats');
     if (c404) c404.innerHTML = '<span>Népszerű kategóriák:</span>' +
@@ -3328,6 +3419,7 @@
   }
   initLpShowcase();
   initLpQuoteForms();
+  initBusinessPage();
   fixStaticUrls(document);
   if (window.MutationObserver) {
     new MutationObserver(function (mutations) {
@@ -3343,6 +3435,279 @@
   /* ── LANDING (egyedi-rendeles / cegeknek): hero-showcase rotátor ──
      A spotlight-keret újrahasznosítva: a képek crossfade-del váltanak,
      a badge a kép data-badge feliratát követi; hoverre megáll. */
+
+  /* Egyedi rendelés: hozzáférhető választó és valós előnézeti visszajelzés.
+     A data-lp-quote és a mezőnevek megmaradnak a WordPress-adapter számára. */
+  function initCustomOrder() {
+    var form = $('[data-cq-form]');
+    if (!form) return;
+    var idea = $('#eq-otlet', form);
+    var counter = $('[data-cq-count]', form);
+    var status = $('[data-cq-status]', form);
+    var summary = $('[data-cq-summary]');
+    var radios = $all('input[name="tema"]', form);
+    var required = $all('[required]', form);
+    var submit = $('[data-cq-submit]', form);
+    var copy = $('[data-cq-copy]', form);
+    var attempted = false;
+    form.noValidate = true;
+    submit.disabled = false;
+    $all('[data-cq-preview]').forEach(function (notice) { notice.hidden = IS_WOO; });
+
+    function selectedType() {
+      var radio = $('input[name="tema"]:checked', form);
+      return radio ? radio.getAttribute('data-label') : 'Saját ötlet';
+    }
+    function updateType() {
+      if (summary) summary.textContent = selectedType();
+      form.setAttribute('data-layero-form-topic', 'Egyedi rendelés — ' + selectedType());
+    }
+    function updateCount() { counter.textContent = idea.value.length + ' / ' + idea.maxLength; }
+    function isValid(field) {
+      return field.checkValidity() && (field.type === 'checkbox' || field.value.trim().length > 0);
+    }
+    function showError(field, invalid) {
+      var wrap = field.closest('.cq-field');
+      var errorId = field.id + '-error';
+      var error = document.getElementById(errorId);
+      var descriptions = (field.getAttribute('aria-describedby') || '').split(/\s+/).filter(function (id) { return id && id !== errorId; });
+      if (invalid) {
+        field.setAttribute('aria-invalid', 'true');
+        if (!error) {
+          error = document.createElement('p');
+          error.id = errorId;
+          error.className = 'cq-field__error';
+          wrap.appendChild(error);
+        }
+        error.textContent = field.getAttribute('data-err') || 'Ellenőrizd ezt a mezőt.';
+        descriptions.push(errorId);
+      } else {
+        field.removeAttribute('aria-invalid');
+        if (error) error.remove();
+      }
+      if (descriptions.length) field.setAttribute('aria-describedby', descriptions.join(' '));
+      else field.removeAttribute('aria-describedby');
+    }
+    function validate() {
+      var firstInvalid = null;
+      required.forEach(function (field) {
+        var invalid = !isValid(field);
+        showError(field, invalid);
+        if (invalid && !firstInvalid) firstInvalid = field;
+      });
+      if (firstInvalid) firstInvalid.focus();
+      return !firstInvalid;
+    }
+    required.forEach(function (field) {
+      field.addEventListener('blur', function () {
+        if (attempted || field.value.trim() && field.type !== 'checkbox') showError(field, !isValid(field));
+      });
+      field.addEventListener('input', function () {
+        if (field.hasAttribute('aria-invalid')) showError(field, !isValid(field));
+        status.textContent = '';
+      });
+    });
+    radios.forEach(function (radio) { radio.addEventListener('change', updateType); });
+    idea.addEventListener('input', updateCount);
+    $all('[data-cq-idea]').forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        var choice = radios.filter(function (radio) { return radio.value === link.getAttribute('data-cq-idea'); })[0];
+        if (!choice) return;
+        event.preventDefault();
+        choice.checked = true;
+        updateType();
+        choice.focus({ preventScroll: true });
+        form.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      });
+    });
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      attempted = true;
+      if (!validate()) {
+        status.textContent = 'Néhány adat még hiányzik vagy javításra vár. Ellenőrizd a megjelölt mezőket.';
+        return;
+      }
+      // Online a WordPress-adapter a capture fázisban kezeli a valódi küldést.
+      // Adapter nélkül itt sem állítunk sikeres beküldést.
+      status.textContent = IS_WOO
+        ? 'A küldés most nem elérhető. A kitöltött adatok megmaradtak; kérjük, használd a kapcsolati oldalt.'
+        : 'Az űrlap rendben van. Ez helyi előnézet: a megkeresést nem küldtük el. A kitöltött adataid megmaradtak, az ötletedet ki is másolhatod.';
+    });
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      copy.hidden = false;
+      copy.addEventListener('click', function () {
+        if (!idea.value.trim()) {
+          showError(idea, true);
+          idea.focus();
+          status.textContent = 'Előbb írd le az ötleted, hogy legyen mit kimásolni.';
+          return;
+        }
+        var brief = 'Layero — egyedi ötlet\n' + selectedType() + '\n\n' + idea.value.trim();
+        copy.disabled = true;
+        navigator.clipboard.writeText(brief).then(function () {
+          status.textContent = 'Az ötletedet a vágólapra másoltuk. Beillesztheted egy e-mailbe vagy elmentheted magadnak.';
+        }).catch(function () {
+          status.textContent = 'A böngésző nem engedélyezte a másolást. Jelöld ki és másold ki a szöveget az ötlet mezőből.';
+        }).finally(function () { copy.disabled = false; });
+      });
+    }
+    form.addEventListener('reset', function () {
+      window.setTimeout(function () {
+        attempted = false;
+        required.forEach(function (field) { showError(field, false); });
+        updateCount();
+        updateType();
+        status.textContent = '';
+      }, 0);
+    });
+    $all('.cq-faq details').forEach(function (item) {
+      item.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && item.open) {
+          item.open = false;
+          $('summary', item).focus();
+        }
+      });
+    });
+    updateCount();
+    updateType();
+  }
+
+  // Céges bemutató: kézi galéria, natív képnagyító és ellenőrizhető ajánlatkérés.
+  function initBusinessPage() {
+    var gallery = $('[data-b2b-gallery]');
+    var form = $('[data-b2b-quote]');
+    if (!gallery || !form) return;
+    var thumbs = $all('[data-b2b-image]', gallery);
+    var mainImage = $('[data-b2b-main]', gallery);
+    var enlarge = $('[data-b2b-enlarge]', gallery);
+    var dialog = $('[data-b2b-lightbox]');
+    var current = 0;
+    var imageDescriptions = [
+      'Fekete-arany Bázis Bisztró QR + NFC display egy étterem asztalán',
+      'Bázis Bisztró logó formájára készített kulcstartó',
+      'Bázis Bisztró logós poháralátétek és asztali tartó'
+    ];
+    function selectImage(index) {
+      current = (index + thumbs.length) % thumbs.length;
+      var button = thumbs[current];
+      var src = $('img', button).getAttribute('src');
+      var title = button.getAttribute('aria-label');
+      thumbs.forEach(function (thumb, i) { thumb.setAttribute('aria-pressed', String(i === current)); });
+      mainImage.src = src;
+      mainImage.alt = imageDescriptions[current];
+      enlarge.setAttribute('aria-label', title + ' képének nagyítása');
+      $('[data-b2b-image-title]', gallery).textContent = title;
+      $('[data-b2b-image-index]', gallery).textContent = '0' + (current + 1) + ' / 03';
+      if (dialog) {
+        $('[data-b2b-dialog-image]', dialog).src = src;
+        $('[data-b2b-dialog-image]', dialog).alt = imageDescriptions[current];
+        $('[data-b2b-dialog-title]', dialog).textContent = title;
+        $('[data-b2b-dialog-count]', dialog).textContent = (current + 1) + ' / ' + thumbs.length;
+      }
+    }
+    thumbs.forEach(function (thumb, i) {
+      thumb.addEventListener('click', function () { selectImage(i); });
+      thumb.addEventListener('keydown', function (event) {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+        event.preventDefault();
+        selectImage(i + (event.key === 'ArrowRight' ? 1 : -1));
+        thumbs[current].focus();
+      });
+    });
+    if (dialog && typeof dialog.showModal === 'function') {
+      enlarge.addEventListener('click', function () {
+        selectImage(current);
+        dialog.showModal();
+        document.documentElement.classList.add('b2b-gallery-open');
+      });
+      $('[data-b2b-close]', dialog).addEventListener('click', function () { dialog.close(); });
+      $('[data-b2b-prev]', dialog).addEventListener('click', function () { selectImage(current - 1); });
+      $('[data-b2b-next]', dialog).addEventListener('click', function () { selectImage(current + 1); });
+      dialog.addEventListener('keydown', function (event) {
+        if (event.key === 'Tab') {
+          var controls = $all('button', dialog);
+          var first = controls[0], last = controls[controls.length - 1];
+          if ((event.shiftKey && document.activeElement === first) || (!event.shiftKey && document.activeElement === last)) {
+            event.preventDefault();
+            (event.shiftKey ? last : first).focus();
+          }
+        }
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          selectImage(current + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+      });
+      dialog.addEventListener('click', function (event) {
+        var bounds = dialog.getBoundingClientRect();
+        if (event.target === dialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) dialog.close();
+      });
+      dialog.addEventListener('close', function () {
+        document.documentElement.classList.remove('b2b-gallery-open');
+        enlarge.focus({ preventScroll: true });
+      });
+    }
+
+    var textarea = $('textarea', form);
+    var count = $('[data-b2b-count]', form);
+    var status = $('[data-b2b-status]', form);
+    var required = $all('[required]', form);
+    function updateCount() { count.textContent = textarea.value.length + ' / ' + textarea.maxLength; }
+    textarea.addEventListener('input', updateCount);
+    form.addEventListener('reset', function () { setTimeout(updateCount, 0); });
+    updateCount();
+    $all('[data-b2b-interest]').forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        var choice = $all('input[name="irany"]', form).filter(function (radio) { return radio.value === link.getAttribute('data-b2b-interest'); })[0];
+        if (!choice) return;
+        event.preventDefault();
+        choice.checked = true;
+        choice.dispatchEvent(new Event('change', { bubbles: true }));
+        form.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+        choice.focus({ preventScroll: true });
+      });
+    });
+    // Az online adapter kezeli a valódi küldést; a helyi oldal csak ellenőriz.
+    if (IS_WOO) {
+      $('[data-b2b-preview]', form).hidden = true;
+      $('[data-b2b-submit-label]', form).textContent = 'Ajánlatot kérek';
+      return;
+    }
+    form.noValidate = true;
+    function validate(field) {
+      var invalid = !field.value.trim() || !field.checkValidity();
+      var wrapper = field.closest('.b2b-field');
+      var error = $('.b2b-field__error', wrapper);
+      if (invalid && !error) {
+        error = document.createElement('small');
+        error.className = 'b2b-field__error';
+        error.id = field.id + '-error';
+        error.textContent = field.getAttribute('data-error');
+        wrapper.appendChild(error);
+      }
+      field.setAttribute('aria-invalid', String(invalid));
+      if (invalid) field.setAttribute('aria-describedby', error.id);
+      else {
+        field.removeAttribute('aria-describedby');
+        if (error) error.remove();
+      }
+      return !invalid;
+    }
+    required.forEach(function (field) {
+      field.addEventListener('blur', function () { if (field.value || field.getAttribute('aria-invalid') === 'true') validate(field); });
+      field.addEventListener('input', function () { if (field.hasAttribute('aria-invalid')) validate(field); });
+    });
+    form.addEventListener('input', function () { status.hidden = true; status.textContent = ''; });
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var firstInvalid = null;
+      required.forEach(function (field) { if (!validate(field) && !firstInvalid) firstInvalid = field; });
+      if (firstInvalid) { firstInvalid.focus(); return; }
+      status.textContent = 'Az ajánlatkérés ellenőrzése kész. Ez helyi előnézet: az üzenetet nem küldtük el. A kitöltött adataid megmaradtak; valódi megkereséshez írj a layeroprint@gmail.com címre.';
+      status.hidden = false;
+      status.focus();
+    });
+  }
+
   function initLpShowcase() {
     $all('[data-lp-showcase]').forEach(function (frame) {
       var imgs = $all('.sh-spotlight__img', frame);
@@ -3376,6 +3741,7 @@
      számláló, küldés-állapot, siker-panel (data-success), újrakezdés. */
   function initLpQuoteForms() {
     $all('form[data-lp-quote]').forEach(function (form) {
+      if (form.hasAttribute('data-cq-form') || form.hasAttribute('data-b2b-quote')) return;
       var fields = $('.sh-form__fields', form);
       form.setAttribute('novalidate', '');
 
