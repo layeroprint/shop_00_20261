@@ -221,3 +221,13 @@ body.woocommerce div.product .woocommerce-tabs ul.tabs li { border-radius:12px 1
   .elementor .lyr-products--listing .lyr-product-grid.sh-prod-grid { grid-template-columns: minmax(0, 1fr); gap: 22px; }
   .lyr-products--home .lyr-product-card--home .lyr-product-card__add { padding-inline: 8px; }
 }
+/* Keep the whole filter row tappable and leave room to read the search query. */
+@media (max-width: 900px) {
+  .lyr-catalog-filters { padding: 6px 18px; }
+  .lyr-catalog-filters > summary { min-height: 44px; }
+  .lyr-catalog-filters[open] > summary { padding-bottom: 0; margin-bottom: 14px; }
+}
+@media (max-width: 600px) {
+  .lyr-products--listing .lyr-product-search { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+  .lyr-products--listing .lyr-product-search button { width: auto; min-width: 88px; padding-inline: 12px; }
+}

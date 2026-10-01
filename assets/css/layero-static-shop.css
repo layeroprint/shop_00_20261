@@ -5857,3 +5857,37 @@ body[data-page="termek"] .sh-buy-row .sh-btn--primary { font-size: var(--text-co
   .b2b-principles p { display: block; }
   .b2b-principles small { display: block; margin-top: 5px; }
 }
+
+/* Mobile review, 2026-10-01: stable header, usable touch targets and navigation. */
+.sh-topbar__promo { display: grid; align-items: center; }
+.sh-topbar__promo span {
+  display: block; grid-area: 1 / 1; visibility: hidden; animation: none;
+}
+.sh-topbar__promo span.is-on { display: block; visibility: visible; }
+.sh-header__inner :is(.sh-acct-btn, .sh-wish-btn) {
+  width: 44px; height: 44px; flex-shrink: 0; justify-content: center;
+  border-radius: 999px;
+}
+.sh-wish-badge { top: 3px; right: 2px; }
+.sh-pinfo__review, .sh-quiz__browse { min-height: 44px; }
+.sh-legal nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 5px; }
+.sh-contact.shop-wrap { padding-inline: clamp(18px, 3vw, 32px); }
+@media (max-width: 940px) {
+  body.sh-menu-open { overflow: hidden; }
+  .sh-nav { visibility: hidden; transition: none; }
+  .sh-nav.is-open {
+    visibility: visible; max-height: var(--sh-nav-height, calc(100dvh - 64px));
+    overscroll-behavior: contain; padding-bottom: max(12px, env(safe-area-inset-bottom));
+    scrollbar-gutter: stable;
+  }
+  body.layero-shell-ready .sh-nav:not(.is-open) .sh-mega { visibility: hidden; }
+  .sh-nav:focus { outline: none; }
+}
+@media (max-width: 600px) {
+  .sh-header__inner { gap: 6px; }
+  .sh-header__inner .sh-brand { --sh-brand-mark: 40px; }
+  .sh-topbar__promo { display: grid; }
+}
+@media (max-width: 360px) {
+  .sh-header__inner .sh-brand { --sh-brand-mark: 36px; }
+}

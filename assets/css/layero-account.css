@@ -414,6 +414,9 @@ body.layero-account-page .lyr-account-section-head > a,
 body.layero-account-page .lyr-account-detail-grid article > a {
   color: var(--lp-teal);
   font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 body.layero-account-page .lyr-account-empty {
@@ -1290,4 +1293,10 @@ body.layero-account-page :focus-visible {
 	body.layero-favorites-page .lyr-favorites-empty-actions .lyr-btn {
 		width: 100%;
 	}
+}
+
+body.layero-favorites-page .lyr-favorites-toolbar > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }

@@ -98,3 +98,9 @@ body[data-page="termek"] .lyr-single-product .sh-pgallery__thumbs { flex-wrap: n
 .lyr-single-product .lyr-single-reviews #review_form #respond label { font-size: .9375rem; line-height: 1.6; }
 .lyr-single-product .lyr-single-reviews #reviews #comments .commentlist li .description p,
 .lyr-single-product .sh-longdesc__text ul { font-size: 1rem; line-height: 1.75; }
+/* Touch quantity controls keep their full target size on narrow product pages. */
+.lyr-single-buy .quantity .lyr-quantity-step { width: 44px; min-width: 44px; }
+.lyr-single-buy form.cart .quantity { flex-basis: 132px; }
+@media (max-width: 380px) {
+  .lyr-single-buy form.cart button.single_add_to_cart_button { flex-basis: 100%; }
+}

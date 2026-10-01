@@ -1055,7 +1055,7 @@
         '<a class="sh-logo sh-brand" href="index.html" aria-label="Layero Shop – főoldal">' +
           '<img class="sh-brand__image" src="assets/layero-logo/layero-logo.svg" alt="" width="439" height="128">' +
         '</a>' +
-        '<nav class="sh-nav" id="sh-nav">' +
+        '<nav class="sh-nav" id="sh-nav" aria-label="Fő navigáció" tabindex="-1">' +
           searchForm('mobile') +
           '<a href="index.html"' + (page === 'home' ? ' aria-current="page"' : '') + '>Főoldal</a>' +
           '<div class="sh-nav__item">' +
@@ -1102,7 +1102,7 @@
           '<a href="kapcsolat.html"' + (page === 'kapcsolat' ? ' aria-current="page"' : '') + '>Kapcsolat</a>' +
         '</nav>' +
         searchForm('desktop') +
-        '<button class="sh-menu-btn" type="button" aria-label="Menü" aria-expanded="false">' +
+        '<button class="sh-menu-btn" type="button" aria-label="Menü" aria-controls="sh-nav" aria-expanded="false">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>' +
         '</button>' +
         '<a class="sh-acct-btn" href="fiok.html" aria-label="Fiókom">' + ICO.user + '</a>' +
@@ -1125,19 +1125,54 @@
     if (topbarNode) document.body.insertBefore(topbarNode, header);
 
     var menuBtn = $('.sh-menu-btn', header);
-    menuBtn.addEventListener('click', function () {
-      var nav = $('#sh-nav');
-      var open = nav.classList.toggle('is-open');
+    var nav = $('#sh-nav', header);
+    var mobileNav = window.matchMedia('(max-width: 940px)');
+    function sizeMenu() {
+      var viewport = window.visualViewport;
+      var bottom = viewport ? viewport.offsetTop + viewport.height : window.innerHeight;
+      nav.style.setProperty('--sh-nav-height', Math.max(0, bottom - header.getBoundingClientRect().bottom) + 'px');
+    }
+    function setMenu(open, restoreFocus) {
+      open = Boolean(open && mobileNav.matches);
+      nav.classList.toggle('is-open', open);
+      nav.inert = mobileNav.matches && !open;
+      document.body.classList.toggle('sh-menu-open', open);
       menuBtn.setAttribute('aria-expanded', String(open));
+      if (open) sizeMenu();
+      if (restoreFocus) menuBtn.focus();
+    }
+    setMenu(false);
+    menuBtn.addEventListener('click', function (event) {
+      var open = !nav.classList.contains('is-open');
+      setMenu(open);
+      // Keyboard users enter the links; a touch opening does not summon the keyboard.
+      if (open && event.detail === 0) nav.focus();
+    });
+    document.addEventListener('click', function (event) {
+      if (!nav.classList.contains('is-open') || menuBtn.contains(event.target)) return;
+      if (!nav.contains(event.target) || event.target.closest('a[href]')) setMenu(false);
+    });
+    document.addEventListener('focusin', function (event) {
+      if (nav.classList.contains('is-open') && !header.contains(event.target)) setMenu(false);
     });
     document.addEventListener('keydown', function (event) {
-      var nav = $('#sh-nav');
-      if (event.key === 'Escape' && nav && nav.classList.contains('is-open')) {
-        nav.classList.remove('is-open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-        menuBtn.focus();
+      if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+        event.preventDefault();
+        setMenu(false, true);
       }
     });
+    function resizeMenu() {
+      if (!mobileNav.matches) setMenu(false);
+      else {
+        nav.inert = !nav.classList.contains('is-open');
+        if (!nav.inert) sizeMenu();
+      }
+    }
+    window.addEventListener('resize', resizeMenu);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', resizeMenu);
+      window.visualViewport.addEventListener('scroll', sizeMenu);
+    }
     document.body.classList.add('layero-shell-ready');
 
     var footer = document.createElement('footer');
