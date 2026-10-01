@@ -63,6 +63,13 @@ class Testimonials extends Base_Widget {
 		$repeater->add_control('name', array('label' => __('Név', 'layero-shop-ui'), 'type' => Controls_Manager::TEXT));
 		$repeater->add_control('meta', array('label' => __('Termék / meta', 'layero-shop-ui'), 'type' => Controls_Manager::TEXT));
 		$repeater->add_control('topic', array('label' => __('Témacímke', 'layero-shop-ui'), 'type' => Controls_Manager::TEXT));
+		$repeater->add_control('is_sample', array(
+			'label' => __('Mintavélemény', 'layero-shop-ui'),
+			'type' => Controls_Manager::SWITCHER,
+			'return_value' => 'yes',
+			'default' => '',
+			'description' => __('Kitalált név és értékelés. A Minta jelölést csak valódi, jóváhagyott véleményre cserélés után kapcsold ki.', 'layero-shop-ui'),
+		));
 		$repeater->add_control('card_style', array(
 			'label' => __('Kártya stílusa', 'layero-shop-ui'),
 			'type' => Controls_Manager::SELECT,
@@ -87,7 +94,7 @@ class Testimonials extends Base_Widget {
 			'type' => Controls_Manager::REPEATER,
 			'fields' => $repeater->get_controls(),
 			'title_field' => '{{{ name }}}',
-			'default' => Shop_Content::testimonials(),
+			'default' => Shop_Content::testimonials_preview(),
 		));
 		$this->end_controls_section();
 
@@ -147,7 +154,7 @@ class Testimonials extends Base_Widget {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		$items = isset($settings['items']) && is_array($settings['items']) ? $settings['items'] : Shop_Content::testimonials();
+		$items = isset($settings['items']) && is_array($settings['items']) ? $settings['items'] : Shop_Content::testimonials_preview();
 		if (! $items) { return; }
 		$raw_settings = $this->get_data('settings');
 		$raw_items = $raw_settings['items'] ?? array();
@@ -197,10 +204,14 @@ class Testimonials extends Base_Widget {
 						$product_icon = array_key_exists('product_icon', $raw_item) ? ($item['product_icon'] ?? 'sparkle') : ($legacy_item['product_icon'] ?? 'sparkle');
 						$product_icon = in_array($product_icon, array('lamp', 'display', 'sparkle'), true) ? $product_icon : 'sparkle';
 						$topic = trim((string) (array_key_exists('topic', $raw_item) ? ($item['topic'] ?? '') : ($legacy_item['topic'] ?? '')));
+						$is_sample = 'yes' === ($item['is_sample'] ?? '');
+						if ($is_sample && ! preg_match('/^Minta(?:\s*[·:–-]|\s*$)/u', $topic)) {
+							$topic = '' === $topic ? __('Minta', 'layero-shop-ui') : sprintf(__('Minta · %s', 'layero-shop-ui'), $topic);
+						}
 						$initials = $this->initials($name);
 						$rating_label = sprintf(__('%1$d csillag az 5-ből', 'layero-shop-ui'), $rating);
 					?>
-					<article class="sh-review lyr-testimonial lr-card<?php echo 'standard' === $style ? '' : ' lr-card--' . esc_attr($style); ?>">
+					<article class="sh-review lyr-testimonial lr-card<?php echo 'standard' === $style ? '' : ' lr-card--' . esc_attr($style); ?>"<?php if ($is_sample) : ?> data-lr-sample aria-label="<?php echo esc_attr__('Mintavélemény – kitalált szerző és értékelés', 'layero-shop-ui'); ?>"<?php endif; ?>>
 						<div class="lr-card__top"><span class="lr-topic"<?php echo '' === $topic ? ' hidden' : ''; ?>><?php echo esc_html($topic); ?></span><svg class="lr-quote-mark" viewBox="0 0 27 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10.5 6H5a2 2 0 0 0-2 2v5h5c0 2-1 3.5-3 4.5V20c4.4-1.3 6.5-4.3 6.5-9V7a1 1 0 0 0-1-1Zm12 0H17a2 2 0 0 0-2 2v5h5c0 2-1 3.5-3 4.5V20c4.4-1.3 6.5-4.3 6.5-9V7a1 1 0 0 0-1-1Z"/></svg></div>
 						<div class="sh-review__stars lyr-testimonial__stars lr-rating" role="img" aria-label="<?php echo esc_attr($rating_label); ?>"><?php echo $this->stars_svg($rating); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span class="lr-rating__value" aria-hidden="true"><?php echo esc_html($rating . ' / 5'); ?></span></div>
 						<blockquote class="lr-quote"><p><?php echo esc_html($item['quote'] ?? ''); ?></p></blockquote>

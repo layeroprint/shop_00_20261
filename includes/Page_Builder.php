@@ -18,6 +18,7 @@ final class Page_Builder {
 		add_action('admin_init', array(__CLASS__, 'maybe_restore_home_whofor'));
 		add_action('admin_init', array(__CLASS__, 'maybe_remove_obsolete_blocks'));
 		add_action('admin_init', array(__CLASS__, 'maybe_remove_home_gallery'));
+		add_action('admin_init', array(__CLASS__, 'maybe_upgrade_home_testimonials'));
 		add_filter('wp_robots', array(__CLASS__, 'legal_draft_robots'));
 		add_filter('elementor/maintenance_mode/is_login_page', array(__CLASS__, 'allow_legal_pages'));
 		add_filter('woocommerce_coming_soon_exclude', array(__CLASS__, 'allow_legal_pages'));
@@ -346,6 +347,56 @@ final class Page_Builder {
 		}
 		clean_post_cache($post_id);
 		update_post_meta($post_id, '_layero_home_gallery_revision', '1');
+	}
+
+	/** Append the requested samples only to the known three-item homepage list. */
+	public static function maybe_upgrade_home_testimonials() {
+		if (! current_user_can('manage_options') || 'page' !== get_option('show_on_front')) { return; }
+		$post_id = (int) get_option('page_on_front');
+		$page = get_post($post_id);
+		if (! $page || 'page' !== $page->post_type || get_post_meta($post_id, '_layero_home_testimonials_revision', true)) { return; }
+		$raw = get_post_meta($post_id, '_elementor_data', true);
+		$data = json_decode($raw, true);
+		if (! is_array($data) || ! self::append_home_testimonial_samples($data)) { return; }
+		$backup = array('elementor_data' => $raw, 'post_content' => $page->post_content, 'saved_at' => gmdate('c'));
+		if (! get_post_meta($post_id, '_layero_home_testimonials_backup', true)
+			&& ! add_post_meta($post_id, '_layero_home_testimonials_backup', wp_slash($backup), true)) { return; }
+		if (! update_post_meta($post_id, '_elementor_data', wp_slash(wp_json_encode($data)))) { return; }
+		delete_post_meta($post_id, '_elementor_element_cache');
+		delete_post_meta($post_id, '_elementor_css');
+		if (class_exists('\\Elementor\\Core\\Files\\CSS\\Post')) {
+			(new \Elementor\Core\Files\CSS\Post($post_id))->delete();
+		}
+		clean_post_cache($post_id);
+		update_post_meta($post_id, '_layero_home_testimonials_revision', '1');
+	}
+
+	private static function append_home_testimonial_samples(&$elements) {
+		$changed = false;
+		$defaults = Shop_Content::testimonials();
+		foreach ($elements as &$element) {
+			if ('layero_testimonials' === ($element['widgetType'] ?? '')) {
+				$items = $element['settings']['items'] ?? null;
+				$matches = is_array($items) && 3 === count($items);
+				if ($matches) {
+					foreach (array_values($items) as $index => $item) {
+						foreach (array('name', 'quote', 'meta') as $key) {
+							if (($item[$key] ?? '') !== $defaults[$index][$key]) { $matches = false; }
+						}
+						if (5 !== (int) ($item['stars'] ?? 5) || 'yes' === ($item['is_sample'] ?? '')) { $matches = false; }
+					}
+				}
+				if ($matches) {
+					foreach (Shop_Content::testimonial_samples() as $index => $sample) {
+						$sample['_id'] = 'sample' . ($index + 4);
+						$element['settings']['items'][] = $sample;
+					}
+					$changed = true;
+				}
+			}
+			if (! empty($element['elements']) && self::append_home_testimonial_samples($element['elements'])) { $changed = true; }
+		}
+		return $changed;
 	}
 
 	private static function without_widgets($elements, $types, &$removed) {

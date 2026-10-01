@@ -264,6 +264,23 @@ final class Shop_Content {
 		);
 	}
 
+	/** The seven editable samples already used by the static homepage. */
+	public static function testimonial_samples() {
+		return array(
+			array('stars' => 5, 'quote' => 'A keresztlányom születésnapjára választottam a nevével készült lámpát. Amikor felkapcsoltuk, rögtön az éjjeliszekrényére tette. Igazán személyes ajándék lett.', 'name' => 'Tóth Réka', 'meta' => 'Névre szóló szám-lámpa', 'topic' => 'Minta · Születésnap', 'card_style' => 'standard', 'product_icon' => 'lamp', 'is_sample' => 'yes'),
+			array('stars' => 5, 'quote' => 'Az évfordulónkra szerettem volna valamit a közös történetünkből. Pár mondatból és egy képből olyan emléket készítettek, aminek azóta is külön helye van nálunk.', 'name' => 'Nagy Ádám', 'meta' => 'Egyedi rendelés', 'topic' => 'Minta · Közös emlék', 'card_style' => 'warm', 'product_icon' => 'sparkle', 'is_sample' => 'yes'),
+			array('stars' => 5, 'quote' => 'A tulipános vázát eredetileg ajándékba rendeltem, de kibontás után magamnak is szerettem volna egyet. Néhány szál virággal nagyon jól mutat a nappalinkban.', 'name' => 'Kovács Dóra', 'meta' => 'Tulipán üvegcső-váza', 'topic' => 'Minta · Otthoni hangulat', 'card_style' => 'standard', 'product_icon' => 'sparkle', 'is_sample' => 'yes'),
+			array('stars' => 5, 'quote' => 'A csapatunknak rendeltünk kulcstartókat a saját logónkkal. A színeket előre egyeztettük, a végeredmény pedig szépen illik az arculatunkhoz. Jó volt átadni őket.', 'name' => 'Farkas Péter', 'meta' => 'Logós kulcstartó', 'topic' => 'Minta · Céges ajándék', 'card_style' => 'featured', 'product_icon' => 'sparkle', 'is_sample' => 'yes'),
+			array('stars' => 5, 'quote' => 'Az unokaöcsém születésére készült az elefántos lámpa a nevével és a születési adataival. A szülei rögtön kitették a gyerekszobába. Kedves emlék lett belőle.', 'name' => 'Varga Eszter', 'meta' => 'Baba elefánt születési lámpa', 'topic' => 'Minta · Babaszületés', 'card_style' => 'warm', 'product_icon' => 'lamp', 'is_sample' => 'yes'),
+			array('stars' => 5, 'quote' => 'A barátomnak kerestem ajándékot, aki egyetlen futamot sem hagy ki. A pályás falikép telitalálat volt: rögtön felismerte a kedvenc pályáját, és már a falon van.', 'name' => 'Molnár Bence', 'meta' => 'F1 pálya-falikép', 'topic' => 'Minta · Rajongói ajándék', 'card_style' => 'standard', 'product_icon' => 'sparkle', 'is_sample' => 'yes'),
+			array('stars' => 5, 'quote' => 'A húgom diplomaosztójára választottam a baglyos figurát, személyes felirattal. Pont olyan kedves és játékos lett, mint szerettem volna. Az íróasztalán kapott helyet.', 'name' => 'Horváth Anna', 'meta' => 'Diplomás bagoly figura', 'topic' => 'Minta · Ballagás', 'card_style' => 'warm', 'product_icon' => 'sparkle', 'is_sample' => 'yes'),
+		);
+	}
+
+	public static function testimonials_preview() {
+		return array_merge(self::testimonials(), self::testimonial_samples());
+	}
+
 	public static function gallery_items() {
 		return array(
 			array('image' => array('url' => self::asset_url('termekvilag/hero_slider/layero-asset-0009.webp')), 'alt' => 'Névre szóló szám-lámpa', 'url' => array('url' => '/termekek/?cat=lampak')),
