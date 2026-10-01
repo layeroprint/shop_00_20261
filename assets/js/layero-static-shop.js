@@ -72,6 +72,12 @@
     }, true);
   }
   function fixStaticUrls(root) {
+    staticNodes('[data-slide-src], [data-slide-srcset]', root).forEach(function (node) {
+      ['data-slide-src', 'data-slide-srcset'].forEach(function (attr) {
+        var value = node.getAttribute(attr);
+        if (value) node.setAttribute(attr, normalizeAssetUrl(value));
+      });
+    });
     staticNodes('img[src]', root).forEach(function (img) {
       var next = normalizeAssetUrl(img.getAttribute('src'));
       if (next && next !== img.getAttribute('src')) img.setAttribute('src', next);
@@ -1552,6 +1558,19 @@
   }
 
   /* ── FŐOLDAL ─────────────────────────────────────────────────── */
+  function loadSlideImages(slide) {
+    // Resolve picture sources first, so mobile never downloads the desktop fallback.
+    $all('source[data-slide-srcset]', slide).forEach(function (source) {
+      source.setAttribute('srcset', source.getAttribute('data-slide-srcset'));
+      source.removeAttribute('data-slide-srcset');
+    });
+    $all('img[data-slide-src]', slide).forEach(function (img) {
+      img.loading = 'eager';
+      img.src = img.getAttribute('data-slide-src');
+      img.removeAttribute('data-slide-src');
+    });
+  }
+
   function initSlider() {
     var slider = $('#sh-slider');
     if (!slider) return;
@@ -1571,6 +1590,7 @@
     // teljesen rá nem úszik; a szöveg elemenként, finoman érkezik (is-entering)
     var transT = null;
     function transitionTo(next, prev) {
+      loadSlideImages(slides[next]);
       clearTimeout(transT);
       slides.forEach(function (s) {
         s.classList.remove('is-on', 'is-leaving', 'is-entering');
@@ -1601,6 +1621,7 @@
       transitionTo(next, prev);
     }
     // belépéskor a kép azonnal látszik, csak a szöveg úszik be finoman
+    loadSlideImages(slides[0]);
     if (!reduceMotion) {
       slides[0].classList.add('is-entering');
       transT = setTimeout(function () { slides[0].classList.remove('is-entering'); }, 1600);
@@ -1992,20 +2013,33 @@
       if (carAuto) {
         var SPEED = 42;                 // px / másodperc
         var autoPaused = false, hovering = false, resumeTimer = 0, lastTs = 0;
-        function autoResume() { if (!hovering && !document.hidden) autoPaused = false; }
-        function autoPause() { autoPaused = true; clearTimeout(resumeTimer); }
+        var carVisible = !('IntersectionObserver' in window), autoFrame = 0;
+        function syncAutoFrame() {
+          if (autoPaused || !carVisible || document.hidden) {
+            cancelAnimationFrame(autoFrame); autoFrame = 0; lastTs = 0;
+          } else if (!autoFrame) autoFrame = requestAnimationFrame(autoStep);
+        }
+        function autoResume() { if (!hovering && !document.hidden) autoPaused = false; syncAutoFrame(); }
+        function autoPause() { autoPaused = true; clearTimeout(resumeTimer); syncAutoFrame(); }
         carHold = function (ms) { autoPause(); resumeTimer = setTimeout(autoResume, ms || 1800); };
 
         function autoStep(ts) {
+          autoFrame = 0;
+          if (autoPaused || !carVisible || document.hidden) { lastTs = 0; return; }
           if (lastTs && !autoPaused) {
-            car.scrollLeft += SPEED * (ts - lastTs) / 1000;
+            car.scrollLeft += SPEED * Math.min(ts - lastTs, 64) / 1000;
             var half = car.scrollWidth / 2;               // egy kártyasor szélessége
             if (car.scrollLeft >= half) car.scrollLeft -= half;
           }
           lastTs = ts;
-          requestAnimationFrame(autoStep);
+          autoFrame = requestAnimationFrame(autoStep);
         }
-        requestAnimationFrame(autoStep);
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (entries) {
+            carVisible = entries[0].isIntersecting; syncAutoFrame();
+          }).observe(car);
+        }
+        syncAutoFrame();
 
         // egérrel fölé húzva megáll, elhagyva folytatódik
         car.addEventListener('mouseenter', function () { hovering = true; autoPause(); });

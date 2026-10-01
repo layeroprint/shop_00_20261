@@ -221,6 +221,12 @@
 			wishlistBootPromise = Promise.resolve(merged);
 			return wishlistBootPromise;
 		}
+		// The server already supplied the current favorites. Only merge unsaved local items.
+		var serverIds = (Array.isArray(config.favoriteIds) ? config.favoriteIds : []).map(String);
+		if (merged.length === serverIds.length && merged.every(function (id) { return serverIds.indexOf(id) !== -1; })) {
+			wishlistBootPromise = Promise.resolve(merged);
+			return wishlistBootPromise;
+		}
 
 		wishlistBootPromise = accountRequest('layero_sync_favorites', { ids: JSON.stringify(merged) })
 			.then(function (result) {
@@ -565,21 +571,34 @@
 				var hovering = false;
 				var resumeTimer = 0;
 				var lastTs = 0;
+				var inView = !('IntersectionObserver' in window), frame = 0;
+				function syncFrame() {
+					if (paused || !inView || document.hidden) {
+						window.cancelAnimationFrame(frame); frame = 0; lastTs = 0;
+					} else if (!frame) frame = window.requestAnimationFrame(step);
+				}
 
-				var resume = function () { if (!hovering && !document.hidden) paused = false; };
-				var pause = function () { paused = true; window.clearTimeout(resumeTimer); };
+				var resume = function () { if (!hovering && !document.hidden) paused = false; syncFrame(); };
+				var pause = function () { paused = true; window.clearTimeout(resumeTimer); syncFrame(); };
 				hold = function (ms) { pause(); resumeTimer = window.setTimeout(resume, ms || 1800); };
 
 				function step(ts) {
+					frame = 0;
+					if (paused || !inView || document.hidden) { lastTs = 0; return; }
 					if (lastTs && !paused) {
-						track.scrollLeft += speed * (ts - lastTs) / 1000;
+						track.scrollLeft += speed * Math.min(ts - lastTs, 64) / 1000;
 						var half = track.scrollWidth / 2;
 						if (track.scrollLeft >= half) track.scrollLeft -= half;
 					}
 					lastTs = ts;
-					window.requestAnimationFrame(step);
+					frame = window.requestAnimationFrame(step);
 				}
-				window.requestAnimationFrame(step);
+				if ('IntersectionObserver' in window) {
+					new IntersectionObserver(function (entries) {
+						inView = entries[0].isIntersecting; syncFrame();
+					}).observe(track);
+				}
+				syncFrame();
 
 				track.addEventListener('mouseenter', function () { hovering = true; pause(); });
 				track.addEventListener('mouseleave', function () { hovering = false; resume(); });

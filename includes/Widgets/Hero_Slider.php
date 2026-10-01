@@ -194,7 +194,26 @@ class Hero_Slider extends Base_Widget {
 		?>
 		<section class="sh-slider<?php echo $lifestyle ? ' sh-slider--lifestyle' : ''; ?>" id="sh-slider" data-autoplay="<?php echo esc_attr($migrated_defaults ? 0 : max(0, (int) ($settings['autoplay_speed'] ?? 0))); ?>" data-hero-style="<?php echo esc_attr($hero_style); ?>" aria-label="<?php esc_attr_e('Kiemelt ajánlatok', 'layero-shop-ui'); ?>">
 			<?php foreach ($slides as $index => $slide) : ?>
-				<?php $this->render_slide($slide, $index, 0 === $index ? 'h1' : ('h1' === $title_tag ? 'h2' : $title_tag)); ?>
+				<?php
+				ob_start();
+				$this->render_slide($slide, $index, 0 === $index ? 'h1' : ('h1' === $title_tag ? 'h2' : $title_tag));
+				$html = ob_get_clean();
+				if ($index > 0) {
+					$tags = new \WP_HTML_Tag_Processor($html);
+					while ($tags->next_tag()) {
+						if ('SOURCE' === $tags->get_tag() && $tags->get_attribute('srcset')) {
+							$tags->set_attribute('data-slide-srcset', $tags->get_attribute('srcset'));
+							$tags->remove_attribute('srcset');
+						} elseif ('IMG' === $tags->get_tag() && $tags->get_attribute('src') && 0 !== strpos($tags->get_attribute('src'), 'data:')) {
+							$tags->set_attribute('data-slide-src', $tags->get_attribute('src'));
+							$tags->set_attribute('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+							$tags->remove_attribute('fetchpriority');
+						}
+					}
+					$html = $tags->get_updated_html();
+				}
+				echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by render_slide.
+				?>
 			<?php endforeach; ?>
 			<?php if ('yes' === ($settings['show_arrows'] ?? 'yes') && count($slides) > 1) : ?>
 				<button class="sh-slider__nav sh-slider__nav--prev" type="button" data-slide-prev aria-label="<?php esc_attr_e('Előző', 'layero-shop-ui'); ?>">&lsaquo;</button>

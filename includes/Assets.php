@@ -77,7 +77,7 @@ final class Assets {
 
 		wp_register_script(
 			'layero-static-data',
-			LAYERO_SHOP_UI_URL . 'assets/js/layero-static-data.js',
+			false, // WooCommerce supplies the catalogue below; do not download the preview catalogue.
 			array(),
 			LAYERO_SHOP_UI_VERSION,
 			true
@@ -152,6 +152,7 @@ final class Assets {
 		);
 		// Replace the preview data before any shared UI code reads it.
 		wp_add_inline_script('layero-static-data',
+			'window.SHOP_VARIANSOK = {meret:[],szin:[]};' .
 			'window.SHOP_PRODUCTS = ' . wp_json_encode($catalog['products'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';' .
 			'window.SHOP_CATS = ' . wp_json_encode($catalog['categories'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';', 'after');
 

@@ -88,6 +88,12 @@ const ADAPTER = `  var STATIC_CFG = window.LayeroShopStatic || {};
     }, true);
   }
   function fixStaticUrls(root) {
+    staticNodes('[data-slide-src], [data-slide-srcset]', root).forEach(function (node) {
+      ['data-slide-src', 'data-slide-srcset'].forEach(function (attr) {
+        var value = node.getAttribute(attr);
+        if (value) node.setAttribute(attr, normalizeAssetUrl(value));
+      });
+    });
     staticNodes('img[src]', root).forEach(function (img) {
       var next = normalizeAssetUrl(img.getAttribute('src'));
       if (next && next !== img.getAttribute('src')) img.setAttribute('src', next);

@@ -21,7 +21,20 @@ foreach (array('fresh' => array(), '0.10.3' => array('slides' => $lifestyle), 'l
     hero_check(5 === substr_count($html, '<article class="sh-slide '), $case . ': five slides.');
     hero_check(strpos($html, $old[0]['title']) < strpos($html, $old[1]['title']) && strpos($html, $old[1]['title']) < strpos($html, $lifestyle[0]['title']), $case . ': original lamp and fan copy precede lifestyle scenes.');
     hero_check(false !== strpos($html, 'data-lamp-ba') && false !== strpos($html, 'data-spot'), $case . ': both original interactive widgets retained.');
-    hero_check(3 === substr_count($html, '<source media="(max-width: 820px)"') && false !== strpos($html, 'sh-slider--lifestyle'), $case . ': mobile artwork and mixed slider styling.');
+    $tags = new WP_HTML_Tag_Processor($html);
+    $mobile_sources = 0; $deferred_images = 0; $eager_images = 0;
+    while ($tags->next_tag()) {
+        if ('SOURCE' === $tags->get_tag() && '(max-width: 820px)' === $tags->get_attribute('media')) {
+            $mobile_sources++;
+            hero_check(! $tags->get_attribute('srcset') && $tags->get_attribute('data-slide-srcset'), $case . ': hidden mobile source waits for selection.');
+        }
+        if ('IMG' === $tags->get_tag()) {
+            if ($tags->get_attribute('data-slide-src')) { $deferred_images++; }
+            elseif (0 === strpos((string) $tags->get_attribute('src'), 'http')) { $eager_images++; }
+        }
+    }
+    hero_check(3 === $mobile_sources && false !== strpos($html, 'sh-slider--lifestyle'), $case . ': mobile artwork and mixed slider styling.');
+    hero_check(7 === $deferred_images && 2 === $eager_images, $case . ': only the first comparison images load immediately.');
 }
 $lifestyle[0]['title'] = 'Saját szerkesztett kampány';
 $html = hero_render(array('slides' => $lifestyle));
