@@ -64,7 +64,7 @@ body.layero-account-page .sh-page-hd .shop-wrap::before {
   margin-bottom: 9px;
   color: var(--lp-cyan);
   content: 'LAYERO ÜGYFÉLKÖZPONT';
-  font-size: .72rem;
+  font-size: .875rem;
   font-weight: 800;
   letter-spacing: .18em;
 }
@@ -186,7 +186,7 @@ body.layero-account-page .woocommerce-MyAccount-navigation ul::before {
     linear-gradient(140deg, var(--lp-navy), var(--lp-navy-2));
   color: #fff;
   content: 'Személyes fiók\A Rendelések és adatok egy helyen';
-  font-size: .78rem;
+  font-size: .875rem;
   font-weight: 750;
   letter-spacing: .015em;
   line-height: 1.7;
@@ -212,7 +212,7 @@ body.layero-account-page .woocommerce-MyAccount-navigation a {
   padding: 13px 16px 13px 52px !important;
   background: transparent !important;
   color: #263946 !important;
-  font-size: .84rem !important;
+  font-size: .875rem !important;
   font-weight: 700 !important;
   text-decoration: none !important;
   transition: background .2s ease, color .2s ease, padding .2s ease;
@@ -309,7 +309,7 @@ body.layero-account-page .lyr-account-heading::after {
 body.layero-account-page .lyr-account-heading .lyr-eyebrow,
 body.layero-account-page .lyr-account-heading > span {
   color: var(--lp-cyan) !important;
-  font-size: .7rem;
+  font-size: .875rem;
   font-weight: 800;
   letter-spacing: .17em;
   text-transform: uppercase;
@@ -375,7 +375,7 @@ body.layero-account-page .lyr-account-detail-icon {
 
 body.layero-account-page .lyr-account-stat small {
   color: #758691;
-  font-size: .66rem;
+  font-size: .875rem;
   font-weight: 750;
   letter-spacing: .04em;
   text-transform: uppercase;
@@ -394,7 +394,7 @@ body.layero-account-page .lyr-account-section-head {
 
 body.layero-account-page .lyr-account-section-head .lyr-eyebrow {
   color: var(--lp-teal);
-  font-size: .68rem;
+  font-size: .875rem;
   font-weight: 800;
   letter-spacing: .16em;
   text-transform: uppercase;
@@ -457,7 +457,7 @@ body.layero-account-page .woocommerce a.button {
   background: linear-gradient(135deg, var(--lp-teal), #087a90) !important;
   box-shadow: 0 9px 20px rgba(13, 145, 167, .2);
   color: #fff !important;
-  font-size: .82rem;
+  font-size: .875rem;
   font-weight: 800 !important;
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
@@ -640,7 +640,7 @@ body.layero-favorites-page .lyr-favorites-hero .lyr-eyebrow {
 	display: block;
 	margin-bottom: 11px;
 	color: var(--lp-cyan);
-	font-size: .71rem;
+	font-size: .875rem;
 	font-weight: 850;
 	letter-spacing: .18em;
 	text-transform: uppercase;
@@ -712,7 +712,7 @@ body.layero-favorites-page .lyr-favorites-count-card b {
 body.layero-favorites-page .lyr-favorites-count-card small {
 	margin-top: 5px;
 	color: rgba(255, 255, 255, .62);
-	font-size: .7rem;
+	font-size: .875rem;
 	font-weight: 700;
 }
 
@@ -749,7 +749,7 @@ body.layero-favorites-page .lyr-favorites-toolbar > div {
 	gap: 10px;
 	min-width: 0;
 	color: #47616d;
-	font-size: .8rem;
+	font-size: .875rem;
 	font-weight: 650;
 }
 
@@ -763,7 +763,7 @@ body.layero-favorites-page .lyr-favorites-toolbar svg {
 body.layero-favorites-page .lyr-favorites-toolbar > a {
 	flex: 0 0 auto;
 	color: var(--lp-teal);
-	font-size: .76rem;
+	font-size: .875rem;
 	font-weight: 800;
 	text-decoration: none;
 }
@@ -871,7 +871,7 @@ body.layero-account-page .woocommerce form label {
   display: block;
   margin-bottom: 7px;
   color: #304653;
-  font-size: .79rem;
+  font-size: .875rem;
   font-weight: 750;
 }
 
@@ -903,7 +903,7 @@ body.layero-account-page .woocommerce textarea:focus {
 
 body.layero-account-page .woocommerce form em {
   color: var(--lp-muted);
-  font-size: .75rem;
+  font-size: .875rem;
 }
 
 body.layero-account-page .woocommerce form fieldset {
@@ -957,14 +957,14 @@ body.layero-account-page .woocommerce-Address-title h2 {
 body.layero-account-page .woocommerce-Address-title a.edit {
   float: none;
   color: var(--lp-teal);
-  font-size: .76rem;
+  font-size: .875rem;
   font-weight: 800;
 }
 
 body.layero-account-page .woocommerce-Address address {
   margin-top: 24px;
   color: var(--lp-muted);
-  font-size: .86rem;
+  font-size: .875rem;
   font-style: normal;
   line-height: 1.7;
 }
@@ -983,7 +983,7 @@ body.layero-account-page .woocommerce table.shop_table th {
   padding: 15px 17px;
   background: #f5fafb;
   color: #425761;
-  font-size: .72rem;
+  font-size: .875rem;
   font-weight: 800;
   letter-spacing: .06em;
   text-transform: uppercase;
