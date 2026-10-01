@@ -3,12 +3,29 @@ body.layero-shell-ready .elementor-location-header,
 body.layero-shell-ready .elementor-location-footer,
 body.layero-shell-ready #site-header,
 body.layero-shell-ready #site-footer { display: none !important; }
+/* One-column Elementor hosts leave the page grid to their Layero widget.
+   This also covers older boxed sections with the default 10px column gutter. */
+body.layero-shell-ready .elementor-top-section:has(> .elementor-container > .elementor-column:only-child :is([class*="elementor-widget-layero_"], .elementor-widget-shortcode)) > .elementor-container {
+  max-width: none;
+}
+body.layero-shell-ready .elementor-top-column:only-child > .elementor-widget-wrap:has(> :is([class*="elementor-widget-layero_"], .elementor-widget-shortcode)) {
+  padding-inline: 0;
+}
+body.layero-shell-ready .e-con:has(> :is([class*="elementor-widget-layero_"], .elementor-widget-shortcode)),
+body.layero-shell-ready .e-con:has(> .e-con-inner > :is([class*="elementor-widget-layero_"], .elementor-widget-shortcode)) {
+  --container-max-width: 100%;
+  padding-inline: 0;
+}
+body.layero-shell-ready .e-con-boxed:has(> .e-con-inner > :is([class*="elementor-widget-layero_"], .elementor-widget-shortcode)) > .e-con-inner {
+  max-width: none;
+}
 .lyr-pagination { display:flex; gap:16px; align-items:center; justify-content:center; margin:28px 0; flex-wrap:wrap; }
 .lyr-form-consent { display:block; margin:16px 0; font-size:14px; line-height:1.6; }
 .lyr-form-consent input { width:auto; margin-right:8px; }
 .lyr-online-status:not(:empty) { padding:12px; border-left:3px solid #0a7c92; background:#eef8fa; }
 .lyr-form-note { font-size:14px; color:#53616b; }
-body.woocommerce main#main { max-width:1180px; margin:32px auto; padding:0 20px; }
+/* Layero sections own the shared page grid; the theme must not add another one. */
+body.layero-shell-ready.woocommerce main#main { width:100%; max-width:none; margin:0; padding:0; }
 body.woocommerce div.product .summary .price { color:#0a6677; }
 body.woocommerce div.product form.cart .button { background:#0a7c92; border-radius:24px; min-height:44px; padding:12px 24px; }
 body.woocommerce div.product .woocommerce-tabs ul.tabs li { border-radius:12px 12px 0 0; }
@@ -61,7 +78,7 @@ body.woocommerce div.product .woocommerce-tabs ul.tabs li { border-radius:12px 1
 .lyr-single-product .sh-specs th,
 .lyr-single-product .sh-specs td { padding:11px 20px; border-top:1px solid var(--line); text-align:left; font-size:14px; }
 .lyr-single-product .sh-specs th { width:42%; color:var(--muted); font-weight:450; }
-.lyr-single-accordion { max-width:860px; }
+.lyr-single-accordion { max-width:var(--maxw); }
 .lyr-single-product .sh-acc details > div a,
 .lyr-single-product .sh-guarantee__legal a { color:#087c90; text-decoration:underline; }
 .lyr-single-reviews { max-width:var(--maxw); }

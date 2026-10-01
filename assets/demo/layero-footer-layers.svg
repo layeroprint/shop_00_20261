@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1000" viewBox="0 0 2000 1000" fill="none">
+  <!-- Extruded organic contours inspired by FDM print layers. Static decorative artwork. -->
+  <defs>
+    <path id="contour" d="M-360 0C-350-120-140-135 15-100C140-70 170-120 280-65C400 10 230 170 70 110C-40 68-105 130-245 95C-320 76-355 42-360 0Z"/>
+    <linearGradient id="cyan" x1="-350" y1="-80" x2="330" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00e5ff" stop-opacity="0.03"/>
+      <stop offset="0.42" stop-color="#00d7e8" stop-opacity="0.22"/>
+      <stop offset="0.7" stop-color="#71b9c2" stop-opacity="0.48"/>
+      <stop offset="1" stop-color="#f0c27a" stop-opacity="0.16"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="-360" y1="0" x2="360" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00d7e8" stop-opacity="0.06"/>
+      <stop offset="0.5" stop-color="#f0c27a" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#f0c27a" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fade" x2="0" y2="1">
+      <stop stop-color="white"/>
+      <stop offset="0.8" stop-color="white"/>
+      <stop offset="1" stop-color="black"/>
+    </linearGradient>
+    <mask id="edge-fade"><path fill="url(#fade)" d="M0 0H2000V1000H0Z"/></mask>
+  </defs>
+  <g stroke-width="0.85" mask="url(#edge-fade)">
+    <use href="#contour" transform="translate(1735.00 -38.00) rotate(-26) scale(1.361)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1736.16 -29.60) rotate(-26) scale(1.379)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1737.31 -21.20) rotate(-26) scale(1.397)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1738.47 -12.80) rotate(-26) scale(1.415)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1739.62 -4.40) rotate(-26) scale(1.432)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1740.78 4.00) rotate(-26) scale(1.449)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1741.93 12.40) rotate(-26) scale(1.466)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1743.09 20.80) rotate(-26) scale(1.482)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1744.24 29.20) rotate(-26) scale(1.498)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1745.40 37.60) rotate(-26) scale(1.513)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1746.56 46.00) rotate(-26) scale(1.527)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1747.71 54.40) rotate(-26) scale(1.541)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1748.87 62.80) rotate(-26) scale(1.553)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1750.02 71.20) rotate(-26) scale(1.565)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1751.18 79.60) rotate(-26) scale(1.576)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1752.33 88.00) rotate(-26) scale(1.585)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1753.49 96.40) rotate(-26) scale(1.594)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1754.64 104.80) rotate(-26) scale(1.601)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1755.80 113.20) rotate(-26) scale(1.607)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1756.96 121.60) rotate(-26) scale(1.612)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1758.11 130.00) rotate(-26) scale(1.616)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1759.27 138.40) rotate(-26) scale(1.619)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1760.42 146.80) rotate(-26) scale(1.620)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1761.58 155.20) rotate(-26) scale(1.620)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1762.73 163.60) rotate(-26) scale(1.619)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1763.89 172.00) rotate(-26) scale(1.616)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1765.04 180.40) rotate(-26) scale(1.612)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1766.20 188.80) rotate(-26) scale(1.607)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1767.36 197.20) rotate(-26) scale(1.601)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1768.51 205.60) rotate(-26) scale(1.594)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1769.67 214.00) rotate(-26) scale(1.585)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1770.82 222.40) rotate(-26) scale(1.576)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1771.98 230.80) rotate(-26) scale(1.565)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1773.13 239.20) rotate(-26) scale(1.553)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1774.29 247.60) rotate(-26) scale(1.541)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1775.44 256.00) rotate(-26) scale(1.527)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1776.60 264.40) rotate(-26) scale(1.513)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1777.76 272.80) rotate(-26) scale(1.498)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1778.91 281.20) rotate(-26) scale(1.482)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1780.07 289.60) rotate(-26) scale(1.466)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1781.22 298.00) rotate(-26) scale(1.449)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1782.38 306.40) rotate(-26) scale(1.432)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1783.53 314.80) rotate(-26) scale(1.415)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1784.69 323.20) rotate(-26) scale(1.397)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1785.84 331.60) rotate(-26) scale(1.379)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(1787.00 340.00) rotate(-26) scale(1.361)" stroke="url(#cyan)"/>
+    <use href="#contour" transform="translate(30.00 625.00) rotate(-24) scale(0.941)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(31.58 632.40) rotate(-24) scale(0.958)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(33.15 639.80) rotate(-24) scale(0.975)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(34.73 647.20) rotate(-24) scale(0.991)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(36.30 654.60) rotate(-24) scale(1.007)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(37.88 662.00) rotate(-24) scale(1.023)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(39.45 669.40) rotate(-24) scale(1.038)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(41.03 676.80) rotate(-24) scale(1.052)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(42.61 684.20) rotate(-24) scale(1.064)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(44.18 691.60) rotate(-24) scale(1.076)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(45.76 699.00) rotate(-24) scale(1.087)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(47.33 706.40) rotate(-24) scale(1.096)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(48.91 713.80) rotate(-24) scale(1.104)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(50.48 721.20) rotate(-24) scale(1.110)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(52.06 728.60) rotate(-24) scale(1.115)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(53.64 736.00) rotate(-24) scale(1.118)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(55.21 743.40) rotate(-24) scale(1.120)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(56.79 750.80) rotate(-24) scale(1.120)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(58.36 758.20) rotate(-24) scale(1.118)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(59.94 765.60) rotate(-24) scale(1.115)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(61.52 773.00) rotate(-24) scale(1.110)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(63.09 780.40) rotate(-24) scale(1.104)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(64.67 787.80) rotate(-24) scale(1.096)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(66.24 795.20) rotate(-24) scale(1.087)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(67.82 802.60) rotate(-24) scale(1.076)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(69.39 810.00) rotate(-24) scale(1.064)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(70.97 817.40) rotate(-24) scale(1.052)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(72.55 824.80) rotate(-24) scale(1.038)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(74.12 832.20) rotate(-24) scale(1.023)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(75.70 839.60) rotate(-24) scale(1.007)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(77.27 847.00) rotate(-24) scale(0.991)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(78.85 854.40) rotate(-24) scale(0.975)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(80.42 861.80) rotate(-24) scale(0.958)" stroke="url(#gold)"/>
+    <use href="#contour" transform="translate(82.00 869.20) rotate(-24) scale(0.941)" stroke="url(#gold)"/>
+  </g>
+</svg>

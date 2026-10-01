@@ -44,7 +44,7 @@
   width: 100%;
   max-width: var(--maxw, 1240px);
   margin: 0 auto;
-  padding: 0 clamp(20px, 3vw, 32px);
+  padding: 0 var(--page-gutter, clamp(18px, 3vw, 32px));
 }
 
 .lyr-testimonials--studio .lr-head {
@@ -476,7 +476,6 @@
 }
 
 @media (max-width: 360px) {
-  .lyr-testimonials--studio .lr-wrap { padding-inline: 16px; }
   .lyr-testimonials--studio .lr-card { padding: 22px 20px; }
   .lyr-testimonials--studio .lr-topic { font-size: .875rem; padding-inline: 8px; }
   .lyr-testimonials--studio .lr-product-icon { display: none; }

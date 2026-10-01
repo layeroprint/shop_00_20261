@@ -1178,6 +1178,7 @@
     var footer = document.createElement('footer');
     footer.className = 'sh-footer';
     footer.innerHTML =
+      '<div class="sh-footer__texture" aria-hidden="true"></div>' +
       '<div class="shop-wrap">' +
         '<div class="sh-footer__intro">' +
           '<div class="sh-footer__brand">' +
@@ -1211,7 +1212,7 @@
         '</nav>' +
         '<section class="sh-footer__contact" aria-labelledby="sh-footer-contact">' +
           '<span class="sh-footer__eyebrow">Beszéljünk róla</span>' +
-          '<h2 id="sh-footer-contact">Kérdésed van? <br>Itt vagyunk.</h2>' +
+          '<h2 id="sh-footer-contact">Kérdésed van? <span>Itt vagyunk.</span></h2>' +
           '<a class="sh-footer__contact-link" href="tel:+40756642387"><span class="sh-footer__contact-icon" aria-hidden="true">' + ICO.phone + '</span><span><strong>+40 756 642 387</strong><small>Hétköznap 9–17 óráig</small></span></a>' +
           '<a class="sh-footer__contact-link" href="mailto:layeroprint@gmail.com"><span class="sh-footer__contact-icon" aria-hidden="true">' + ICO.mail + '</span><span><strong>layeroprint@gmail.com</strong><small>Írj nekünk e-mailt</small></span></a>' +
           '<a class="sh-footer__contact-cta" href="kapcsolat.html">Kapcsolatfelvétel <span aria-hidden="true">↗</span></a>' +

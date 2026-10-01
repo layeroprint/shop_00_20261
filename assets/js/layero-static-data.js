@@ -580,10 +580,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/04-roblox-logos-kulcstarto/04-roblox-logos-kulcstarto-01.jpg",
-      "assets/kulcstartok/04-roblox-logos-kulcstarto/04-roblox-logos-kulcstarto-02.jpg",
-      "assets/kulcstartok/04-roblox-logos-kulcstarto/04-roblox-logos-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/04-roblox-logos-kulcstarto/04-roblox-logos-kulcstarto-02.jpg",
+  "assets/kulcstartok/04-roblox-logos-kulcstarto/04-roblox-logos-kulcstarto-01.jpg",
+  "assets/kulcstartok/04-roblox-logos-kulcstarto/04-roblox-logos-kulcstarto-03.jpg"
+],
     "leiras": "Fekete-arany hatású, hatszögletű Roblox/Robux mintás kulcstartó. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A sárga keret és a középen látható, elfordított négyzetes jel a Robux motívumát idézi. A tömör, hatszögletű forma gamer táskán és kulcscsomón egyaránt jól érvényesül.",
@@ -701,13 +701,13 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-04.jpg",
-      "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-01.jpg",
-      "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-02.jpg",
-      "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-03.jpg",
-      "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-05.jpg",
-      "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-06.jpg"
-    ],
+  "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-01.jpg",
+  "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-04.jpg",
+  "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-02.jpg",
+  "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-03.jpg",
+  "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-05.jpg",
+  "assets/kulcstartok/05-skoda-logos-kulcstarto/05-skoda-logos-kulcstarto-06.jpg"
+],
     "leiras": "Kerek Škoda kulcstartó zöld, szárnyas nyíl motívummal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A fekete keretben megjelenő zöld jel adja ennek az autós kulcstartónak a karakterét. Jó apróság egy Škoda tulajdonosának, akár a mindennap használt autókulcs mellé.",
@@ -828,10 +828,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/06-bmw-logos-kulcstarto/06-bmw-logos-kulcstarto-03.jpg",
-      "assets/kulcstartok/06-bmw-logos-kulcstarto/06-bmw-logos-kulcstarto-01.jpg",
-      "assets/kulcstartok/06-bmw-logos-kulcstarto/06-bmw-logos-kulcstarto-02.jpg"
-    ],
+  "assets/kulcstartok/06-bmw-logos-kulcstarto/06-bmw-logos-kulcstarto-02.jpg",
+  "assets/kulcstartok/06-bmw-logos-kulcstarto/06-bmw-logos-kulcstarto-03.jpg",
+  "assets/kulcstartok/06-bmw-logos-kulcstarto/06-bmw-logos-kulcstarto-01.jpg"
+],
     "leiras": "Kerek BMW kulcstartó kék-fehér középrésszel és fekete szegéllyel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A négy részre osztott kék-fehér minta és a BMW felirat azonnal felismerhetővé teszi a függőt. Visszafogott autós kiegészítő saját kulcscsomóra vagy ajándékba.",
@@ -949,13 +949,13 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-01.jpg",
-      "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-02.jpg",
-      "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-03.jpg",
-      "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-04.jpg",
-      "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-05.jpg",
-      "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-06.jpg"
-    ],
+  "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-02.jpg",
+  "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-01.jpg",
+  "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-03.jpg",
+  "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-04.jpg",
+  "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-05.jpg",
+  "assets/kulcstartok/07-toyota-logos-kulcstarto/07-toyota-logos-kulcstarto-06.jpg"
+],
     "leiras": "Piros, ovális Toyota kulcstartó fehér emblémával. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A fehér Toyota jel élénken kirajzolódik a piros alapon. Az ovális függő egyszerű módja annak, hogy a kulcscsomón is visszaköszönjön a kedvenc autómárka.",
@@ -1076,10 +1076,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/08-ford-logos-kulcstarto/08-ford-logos-kulcstarto-01.jpg",
-      "assets/kulcstartok/08-ford-logos-kulcstarto/08-ford-logos-kulcstarto-02.jpg",
-      "assets/kulcstartok/08-ford-logos-kulcstarto/08-ford-logos-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/08-ford-logos-kulcstarto/08-ford-logos-kulcstarto-02.jpg",
+  "assets/kulcstartok/08-ford-logos-kulcstarto/08-ford-logos-kulcstarto-01.jpg",
+  "assets/kulcstartok/08-ford-logos-kulcstarto/08-ford-logos-kulcstarto-03.jpg"
+],
     "leiras": "Kék, ovális Ford kulcstartó fehér felirattal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A klasszikus kék-fehér színpár és az ovális forma teszi ismerőssé ezt a Ford-mintás darabot. Autókulcshoz illő apró kiegészítő, amely ajándékként is könnyen személyessé válik.",
@@ -1197,10 +1197,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/09-audi-logos-kulcstarto/09-audi-logos-kulcstarto-01.jpg",
-      "assets/kulcstartok/09-audi-logos-kulcstarto/09-audi-logos-kulcstarto-02.jpg",
-      "assets/kulcstartok/09-audi-logos-kulcstarto/09-audi-logos-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/09-audi-logos-kulcstarto/09-audi-logos-kulcstarto-03.jpg",
+  "assets/kulcstartok/09-audi-logos-kulcstarto/09-audi-logos-kulcstarto-01.jpg",
+  "assets/kulcstartok/09-audi-logos-kulcstarto/09-audi-logos-kulcstarto-02.jpg"
+],
     "leiras": "Audi kulcstartó négy fehér karikával és piros felirattal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A sötét alapon a négy összekapcsolódó karika és a piros Audi felirat kap hangsúlyt. Letisztult motívum az autókulcs mellé, Audi-rajongóknak.",
@@ -1318,10 +1318,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/10-f1-logos-kulcstarto/10-f1-logos-kulcstarto-01.jpg",
-      "assets/kulcstartok/10-f1-logos-kulcstarto/10-f1-logos-kulcstarto-02.jpg",
-      "assets/kulcstartok/10-f1-logos-kulcstarto/10-f1-logos-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/10-f1-logos-kulcstarto/10-f1-logos-kulcstarto-02.jpg",
+  "assets/kulcstartok/10-f1-logos-kulcstarto/10-f1-logos-kulcstarto-01.jpg",
+  "assets/kulcstartok/10-f1-logos-kulcstarto/10-f1-logos-kulcstarto-03.jpg"
+],
     "leiras": "Piros-fekete F1 logós kulcstartó az autósport kedvelőinek. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A lendületes F1 motívumot a piros és fekete felületek kontrasztja emeli ki. Kis méretű emlék a versenyhétvégék hangulatából, kulcsra vagy táskára akasztva.",
@@ -1439,12 +1439,12 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/11-fc-barcelona-kulcstarto/11-fc-barcelona-kulcstarto-01.jpg",
-      "assets/kulcstartok/11-fc-barcelona-kulcstarto/11-fc-barcelona-kulcstarto-02.jpg",
-      "assets/kulcstartok/11-fc-barcelona-kulcstarto/11-fc-barcelona-kulcstarto-03.jpg",
-      "assets/kulcstartok/11-fc-barcelona-kulcstarto/11-fc-barcelona-kulcstarto-04.jpg",
-      "assets/kulcstartok/11-fc-barcelona-kulcstarto/11-fc-barcelona-kulcstarto-05.jpg"
-    ],
+  "assets/kulcstartok/11-fc-barcelona-kulcstarto/11-fc-barcelona-kulcstarto-02.jpg",
+  "assets/kulcstartok/11-fc-barcelona-kulcstarto/11-fc-barcelona-kulcstarto-01.jpg",
+  "assets/kulcstartok/11-fc-barcelona-kulcstarto/11-fc-barcelona-kulcstarto-03.jpg",
+  "assets/kulcstartok/11-fc-barcelona-kulcstarto/11-fc-barcelona-kulcstarto-04.jpg",
+  "assets/kulcstartok/11-fc-barcelona-kulcstarto/11-fc-barcelona-kulcstarto-05.jpg"
+],
     "leiras": "FC Barcelona címeres kulcstartó kék, bordó és sárga részletekkel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A pajzs alakú függőn a klub címerének mezői és a labdamotívum is megjelenik. Szurkolói apróság, amely a hétköznapokban is helyet kaphat a kulcscsomón.",
@@ -1565,11 +1565,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/12-real-madrid-kulcstarto/12-real-madrid-kulcstarto-03.jpg",
-      "assets/kulcstartok/12-real-madrid-kulcstarto/12-real-madrid-kulcstarto-01.jpg",
-      "assets/kulcstartok/12-real-madrid-kulcstarto/12-real-madrid-kulcstarto-02.jpg",
-      "assets/kulcstartok/12-real-madrid-kulcstarto/12-real-madrid-kulcstarto-04.jpg"
-    ],
+  "assets/kulcstartok/12-real-madrid-kulcstarto/12-real-madrid-kulcstarto-04.jpg",
+  "assets/kulcstartok/12-real-madrid-kulcstarto/12-real-madrid-kulcstarto-03.jpg",
+  "assets/kulcstartok/12-real-madrid-kulcstarto/12-real-madrid-kulcstarto-01.jpg",
+  "assets/kulcstartok/12-real-madrid-kulcstarto/12-real-madrid-kulcstarto-02.jpg"
+],
     "leiras": "Real Madrid címeres kulcstartó koronával, fehér és aranysárga részletekkel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A koronás címer és a kék átlós sáv adja a függő jellegzetes megjelenését. Real Madrid-szurkolónak szánt kisebb ajándékhoz vagy saját kulcscsomóra is illik.",
@@ -1688,8 +1688,9 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/13-hello-kitty-kulcstarto/13-hello-kitty-kulcstarto-04.jpg"
-    ],
+  "assets/kulcstartok/13-hello-kitty-kulcstarto/13-hello-kitty-kulcstarto-02.jpg",
+  "assets/kulcstartok/13-hello-kitty-kulcstarto/13-hello-kitty-kulcstarto-04.jpg"
+],
     "leiras": "Hello Kitty arcos kulcstartó piros masnival és fehér arcrésszel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A karakter kontúrját követő függőn a masni, a bajuszvonalak és az apró orr is jól látszik. Kedves, színes részlet egy táskán vagy a mindennapi kulcsok mellett.",
@@ -1805,8 +1806,9 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/14-mickey-mouse-kulcstarto/14-mickey-mouse-kulcstarto-05.jpg"
-    ],
+  "assets/kulcstartok/14-mickey-mouse-kulcstarto/14-mickey-mouse-kulcstarto-02.jpg",
+  "assets/kulcstartok/14-mickey-mouse-kulcstarto/14-mickey-mouse-kulcstarto-05.jpg"
+],
     "leiras": "Mickey Mouse arcos kulcstartó fekete fülekkel és piros szegéllyel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A kerek fülek és a mosolygó arc teszik felismerhetővé ezt a karakteres függőt. A piros körvonal kiemeli az alakot, így egyszerű táskán is mutatós apróság.",
@@ -2039,10 +2041,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/16-angel-lilo-stitch-kulcstarto/16-angel-lilo-stitch-kulcstarto-01.jpg",
-      "assets/kulcstartok/16-angel-lilo-stitch-kulcstarto/16-angel-lilo-stitch-kulcstarto-02.jpg",
-      "assets/kulcstartok/16-angel-lilo-stitch-kulcstarto/16-angel-lilo-stitch-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/16-angel-lilo-stitch-kulcstarto/16-angel-lilo-stitch-kulcstarto-02.jpg",
+  "assets/kulcstartok/16-angel-lilo-stitch-kulcstarto/16-angel-lilo-stitch-kulcstarto-01.jpg",
+  "assets/kulcstartok/16-angel-lilo-stitch-kulcstarto/16-angel-lilo-stitch-kulcstarto-03.jpg"
+],
     "leiras": "Rózsaszín Angel kulcstartó nagy fülekkel, ülő figurával. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "Angel rózsaszín alakja és széles fülei adják ennek a Lilo & Stitch témájú függőnek a báját. Stitch mellé páros ajándéknak, önmagában pedig táskadísznek is kedves választás.",
@@ -2282,10 +2284,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/18-demogorgon-stranger-things-kulcstarto/18-demogorgon-stranger-things-kulcstarto-01.jpg",
-      "assets/kulcstartok/18-demogorgon-stranger-things-kulcstarto/18-demogorgon-stranger-things-kulcstarto-02.jpg",
-      "assets/kulcstartok/18-demogorgon-stranger-things-kulcstarto/18-demogorgon-stranger-things-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/18-demogorgon-stranger-things-kulcstarto/18-demogorgon-stranger-things-kulcstarto-03.jpg",
+  "assets/kulcstartok/18-demogorgon-stranger-things-kulcstarto/18-demogorgon-stranger-things-kulcstarto-01.jpg",
+  "assets/kulcstartok/18-demogorgon-stranger-things-kulcstarto/18-demogorgon-stranger-things-kulcstarto-02.jpg"
+],
     "leiras": "Demogorgon figurás kulcstartó szürke testtel és piros szájrésszel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A széttárt, sziromszerű fej és a vékony figura a Stranger Things világát idézi. Szokatlan, részletes függő azoknak, akik a kedves figurák helyett egy sötétebb hangulatú motívumot választanának.",
@@ -2403,11 +2405,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/19-minecraft-crafting-table-kulcstarto/19-minecraft-crafting-table-kulcstarto-01.jpg",
-      "assets/kulcstartok/19-minecraft-crafting-table-kulcstarto/19-minecraft-crafting-table-kulcstarto-02.jpg",
-      "assets/kulcstartok/19-minecraft-crafting-table-kulcstarto/19-minecraft-crafting-table-kulcstarto-03.jpg",
-      "assets/kulcstartok/19-minecraft-crafting-table-kulcstarto/19-minecraft-crafting-table-kulcstarto-04.jpg"
-    ],
+  "assets/kulcstartok/19-minecraft-crafting-table-kulcstarto/19-minecraft-crafting-table-kulcstarto-02.jpg",
+  "assets/kulcstartok/19-minecraft-crafting-table-kulcstarto/19-minecraft-crafting-table-kulcstarto-01.jpg",
+  "assets/kulcstartok/19-minecraft-crafting-table-kulcstarto/19-minecraft-crafting-table-kulcstarto-03.jpg",
+  "assets/kulcstartok/19-minecraft-crafting-table-kulcstarto/19-minecraft-crafting-table-kulcstarto-04.jpg"
+],
     "leiras": "Minecraft Crafting Table clicker kulcstartó lenyomható, kattogó résszel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A Minecraft barkácsasztalát idéző, barna-fekete kulcstartó lenyomható része minden megnyomásra kattan. A rácsos, pixeles minta mellett a kattogó clicker funkció teszi különlegessé ezt a gamer kiegészítőt. Kulcsokra vagy hátizsákra akasztva is magaddal viheted.",
@@ -2526,10 +2528,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/20-minecraft-tnt-kulcstarto/20-minecraft-tnt-kulcstarto-01.jpg",
-      "assets/kulcstartok/20-minecraft-tnt-kulcstarto/20-minecraft-tnt-kulcstarto-02.jpg",
-      "assets/kulcstartok/20-minecraft-tnt-kulcstarto/20-minecraft-tnt-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/20-minecraft-tnt-kulcstarto/20-minecraft-tnt-kulcstarto-03.jpg",
+  "assets/kulcstartok/20-minecraft-tnt-kulcstarto/20-minecraft-tnt-kulcstarto-01.jpg",
+  "assets/kulcstartok/20-minecraft-tnt-kulcstarto/20-minecraft-tnt-kulcstarto-02.jpg"
+],
     "leiras": "Minecraft TNT kocka kulcstartó piros-fehér mintával. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A térbeli blokk oldalán a fehér sáv és a TNT felirat is megjelenik. A Minecraft pixeles világát kedvelőknek készült dekoratív függő, élénk piros részletekkel.",
@@ -2648,9 +2650,9 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/21-minecraft-skeleton-kulcstarto/21-minecraft-skeleton-kulcstarto-01.jpg",
-      "assets/kulcstartok/21-minecraft-skeleton-kulcstarto/21-minecraft-skeleton-kulcstarto-02.jpg"
-    ],
+  "assets/kulcstartok/21-minecraft-skeleton-kulcstarto/21-minecraft-skeleton-kulcstarto-02.jpg",
+  "assets/kulcstartok/21-minecraft-skeleton-kulcstarto/21-minecraft-skeleton-kulcstarto-01.jpg"
+],
     "leiras": "Minecraft Skeleton kulcstartó fehér, szögletes figurával. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A kockafej és a keskeny, tagolt test a játék csontvázkarakterét idézi. Visszafogott színű gamer kiegészítő, amely formájával hívja fel magára a figyelmet.",
@@ -2767,14 +2769,14 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-05.jpg",
-      "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-01.jpeg",
-      "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-02.jpg",
-      "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-03.jpg",
-      "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-04.jpg",
-      "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-06.jpg",
-      "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-07.jpg"
-    ],
+  "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-02.jpg",
+  "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-05.jpg",
+  "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-01.jpeg",
+  "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-03.jpg",
+  "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-04.jpg",
+  "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-06.jpg",
+  "assets/kulcstartok/22-golden-retriever-flexi-kulcstarto/22-golden-retriever-flexi-kulcstarto-07.jpg"
+],
     "leiras": "Aranybarna Golden Retriever flexi kulcstartó tagolt, mozgatható testtel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A fekvő kiskutya lógó fülei és kedves pofija egy retriever jellegzetességeit idézik. A kapcsolódó testszegmensek mozgást engednek a figurának, így különlegesebb részlet kerül a kulcscsomóra.",
@@ -3387,10 +3389,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/29-mehecske-kulcstarto/29-mehecske-kulcstarto-03.jpg",
-      "assets/kulcstartok/29-mehecske-kulcstarto/29-mehecske-kulcstarto-01.jpg",
-      "assets/kulcstartok/29-mehecske-kulcstarto/29-mehecske-kulcstarto-02.jpg"
-    ],
+  "assets/kulcstartok/29-mehecske-kulcstarto/29-mehecske-kulcstarto-02.jpg",
+  "assets/kulcstartok/29-mehecske-kulcstarto/29-mehecske-kulcstarto-03.jpg",
+  "assets/kulcstartok/29-mehecske-kulcstarto/29-mehecske-kulcstarto-01.jpg"
+],
     "leiras": "Csíkos méhecske kulcstartó nagy szemekkel és apró szárnyakkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A sárga és sötét sávok, a kerek szemek és a szárnyak vidám méhecskét formáznak. A tagolt testű figura színes kiegészítője lehet egy egyszerű kulcscsomónak.",
@@ -3508,9 +3510,9 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/30-kutya-ruhaban-kulcstarto/30-kutya-ruhaban-kulcstarto-01.jpg",
-      "assets/kulcstartok/30-kutya-ruhaban-kulcstarto/30-kutya-ruhaban-kulcstarto-02.jpg"
-    ],
+  "assets/kulcstartok/30-kutya-ruhaban-kulcstarto/30-kutya-ruhaban-kulcstarto-02.jpg",
+  "assets/kulcstartok/30-kutya-ruhaban-kulcstarto/30-kutya-ruhaban-kulcstarto-01.jpg"
+],
     "leiras": "Világos kiskutya kulcstartó rózsaszín ruhában. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A nagy szemű, világos kutyus rózsaszín öltözéke adja a figura különlegességét. Kedves választás annak, aki az állatos, meseszerű kiegészítőket szereti.",
@@ -3745,11 +3747,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/34-malac-kulcstarto/34-malac-kulcstarto-01.jpg",
-      "assets/kulcstartok/34-malac-kulcstarto/34-malac-kulcstarto-02.jpg",
-      "assets/kulcstartok/34-malac-kulcstarto/34-malac-kulcstarto-03.jpg",
-      "assets/kulcstartok/34-malac-kulcstarto/34-malac-kulcstarto-04.jpg"
-    ],
+  "assets/kulcstartok/34-malac-kulcstarto/34-malac-kulcstarto-02.jpg",
+  "assets/kulcstartok/34-malac-kulcstarto/34-malac-kulcstarto-01.jpg",
+  "assets/kulcstartok/34-malac-kulcstarto/34-malac-kulcstarto-03.jpg",
+  "assets/kulcstartok/34-malac-kulcstarto/34-malac-kulcstarto-04.jpg"
+],
     "leiras": "Rózsaszín malacfigurás kulcstartó kerek orral és apró fülekkel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A feltűnő rózsaszín szín és a jellegzetes malacorr adja a kis figura játékos megjelenését. Állatos kiegészítőket kedvelőknek vagy egy humoros ajándék mellé is illik.",
@@ -3868,9 +3870,9 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/35-glock-pisztoly-kulcstarto/35-glock-pisztoly-kulcstarto-01.jpg",
-      "assets/kulcstartok/35-glock-pisztoly-kulcstarto/35-glock-pisztoly-kulcstarto-02.jpg"
-    ],
+  "assets/kulcstartok/35-glock-pisztoly-kulcstarto/35-glock-pisztoly-kulcstarto-02.jpg",
+  "assets/kulcstartok/35-glock-pisztoly-kulcstarto/35-glock-pisztoly-kulcstarto-01.jpg"
+],
     "leiras": "Fekete, Glock formáját idéző miniatűr kulcstartó. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A pisztoly körvonalát követő apró függő dekoratív kiegészítő a kulcscsomóra. 3D nyomtatott dísztárgy, működő fegyverfunkció nélkül.",
@@ -4228,10 +4230,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/38-monster-energy-kulcstarto/38-monster-energy-kulcstarto-01.jpg",
-      "assets/kulcstartok/38-monster-energy-kulcstarto/38-monster-energy-kulcstarto-02.jpg",
-      "assets/kulcstartok/38-monster-energy-kulcstarto/38-monster-energy-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/38-monster-energy-kulcstarto/38-monster-energy-kulcstarto-03.jpg",
+  "assets/kulcstartok/38-monster-energy-kulcstarto/38-monster-energy-kulcstarto-01.jpg",
+  "assets/kulcstartok/38-monster-energy-kulcstarto/38-monster-energy-kulcstarto-02.jpg"
+],
     "leiras": "Fekete Monster Energy mintás kulcstartó élénkzöld karmolásmotívummal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A neonhatású zöld jel és a világos körvonal erősen elválik a fekete alaptól. Feltűnő motívum azoknak, akik sportosabb, élénk színű kiegészítőt keresnek.",
@@ -4348,10 +4350,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/39-john-deere-logos-kulcstarto/39-john-deere-logos-kulcstarto-01.jpg",
-      "assets/kulcstartok/39-john-deere-logos-kulcstarto/39-john-deere-logos-kulcstarto-02.jpg",
-      "assets/kulcstartok/39-john-deere-logos-kulcstarto/39-john-deere-logos-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/39-john-deere-logos-kulcstarto/39-john-deere-logos-kulcstarto-02.jpg",
+  "assets/kulcstartok/39-john-deere-logos-kulcstarto/39-john-deere-logos-kulcstarto-01.jpg",
+  "assets/kulcstartok/39-john-deere-logos-kulcstarto/39-john-deere-logos-kulcstarto-03.jpg"
+],
     "leiras": "Zöld-sárga John Deere kulcstartó szarvasmotívummal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A sárga szarvas és keret a zöld alapon a jól ismert mezőgazdasági témát idézi. Lekerekített, négyzetes függő traktorrajongóknak vagy a gépkulcs mellé.",
@@ -4470,10 +4472,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/40-focilabda-kulcstarto/40-focilabda-kulcstarto-01.jpg",
-      "assets/kulcstartok/40-focilabda-kulcstarto/40-focilabda-kulcstarto-02.jpg",
-      "assets/kulcstartok/40-focilabda-kulcstarto/40-focilabda-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/40-focilabda-kulcstarto/40-focilabda-kulcstarto-03.jpg",
+  "assets/kulcstartok/40-focilabda-kulcstarto/40-focilabda-kulcstarto-01.jpg",
+  "assets/kulcstartok/40-focilabda-kulcstarto/40-focilabda-kulcstarto-02.jpg"
+],
     "leiras": "Térbeli focilabda kulcstartó fekete-fehér mintával. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A gömb alakú függőn a focilabda jellegzetes fekete és fehér mezői jelennek meg. Kis ajándék játékosoknak, edzőknek és szurkolóknak, csapatválasztástól függetlenül.",
@@ -4709,10 +4711,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/42-medve-kulcstarto/42-medve-kulcstarto-03.jpg",
-      "assets/kulcstartok/42-medve-kulcstarto/42-medve-kulcstarto-01.jpg",
-      "assets/kulcstartok/42-medve-kulcstarto/42-medve-kulcstarto-02.jpg"
-    ],
+  "assets/kulcstartok/42-medve-kulcstarto/42-medve-kulcstarto-01.jpg",
+  "assets/kulcstartok/42-medve-kulcstarto/42-medve-kulcstarto-03.jpg",
+  "assets/kulcstartok/42-medve-kulcstarto/42-medve-kulcstarto-02.jpg"
+],
     "leiras": "Barna medvefigurás kulcstartó kerek fülekkel és nagy szemekkel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A gömbölyű fej és a világosabb pofi barátságos karaktert ad a kis medvének. Egyszerű, kedves állatfigura, amely a kulcsok mellett a táskán is helyet kaphat.",
@@ -4830,11 +4832,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/43-ballagasi-kulcstarto/43-ballagasi-kulcstarto-01.jpg",
-      "assets/kulcstartok/43-ballagasi-kulcstarto/43-ballagasi-kulcstarto-02.jpg",
-      "assets/kulcstartok/43-ballagasi-kulcstarto/43-ballagasi-kulcstarto-03.jpg",
-      "assets/kulcstartok/43-ballagasi-kulcstarto/43-ballagasi-kulcstarto-04.jpg"
-    ],
+  "assets/kulcstartok/43-ballagasi-kulcstarto/43-ballagasi-kulcstarto-02.jpg",
+  "assets/kulcstartok/43-ballagasi-kulcstarto/43-ballagasi-kulcstarto-01.jpg",
+  "assets/kulcstartok/43-ballagasi-kulcstarto/43-ballagasi-kulcstarto-03.jpg",
+  "assets/kulcstartok/43-ballagasi-kulcstarto/43-ballagasi-kulcstarto-04.jpg"
+],
     "leiras": "Ballagási kulcstartó kalapmotívummal és feliratos táblácskával. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A ballagási kalap és a lila névtábla együtt idézi fel az iskolai évek lezárását. A képen látható név és évszám minta; a kívánt felirat egyeztetésével személyes emlék készülhet a ballagónak.",
@@ -4949,15 +4951,15 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "lampak",
     "ar": 15000,
     "kepek": [
-      "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-01.jpg",
-      "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-02.jpg",
-      "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-03.jpg",
-      "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-04.jpg",
-      "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-05.jpg",
-      "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-06.jpg",
-      "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-07.jpg",
-      "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-08.jpg"
-    ],
+  "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-04.jpg",
+  "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-01.jpg",
+  "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-02.jpg",
+  "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-03.jpg",
+  "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-05.jpg",
+  "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-06.jpg",
+  "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-07.jpg",
+  "assets/kulcstartok/44-minnie-mouse-shadow-box-lampa/44-minnie-mouse-shadow-box-lampa-08.jpg"
+],
     "leiras": "3D nyomtatott Minnie Mouse shadow box (árnyékdoboz) LED lámpa. Gyönyörű fényeffektusokkal, USB táplálással. Tökéletes ajándék Disney rajongóknak! Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott Minnie Mouse shadow box (árnyékdoboz) LED lámpa. Gyönyörű fényeffektusokkal, USB táplálással. Tökéletes ajándék Disney rajongóknak! Tartós PLA anyagból készült.",
@@ -5219,14 +5221,14 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "lampak",
     "ar": 12000,
     "kepek": [
-      "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-01.jpg",
-      "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-02.jpg",
-      "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-03.jpg",
-      "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-04.jpg",
-      "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-05.jpg",
-      "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-06.jpg",
-      "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-07.jpg"
-    ],
+  "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-02.jpg",
+  "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-01.jpg",
+  "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-03.jpg",
+  "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-04.jpg",
+  "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-05.jpg",
+  "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-06.jpg",
+  "assets/kulcstartok/46-assassins-creed-led-tabla/46-assassins-creed-led-tabla-07.jpg"
+],
     "leiras": "3D nyomtatott Assassin's Creed logós LED világító tábla. USB táplálással, hangulatos megvilágítás. Tökéletes ajándék Assassin's Creed rajongóknak! Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott Assassin's Creed logós LED világító tábla. USB táplálással, hangulatos megvilágítás. Tökéletes ajándék Assassin's Creed rajongóknak! Tartós PLA anyagból készült.",
@@ -5356,11 +5358,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "szezonalis",
     "ar": 5000,
     "kepek": [
-      "assets/kulcstartok/47-hello-fall-oszi-felirat/47-hello-fall-oszi-felirat-01.jpg",
-      "assets/kulcstartok/47-hello-fall-oszi-felirat/47-hello-fall-oszi-felirat-02.jpg",
-      "assets/kulcstartok/47-hello-fall-oszi-felirat/47-hello-fall-oszi-felirat-03.jpg",
-      "assets/kulcstartok/47-hello-fall-oszi-felirat/47-hello-fall-oszi-felirat-04.jpg"
-    ],
+  "assets/kulcstartok/47-hello-fall-oszi-felirat/47-hello-fall-oszi-felirat-02.jpg",
+  "assets/kulcstartok/47-hello-fall-oszi-felirat/47-hello-fall-oszi-felirat-01.jpg",
+  "assets/kulcstartok/47-hello-fall-oszi-felirat/47-hello-fall-oszi-felirat-03.jpg",
+  "assets/kulcstartok/47-hello-fall-oszi-felirat/47-hello-fall-oszi-felirat-04.jpg"
+],
     "leiras": "3D nyomtatott \"Hello Fall\" őszi dekorációs felirat levelekkel díszítve. Hangulatos őszi lakásdekoráció. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott \"Hello Fall\" őszi dekorációs felirat levelekkel díszítve. Hangulatos őszi lakásdekoráció. Tartós PLA anyagból készült.",
@@ -5485,13 +5487,13 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "szezonalis",
     "ar": 6000,
     "kepek": [
-      "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-01.jpg",
-      "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-02.jpg",
-      "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-03.jpg",
-      "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-04.jpg",
-      "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-05.jpg",
-      "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-06.jpg"
-    ],
+  "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-05.jpg",
+  "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-01.jpg",
+  "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-02.jpg",
+  "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-03.jpg",
+  "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-04.jpg",
+  "assets/kulcstartok/48-oszi-tok-vaza/48-oszi-tok-vaza-06.jpg"
+],
     "leiras": "3D nyomtatott őszi tök formájú dekoratív váza. Gyönyörű őszi hangulatot teremt a lakásban. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott őszi tök formájú dekoratív váza. Gyönyörű őszi hangulatot teremt a lakásban. Tartós PLA anyagból készült.",
@@ -5618,15 +5620,15 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "szezonalis",
     "ar": 4000,
     "kepek": [
-      "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-01.jpg",
-      "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-02.jpg",
-      "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-03.jpg",
-      "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-04.jpg",
-      "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-05.jpg",
-      "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-06.jpg",
-      "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-07.jpg",
-      "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-08.jpg"
-    ],
+  "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-02.jpg",
+  "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-01.jpg",
+  "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-03.jpg",
+  "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-04.jpg",
+  "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-05.jpg",
+  "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-06.jpg",
+  "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-07.jpg",
+  "assets/kulcstartok/49-bordazott-korte-dekor/49-bordazott-korte-dekor-08.jpg"
+],
     "leiras": "3D nyomtatott bordázott körte/tök formájú dekoráció. Elegáns őszi lakásdekoráció, különböző színekben elérhető. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott bordázott körte/tök formájú dekoráció. Elegáns őszi lakásdekoráció, különböző színekben elérhető. Tartós PLA anyagból készült.",
@@ -5751,17 +5753,17 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "szezonalis",
     "ar": 5000,
     "kepek": [
-      "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-01.jpg",
-      "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-02.jpg",
-      "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-03.jpg",
-      "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-04.jpg",
-      "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-05.jpg",
-      "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-06.jpg",
-      "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-07.jpg",
-      "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-08.jpg",
-      "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-09.jpg",
-      "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-10.jpg"
-    ],
+  "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-02.jpg",
+  "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-01.jpg",
+  "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-03.jpg",
+  "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-04.jpg",
+  "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-05.jpg",
+  "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-06.jpg",
+  "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-07.jpg",
+  "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-08.jpg",
+  "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-09.jpg",
+  "assets/kulcstartok/50-leveles-mintas-mecsestarto/50-leveles-mintas-mecsestarto-10.jpg"
+],
     "leiras": "3D nyomtatott leveles mintás mécsestartó. Gyönyörű fényeffektust hoz létre a leveles áttört mintázatnak köszönhetően. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott leveles mintás mécsestartó. Gyönyörű fényeffektust hoz létre a leveles áttört mintázatnak köszönhetően. Tartós PLA anyagból készült.",
@@ -5893,14 +5895,14 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "lampak",
     "ar": 15000,
     "kepek": [
-      "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-01.jpg",
-      "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-02.jpg",
-      "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-03.jpg",
-      "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-04.jpg",
-      "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-05.jpg",
-      "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-06.jpg",
-      "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-07.jpg"
-    ],
+  "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-03.jpg",
+  "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-01.jpg",
+  "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-02.jpg",
+  "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-04.jpg",
+  "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-05.jpg",
+  "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-06.jpg",
+  "assets/kulcstartok/51-jurassic-park-lithophane-lampa/51-jurassic-park-lithophane-lampa-07.jpg"
+],
     "leiras": "3D nyomtatott Jurassic Park lithophane (fényáteresztő) LED lámpa. A bekapcsolt LED megvilágítja a Jurassic Park jelenetet. USB táplálás. Tökéletes ajándék dínó rajongóknak! Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott Jurassic Park lithophane (fényáteresztő) LED lámpa. A bekapcsolt LED megvilágítja a Jurassic Park jelenetet. USB táplálás. Tökéletes ajándék dínó rajongóknak! Tartós PLA anyagból készült.",
@@ -6031,11 +6033,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "rajongoi",
     "ar": 8000,
     "kepek": [
-      "assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-01.jpg",
-      "assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-02.jpg",
-      "assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-03.jpg",
-      "assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-04.jpg"
-    ],
+  "assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-02.jpg",
+  "assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-01.jpg",
+  "assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-03.jpg",
+  "assets/kulcstartok/52-f1-2026-versenynaptar/52-f1-2026-versenynaptar-04.jpg"
+],
     "leiras": "3D nyomtatott Formula 1 2026-os szezon versenynaptár. Az összes 2026-os F1 verseny dátuma és helyszíne egy dekoratív táblán. Tökéletes ajándék F1 rajongóknak! Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott Formula 1 2026-os szezon versenynaptár. Az összes 2026-os F1 verseny dátuma és helyszíne egy dekoratív táblán. Tökéletes ajándék F1 rajongóknak! Tartós PLA anyagból készült.",
@@ -6162,11 +6164,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "dekoraciok",
     "ar": 6000,
     "kepek": [
-      "assets/kulcstartok/53-3d-tulipan-csokor/53-3d-tulipan-csokor-01.jpg",
-      "assets/kulcstartok/53-3d-tulipan-csokor/53-3d-tulipan-csokor-02.jpg",
-      "assets/kulcstartok/53-3d-tulipan-csokor/53-3d-tulipan-csokor-03.jpg",
-      "assets/kulcstartok/53-3d-tulipan-csokor/53-3d-tulipan-csokor-04.jpg"
-    ],
+  "assets/kulcstartok/53-3d-tulipan-csokor/53-3d-tulipan-csokor-03.jpg",
+  "assets/kulcstartok/53-3d-tulipan-csokor/53-3d-tulipan-csokor-01.jpg",
+  "assets/kulcstartok/53-3d-tulipan-csokor/53-3d-tulipan-csokor-02.jpg",
+  "assets/kulcstartok/53-3d-tulipan-csokor/53-3d-tulipan-csokor-04.jpg"
+],
     "leiras": "3D nyomtatott tulipán virágcsokor. Örök szépségű virágcsokor, ami sosem hervad el! Különböző színekben elérhető. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott tulipán virágcsokor. Örök szépségű virágcsokor, ami sosem hervad el! Különböző színekben elérhető. Tartós PLA anyagból készült.",
@@ -6295,10 +6297,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "dekoraciok",
     "ar": 4000,
     "kepek": [
-      "assets/kulcstartok/54-szemuvegtarto/54-szemuvegtarto-01.jpg",
-      "assets/kulcstartok/54-szemuvegtarto/54-szemuvegtarto-02.jpg",
-      "assets/kulcstartok/54-szemuvegtarto/54-szemuvegtarto-03.jpg"
-    ],
+  "assets/kulcstartok/54-szemuvegtarto/54-szemuvegtarto-02.jpg",
+  "assets/kulcstartok/54-szemuvegtarto/54-szemuvegtarto-01.jpg",
+  "assets/kulcstartok/54-szemuvegtarto/54-szemuvegtarto-03.jpg"
+],
     "leiras": "3D nyomtatott dekoratív szemüvegtartó. Praktikus és mutatós tárolás az asztalon. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott dekoratív szemüvegtartó. Praktikus és mutatós tárolás az asztalon. Tartós PLA anyagból készült.",
@@ -6420,16 +6422,16 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "dekoraciok",
     "ar": 12000,
     "kepek": [
-      "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-01.jpg",
-      "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-02.jpg",
-      "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-03.jpg",
-      "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-04.jpg",
-      "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-05.jpg",
-      "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-06.jpg",
-      "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-07.jpg",
-      "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-08.jpg",
-      "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-09.jpg"
-    ],
+  "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-02.jpg",
+  "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-01.jpg",
+  "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-03.jpg",
+  "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-04.jpg",
+  "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-05.jpg",
+  "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-06.jpg",
+  "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-07.jpg",
+  "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-08.jpg",
+  "assets/kulcstartok/55-motoros-borostarto/55-motoros-borostarto-09.jpg"
+],
     "leiras": "3D nyomtatott motoros figurás bortartó/borostartó. A motor formájú tartó elegánsan tartja a borosüveget. Tökéletes ajándék motorosoknak és bor kedvelőknek! Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott motoros figurás bortartó/borostartó. A motor formájú tartó elegánsan tartja a borosüveget. Tökéletes ajándék motorosoknak és bor kedvelőknek! Tartós PLA anyagból készült.",
@@ -6687,11 +6689,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "szezonalis",
     "ar": 8000,
     "kepek": [
-      "assets/kulcstartok/57-days-until-christmas-visszaszamlalo/57-days-until-christmas-visszaszamlalo-01.jpg",
-      "assets/kulcstartok/57-days-until-christmas-visszaszamlalo/57-days-until-christmas-visszaszamlalo-02.jpg",
-      "assets/kulcstartok/57-days-until-christmas-visszaszamlalo/57-days-until-christmas-visszaszamlalo-03.jpg",
-      "assets/kulcstartok/57-days-until-christmas-visszaszamlalo/57-days-until-christmas-visszaszamlalo-04.jpg"
-    ],
+  "assets/kulcstartok/57-days-until-christmas-visszaszamlalo/57-days-until-christmas-visszaszamlalo-02.jpg",
+  "assets/kulcstartok/57-days-until-christmas-visszaszamlalo/57-days-until-christmas-visszaszamlalo-01.jpg",
+  "assets/kulcstartok/57-days-until-christmas-visszaszamlalo/57-days-until-christmas-visszaszamlalo-03.jpg",
+  "assets/kulcstartok/57-days-until-christmas-visszaszamlalo/57-days-until-christmas-visszaszamlalo-04.jpg"
+],
     "leiras": "3D nyomtatott \"Days Until Christmas\" karácsonyi visszaszámláló tábla cserélhető számokkal. Hangulatos karácsonyi dekoráció az egész adventi időszakra! Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott \"Days Until Christmas\" karácsonyi visszaszámláló tábla cserélhető számokkal. Hangulatos karácsonyi dekoráció az egész adventi időszakra! Tartós PLA anyagból készült.",
@@ -6812,11 +6814,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "szezonalis",
     "ar": 15000,
     "kepek": [
-      "assets/kulcstartok/58-karacsonyi-falu-lampa/58-karacsonyi-falu-lampa-01.jpg",
-      "assets/kulcstartok/58-karacsonyi-falu-lampa/58-karacsonyi-falu-lampa-02.jpg",
-      "assets/kulcstartok/58-karacsonyi-falu-lampa/58-karacsonyi-falu-lampa-03.jpg",
-      "assets/kulcstartok/58-karacsonyi-falu-lampa/58-karacsonyi-falu-lampa-04.jpg"
-    ],
+  "assets/kulcstartok/58-karacsonyi-falu-lampa/58-karacsonyi-falu-lampa-02.jpg",
+  "assets/kulcstartok/58-karacsonyi-falu-lampa/58-karacsonyi-falu-lampa-01.jpg",
+  "assets/kulcstartok/58-karacsonyi-falu-lampa/58-karacsonyi-falu-lampa-03.jpg",
+  "assets/kulcstartok/58-karacsonyi-falu-lampa/58-karacsonyi-falu-lampa-04.jpg"
+],
     "leiras": "3D nyomtatott karácsonyi falu LED lámpa. Mesebeli karácsonyi falu megvilágítva, USB táplálással. Hangulatos karácsonyi dekoráció! Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott karácsonyi falu LED lámpa. Mesebeli karácsonyi falu megvilágítva, USB táplálással. Hangulatos karácsonyi dekoráció! Tartós PLA anyagból készült.",
@@ -6942,11 +6944,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "lampak",
     "ar": 10000,
     "kepek": [
-      "assets/kulcstartok/59-voronoi-szogletes-lampa/59-voronoi-szogletes-lampa-01.jpg",
-      "assets/kulcstartok/59-voronoi-szogletes-lampa/59-voronoi-szogletes-lampa-02.jpg",
-      "assets/kulcstartok/59-voronoi-szogletes-lampa/59-voronoi-szogletes-lampa-03.jpg",
-      "assets/kulcstartok/59-voronoi-szogletes-lampa/59-voronoi-szogletes-lampa-04.jpg"
-    ],
+  "assets/kulcstartok/59-voronoi-szogletes-lampa/59-voronoi-szogletes-lampa-02.jpg",
+  "assets/kulcstartok/59-voronoi-szogletes-lampa/59-voronoi-szogletes-lampa-01.jpg",
+  "assets/kulcstartok/59-voronoi-szogletes-lampa/59-voronoi-szogletes-lampa-03.jpg",
+  "assets/kulcstartok/59-voronoi-szogletes-lampa/59-voronoi-szogletes-lampa-04.jpg"
+],
     "leiras": "3D nyomtatott Voronoi mintás szögletes LED lámpa. A Voronoi geometrikus minta gyönyörű fényeffektust hoz létre. USB táplálás. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott Voronoi mintás szögletes LED lámpa. A Voronoi geometrikus minta gyönyörű fényeffektust hoz létre. USB táplálás. Tartós PLA anyagból készült.",
@@ -7074,11 +7076,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "dekoraciok",
     "ar": 8000,
     "kepek": [
-      "assets/kulcstartok/60-csaladi-szobor/60-csaladi-szobor-01.jpg",
-      "assets/kulcstartok/60-csaladi-szobor/60-csaladi-szobor-02.jpg",
-      "assets/kulcstartok/60-csaladi-szobor/60-csaladi-szobor-03.jpg",
-      "assets/kulcstartok/60-csaladi-szobor/60-csaladi-szobor-04.jpg"
-    ],
+  "assets/kulcstartok/60-csaladi-szobor/60-csaladi-szobor-03.jpg",
+  "assets/kulcstartok/60-csaladi-szobor/60-csaladi-szobor-01.jpg",
+  "assets/kulcstartok/60-csaladi-szobor/60-csaladi-szobor-02.jpg",
+  "assets/kulcstartok/60-csaladi-szobor/60-csaladi-szobor-04.jpg"
+],
     "leiras": "3D nyomtatott családi szobor figurák. Személyre szabható családi szobor, a család tagjainak számával megegyező figurákkal. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott családi szobor figurák. Személyre szabható családi szobor, a család tagjainak számával megegyező figurákkal. Tartós PLA anyagból készült.",
@@ -7207,10 +7209,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "lampak",
     "ar": 15000,
     "kepek": [
-      "assets/kulcstartok/61-szarvas-shadow-box-lampa/61-szarvas-shadow-box-lampa-01.jpg",
-      "assets/kulcstartok/61-szarvas-shadow-box-lampa/61-szarvas-shadow-box-lampa-02.jpg",
-      "assets/kulcstartok/61-szarvas-shadow-box-lampa/61-szarvas-shadow-box-lampa-03.jpg"
-    ],
+  "assets/kulcstartok/61-szarvas-shadow-box-lampa/61-szarvas-shadow-box-lampa-02.jpg",
+  "assets/kulcstartok/61-szarvas-shadow-box-lampa/61-szarvas-shadow-box-lampa-01.jpg",
+  "assets/kulcstartok/61-szarvas-shadow-box-lampa/61-szarvas-shadow-box-lampa-03.jpg"
+],
     "leiras": "3D nyomtatott szarvas shadow box (árnyékdoboz) LED lámpa. A szarvas sziluettje gyönyörű árnyékot vet. USB táplálás. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott szarvas shadow box (árnyékdoboz) LED lámpa. A szarvas sziluettje gyönyörű árnyékot vet. USB táplálás. Tartós PLA anyagból készült.",
@@ -7469,11 +7471,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "dekoraciok",
     "ar": 10000,
     "kepek": [
-      "assets/kulcstartok/63-szarvas-borostarto/63-szarvas-borostarto-01.jpg",
-      "assets/kulcstartok/63-szarvas-borostarto/63-szarvas-borostarto-02.jpg",
-      "assets/kulcstartok/63-szarvas-borostarto/63-szarvas-borostarto-03.jpg",
-      "assets/kulcstartok/63-szarvas-borostarto/63-szarvas-borostarto-04.jpg"
-    ],
+  "assets/kulcstartok/63-szarvas-borostarto/63-szarvas-borostarto-02.jpg",
+  "assets/kulcstartok/63-szarvas-borostarto/63-szarvas-borostarto-01.jpg",
+  "assets/kulcstartok/63-szarvas-borostarto/63-szarvas-borostarto-03.jpg",
+  "assets/kulcstartok/63-szarvas-borostarto/63-szarvas-borostarto-04.jpg"
+],
     "leiras": "3D nyomtatott szarvas formájú bortartó/borostartó. A szarvas agancsai elegánsan tartják a borosüveget. Tökéletes ajándék vadász és bor kedvelőknek! Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott szarvas formájú bortartó/borostartó. A szarvas agancsai elegánsan tartják a borosüveget. Tökéletes ajándék vadász és bor kedvelőknek! Tartós PLA anyagból készült.",
@@ -7599,11 +7601,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "szezonalis",
     "ar": 15000,
     "kepek": [
-      "assets/kulcstartok/64-karacsonyi-fenyofa-lampa/64-karacsonyi-fenyofa-lampa-01.jpg",
-      "assets/kulcstartok/64-karacsonyi-fenyofa-lampa/64-karacsonyi-fenyofa-lampa-02.jpg",
-      "assets/kulcstartok/64-karacsonyi-fenyofa-lampa/64-karacsonyi-fenyofa-lampa-03.jpg",
-      "assets/kulcstartok/64-karacsonyi-fenyofa-lampa/64-karacsonyi-fenyofa-lampa-04.jpg"
-    ],
+  "assets/kulcstartok/64-karacsonyi-fenyofa-lampa/64-karacsonyi-fenyofa-lampa-04.jpg",
+  "assets/kulcstartok/64-karacsonyi-fenyofa-lampa/64-karacsonyi-fenyofa-lampa-01.jpg",
+  "assets/kulcstartok/64-karacsonyi-fenyofa-lampa/64-karacsonyi-fenyofa-lampa-02.jpg",
+  "assets/kulcstartok/64-karacsonyi-fenyofa-lampa/64-karacsonyi-fenyofa-lampa-03.jpg"
+],
     "leiras": "3D nyomtatott karácsonyi fenyőfa és templom LED lámpa. Mesebeli karácsonyi jelenet megvilágítva. USB táplálás. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott karácsonyi fenyőfa és templom LED lámpa. Mesebeli karácsonyi jelenet megvilágítva. USB táplálás. Tartós PLA anyagból készült.",
@@ -7859,11 +7861,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "szezonalis",
     "ar": 5000,
     "kepek": [
-      "assets/kulcstartok/66-oszi-leveles-tal/66-oszi-leveles-tal-01.jpg",
-      "assets/kulcstartok/66-oszi-leveles-tal/66-oszi-leveles-tal-02.jpg",
-      "assets/kulcstartok/66-oszi-leveles-tal/66-oszi-leveles-tal-03.jpg",
-      "assets/kulcstartok/66-oszi-leveles-tal/66-oszi-leveles-tal-04.jpg"
-    ],
+  "assets/kulcstartok/66-oszi-leveles-tal/66-oszi-leveles-tal-02.jpg",
+  "assets/kulcstartok/66-oszi-leveles-tal/66-oszi-leveles-tal-01.jpg",
+  "assets/kulcstartok/66-oszi-leveles-tal/66-oszi-leveles-tal-03.jpg",
+  "assets/kulcstartok/66-oszi-leveles-tal/66-oszi-leveles-tal-04.jpg"
+],
     "leiras": "3D nyomtatott őszi leveles dombornyomott dekoratív tál. Gyönyörű őszi leveles mintázattal, különböző színekben. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott őszi leveles dombornyomott dekoratív tál. Gyönyörű őszi leveles mintázattal, különböző színekben. Tartós PLA anyagból készült.",
@@ -7975,10 +7977,10 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "dekoraciok",
     "ar": 5000,
     "kepek": [
-      "assets/kulcstartok/67-leveles-viragtarto/67-leveles-viragtarto-01.jpg",
-      "assets/kulcstartok/67-leveles-viragtarto/67-leveles-viragtarto-02.jpg",
-      "assets/kulcstartok/67-leveles-viragtarto/67-leveles-viragtarto-03.jpg"
-    ],
+  "assets/kulcstartok/67-leveles-viragtarto/67-leveles-viragtarto-02.jpg",
+  "assets/kulcstartok/67-leveles-viragtarto/67-leveles-viragtarto-01.jpg",
+  "assets/kulcstartok/67-leveles-viragtarto/67-leveles-viragtarto-03.jpg"
+],
     "leiras": "3D nyomtatott leveles mintás dekoratív virágtartó kaspó. Terrakotta hatású, természetes megjelenés. Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott leveles mintás dekoratív virágtartó kaspó. Terrakotta hatású, természetes megjelenés. Tartós PLA anyagból készült.",
@@ -8239,13 +8241,13 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "baba-gyerek",
     "ar": 10000,
     "kepek": [
-      "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-01.jpg",
-      "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-02.jpg",
-      "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-03.jpg",
-      "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-04.jpg",
-      "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-05.jpg",
-      "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-06.jpg"
-    ],
+  "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-04.jpg",
+  "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-01.jpg",
+  "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-02.jpg",
+  "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-03.jpg",
+  "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-05.jpg",
+  "assets/kulcstartok/69-stitch-nevtabla-lampa/69-stitch-nevtabla-lampa-06.jpg"
+],
     "leiras": "3D nyomtatott Stitch figurás személyre szabható névtábla LED lámpa. A gyerek neve világít a Stitch figura mellett! USB táplálás. Tökéletes ajándék Disney rajongó gyerekeknek! Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott Stitch figurás személyre szabható névtábla LED lámpa. A gyerek neve világít a Stitch figura mellett! USB táplálás. Tökéletes ajándék Disney rajongó gyerekeknek! Tartós PLA anyagból készült.",
@@ -8376,11 +8378,11 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "dekoraciok",
     "ar": 6000,
     "kepek": [
-      "assets/kulcstartok/70-olelkezo-par-szobor/70-olelkezo-par-szobor-01.jpg",
-      "assets/kulcstartok/70-olelkezo-par-szobor/70-olelkezo-par-szobor-02.jpg",
-      "assets/kulcstartok/70-olelkezo-par-szobor/70-olelkezo-par-szobor-03.jpg",
-      "assets/kulcstartok/70-olelkezo-par-szobor/70-olelkezo-par-szobor-04.jpg"
-    ],
+  "assets/kulcstartok/70-olelkezo-par-szobor/70-olelkezo-par-szobor-04.jpg",
+  "assets/kulcstartok/70-olelkezo-par-szobor/70-olelkezo-par-szobor-01.jpg",
+  "assets/kulcstartok/70-olelkezo-par-szobor/70-olelkezo-par-szobor-02.jpg",
+  "assets/kulcstartok/70-olelkezo-par-szobor/70-olelkezo-par-szobor-03.jpg"
+],
     "leiras": "3D nyomtatott ölelkező pár szobor. Romantikus dekoráció, tökéletes Valentin-napi vagy évfordulós ajándék! Tartós PLA anyagból készült.",
     "hosszu": [
       "3D nyomtatott ölelkező pár szobor. Romantikus dekoráció, tökéletes Valentin-napi vagy évfordulós ajándék! Tartós PLA anyagból készült.",
@@ -8628,15 +8630,15 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg",
-      "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
-      "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg",
-      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
-      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
-      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
-      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
-      "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
-    ],
+  "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg",
+  "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg",
+  "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
+],
     "leiras": "Választható színű macis kulcstartó piros szívvel és kötött mintát idéző felülettel. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A kis medve két mancsával tartja a piros szívet. A 3D nyomtatott felület szövetszerű mintázata különleges részletet ad a figurának; szeretetteljes apró ajándék párnak vagy barátnak.",
@@ -8675,15 +8677,15 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
         },
         "ar": 10,
         "kepek": [
-          "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg",
-          "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
-          "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg",
-          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
-          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
-          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
-          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
-          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
-        ],
+  "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg",
+  "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-01.jpg",
+  "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
+],
         "rendelheto": true,
         "max_mennyiseg": 10
       },
@@ -8696,14 +8698,14 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
         },
         "ar": 10,
         "kepek": [
-          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
-          "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
-          "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg",
-          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
-          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
-          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
-          "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
-        ],
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-03.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-01.jpg",
+  "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-02.jpg",
+  "assets/kulcstartok/27-maci-szivvel-barna-kulcstarto/27-maci-szivvel-barna-kulcstarto-03.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-02.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-04.jpg",
+  "assets/kulcstartok/28-maci-szivvel-kek-kulcstarto/28-maci-szivvel-kek-kulcstarto-05.jpg"
+],
         "rendelheto": true,
         "max_mennyiseg": 10
       }
@@ -8840,13 +8842,13 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
     "cat": "kulcstartok",
     "ar": 10,
     "kepek": [
-      "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg",
-      "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
-      "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg",
-      "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
-      "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
-      "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
-    ],
+  "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
+  "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg",
+  "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg",
+  "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
+  "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
+  "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
+],
     "leiras": "választható színű polip kulcstartó tagolt, mozgatható karokkal. A nyomtatott rész hossza kb. 4–5 cm, fémkarika nélkül.",
     "hosszu": [
       "A kerek fej körül szétterülő karok látványos sziluettet adnak a választható színű polipnak. A csuklós részeknek köszönhetően a figura alakja mozgatható, így minden kézbevételnél más pózt vehet fel.",
@@ -8885,13 +8887,13 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
         },
         "ar": 10,
         "kepek": [
-          "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg",
-          "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
-          "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg",
-          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
-          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
-          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
-        ],
+  "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
+  "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-01.jpg",
+  "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg",
+  "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
+  "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
+  "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
+],
         "rendelheto": true,
         "max_mennyiseg": 10
       },
@@ -8904,12 +8906,12 @@ SHOP_PRODUCTS.push.apply(SHOP_PRODUCTS, [
         },
         "ar": 10,
         "kepek": [
-          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
-          "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
-          "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg",
-          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
-          "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
-        ],
+  "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-01.jpg",
+  "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-02.jpg",
+  "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-02.jpg",
+  "assets/kulcstartok/31-polip-piros-kulcstarto/31-polip-piros-kulcstarto-03.jpg",
+  "assets/kulcstartok/32-polip-rozsaszin-kulcstarto/32-polip-rozsaszin-kulcstarto-03.jpg"
+],
         "rendelheto": true,
         "max_mennyiseg": 10
       }
