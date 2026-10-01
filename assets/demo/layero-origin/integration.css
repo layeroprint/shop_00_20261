@@ -37,8 +37,8 @@
   max-width: none;
 }
 
-/* The same original brand mark is used in the shop header and this dialog. */
-.lyo-dialog .lyo-brand__mark { width: 29px; height: 29px; }
+/* The approved full vector logo, in its dark-background variant. */
+.lyo-dialog .lyo-brand__logo { display: block; width: 123.542px; height: 36px; object-fit: contain; }
 
 @media (prefers-reduced-motion: reduce) {
   .sh-fab .lyo-launcher { transition: none; }

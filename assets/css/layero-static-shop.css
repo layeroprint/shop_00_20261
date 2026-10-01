@@ -231,32 +231,19 @@ button { font-family: inherit; cursor: pointer; }
   height: 62px;
   display: flex; align-items: center; gap: 22px;
 }
-/* Közös logórács: középre igazított ikon, mellette balra zárt kétsoros felirat. */
+/* A jóváhagyott teljes SVG-logó eredeti aránya, világos/sötét változattal. */
 .sh-brand {
   --sh-brand-mark: 44px;
-  --sh-brand-name: 1.25rem;
-  --sh-brand-tag: 0.5625rem;
-  --sh-brand-gap: 10px;
-  --sh-brand-row-gap: 3px;
-  --sh-brand-accent: var(--accent);
-  display: inline-grid; grid-template-columns: var(--sh-brand-mark) max-content;
-  align-items: center; column-gap: var(--sh-brand-gap); flex-shrink: 0;
+  display: inline-flex; align-items: center; flex-shrink: 0;
+  min-height: 44px;
   vertical-align: middle;
 }
-.sh-brand img {
-  width: var(--sh-brand-mark); height: var(--sh-brand-mark); object-fit: contain;
-  /* A képfájl aszimmetrikus átlátszó szélét ellensúlyozó optikai középre igazítás. */
-  transform: translate(-7%, -7.5%);
+.sh-brand .sh-brand__image {
+  display: block; width: calc(var(--sh-brand-mark) * 3.4317265625);
+  height: var(--sh-brand-mark); max-width: none; object-fit: contain;
 }
-.sh-brand__type { display: grid; justify-items: start; gap: var(--sh-brand-row-gap); text-align: left; }
-.sh-brand__name {
-  font-family: var(--font-display); font-size: var(--sh-brand-name); font-weight: 700;
-  letter-spacing: -0.055em; line-height: 1;
-}
-.sh-brand small {
-  display: block; font-family: var(--font); font-size: var(--sh-brand-tag); font-weight: 650;
-  line-height: 1.2; letter-spacing: 0.32em;
-  text-transform: uppercase; color: var(--sh-brand-accent);
+.sh-brand:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 3px;
 }
 .sh-logo { margin-right: auto; }
 
@@ -1069,11 +1056,6 @@ button { font-family: inherit; cursor: pointer; }
 .sh-footer__brand { display: flex; align-items: center; gap: clamp(28px, 4vw, 60px); }
 .sh-footer__logo {
   --sh-brand-mark: 60px;
-  --sh-brand-name: 1.75rem;
-  --sh-brand-tag: 0.625rem;
-  --sh-brand-gap: 12px;
-  --sh-brand-row-gap: 5px;
-  --sh-brand-accent: var(--brand-cyan);
   color: #fff;
 }
 .sh-footer__brand p {
@@ -1151,7 +1133,7 @@ button { font-family: inherit; cursor: pointer; }
 @media (max-width: 600px) {
   .sh-footer__intro { display: block; padding: 32px 0; }
   .sh-footer__brand { display: flex; align-items: center; gap: 24px; }
-  .sh-footer__logo { --sh-brand-mark: 52px; --sh-brand-name: 1.5rem; --sh-brand-gap: 10px; --sh-brand-row-gap: 4px; }
+  .sh-footer__logo { --sh-brand-mark: 52px; }
   .sh-footer__brand p { margin: 0; font-size: 1.05rem; }
   .sh-footer__story { max-width: 44ch; margin-top: 24px; }
   .sh-footer__story > .sh-footer__eyebrow { display: none; }
@@ -3229,11 +3211,9 @@ input, select, textarea, progress { accent-color: var(--accent); }
 .sh-cart-badge { top: 3px; right: 2px; }
 @media (max-width: 420px) {
   .sh-header__inner { gap: 8px; padding-inline: 14px; }
-  .sh-logo { --sh-brand-gap: 8px; }
 }
 @media (max-width: 360px) {
   .sh-header__inner { gap: 4px; padding-inline: 12px; }
-  .sh-logo { --sh-brand-gap: 6px; }
 }
 
 .sh-heart,
@@ -5766,8 +5746,6 @@ body[data-page="termek"] .sh-longdesc.sh-description--topics {
 /* Readability: body copy 16px, controls 15px, supporting text at least 14px.
    These rules follow the page-specific and mobile rules so small screens keep
    the same reading size. Counters and icon substitutions have separate sizes. */
-.sh-brand { --sh-brand-tag: .875rem; }
-.sh-footer__logo.sh-brand { --sh-brand-tag: .875rem; }
 .sh-nav a, .sh-whofor a, .sh-pill, .sh-btn, .sh-card-add,
 .sh-footer__nav a, .sh-footer__story-link, .sh-footer__contact-cta,
 .sh-product-nav a, .sh-quiz__back, .sh-quiz__next,
@@ -5821,7 +5799,7 @@ body[data-page="termek"] .sh-buy-row .sh-btn--primary { font-size: var(--text-co
 @media (max-width: 360px) {
   .sh-header__inner { gap: 6px; }
   .sh-header__inner .sh-acct-btn { display: none; }
-  .sh-header__inner .sh-brand { --sh-brand-mark: 36px; --sh-brand-name: 1.125rem; --sh-brand-gap: 8px; }
+  .sh-header__inner .sh-brand { --sh-brand-mark: 36px; }
 }
 .sh-footer__story p, .sh-pinfo__desc, .sh-quizcta__copy p,
 .sh-acc details > div, .sh-faq details > div,

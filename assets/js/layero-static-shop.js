@@ -1047,8 +1047,7 @@
       /* fő sor */
       '<div class="sh-header__inner">' +
         '<a class="sh-logo sh-brand" href="index.html" aria-label="Layero Shop – főoldal">' +
-          '<img src="assets/layero-asset-0251.webp" alt="" width="44" height="44">' +
-          '<span class="sh-brand__type"><span class="sh-brand__name">Layero</span><small>Shop</small></span>' +
+          '<img class="sh-brand__image" src="assets/layero-logo/layero-logo.svg" alt="" width="439" height="128">' +
         '</a>' +
         '<nav class="sh-nav" id="sh-nav">' +
           searchForm('mobile') +
@@ -1141,7 +1140,7 @@
       '<div class="shop-wrap">' +
         '<div class="sh-footer__intro">' +
           '<div class="sh-footer__brand">' +
-            '<a class="sh-footer__logo sh-brand" href="index.html" aria-label="Layero Shop – főoldal"><img src="assets/layero-asset-0251.webp" alt="" width="60" height="60"><span class="sh-brand__type"><span class="sh-brand__name">Layero</span><small>Shop</small></span></a>' +
+            '<a class="sh-footer__logo sh-brand" href="index.html" aria-label="Layero Shop – főoldal"><img class="sh-brand__image" src="assets/layero-logo/layero-logo-dark.svg" alt="" width="439" height="128"></a>' +
             '<p>Rétegről rétegre.<br><span>Személyesen neked.</span></p>' +
           '</div>' +
           '<div class="sh-footer__story">' +
@@ -1866,7 +1865,7 @@
     injectJsonLd({
       '@context': 'https://schema.org', '@type': 'Organization',
       name: 'Layero Shop', url: location.href,
-      logo: absUrl('assets/layero-asset-0251.webp'),
+      logo: absUrl('assets/layero-logo/layero-logo.svg'),
       description: 'Személyre szabott 3D nyomtatott ajándékok, világító lámpák, kulcstartók és dekorációk.',
       email: 'layeroprint@gmail.com', telephone: '+40756642387',
       address: { '@type': 'PostalAddress', addressLocality: 'Szatmárnémeti', addressCountry: 'RO' },

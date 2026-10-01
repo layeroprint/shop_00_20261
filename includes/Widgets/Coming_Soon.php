@@ -151,7 +151,7 @@ class Coming_Soon extends Base_Widget {
 
 	protected function render() {
 		$s = $this->get_settings_for_display();
-		$logo = LAYERO_SHOP_UI_URL . 'assets/demo/layero-asset-0251.webp';
+		$logo = LAYERO_SHOP_UI_URL . 'assets/demo/layero-logo/layero-logo-dark.svg';
 		$launch = ! empty($s['launch']) ? $s['launch'] : '2026-08-15 10:00:00';
 		$chips = array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', (string) ($s['chips'] ?? ''))));
 		$show_notify = 'yes' === ($s['show_notify'] ?? 'yes');
@@ -195,10 +195,7 @@ class Coming_Soon extends Base_Widget {
 				display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
 			}
 			.lyr-cs__brand { display: inline-flex; align-items: center; gap: 13px; margin-bottom: clamp(24px, 3.5vw, 38px); text-decoration: none; }
-			.lyr-cs__brand img { width: 46px; height: 46px; object-fit: contain; filter: drop-shadow(0 0 18px rgba(0, 194, 224, 0.55)); animation: lyr-cs-pulse 4.5s ease-in-out infinite; }
-			@keyframes lyr-cs-pulse { 0%,100% { filter: drop-shadow(0 0 14px rgba(0,194,224,.45)); } 50% { filter: drop-shadow(0 0 26px rgba(0,194,224,.75)); } }
-			.lyr-cs__brand b { font-size: 1.42rem; font-weight: 800; letter-spacing: -0.02em; color: #fff; }
-			.lyr-cs__brand b small { font-weight: 600; font-size: 0.62em; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent-2); margin-left: 3px; }
+			.lyr-cs__brand img { display: block; width: 157.86px; height: 46px; object-fit: contain; }
 			.lyr-cs__kicker { display: inline-flex; align-items: center; gap: 9px; font-size: 0.72rem; font-weight: 650; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 16px; }
 			.lyr-cs__kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(0,194,224,.5); animation: lyr-cs-dot 2.4s ease-out infinite; }
 			@keyframes lyr-cs-dot { 0% { box-shadow: 0 0 0 0 rgba(0,194,224,.55); } 70% { box-shadow: 0 0 0 9px rgba(0,194,224,0); } 100% { box-shadow: 0 0 0 0 rgba(0,194,224,0); } }
@@ -248,8 +245,7 @@ class Coming_Soon extends Base_Widget {
 		<div class="lyr-cs" data-lyr-cs data-launch="<?php echo esc_attr($launch); ?>">
 			<div class="lyr-cs__wrap">
 				<span class="lyr-cs__brand">
-					<img src="<?php echo esc_url($logo); ?>" alt="Layero" width="46" height="46">
-					<b>Layero <small>Shop</small></b>
+					<img src="<?php echo esc_url($logo); ?>" alt="Layero Shop" width="439" height="128">
 				</span>
 
 				<?php if (! empty($s['kicker'])) : ?>

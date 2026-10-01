@@ -21,8 +21,18 @@ final class Assets {
 		add_action('init', array($this, 'register'));
 		add_action('wp_enqueue_scripts', array($this, 'enqueue'), 100);
 		add_action('wp_head', array($this, 'consent_defaults'), -100);
+		remove_action('wp_head', 'wp_site_icon', 99);
+		add_action('wp_head', array($this, 'brand_icons'), 99);
 		add_action('elementor/frontend/after_register_styles', array($this, 'register'));
 		add_action('elementor/frontend/after_register_scripts', array($this, 'register'));
+	}
+
+	public function brand_icons() {
+		$base = LAYERO_SHOP_UI_URL . 'assets/demo/layero-logo/';
+		$version = '?v=' . LAYERO_SHOP_UI_VERSION;
+		printf('<link rel="icon" type="image/png" sizes="32x32" href="%s">' . "\n", esc_url($base . 'favicon-32.png' . $version));
+		printf('<link rel="icon" type="image/svg+xml" href="%s">' . "\n", esc_url($base . 'favicon.svg' . $version));
+		printf('<link rel="apple-touch-icon" sizes="180x180" href="%s">' . "\n", esc_url($base . 'apple-touch-icon.png' . $version));
 	}
 
 	public function register() {
