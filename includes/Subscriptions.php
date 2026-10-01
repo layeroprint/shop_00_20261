@@ -163,7 +163,7 @@ final class Subscriptions {
 	}
 	public static function assets() {
 		wp_enqueue_script('layero-subscriptions', LAYERO_SHOP_UI_URL . 'assets/js/layero-subscriptions.js', array(), LAYERO_SHOP_UI_VERSION, true);
-		wp_enqueue_style('layero-subscriptions', LAYERO_SHOP_UI_URL . 'assets/css/layero-subscriptions.css', array(), LAYERO_SHOP_UI_VERSION);
+		wp_enqueue_style('layero-subscriptions', LAYERO_SHOP_UI_URL . 'assets/css/layero-subscriptions.css', array(), LAYERO_SHOP_UI_VERSION . '.' . filemtime(LAYERO_SHOP_UI_PATH . 'assets/css/layero-subscriptions.css'));
 	}
 	public static function cleanup() {
 		$posts = get_posts(array('post_type' => self::TYPE, 'post_status' => 'private', 'numberposts' => 100, 'meta_query' => array('relation' => 'OR',

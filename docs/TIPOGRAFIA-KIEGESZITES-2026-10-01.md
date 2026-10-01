@@ -1,0 +1,7 @@
+# A 0.10.28 olvashatósági javítás online kiegészítése
+
+Az online utóellenőrzés a külön hírlevél- és kereskedelmi stíluslapokban is talált 11–13 px-es feliratokat. Ezek most legalább 14 px-esek; a hírlevél és pénztár beviteli mezői 16 px, a fő gombok 15 px-esek. A vásárlási lépések, kuponok, variációs adatok, szállítási magyarázatok és kosárpanel is követik a közös méretezést. A mennyiség- és eltávolításvezérlők nagyobb érintési felületet kaptak. A 380 px alatti kosárpanel az árat külön sorba teszi a hosszabb terméknév és nagyobb gombok mellett.
+
+A helyi WooCommerce-kosárban a mennyiség növelése/visszaállítása, a 10%-os QA-kupon alkalmazása/eltávolítása, a szállítás és a megőrzött személyre szabási adatok ellenőrizve. A pénztár tényleges 320/390/1440 px-es nézetben sem mutat apró olvasandó feliratot vagy vízszintes túlcsordulást. Rendelés nem készült. Öt szinkronpróba és 70 elkülönített kereskedelmi ellenőrzés sikeres.
+
+A hírlevél-CSS URL-je a fájl módosítási idejét is tartalmazza, így a kiegészítés önállóan frissíti a gyorsítótárat. A kereskedelmi CSS már ugyanezt az eljárást használja. A kiegészítő commit nem tartalmazza a párhuzamosan készülő 0.10.29 logócseréjének fájljait vagy verzióváltását. Az előző éles pont `c24fdf6181879db7788c2aace4cd757601122cfd` (0.10.28). Átvétel a meglévő `layero_plugins` cPanel-tároló **Update from Remote** műveletével; a karbantartási állapot megmarad.
