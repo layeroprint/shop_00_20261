@@ -206,7 +206,9 @@ class Hero_Slider extends Base_Widget {
 							$tags->remove_attribute('srcset');
 						} elseif ('IMG' === $tags->get_tag() && $tags->get_attribute('src') && 0 !== strpos($tags->get_attribute('src'), 'data:')) {
 							$tags->set_attribute('data-slide-src', $tags->get_attribute('src'));
-							$tags->set_attribute('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+							// WordPress rejects data: URLs in set_attribute('src'); no source means no eager download.
+							$tags->remove_attribute('src');
+							$tags->remove_attribute('srcset');
 							$tags->remove_attribute('fetchpriority');
 						}
 					}

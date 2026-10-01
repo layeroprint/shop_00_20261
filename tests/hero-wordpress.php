@@ -29,7 +29,10 @@ foreach (array('fresh' => array(), '0.10.3' => array('slides' => $lifestyle), 'l
             hero_check(! $tags->get_attribute('srcset') && $tags->get_attribute('data-slide-srcset'), $case . ': hidden mobile source waits for selection.');
         }
         if ('IMG' === $tags->get_tag()) {
-            if ($tags->get_attribute('data-slide-src')) { $deferred_images++; }
+            if ($tags->get_attribute('data-slide-src')) {
+                $deferred_images++;
+                hero_check(! $tags->get_attribute('src') && ! $tags->get_attribute('srcset'), $case . ': deferred image has no downloadable source before selection.');
+            }
             elseif (0 === strpos((string) $tags->get_attribute('src'), 'http')) { $eager_images++; }
         }
     }
