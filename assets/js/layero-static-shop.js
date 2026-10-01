@@ -540,6 +540,132 @@
       '</div></section>';
   }
 
+  // Keep the original description nodes (including links and IDs); only change their layout.
+  // Without JavaScript the complete, server-rendered description remains readable.
+  function initProductDescription() {
+    $all('.sh-longdesc').forEach(function (layout) {
+      var source = $('.sh-longdesc__text', layout);
+      var title = source && $('.sh-h2', source);
+      if (!title || layout.dataset.descriptionReady) return;
+      var nodes = [];
+      for (var node = title.nextSibling; node; node = node.nextSibling) nodes.push(node);
+      var groups = [], intro = [], current = intro, care = null;
+      nodes.forEach(function (node) {
+        if (node.nodeType === 1 && /^H[23]$/.test(node.tagName)) {
+          current = [];
+          groups.push({ heading: node, nodes: current });
+        } else if (node.nodeType === 1 && node.matches('p') && node.querySelector('strong') && /^(Termékápolás|Îngrijirea produsului)\s*:/i.test(node.textContent.trim())) {
+          if (!care) {
+            var heading = document.createElement('h3');
+            heading.textContent = 'Termékápolás';
+            care = { heading: heading, nodes: [] };
+            groups.push(care);
+          }
+          care.nodes.push(node);
+        } else {
+          current.push(node);
+        }
+      });
+      // Unstructured legacy descriptions stay visible when short.
+      if (!groups.length && intro.filter(function (node) { return node.nodeType === 1; }).length > 3) {
+        var heading = document.createElement('h3');
+        heading.textContent = 'További tudnivalók';
+        var elements = 0, remaining = [];
+        intro = intro.filter(function (node) {
+          if (node.nodeType === 1) elements++;
+          if (elements > 2) { remaining.push(node); return false; }
+          return true;
+        });
+        groups.push({ heading: heading, nodes: remaining });
+      }
+      var header = document.createElement('header');
+      header.className = 'sh-description__header';
+      var kicker = $('.sh-kicker', source);
+      if (kicker) header.appendChild(kicker);
+      header.appendChild(title);
+      var overview = document.createElement('div');
+      overview.className = 'sh-description__overview';
+      var lead = document.createElement('div');
+      lead.className = 'sh-description__lead';
+      intro.forEach(function (node) { lead.appendChild(node); });
+      overview.appendChild(lead);
+      var topics = document.createElement('div');
+      topics.className = 'sh-description__topics';
+      groups.forEach(function (group) {
+        var label = group.heading.textContent.trim();
+        var isFacts = /^Amit a termékről tudni érdemes$/i.test(label);
+        var isSpecs = /^Specifikáció$/i.test(label);
+        var section = document.createElement(isFacts || isSpecs ? 'section' : 'details');
+        section.className = isFacts ? 'sh-description__facts' : isSpecs ? 'sh-description__specs' : 'sh-description__topic';
+        if (isFacts || isSpecs) {
+          section.appendChild(group.heading);
+        } else {
+          var summary = document.createElement('summary');
+          summary.appendChild(group.heading);
+          var icon = document.createElement('span');
+          icon.className = 'sh-description__toggle';
+          icon.setAttribute('aria-hidden', 'true');
+          summary.appendChild(icon);
+          section.appendChild(summary);
+        }
+        var content = document.createElement('div');
+        content.className = 'sh-description__content';
+        group.nodes.forEach(function (node) { content.appendChild(node); });
+        section.appendChild(content);
+        (isFacts || isSpecs ? overview : topics).appendChild(section);
+      });
+      var specs = Array.prototype.find.call(layout.children, function (child) { return child.classList.contains('sh-specs'); });
+      if (specs) overview.appendChild(specs);
+      // Keep any unexpected source nodes visible instead of dropping content.
+      Array.prototype.slice.call(source.childNodes).forEach(function (node) { lead.appendChild(node); });
+      source.remove();
+      layout.prepend(header);
+      layout.appendChild(overview);
+      if (topics.children.length) {
+        var toolbar = document.createElement('div');
+        toolbar.className = 'sh-description__toolbar';
+        var caption = document.createElement('span');
+        caption.textContent = 'További részletek';
+        var expand = document.createElement('button');
+        expand.type = 'button';
+        expand.className = 'sh-description__expand';
+        var panels = $all('details', topics);
+        function updateExpand() {
+          var allOpen = panels.every(function (panel) { return panel.open; });
+          expand.textContent = allOpen ? 'Összes bezárása' : 'Összes megnyitása';
+        }
+        expand.addEventListener('click', function () {
+          var open = !panels.every(function (panel) { return panel.open; });
+          panels.forEach(function (panel) { panel.open = open; });
+          updateExpand();
+        });
+        panels.forEach(function (panel) {
+          panel.addEventListener('toggle', updateExpand);
+          panel.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && panel.open) {
+              event.preventDefault(); panel.open = false; $('summary', panel).focus();
+            }
+          });
+        });
+        updateExpand();
+        toolbar.appendChild(caption);
+        toolbar.appendChild(expand);
+        topics.prepend(toolbar);
+        layout.appendChild(topics);
+        layout.classList.add('sh-description--topics');
+        var printState;
+        window.addEventListener('beforeprint', function () {
+          printState = panels.map(function (panel) { var open = panel.open; panel.open = true; return open; });
+        });
+        window.addEventListener('afterprint', function () {
+          if (printState) panels.forEach(function (panel, i) { panel.open = printState[i]; });
+        });
+      }
+      layout.classList.add('sh-description');
+      layout.dataset.descriptionReady = 'true';
+    });
+  }
+
   // Progressive tabs: without JavaScript every section and anchor stays available.
   function initProductTabs() {
     $all('[data-product-tabs]').forEach(function (root) {
@@ -3579,6 +3705,7 @@
   if (page === 'home') renderHome();
   if (page === 'kategoria') renderKategoria();
   if (page === 'termek') renderTermek();
+  initProductDescription();
   initProductTabs();
   if (page === 'kosar') renderKosar();
   if (page === 'kapcsolat') renderKapcsolat();

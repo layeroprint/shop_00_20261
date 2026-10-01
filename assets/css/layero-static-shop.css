@@ -5691,3 +5691,71 @@ html.b2b-gallery-open { overflow: hidden; }
 .sh-buy-row .sh-btn:disabled, .sh-qv__foot .sh-btn:disabled, .sh-stickybar .sh-btn:disabled { opacity:.45; cursor:not-allowed; transform:none; }
 .sh-cart-variation-error { color:#9d341d; font-size:.8rem; line-height:1.5; }
 @media(max-width:480px) { .sh-opt--variation .sh-opt__row button { min-width:92px; } .sh-opt--variation .sh-opt__row button img { width:64px; height:64px; } }
+
+/* Product reading layout: concise overview, complete details on demand. */
+body[data-page="termek"] .sh-longdesc.sh-description {
+  grid-template-columns: minmax(0, 1fr); gap: 30px;
+  max-width: 1180px;
+}
+body[data-page="termek"] .sh-longdesc.sh-description--topics {
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  column-gap: clamp(36px, 5vw, 76px);
+}
+.sh-description__header { grid-column: 1 / -1; }
+.sh-description__header .sh-h2 { margin: 10px 0 0; font-size: clamp(1.65rem, 2.6vw, 2.2rem); line-height: 1.25; }
+.sh-description__overview, .sh-description__topics { min-width: 0; }
+.sh-description__overview { display: grid; align-content: start; gap: 22px; }
+.sh-description:not(.sh-description--topics) .sh-description__overview { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); }
+.sh-description__lead:empty { display: none; }
+.sh-description :where(p, li) { color: #526572; font-size: .94rem; line-height: 1.8; overflow-wrap: anywhere; }
+.sh-description p { margin: 0 0 16px; max-width: 66ch; }
+.sh-description p:last-child { margin-bottom: 0; }
+.sh-description :where(ul, ol) { padding-left: 20px; margin: 0; }
+.sh-description li + li { margin-top: 10px; }
+.sh-description li::marker { color: var(--accent); }
+.sh-description__facts { padding: 24px; background: #f5f8fa; border: 1px solid #e5ecef; border-radius: 16px; }
+.sh-description__facts > :is(h2, h3), .sh-description__specs > :is(h2, h3) { margin: 0 0 16px; font-size: .94rem; line-height: 1.5; font-weight: 600; color: #153448; }
+.sh-description__specs { padding: 0 4px; }
+.sh-description table { width: 100%; margin: 0; border: 0; border-collapse: collapse; font-size: .88rem; line-height: 1.7; }
+.sh-description table :is(th, td) { padding: 14px 12px; border: 0; border-block: 1px solid #e3e9ed; background: transparent; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.sh-description table :is(th, td):first-child { width: 36%; color: #61717d; font-weight: 400; padding-left: 0; }
+.sh-description table td:last-child { color: #294353; padding-right: 0; }
+.sh-description__toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 0 0 17px; border-bottom: 1px solid #dce5e9; }
+.sh-description__toolbar > span { color: #647584; font-size: .76rem; font-weight: 500; }
+.sh-description__expand { flex-shrink: 0; border: 0; border-radius: 4px; background: transparent; padding: 8px 0 8px 8px; color: var(--accent-deep); font: inherit; font-size: .76rem; font-weight: 600; cursor: pointer; }
+.sh-description__expand:hover { text-decoration: underline; background: transparent; color: var(--accent-deep); }
+.sh-description__topic { border-bottom: 1px solid #dce5e9; }
+.sh-description__topic > summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; padding: 19px 0; list-style: none; cursor: pointer; }
+.sh-description__topic > summary::-webkit-details-marker { display: none; }
+.sh-description__topic > summary::marker { content: ''; }
+.sh-description__topic > summary :is(h2, h3) { margin: 0; color: #153448; font-size: 1rem; line-height: 1.5; font-weight: 600; }
+.sh-description__toggle { position: relative; flex: 0 0 30px; height: 30px; border: 1px solid #dce5e9; border-radius: 50%; }
+.sh-description__toggle::before, .sh-description__toggle::after { content: ''; position: absolute; left: 9px; top: 13px; width: 10px; height: 2px; background: var(--accent-deep); }
+.sh-description__toggle::after { transform: rotate(90deg); }
+.sh-description__topic[open] .sh-description__toggle::after { display: none; }
+.sh-description__topic[open] .sh-description__toggle { background: #edf5f7; border-color: #c8dde4; }
+.sh-description__topic > summary:hover .sh-description__toggle { border-color: var(--accent); }
+.sh-description__topic > .sh-description__content { padding: 0 8px 24px 0; }
+.sh-description :where(summary, button):focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 5px; }
+.sh-description :where(img, video) { max-width: 100%; height: auto; }
+.sh-description [id] { scroll-margin-top: 130px; }
+@media (max-width: 860px) {
+  body[data-page="termek"] .sh-longdesc.sh-description--topics { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .sh-description:not(.sh-description--topics) .sh-description__overview { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .sh-description__topics { margin-top: 6px; }
+}
+@media (max-width: 540px) {
+  body[data-page="termek"] .sh-product-details { padding-block: 32px; }
+  .sh-description__facts { padding: 20px; }
+  .sh-description__topic > summary { min-height: 70px; gap: 14px; }
+  .sh-description__topic > summary :is(h2, h3) { font-size: .94rem; }
+  .sh-description__toolbar { gap: 8px; }
+}
+@media print {
+  body[data-page="termek"] .sh-longdesc.sh-description { display: block; }
+  .sh-description__header, .sh-description__overview { margin-bottom: 24px; }
+  .sh-description__toolbar, .sh-description__toggle { display: none; }
+  .sh-description__topic { break-inside: avoid; }
+  .sh-description__topic::details-content { content-visibility: visible; }
+  .sh-description__topic > .sh-description__content { display: block !important; }
+}
